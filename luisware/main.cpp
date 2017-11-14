@@ -67,6 +67,9 @@ int main(int, char const**)
     }
 */
 
+    
+    
+    
     int gridx, gridy;
     RectangleShape grid[8][8];
     
