@@ -67,18 +67,19 @@ int main(int, char const**)
     }
     
     
-    vector< RectangleShape > grid;
+    RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            sf::RectangleShape newPix( 50, 50);
-            
-            
+            RectangleShape newPix(sf::Vector2f(50, 50));
+            newPix.setPosition( (50+i*15), (50+j*15));
+            newPix.setFillColor(sf::Color::White);
+            grid[i][j] = newPix;
         }
     }
     
     sf::RectangleShape rectangle(sf::Vector2f(2000, 1000));
-    rectangle.setFillColor(sf::Color(255, 255, 255));
+    rectangle.setFillColor(sf::Color(0, 0, 0));
     rectangle.setPosition(0, 0);
     // Play the music
     music.play();
@@ -113,6 +114,12 @@ int main(int, char const**)
         
         // Draw the sprite
         window.draw(sprite);
+        
+        for( i=0 ; i < 8 ; i++ ){
+            for( j=0 ; j<8 ; j++ ){
+                window.draw( grid[i][j]);
+            }
+        }
         
         // Draw the string
         window.draw(text);
