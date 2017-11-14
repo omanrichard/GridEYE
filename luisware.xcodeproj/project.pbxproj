@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79BC31B11FBAB237005842D0 /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AE1FBAB237005842D0 /* wrench.png */; };
+		79BC31B21FBAB237005842D0 /* add-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AF1FBAB237005842D0 /* add-button.png */; };
+		79BC31B31FBAB237005842D0 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31B01FBAB237005842D0 /* delete.png */; };
 		79EE7B301FBA7F4100D8618D /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */; };
 		79EE7B331FBA7F4100D8618D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79EE7B321FBA7F4100D8618D /* main.cpp */; };
 		79EE7B361FBA7F4100D8618D /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B351FBA7F4100D8618D /* cute_image.jpg */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79BC31AE1FBAB237005842D0 /* wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrench.png; sourceTree = "<group>"; };
+		79BC31AF1FBAB237005842D0 /* add-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-button.png"; sourceTree = "<group>"; };
+		79BC31B01FBAB237005842D0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		79EE7B2A1FBA7F4100D8618D /* luisware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = luisware.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79EE7B2E1FBA7F4100D8618D /* luisware-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luisware-Info.plist"; sourceTree = "<group>"; };
 		79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -93,12 +99,15 @@
 		79EE7B341FBA7F4100D8618D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79BC31AF1FBAB237005842D0 /* add-button.png */,
+				79BC31B01FBAB237005842D0 /* delete.png */,
+				79BC31AE1FBAB237005842D0 /* wrench.png */,
 				79EE7B481FBA8F8A00D8618D /* close.png */,
 				79EE7B4A1FBA8F8A00D8618D /* download.png */,
 				79EE7B471FBA8F8A00D8618D /* home.png */,
 				79EE7B4C1FBA8F8A00D8618D /* new-file.png */,
-				79EE7B491FBA8F8A00D8618D /* note.png */,
 				79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */,
+				79EE7B491FBA8F8A00D8618D /* note.png */,
 				79EE7B461FBA8F8A00D8618D /* play-button.png */,
 				79EE7B451FBA8F8A00D8618D /* settings.png */,
 				79EE7B351FBA7F4100D8618D /* cute_image.jpg */,
@@ -170,10 +179,13 @@
 				79EE7B3C1FBA7F4100D8618D /* icon.png in Resources */,
 				79EE7B521FBA8F8A00D8618D /* download.png in Resources */,
 				79EE7B4D1FBA8F8A00D8618D /* settings.png in Resources */,
+				79BC31B31FBAB237005842D0 /* delete.png in Resources */,
+				79BC31B21FBAB237005842D0 /* add-button.png in Resources */,
 				79EE7B511FBA8F8A00D8618D /* note.png in Resources */,
 				79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */,
 				79EE7B501FBA8F8A00D8618D /* close.png in Resources */,
 				79EE7B4F1FBA8F8A00D8618D /* home.png in Resources */,
+				79BC31B11FBAB237005842D0 /* wrench.png in Resources */,
 				79EE7B3A1FBA7F4100D8618D /* sansation.ttf in Resources */,
 				79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */,
 				79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */,

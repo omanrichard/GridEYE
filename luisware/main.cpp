@@ -66,35 +66,94 @@ int main(int, char const**)
 */
     
     // Load sprites to display
-    Texture texture;
-    if (!texture.loadFromFile("settings.png")) {
+    
+    //----------------- Menu ---------------------
+    Texture t_settings;
+    if (!t_settings.loadFromFile("wrench.png")) {
         return EXIT_FAILURE;
     }
+    Sprite settings( t_settings );
+    settings.setPosition( 15, 109 );
+    settings.scale(0.50, 0.50);
     
-    Sprite sprite( texture );
-    sprite.setPosition( 15, 15 );
-    sprite.scale(0.50, 0.50);
+    Texture t_record;
+    if (!t_record.loadFromFile("add-button.png")) {
+        return EXIT_FAILURE;
+    }
+    Sprite record( t_record );
+    record.setPosition( 15, 188+15 );
+    record.scale(0.50, 0.50);
     
+    Texture t_stop;
+    if (!t_stop.loadFromFile("close.png")) {
+        return EXIT_FAILURE;
+    }
+    Sprite stop( t_stop );
+    stop.setPosition( 15, 267+30);
+    stop.scale(0.50, 0.50);
+    
+    Texture t_play;
+    if (!t_play.loadFromFile("play-button.png")) {
+        return EXIT_FAILURE;
+    }
+    Sprite play( t_play );
+    play.setPosition( 15, 346+45 );
+    play.scale(0.50, 0.50);
+    
+    Texture t_trash;
+    if (!t_trash.loadFromFile("delete.png")) {
+        return EXIT_FAILURE;
+    }
+    Sprite trash( t_trash );
+    trash.setPosition( 15, 425+60 );
+    trash.scale(0.50, 0.50);
+    
+    Texture t_save;
+    if (!t_trash.loadFromFile("download.png")) {
+        return EXIT_FAILURE;
+    }
+    Sprite save( t_save );
+    save.setPosition( 15, 504+75 );
+    save.scale(0.50, 0.50);
+    
+    //----------------- Camera Grid ----------------
     int gridx, gridy;
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            gridx = (267+i*51);
-            gridy = (25+j*51);
-            RectangleShape newPix(sf::Vector2f(50, 50));
+            gridx = (164+i*59);
+            gridy = (88+j*59);
+            RectangleShape newPix(sf::Vector2f(58, 58));
             newPix.setPosition( gridx, gridy );
             newPix.setFillColor(sf::Color::White);
             grid[i][j] = newPix;
         }
     }
     
-    sf::RectangleShape line( Vector2f( 2, 433) );
+    sf::RectangleShape line( Vector2f( 1, 700) );
     line.setFillColor( Color::Black );
-    sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
     line.setPosition(94, 0);
+    
+    RectangleShape line2( Vector2f( 625, 1));
+    line2.setFillColor( Color::Black );
+    line2.setPosition(94, 606);
+    
+    sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
     rectangle.setFillColor(sf::Color(72, 80, 94));
     rectangle.setPosition(0, 0);
+    
+    sf::Font font;
+    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    sf::Text text("Thermal Camera", font, 50);
+    text.setFillColor(sf::Color::Black);
+    text.setPosition( 109 , 10);
+    
+    sf::Text r_text("Recording", font, 30);
+    r_text.setFillColor(sf::Color::Black);
+    r_text.setPosition( 550 , 10);
 
 //---------------------- Draw -------------------------
     // Play the music
@@ -124,14 +183,21 @@ int main(int, char const**)
 
         // Clear screen
         window.clear();
+        
         // Draw Rectangle First
         window.draw(rectangle);
-        
-        window.draw(line);
 
-        // Draw the sprite
-        window.draw(sprite);
+        window.draw(line);
+        window.draw(line2);
         
+        // Draw the sprites
+        window.draw(settings);
+        window.draw(record);
+        window.draw(stop);
+        window.draw(play);
+        window.draw(trash);
+        window.draw(save);
+
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 window.draw( grid[i][j] );
@@ -139,8 +205,9 @@ int main(int, char const**)
         }
         
         // Draw the string
-    //    window.draw(text);
-
+        window.draw(text);
+        window.draw(r_text);
+        
         // Update the window
         window.display();
     }
