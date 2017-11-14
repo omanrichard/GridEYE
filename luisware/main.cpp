@@ -61,12 +61,12 @@ int main(int, char const**)
     text.setFillColor(sf::Color::Black);
 
     // Load a music to play
-    sf::Music music;
+/*    sf::Music music;
     if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
         return EXIT_FAILURE;
     }
-    
-    
+*/
+
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
