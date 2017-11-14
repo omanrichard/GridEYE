@@ -72,13 +72,15 @@ int main(int, char const**)
     }
     
     sf::Sprite sprite( texture );
-        
+    sprite.setPosition( 15, 15 );
+    sprite.scale(0.50, 0.50);
+    
     int gridx, gridy;
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            gridx = (25+i*51);
+            gridx = (267+i*51);
             gridy = (25+j*51);
             RectangleShape newPix(sf::Vector2f(50, 50));
             newPix.setPosition( gridx, gridy );
@@ -87,7 +89,10 @@ int main(int, char const**)
         }
     }
     
+    sf::RectangleShape line( Vector2f( 2, 433) );
+    line.setFillColor( Color::Black );
     sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
+    line.setPosition(94, 0);
     rectangle.setFillColor(sf::Color(72, 80, 94));
     rectangle.setPosition(0, 0);
 
@@ -100,8 +105,7 @@ int main(int, char const**)
     while (window.isOpen())
     {
         
-        window.draw(rectangle);
-        
+        window.draw(line);
         
         // Process events
         sf::Event event;
@@ -123,7 +127,8 @@ int main(int, char const**)
         // Draw Rectangle First
         window.draw(rectangle);
         
-        
+        window.draw(line);
+
         // Draw the sprite
         window.draw(sprite);
         
