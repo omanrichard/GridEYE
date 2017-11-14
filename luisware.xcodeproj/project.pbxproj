@@ -13,6 +13,7 @@
 		79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B371FBA7F4100D8618D /* nice_music.ogg */; };
 		79EE7B3A1FBA7F4100D8618D /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B391FBA7F4100D8618D /* sansation.ttf */; };
 		79EE7B3C1FBA7F4100D8618D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B3B1FBA7F4100D8618D /* icon.png */; };
+		79EE7B441FBA80E700D8618D /* projectClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79EE7B421FBA80E600D8618D /* projectClasses.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		79EE7B371FBA7F4100D8618D /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		79EE7B391FBA7F4100D8618D /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		79EE7B3B1FBA7F4100D8618D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		79EE7B421FBA80E600D8618D /* projectClasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = projectClasses.cpp; path = "../../Final Project/Final Project/main/projectClasses.cpp"; sourceTree = "<group>"; };
+		79EE7B431FBA80E600D8618D /* projectClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = projectClasses.h; path = "../../Final Project/Final Project/main/projectClasses.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,8 @@
 		79EE7B2C1FBA7F4100D8618D /* luisware */ = {
 			isa = PBXGroup;
 			children = (
+				79EE7B421FBA80E600D8618D /* projectClasses.cpp */,
+				79EE7B431FBA80E600D8618D /* projectClasses.h */,
 				79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */,
 				79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */,
 				79EE7B321FBA7F4100D8618D /* main.cpp */,
@@ -175,6 +180,7 @@
 			files = (
 				79EE7B331FBA7F4100D8618D /* main.cpp in Sources */,
 				79EE7B301FBA7F4100D8618D /* ResourcePath.mm in Sources */,
+				79EE7B441FBA80E700D8618D /* projectClasses.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
