@@ -34,7 +34,7 @@ int main(int, char const**)
     
 //--------------------- Set up -----------------------------------
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(2000, 1000), "ECE3220 Final Project");
+    sf::RenderWindow window(sf::VideoMode(700,700), "ECE3220 Final Project");
 /*
     // Set the Icon
     sf::Image icon;
