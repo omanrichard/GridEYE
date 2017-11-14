@@ -65,11 +65,6 @@ int main(int, char const**)
     }
 */
 
-    // Load sprites to display
-    sf::Texture texture;
-    if (!texture.loadFromFile("settings.png")) {
-        return EXIT_FAILURE;
-    }
     
     sf::Sprite sprite( texture );
     sprite.setPosition( 15, 15 );
@@ -130,7 +125,7 @@ int main(int, char const**)
         window.draw(line);
 
         // Draw the sprite
-        window.draw(sprite);
+        //window.draw(sprite);
         
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
