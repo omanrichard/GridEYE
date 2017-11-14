@@ -71,8 +71,8 @@ int main(int, char const**)
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            gridx = (50+i*50+10);
-            gridy = (50+j*50+10);
+            gridx = (50+(i*51));
+            gridy = (50+j*51);
             RectangleShape newPix(sf::Vector2f(50, 50));
             newPix.setPosition( gridx, gridy );
             newPix.setFillColor(sf::Color::White);
@@ -118,7 +118,7 @@ int main(int, char const**)
         
         
         // Draw the sprite
-        window.draw(sprite);
+        //window.draw(sprite);
         
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
