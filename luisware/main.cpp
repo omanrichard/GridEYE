@@ -23,7 +23,7 @@
 int main(int, char const**)
 {
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(2000, 1000), "ECE3220 Final Project");
 
     // Set the Icon
     sf::Image icon;
@@ -32,19 +32,22 @@ int main(int, char const**)
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    // Load a sprite to display
+    // Load sprites to display
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
+    if (!texture.loadFromFile(resourcePath() + "settings.png")) {
         return EXIT_FAILURE;
     }
+
     sf::Sprite sprite(texture);
 
+    
+    
     // Create a graphical text to display
     sf::Font font;
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
-    sf::Text text("Hello SFML", font, 50);
+    sf::Text text("Boss Camera", font, 50);
     text.setFillColor(sf::Color::Black);
 
     // Load a music to play
@@ -52,13 +55,20 @@ int main(int, char const**)
     if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
         return EXIT_FAILURE;
     }
-
+    
+    sf::RectangleShape rectangle(sf::Vector2f(2000, 1000));
+    rectangle.setFillColor(sf::Color(255, 255, 255));
+    rectangle.setPosition(0, 0);
     // Play the music
     music.play();
 
     // Start the game loop
     while (window.isOpen())
     {
+        
+        window.draw(rectangle);
+        
+        
         // Process events
         sf::Event event;
         while (window.pollEvent(event))
@@ -83,6 +93,7 @@ int main(int, char const**)
         // Draw the string
         window.draw(text);
 
+        window.draw(rectangle);
         // Update the window
         window.display();
     }

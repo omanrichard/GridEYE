@@ -13,7 +13,14 @@
 		79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B371FBA7F4100D8618D /* nice_music.ogg */; };
 		79EE7B3A1FBA7F4100D8618D /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B391FBA7F4100D8618D /* sansation.ttf */; };
 		79EE7B3C1FBA7F4100D8618D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B3B1FBA7F4100D8618D /* icon.png */; };
-		79EE7B441FBA80E700D8618D /* projectClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79EE7B421FBA80E600D8618D /* projectClasses.cpp */; };
+		79EE7B4D1FBA8F8A00D8618D /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B451FBA8F8A00D8618D /* settings.png */; };
+		79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B461FBA8F8A00D8618D /* play-button.png */; };
+		79EE7B4F1FBA8F8A00D8618D /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B471FBA8F8A00D8618D /* home.png */; };
+		79EE7B501FBA8F8A00D8618D /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B481FBA8F8A00D8618D /* close.png */; };
+		79EE7B511FBA8F8A00D8618D /* note.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B491FBA8F8A00D8618D /* note.png */; };
+		79EE7B521FBA8F8A00D8618D /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4A1FBA8F8A00D8618D /* download.png */; };
+		79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */; };
+		79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4C1FBA8F8A00D8618D /* new-file.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +33,14 @@
 		79EE7B371FBA7F4100D8618D /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		79EE7B391FBA7F4100D8618D /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		79EE7B3B1FBA7F4100D8618D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		79EE7B421FBA80E600D8618D /* projectClasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = projectClasses.cpp; path = "../../Final Project/Final Project/main/projectClasses.cpp"; sourceTree = "<group>"; };
-		79EE7B431FBA80E600D8618D /* projectClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = projectClasses.h; path = "../../Final Project/Final Project/main/projectClasses.h"; sourceTree = "<group>"; };
+		79EE7B451FBA8F8A00D8618D /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		79EE7B461FBA8F8A00D8618D /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
+		79EE7B471FBA8F8A00D8618D /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		79EE7B481FBA8F8A00D8618D /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		79EE7B491FBA8F8A00D8618D /* note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = note.png; sourceTree = "<group>"; };
+		79EE7B4A1FBA8F8A00D8618D /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
+		79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-2.png"; sourceTree = "<group>"; };
+		79EE7B4C1FBA8F8A00D8618D /* new-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new-file.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +73,6 @@
 		79EE7B2C1FBA7F4100D8618D /* luisware */ = {
 			isa = PBXGroup;
 			children = (
-				79EE7B421FBA80E600D8618D /* projectClasses.cpp */,
-				79EE7B431FBA80E600D8618D /* projectClasses.h */,
 				79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */,
 				79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */,
 				79EE7B321FBA7F4100D8618D /* main.cpp */,
@@ -82,6 +93,14 @@
 		79EE7B341FBA7F4100D8618D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79EE7B481FBA8F8A00D8618D /* close.png */,
+				79EE7B4A1FBA8F8A00D8618D /* download.png */,
+				79EE7B471FBA8F8A00D8618D /* home.png */,
+				79EE7B4C1FBA8F8A00D8618D /* new-file.png */,
+				79EE7B491FBA8F8A00D8618D /* note.png */,
+				79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */,
+				79EE7B461FBA8F8A00D8618D /* play-button.png */,
+				79EE7B451FBA8F8A00D8618D /* settings.png */,
 				79EE7B351FBA7F4100D8618D /* cute_image.jpg */,
 				79EE7B371FBA7F4100D8618D /* nice_music.ogg */,
 				79EE7B391FBA7F4100D8618D /* sansation.ttf */,
@@ -149,8 +168,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				79EE7B3C1FBA7F4100D8618D /* icon.png in Resources */,
+				79EE7B521FBA8F8A00D8618D /* download.png in Resources */,
+				79EE7B4D1FBA8F8A00D8618D /* settings.png in Resources */,
+				79EE7B511FBA8F8A00D8618D /* note.png in Resources */,
+				79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */,
+				79EE7B501FBA8F8A00D8618D /* close.png in Resources */,
+				79EE7B4F1FBA8F8A00D8618D /* home.png in Resources */,
 				79EE7B3A1FBA7F4100D8618D /* sansation.ttf in Resources */,
+				79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */,
 				79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */,
+				79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */,
 				79EE7B361FBA7F4100D8618D /* cute_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,7 +207,6 @@
 			files = (
 				79EE7B331FBA7F4100D8618D /* main.cpp in Sources */,
 				79EE7B301FBA7F4100D8618D /* ResourcePath.mm in Sources */,
-				79EE7B441FBA80E700D8618D /* projectClasses.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
