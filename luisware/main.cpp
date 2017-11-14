@@ -31,6 +31,8 @@ int i,j;
 
 int main(int, char const**)
 {
+    
+//--------------------- Set up -----------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(2000, 1000), "ECE3220 Final Project");
 
@@ -81,9 +83,12 @@ int main(int, char const**)
     sf::RectangleShape rectangle(sf::Vector2f(2000, 1000));
     rectangle.setFillColor(sf::Color(0, 0, 0));
     rectangle.setPosition(0, 0);
-    // Play the music
-    music.play();
 
+//---------------------- Draw -------------------------
+    // Play the music
+//    music.play();
+
+    
     // Start the game loop
     while (window.isOpen())
     {
