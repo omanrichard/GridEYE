@@ -67,9 +67,6 @@ int main(int, char const**)
     }
 */
 
-    sf::Sprite sprite(texture);
-    
-    sprite.setPosition(20, 20);
     
     RectangleShape grid[8][8];
     
@@ -120,7 +117,7 @@ int main(int, char const**)
         
         
         // Draw the sprite
-        window.draw(sprite);
+     //   window.draw(sprite);
         
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
@@ -129,7 +126,7 @@ int main(int, char const**)
         }
         
         // Draw the string
-        window.draw(text);
+    //    window.draw(text);
 
         // Update the window
         window.display();
