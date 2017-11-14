@@ -49,9 +49,7 @@ int main(int, char const**)
         return EXIT_FAILURE;
     }
 
-    sf::Sprite sprite(texture);
-
-    sprite.setPosition(20, 20);
+ 
     
     
     // Create a graphical text to display
@@ -69,6 +67,10 @@ int main(int, char const**)
     }
 */
 
+    sf::Sprite sprite(texture);
+    
+    sprite.setPosition(20, 20);
+    
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
