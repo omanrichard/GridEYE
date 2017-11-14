@@ -61,17 +61,18 @@ int main(int, char const**)
     text.setFillColor(sf::Color::Black);
 
     // Load a music to play
-/*    sf::Music music;
+*    sf::Music music;
     if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
         return EXIT_FAILURE;
     }
 */
 
-    
+    int gridx, gridy;
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
+            
             RectangleShape newPix(sf::Vector2f(50, 50));
             newPix.setPosition( (50+i*50), (50+j*50));
             newPix.setFillColor(sf::Color::White);
