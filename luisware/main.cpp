@@ -17,8 +17,17 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+using namespace sf;
+
 // Here is a small helper for you! Have a look.
 #include "ResourcePath.hpp"
+
+int i,j;
 
 int main(int, char const**)
 {
@@ -40,6 +49,7 @@ int main(int, char const**)
 
     sf::Sprite sprite(texture);
 
+    sprite.setPosition(20, 20);
     
     
     // Create a graphical text to display
@@ -54,6 +64,17 @@ int main(int, char const**)
     sf::Music music;
     if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
         return EXIT_FAILURE;
+    }
+    
+    
+    vector< RectangleShape > grid;
+    
+    for( i=0 ; i < 8 ; i++ ){
+        for( j=0 ; j<8 ; j++ ){
+            sf::RectangleShape newPix( 50, 50);
+            
+            
+        }
     }
     
     sf::RectangleShape rectangle(sf::Vector2f(2000, 1000));
@@ -86,14 +107,16 @@ int main(int, char const**)
 
         // Clear screen
         window.clear();
-
+        // Draw Rectangle First
+        window.draw(rectangle);
+        
+        
         // Draw the sprite
         window.draw(sprite);
-
+        
         // Draw the string
         window.draw(text);
 
-        window.draw(rectangle);
         // Update the window
         window.display();
     }
