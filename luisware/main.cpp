@@ -145,7 +145,7 @@ int main(int, char const**)
     rectangle.setPosition(0, 0);
     
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    if (!font.loadFromFile("sansation.ttf") {
         return EXIT_FAILURE;
     }
     sf::Text text("Thermal Camera", font, 50);
