@@ -14,7 +14,7 @@
 // function `resourcePath()` from ResourcePath.hpp
 //
 
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
@@ -72,7 +72,7 @@ int main(int, char const**)
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
             RectangleShape newPix(sf::Vector2f(50, 50));
-            newPix.setPosition( (50+i*15), (50+j*15));
+            newPix.setPosition( (50+i*50), (50+j*50));
             newPix.setFillColor(sf::Color::White);
             grid[i][j] = newPix;
         }
