@@ -16,6 +16,7 @@
 
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+//#include <wiringPi.h>
 
 #include <iostream>
 #include <fstream>
@@ -27,7 +28,7 @@
 using namespace sf;
 
 // Here is a small helper for you! Have a look.
-#include "ResourcePath.hpp"
+//#include "ResourcePath.hpp"
 
 int i,j;
 
@@ -157,7 +158,7 @@ int main(int, char const**)
 
 //---------------------- Draw -------------------------
     // Play the music
-//    music.play();
+    //music.play();
 
     
     // Start the game loop
