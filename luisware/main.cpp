@@ -22,6 +22,8 @@
 #include <vector>
 #include <string>
 
+
+
 using namespace sf;
 
 // Here is a small helper for you! Have a look.
@@ -34,7 +36,7 @@ int main(int, char const**)
     
 //--------------------- Set up -----------------------------------
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(2000, 1000), "ECE3220 Final Project");
+    sf::RenderWindow window(sf::VideoMode(700, 700), "ECE3220 Final Project");
 /*
     // Set the Icon
     sf::Image icon;
@@ -69,15 +71,15 @@ int main(int, char const**)
         return EXIT_FAILURE;
     }
     
-        sf::Sprite sprite( texture );
+    sf::Sprite sprite( texture );
         
     int gridx, gridy;
     RectangleShape grid[8][8];
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            gridx = (50+i*50+10);
-            gridy = (50+j*50+10);
+            gridx = (25+i*51);
+            gridy = (25+j*51);
             RectangleShape newPix(sf::Vector2f(50, 50));
             newPix.setPosition( gridx, gridy );
             newPix.setFillColor(sf::Color::White);
@@ -85,8 +87,8 @@ int main(int, char const**)
         }
     }
     
-    sf::RectangleShape rectangle(sf::Vector2f(2000, 1000));
-    rectangle.setFillColor(sf::Color(0, 0, 0));
+    sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
+    rectangle.setFillColor(sf::Color(72, 80, 94));
     rectangle.setPosition(0, 0);
 
 //---------------------- Draw -------------------------
