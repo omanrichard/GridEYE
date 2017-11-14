@@ -43,11 +43,7 @@ int main(int, char const**)
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    // Load sprites to display
-    sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "settings.png")) {
-        return EXIT_FAILURE;
-    }
+ 
 
  
     
@@ -75,9 +71,10 @@ int main(int, char const**)
     
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j<8 ; j++ ){
-            
+            gridx = (50+i*50+10);
+            gridy = (50+j*50+10);
             RectangleShape newPix(sf::Vector2f(50, 50));
-            newPix.setPosition( (50+i*50), (50+j*50));
+            newPix.setPosition( gridx, gridy );
             newPix.setFillColor(sf::Color::White);
             grid[i][j] = newPix;
         }
@@ -121,11 +118,11 @@ int main(int, char const**)
         
         
         // Draw the sprite
-     //   window.draw(sprite);
+        window.draw(sprite);
         
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
-                window.draw( grid[i][j]);
+                window.draw( grid[i][j] );
             }
         }
         
