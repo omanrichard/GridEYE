@@ -107,6 +107,11 @@ int main(int, char const**)
     if (!t_trash.loadFromFile("download.png")) {
         return EXIT_FAILURE;
     }
+    
+    sf::Font font;
+    if (!font.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
     Sprite save( t_save );
     save.setPosition( 15, 504+75 );
     save.scale(0.50, 0.50);
@@ -134,14 +139,55 @@ int main(int, char const**)
     line2.setFillColor( Color::Black );
     line2.setPosition(94, 606);
     
+    
+ /*/-----------------Draw Terminal Window-------------------/*/
+    
+    sf::RectangleShape terminal(sf::Vector2f( 625, 94 ));
+    terminal.setFillColor(sf::Color::Black);
+    terminal.setPosition(94, 606);
+    
+    sf::RectangleShape terminalHeader(sf::Vector2f( 625, 10 ));
+    terminalHeader.setFillColor(sf::Color(172,172,0));
+    terminalHeader.setPosition(94, 596);
+    
+    
+    sf::Text terminalText1("root@thermalCamera: Terminal text placeholder line 1", font, 12);
+    terminalText1.setFillColor(sf::Color(0,255,0));
+    terminalText1.setPosition( 100 , 610);
+    
+    sf::Text terminalText2("root@thermalCamera: Terminal text placeholder line 2", font, 12);
+    terminalText2.setFillColor(sf::Color(0,255,0));
+    terminalText2.setPosition( 100 , 622);
+    
+    sf::Text terminalText3("root@thermalCamera: Terminal text placeholder line 3", font, 12);
+    terminalText3.setFillColor(sf::Color(0,255,0));
+    terminalText3.setPosition( 100 , 634);
+    
+    sf::Text terminalText4("root@thermalCamera: Terminal text placeholder line 4", font, 12);
+    terminalText4.setFillColor(sf::Color(0,255,0));
+    terminalText4.setPosition( 100 , 646);
+    
+    sf::Text terminalText5("root@thermalCamera: Terminal text placeholder line 5", font, 12);
+    terminalText5.setFillColor(sf::Color(0,255,0));
+    terminalText5.setPosition( 100 , 658);
+    
+    sf::Text terminalText6("root@thermalCamera: Terminal text placeholder line 6", font, 12);
+    terminalText6.setFillColor(sf::Color(0,255,0));
+    terminalText6.setPosition( 100 , 670);
+    
+    sf::Text terminalText7("root@thermalCamera: Terminal text placeholder line 7", font, 12);
+    terminalText7.setFillColor(sf::Color(0,255,0));
+    terminalText7.setPosition( 100 , 682);
+    
+    
+    /*/---------------End Terminal Window---------------/*/
+    
+    
     sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
     rectangle.setFillColor(sf::Color(72, 80, 94));
     rectangle.setPosition(0, 0);
     
-    sf::Font font;
-    if (!font.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+    
     sf::Text text("Thermal Camera", font, 50);
     text.setFillColor(sf::Color::Black);
     text.setPosition( 109 , 10);
@@ -192,6 +238,7 @@ int main(int, char const**)
         window.draw(play);
         window.draw(trash);
         window.draw(save);
+        
 
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
@@ -202,6 +249,16 @@ int main(int, char const**)
         // Draw the string
         window.draw(text);
         window.draw(r_text);
+        
+        window.draw(terminalHeader);
+        window.draw(terminal);
+        window.draw(terminalText1);
+        window.draw(terminalText2);
+        window.draw(terminalText3);
+        window.draw(terminalText4);
+        window.draw(terminalText5);
+        window.draw(terminalText6);
+        window.draw(terminalText7);
         
         // Update the window
         window.display();
