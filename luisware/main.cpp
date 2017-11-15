@@ -67,41 +67,31 @@ int main(int, char const**)
     if (!t_settings.loadFromFile("wrench.png")) {
         return EXIT_FAILURE;
     }
-    Sprite settings( t_settings );
-    settings.setPosition( 15, 109 );
-    settings.scale(0.50, 0.50);
+    
     
     Texture t_record;
     if (!t_record.loadFromFile("add-button.png")) {
         return EXIT_FAILURE;
     }
-    Sprite record( t_record );
-    record.setPosition( 15, 188+15 );
-    record.scale(0.50, 0.50);
+   ;
     
     Texture t_stop;
     if (!t_stop.loadFromFile("close.png")) {
         return EXIT_FAILURE;
     }
-    Sprite stop( t_stop );
-    stop.setPosition( 15, 267+30);
-    stop.scale(0.50, 0.50);
+    
     
     Texture t_play;
     if (!t_play.loadFromFile("play-button.png")) {
         return EXIT_FAILURE;
     }
-    Sprite play( t_play );
-    play.setPosition( 15, 346+45 );
-    play.scale(0.50, 0.50);
+    
     
     Texture t_trash;
     if (!t_trash.loadFromFile("delete.png")) {
         return EXIT_FAILURE;
     }
-    Sprite trash( t_trash );
-    trash.setPosition( 15, 425+60 );
-    trash.scale(0.50, 0.50);
+  
     
     Texture t_save;
     if (!t_trash.loadFromFile("download.png")) {
@@ -112,9 +102,7 @@ int main(int, char const**)
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
     }
-    Sprite save( t_save );
-    save.setPosition( 15, 504+75 );
-    save.scale(0.50, 0.50);
+   
     
     //----------------- Camera Grid ----------------
     int gridx, gridy;
@@ -131,6 +119,9 @@ int main(int, char const**)
         }
     }
     
+    
+  
+    
     sf::RectangleShape line( Vector2f( 1, 700) );
     line.setFillColor( Color::Black );
     line.setPosition(94, 0);
@@ -139,6 +130,40 @@ int main(int, char const**)
     line2.setFillColor( Color::Black );
     line2.setPosition(94, 606);
     
+ /*/----------------Draw Toolbar----------------/*/
+   
+    sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
+    toolbarFrame.setFillColor(sf::Color(132, 101, 142));
+    toolbarFrame.setPosition(0, 0);
+    
+    sf::RectangleShape toolbarHeader(sf::Vector2f( 10, 700 ));
+    toolbarHeader.setFillColor(sf::Color(113, 85, 122));
+    toolbarHeader.setPosition(84, 0);
+    
+    
+    Sprite settings( t_settings );
+    settings.setPosition( 15, 109 );
+    settings.scale(0.50, 0.50);
+    
+    Sprite record( t_record );
+    record.setPosition( 15, 188+15 );
+    record.scale(0.50, 0.50);
+    
+    Sprite play( t_play );
+    play.setPosition( 15, 346+45 );
+    play.scale(0.50, 0.50);
+    
+    Sprite stop( t_stop );
+    stop.setPosition( 15, 267+30);
+    stop.scale(0.50, 0.50);
+    
+    Sprite save( t_save );
+    save.setPosition( 15, 504+75 );
+    save.scale(0.50, 0.50);
+    
+    Sprite trash( t_trash );
+    trash.setPosition( 15, 425+60 );
+    trash.scale(0.50, 0.50);
     
  /*/-----------------Draw Terminal Window-------------------/*/
     
@@ -147,7 +172,7 @@ int main(int, char const**)
     terminal.setPosition(94, 606);
     
     sf::RectangleShape terminalHeader(sf::Vector2f( 625, 10 ));
-    terminalHeader.setFillColor(sf::Color(172,172,0));
+    terminalHeader.setFillColor(sf::Color(255,94,20));
     terminalHeader.setPosition(94, 596);
     
     
@@ -180,12 +205,12 @@ int main(int, char const**)
     terminalText7.setPosition( 100 , 682);
     
     
-    /*/---------------End Terminal Window---------------/*/
+    /*/---------------Background---------------/*/
     
     
-    sf::RectangleShape rectangle(sf::Vector2f( 700, 700 ));
-    rectangle.setFillColor(sf::Color(72, 80, 94));
-    rectangle.setPosition(0, 0);
+    sf::RectangleShape background(sf::Vector2f( 700, 700 ));
+    background.setFillColor(sf::Color(130, 117, 135));
+    background.setPosition(0, 0);
     
     
     sf::Text text("Thermal Camera", font, 50);
@@ -225,13 +250,13 @@ int main(int, char const**)
         // Clear screen
         window.clear();
         
-        // Draw Rectangle First
-        window.draw(rectangle);
+        //Background
+        window.draw(background);
 
-        window.draw(line);
-        window.draw(line2);
         
-        // Draw the sprites
+        // Toolbar
+        window.draw(toolbarFrame);
+        window.draw(toolbarHeader);
         window.draw(settings);
         window.draw(record);
         window.draw(stop);
@@ -239,17 +264,19 @@ int main(int, char const**)
         window.draw(trash);
         window.draw(save);
         
-
+        //Draw output Grid
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 window.draw( grid[i][j] );
             }
         }
         
-        // Draw the string
+        // Draw the placeholder text
         window.draw(text);
         window.draw(r_text);
         
+        
+        //Draw the Terminal window
         window.draw(terminalHeader);
         window.draw(terminal);
         window.draw(terminalText1);
@@ -259,6 +286,11 @@ int main(int, char const**)
         window.draw(terminalText5);
         window.draw(terminalText6);
         window.draw(terminalText7);
+        
+        
+        
+        //window.draw(line);
+        //window.draw(line2);
         
         // Update the window
         window.display();
