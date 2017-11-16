@@ -129,6 +129,11 @@ int main(int, char const**)
     // Load sprites to display
     
     //----------------- Menu ---------------------
+    Texture t_background;
+    if(!t_background.loadFromFile("texture2.jpg")){
+        return EXIT_FAILURE;
+    }
+    
     Texture t_settings;
     if (!t_settings.loadFromFile("wrench.png")) {
         return EXIT_FAILURE;
@@ -180,7 +185,7 @@ int main(int, char const**)
             gridy = (88+j*59);
             RectangleShape newPix(sf::Vector2f(58, 58));
             newPix.setPosition( gridx, gridy );
-            newPix.setFillColor(sf::Color(0,gridward.test(i,j),0));
+            newPix.setFillColor(sf::Color(gridward.test(j*5,i*5),gridward.test(i,j),gridward.test(j*5,i)));
             grid[i][j] = newPix;
         }
     }
@@ -199,13 +204,15 @@ int main(int, char const**)
  /*/----------------Draw Toolbar----------------/*/
    
     sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
-    toolbarFrame.setFillColor(sf::Color(132, 101, 142));
+    toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
     toolbarFrame.setPosition(0, 0);
     
-    sf::RectangleShape toolbarHeader(sf::Vector2f( 10, 700 ));
-    toolbarHeader.setFillColor(sf::Color(113, 85, 122));
-    toolbarHeader.setPosition(84, 0);
+    sf::RectangleShape toolbarHeader(sf::Vector2f( 5, 700 ));
+    toolbarHeader.setFillColor(sf::Color(0, 0, 0,100));
+    toolbarHeader.setPosition(89, 0);
     
+    Sprite background(t_background);
+    background.setPosition(0,0);
     
     Sprite settings( t_settings );
     settings.setPosition( 15, 109 );
@@ -262,11 +269,11 @@ int main(int, char const**)
     terminalText6.setPosition( 100 , 678);
     
     sf::RectangleShape terminal(sf::Vector2f( 625, 94 ));
-    terminal.setFillColor(sf::Color::Black);
+    terminal.setFillColor(sf::Color(0,0,0,150));
     terminal.setPosition(94, 606);
     
     sf::RectangleShape terminalHeader(sf::Vector2f( 625, 10 ));
-    terminalHeader.setFillColor(sf::Color(255,94,20));
+    terminalHeader.setFillColor(sf::Color(255,94,20,150));
     terminalHeader.setPosition(94, 596);
    
     
@@ -274,9 +281,9 @@ int main(int, char const**)
     /*/---------------Background---------------/*/
     
     
-    sf::RectangleShape background(sf::Vector2f( 700, 700 ));
-    background.setFillColor(sf::Color(130, 117, 135));
-    background.setPosition(0, 0);
+    //sf::RectangleShape background(sf::Vector2f( 700, 700 ));
+    //background.setFillColor(sf::Color(130, 117, 135));
+    //background.setPosition(0, 0);
     
     sf::RectangleShape backgroundHeader(sf::Vector2f( 400, 10 ));
     backgroundHeader.setFillColor(sf::Color(0, 255, 0));
@@ -288,11 +295,11 @@ int main(int, char const**)
     backgroundHeader2.rotate(-60);
     
     sf::Text text("Thermal Camera", font, 50);
-    text.setFillColor(sf::Color::Black);
+    text.setFillColor(sf::Color::White);
     text.setPosition( 109 , 10);
     
     sf::Text r_text("Recording", font, 30);
-    r_text.setFillColor(sf::Color::Black);
+    r_text.setFillColor(sf::Color::Red);
     r_text.setPosition( 550 , 10);
 
 //---------------------- Draw -------------------------
@@ -358,14 +365,14 @@ int main(int, char const**)
             terminalTextArray[i] = terminalTextArray[i+1];
         }
         terminalTextArray[5] = newText;
-        
+       /*/
         terminalText1.setString(terminalTextArray[0]);
         terminalText2.setString(terminalTextArray[1]);
         terminalText3.setString(terminalTextArray[2]);
         terminalText4.setString(terminalTextArray[3]);
         terminalText5.setString(terminalTextArray[4]);
         terminalText6.setString(terminalTextArray[5]);
-        
+        /*/
         
         
         window.draw(terminalHeader);
