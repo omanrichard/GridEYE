@@ -16,12 +16,14 @@
 
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <Event.hpp>
 //#include <wiringPi.h>
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+
 
 #define GRIDEYEADDRESS 0x68
 
@@ -134,40 +136,50 @@ int main(int, char const**)
         return EXIT_FAILURE;
     }
     
+    
+    
     Texture t_settings;
-    if (!t_settings.loadFromFile("wrench.png")) {
+    if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
     }
     
     
     Texture t_record;
-    if (!t_record.loadFromFile("add-button.png")) {
+    if (!t_record.loadFromFile("record.png")) {
         return EXIT_FAILURE;
     }
    ;
     
     Texture t_stop;
-    if (!t_stop.loadFromFile("close.png")) {
+    if (!t_stop.loadFromFile("stop.png")) {
         return EXIT_FAILURE;
     }
     
     
     Texture t_play;
-    if (!t_play.loadFromFile("play-button.png")) {
+    if (!t_play.loadFromFile("play.png")) {
         return EXIT_FAILURE;
     }
     
     
     Texture t_trash;
-    if (!t_trash.loadFromFile("delete.png")) {
+    if (!t_trash.loadFromFile("trash.png")) {
         return EXIT_FAILURE;
     }
   
     
     Texture t_save;
-    if (!t_trash.loadFromFile("download.png")) {
+    if (!t_save.loadFromFile("save.png")) {
         return EXIT_FAILURE;
     }
+    
+    Texture t_quit;
+    if (!t_quit.loadFromFile("gravestone.png")) {
+        return EXIT_FAILURE;
+    }
+    
+   
+    
     
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
@@ -214,29 +226,39 @@ int main(int, char const**)
     Sprite background(t_background);
     background.setPosition(0,0);
     
+    
+    
     Sprite settings( t_settings );
-    settings.setPosition( 15, 109 );
+    settings.setPosition( 15, 30 );
     settings.scale(0.50, 0.50);
     
     Sprite record( t_record );
-    record.setPosition( 15, 188+15 );
+    record.setPosition( 15, 109+15 );
     record.scale(0.50, 0.50);
     
     Sprite play( t_play );
-    play.setPosition( 15, 346+45 );
+    play.setPosition( 15, 188+30 );
     play.scale(0.50, 0.50);
     
     Sprite stop( t_stop );
-    stop.setPosition( 15, 267+30);
+    stop.setPosition( 15, 267+45);
     stop.scale(0.50, 0.50);
-    
+
     Sprite save( t_save );
-    save.setPosition( 15, 504+75 );
+    save.setPosition( 15, 346+60 );
     save.scale(0.50, 0.50);
     
     Sprite trash( t_trash );
-    trash.setPosition( 15, 425+60 );
+    trash.setPosition( 15, 425+75 );
     trash.scale(0.50, 0.50);
+    
+    Sprite quit( t_quit );
+    quit.setPosition( 15, 504+90 );
+    quit.scale(0.50, 0.50);
+    
+    sf::RectangleShape selection(sf::Vector2f( 89, 70 ));
+    selection.setFillColor(sf::Color(0, 0, 0, 100));
+    selection.setPosition(-100, -100);
     
  /*/-----------------Draw Terminal Window-------------------/*/
     
@@ -306,8 +328,12 @@ int main(int, char const**)
     // Play the music
     //music.play();
 
+/*/------------------------Start the game loop-----------------------
+ --------------------------------------------------------------------
+ --------------------------------------------------------------------
+ ------------------------------------------------------------------/*/
+   
     
-    // Start the game loop
     while (window.isOpen())
     {
         
@@ -317,6 +343,41 @@ int main(int, char const**)
         sf::Event event;
         while (window.pollEvent(event))
         {
+            
+            //Menu selection
+            if(event.type == sf::Event::MouseMoved){
+                if(event.mouseMove.x > 0 && event.mouseMove.x < 94){
+                    
+                    if(event.mouseMove.y > 0 && event.mouseMove.y < 119){
+                        selection.setPosition(0, 26);
+                    }
+                    if(event.mouseMove.y > 119 && event.mouseMove.y < 189){
+                    selection.setPosition(0, 119);
+                    }
+                    if(event.mouseMove.y > 219 && event.mouseMove.y < 308){
+                    selection.setPosition(0, 219);
+                    }
+                    if(event.mouseMove.y > 308 && event.mouseMove.y < 402){
+                        selection.setPosition(0, 308);
+                    }
+                    if(event.mouseMove.y > 402 && event.mouseMove.y < 496){
+                        selection.setPosition(0, 402);
+                    }
+                    if(event.mouseMove.y > 496 && event.mouseMove.y < 590){
+                        selection.setPosition(0, 496);
+                    }
+                    if(event.mouseMove.y > 590 && event.mouseMove.y < 700){
+                        selection.setPosition(0, 590);
+                    }
+                }
+                else if(event.mouseMove.x > 94){
+                        selection.setPosition(-100, -100);
+                    }
+                }
+            
+            
+            
+            
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -327,7 +388,7 @@ int main(int, char const**)
                 window.close();
             }
         }
-
+        
         // Clear screen
         window.clear();
         
@@ -338,12 +399,16 @@ int main(int, char const**)
         // Toolbar
         window.draw(toolbarFrame);
         window.draw(toolbarHeader);
+        
         window.draw(settings);
         window.draw(record);
         window.draw(stop);
         window.draw(play);
         window.draw(trash);
         window.draw(save);
+        window.draw(quit);
+        
+        window.draw(selection);
         
         //Draw output Grid
         for( i=0 ; i < 8 ; i++ ){
