@@ -584,7 +584,7 @@ int main(int, char const**)
                 //exit
                 if (position.x > 0 && position.x < 95){//Within toolbar
                     if (position.y > 590 && position.y < 700){
-                        
+                        window.close();
                         
                     }
                 }
