@@ -603,7 +603,7 @@ int main(int, char const**)
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
-                        if (position.y > (rootY+175) && position.y < (rootY+200)){/
+                        if (position.y > (rootY+175) && position.y < (rootY+200)){
                             settingsMinsUp.setFillColor(sf::Color(255,144,255));
                         }
                     }
@@ -639,7 +639,7 @@ int main(int, char const**)
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
-                        if (position.y > (rootY + 300) && position.y < 325){
+                        if (position.y > (rootY + 300) && position.y < (rootY + 325)){
                             settingsRangeTrue.setFillColor(sf::Color(255,144,255));
                         }
                     }
