@@ -65,7 +65,7 @@ frame::frame(GridEYE gridward){
 
 /*/ --------------- Frame Methods --------------- /*/
 
-void frame::set_max(){
+short frame::set_max(){
     short temp = 0;
     
     for( i=0 ; i < 8 ; i++ ){
@@ -77,7 +77,7 @@ void frame::set_max(){
     return;
 }
 
-void frame::set_mean(){
+float frame::set_mean(){
     float sum = 0;
     
     for( i=0 ; i < 8 ; i++ ){
@@ -88,7 +88,7 @@ void frame::set_mean(){
     this->mean = sum/64;
 }
 
-void frame::get_data( GridEye gridward ){
+void frame::get_data( GridEYE gridward ){
     for( i=0 ; i < 8 ; i++ ){
         for( j=0 ; j < 8 ;  j++){
             gridward.test( i,j );
@@ -131,7 +131,7 @@ video::video(){
     frame* temp;
     
     for( i=0 ; i<frameCount ; i++){
-        temp = new frame( GridEYE gridward );
+        //temp = new frame( GridEYE gridward );//IDK What youre doing here but it doesnt like it
         this->data.push_back( temp );
         this->frameCount++;
     }
@@ -161,15 +161,18 @@ void video::exportVideo( string filename ){
                           <<   "[" << this->access( j, 7 ) << "] " // TAB [57] [58] [59] [60] [61] [62] [63] [64]
                           << endl;
         }
+        /*/
         newOutput << "\tMax value: " << this->get_max() << endl
         << "\tAverage: " << this->get_mean() << endl << endl;
+         /*/
     }
+    
     newOutput.close( ); // Close file
     return;
 }
 
 short video::set_max(){
-    
+/*/
     while(temp < this->frameCount){
         frame* framePtr = data[temp];
         for( i=0 ; i < 8 ; i++ ){
@@ -193,6 +196,8 @@ float video::set_mean(){
         framePtr->mean = sum/64;
         temp++;
     }
+ /*/
 }
+ 
 /*/ --------------- End Video Methods --------------- /*/
 

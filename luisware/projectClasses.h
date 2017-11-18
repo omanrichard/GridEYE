@@ -30,6 +30,7 @@ public:
     void test(int row, int col);//Draw Test pattern
     int r,g,b;
     int FPS = 10;
+    short pixelL;
 };
 
 /*/ ---------- End GridEYE Class ---------- /*/
@@ -42,8 +43,8 @@ private:                            // 0  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
     short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
                                     // 4  [] [] [] [] [] [] [] []
-    void set_max();                 // 5  [] [] [] [] [] [] [] []
-    void set_mean();                // 6  [] [] [] [] [] [] [] []
+    void set_max2();                 // 5  [] [] [] [] [] [] [] []
+    void set_mean2();                // 6  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     frame();
