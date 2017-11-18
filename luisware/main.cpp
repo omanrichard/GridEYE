@@ -424,8 +424,8 @@ int main(int, char const**)
     Text settingsFPSTextValTen("10 FPS", font, 20);
     Text settingsFPSTextValOne("1 FPS",font,20);
     Text settingsCollectionText("Collection Time",font,30);
-    Text settingsMinsText("99",font,40);
-    Text settingsSecondsText("99",font,40);
+    Text settingsMinsText("0",font,40);
+    Text settingsSecondsText("0",font,40);
     Text settingsRangeText("Sensor Dynamic Range",font,30);
     Text settingsRangeTextTrue("True",font,20);
     Text settingsRangeTextHuman("Human",font, 20);
@@ -619,7 +619,10 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){
                             settingsMinsUp.setFillColor(sf::Color(255,144,255));
-                            recordMins++;
+                            if(recordMins <= 50){
+                                recordMins++;
+                                settingsMinsText.setString(std::to_string(recordMins));
+                            }
                         }
                     }
                 }
@@ -629,7 +632,10 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
                             settingsMinsDown.setFillColor(sf::Color(255,144,255));
-                            recordMins--;
+                            if(recordMins >= 0){
+                                recordMins--;
+                                settingsMinsText.setString(std::to_string(recordMins));
+                            }
                         }
                     }
                 }
@@ -639,7 +645,16 @@ int main(int, char const**)
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY + 175) && position.y < (rootY+200)){
                             settingsSecondsUp.setFillColor(sf::Color(255,144,255));
-                            recordSeconds++;
+                            if(recordSeconds < 59){
+                                recordSeconds++;
+                                settingsSecondsText.setString(std::to_string(recordSeconds));
+                            }
+                            else if(recordSeconds == 60 && recordMins < 50 ){
+                                recordSeconds = 0;
+                                recordMins++;
+                                settingsMinsText.setString(std::to_string(recordMins));
+                                settingsSecondsText.setString(std::to_string(recordSeconds));
+                            }
                         }
                     }
                 }
@@ -649,7 +664,14 @@ int main(int, char const**)
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){
                             settingsSecondsDown.setFillColor(sf::Color(255,144,255));
-                            recordSeconds--;
+                            if(recordSeconds > 0){
+                                recordSeconds--;
+                                settingsSecondsText.setString(std::to_string(recordSeconds));
+                            }
+                            if(recordSeconds == 0){
+                                recordSeconds = 59;
+                                settingsSecondsText.setString(std::to_string(recordSeconds));
+                            }
                         }
                     }
                 }
