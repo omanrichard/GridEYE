@@ -412,8 +412,8 @@ int main(int, char const**)
     Text settingsFPSTextValTen("10 FPS", font, 20);
     Text settingsFPSTextValOne("1 FPS",font,20);
     Text settingsCollectionText("Collection Time",font,30);
-    Text settingsMinsText;
-    Text settingsSecondsText;
+    Text settingsMinsText("99",font,60);
+    Text settingsSecondsText("99",font,60);
     Text settingsRangeText("Sensor Dynamic Range",font,30);
     Text settingsRangeTextTrue("True",font,20);
     Text settingsRangeTextHuman("Human",font, 20);
