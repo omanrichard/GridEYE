@@ -361,9 +361,18 @@ int main(int, char const**)
     RectangleShape settingsMinsBox;
     RectangleShape settingsSecondsBox;
     
+    
+    Text settingsFPSText("Frames Per Second",font, 10);
+    Text settingsFPSTextValTen("10 FPS", font, 10);
+    Text settingsFPSTextValOne("10 FPS",font,10);
     Text settngsMinsText;
     Text settingsSecondsText;
-    
+    Text settingsRangeText("Sensor Dynamic Range",font,10);
+    Text settingsRangeTextTrue("True",font,10);
+    Text settingsRangeTextHuman("Human Mode",font, 10);
+    Text settingsResetText("Reset Sensor",font, 10);
+    Text settingsApplyText("Apply Settings", font, 10);
+     
     
     
     
