@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		798DBF4D1FBFFAC00090BCF6 /* projectClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */; };
 		79BC31B11FBAB237005842D0 /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AE1FBAB237005842D0 /* wrench.png */; };
 		79BC31B21FBAB237005842D0 /* add-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AF1FBAB237005842D0 /* add-button.png */; };
 		79BC31B31FBAB237005842D0 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31B01FBAB237005842D0 /* delete.png */; };
@@ -28,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		798DBF4A1FBFBA920090BCF6 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
+		798DBF4B1FBFFAC00090BCF6 /* projectClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = projectClasses.h; sourceTree = "<group>"; };
+		798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projectClasses.cpp; sourceTree = "<group>"; };
 		79BC31AE1FBAB237005842D0 /* wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrench.png; sourceTree = "<group>"; };
 		79BC31AF1FBAB237005842D0 /* add-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-button.png"; sourceTree = "<group>"; };
 		79BC31B01FBAB237005842D0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -81,6 +84,8 @@
 		79EE7B2C1FBA7F4100D8618D /* luisware */ = {
 			isa = PBXGroup;
 			children = (
+				798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */,
+				798DBF4B1FBFFAC00090BCF6 /* projectClasses.h */,
 				79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */,
 				79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */,
 				79EE7B321FBA7F4100D8618D /* main.cpp */,
@@ -223,6 +228,7 @@
 			files = (
 				79EE7B331FBA7F4100D8618D /* main.cpp in Sources */,
 				79EE7B301FBA7F4100D8618D /* ResourcePath.mm in Sources */,
+				798DBF4D1FBFFAC00090BCF6 /* projectClasses.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
