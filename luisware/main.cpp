@@ -339,10 +339,10 @@ int main(int, char const**)
         settingsBackground.setPosition(-500, -500);
     
     CircleShape settingsExit;
-    settingsExit.setRadius(15);
+    settingsExit.setRadius(10);
     settingsExit.setFillColor(Color(255,0,0));
     settingsExit.setOutlineColor(Color(255,255,255));
-    settingsExit.setOutlineThickness(5);
+    settingsExit.setOutlineThickness(2);
     settingsExit.setPosition(143,93);
 
     
@@ -482,9 +482,10 @@ int main(int, char const**)
                 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > 0  && position.x < 95){//settings Exit Button
+                    if (position.x > 143  && position.x < 173){
+                        if (position.y > 93 && position.y < 123){//settings Exit Button
                         menuLayer = 0;
-                    }
+                        }}
             }
             
             }
@@ -519,8 +520,9 @@ int main(int, char const**)
         
         /*/---Draw Settings Window----/*/
             if(menuLayer == 1){
-        window.draw(settingsExit);//Exit button settings menu
-        window.draw(settingsBackground);//Draw settings menu when clicked
+                //Exit button settings menu
+                window.draw(settingsBackground);//Draw settings menu when clicked
+                window.draw(settingsExit);
             }
           
         /*/----Draw Toolbar----/*/
