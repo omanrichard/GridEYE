@@ -410,11 +410,12 @@ int main(int, char const**)
     Text settingsFPSText("Frames Per Second",font, 30);
     Text settingsFPSTextValTen("10 FPS", font, 20);
     Text settingsFPSTextValOne("1 FPS",font,20);
+    Text settingsCollectionText("Collection Time",font,30);
     Text settingsMinsText;
     Text settingsSecondsText;
     Text settingsRangeText("Sensor Dynamic Range",font,30);
     Text settingsRangeTextTrue("True",font,20);
-    Text settingsRangeTextHuman("Human Mode",font, 20);
+    Text settingsRangeTextHuman("Human",font, 20);
     Text settingsResetText("Reset Sensor",font, 20);
     Text settingsApplyText("Apply Settings", font, 20);
     
@@ -423,6 +424,7 @@ int main(int, char const**)
     settingsFPSText.setFillColor(sf::Color::Black);
     settingsFPSTextValTen.setFillColor(sf::Color::Black);
     settingsFPSTextValOne.setFillColor(sf::Color::Black);
+    settingsCollectionText.setFillColor(sf::Color::Black);
     settingsMinsText.setFillColor(sf::Color::Black);
     settingsSecondsText.setFillColor(sf::Color::Black);
     settingsRangeText.setFillColor(sf::Color::Black);
@@ -436,14 +438,15 @@ int main(int, char const**)
     
     settingsFPSText.setPosition(rootx+50,rootY+25 );
     settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
-    settingsFPSTextValOne.setPosition(rootx+325+10 ,rootY+75 );
+    settingsFPSTextValOne.setPosition(rootx+325+20 ,rootY+75 );
     settingsMinsText.setPosition(rootx+75 ,rootY+175 );
+    settingsCollectionText.setPosition(rootx+50, rootY+125);
     settingsSecondsText.setPosition(rootx+300 ,rootY+175 );
     settingsRangeText.setPosition(rootx+50 ,rootY+250 );
     settingsRangeTextTrue.setPosition(rootx+75+30 ,rootY+300 );
     settingsRangeTextHuman.setPosition(rootx+325 ,rootY+300 );
-    settingsResetText.setPosition(rootx+50 ,rootY+350 );
-    settingsApplyText.setPosition(rootx+300 ,rootY+350 );
+    settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
+    settingsApplyText.setPosition(rootx+300+15 ,rootY+350 );
     
     
     
@@ -629,7 +632,8 @@ int main(int, char const**)
                 
                 window.draw(settingsMinsBox);
                 window.draw(settingsSecondsBox);
-            
+                
+                window.draw(settingsCollectionText);
                 window.draw(settingsMinsText);
                 window.draw(settingsSecondsText);
                 
