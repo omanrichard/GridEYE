@@ -537,7 +537,7 @@ int main(int, char const**)
                 
                 // Settings Background
                 window.draw(settingsBackground);//Draw settings menu when clicked
-                window.draw(SettingsFPSText);
+                window.draw(settingsFPSText);
                 
                 // Exit Button
                 window.draw(settingsExit);//Exit button settings menu
@@ -546,8 +546,8 @@ int main(int, char const**)
                 // Frame Settings
                 window.draw(settingsTenFPS);
                 window.draw(settingsOneFPS);
-                window.draw(settingsFPSValTen);
-                window.draw(settingsFPSValOne);
+                window.draw(settingsFPSTextValTen);
+                window.draw(settingsFPSTextValOne);
                 
                 // Collection Settings
                 window.draw(settingsMinsUp);
