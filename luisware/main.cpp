@@ -704,6 +704,7 @@ int main(int, char const**)
                             settingsSecondsUp.setFillColor(sf::Color(255,144,255));
                             if(recordSeconds < 59){
                                 recordSeconds++;
+                                if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
                                 settingsSecondsText.setString(std::to_string(recordSeconds));
                             }
                             else if(recordSeconds == 59 && recordMins < 50 ){
@@ -732,6 +733,7 @@ int main(int, char const**)
                             settingsSecondsDown.setFillColor(sf::Color(255,144,255));
                             if(recordSeconds > 0){
                                 recordSeconds--;
+                                if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
                                 settingsSecondsText.setString(std::to_string(recordSeconds));
                             }
                             if(recordSeconds == 0){
