@@ -645,7 +645,6 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){
                             settingsMinsUp.setFillColor(sf::Color(0,255,0));
-                            
                         }
                     }
                 }
@@ -666,8 +665,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                            settingsMinsDown.setFillColor(sf::Color(0,255,0));
-                            
+                            settingsMinsDown.setFillColor(sf::Color(255,0,0));
                         }
                     }
                 }
@@ -700,6 +698,7 @@ int main(int, char const**)
                 }
                 // Seconds DOWN
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Trigger
+                    
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){
@@ -714,6 +713,7 @@ int main(int, char const**)
                             }
                         }
                     }
+                
                 }
                 if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Release
                     sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -751,6 +751,13 @@ int main(int, char const**)
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsReset.setFillColor(sf::Color(0,255,0));
                             gridward.reset();
+                            settingsRangeTrue.setFillColor(sf::Color(0,255,0));
+                            settingsTenFPS.setFillColor(sf::Color(0,255,0));
+                            recordMins = 0;
+                            settingsMinsText.setString(std::to_string(recordMins));
+                            recordSeconds = 0;
+                            settingsSecondsText.setString(std::to_string(recordSeconds));
+                            
                         }
                     }
                 }
@@ -759,7 +766,6 @@ int main(int, char const**)
                     if (position.x > (rootx + 50)  && position.x < (rootx+200)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsReset.setFillColor(sf::Color(255,144,255));
-                            gridward.reset();
                         }
                     }
                 }
