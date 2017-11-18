@@ -18,7 +18,7 @@
 #include <SFML/Graphics.hpp>
 #include <Event.hpp>
 //#include <wiringPi.h>
-
+#include <Mouse.hpp>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -99,7 +99,7 @@ GridEYE gridward(GRIDEYEADDRESS);
 int i,j;
 
 
-
+int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, ect.
 int main(int, char const**)
 {
     
@@ -226,6 +226,18 @@ int main(int, char const**)
     Sprite background(t_background);
     background.setPosition(0,0);
     
+    sf::RectangleShape selection(sf::Vector2f( 89, 70 ));
+    selection.setFillColor(sf::Color(0, 0, 0, 100));
+    selection.setPosition(-100, -100);
+    
+    sf::RectangleShape selectionTextBox(sf::Vector2f( 94, 20 ));
+    selectionTextBox.setFillColor(sf::Color(255, 255, 255, 100));
+    selectionTextBox.setPosition(-100, -100);
+    
+    sf::Text selectionText("void", font, 10);
+    selectionText.setFillColor(sf::Color::Black);
+    selectionText.setPosition( -100 , -100);
+    
     
     
     Sprite settings( t_settings );
@@ -256,9 +268,7 @@ int main(int, char const**)
     quit.setPosition( 15, 504+90 );
     quit.scale(0.50, 0.50);
     
-    sf::RectangleShape selection(sf::Vector2f( 89, 70 ));
-    selection.setFillColor(sf::Color(0, 0, 0, 100));
-    selection.setPosition(-100, -100);
+    
     
  /*/-----------------Draw Terminal Window-------------------/*/
     
@@ -308,13 +318,28 @@ int main(int, char const**)
     //background.setPosition(0, 0);
     
     sf::RectangleShape backgroundHeader(sf::Vector2f( 400, 10 ));
-    backgroundHeader.setFillColor(sf::Color(0, 255, 0));
+    backgroundHeader.setFillColor(sf::Color(0, 255, 0,150));
     backgroundHeader.setPosition(94, 70);
     
     sf::RectangleShape backgroundHeader2(sf::Vector2f( 400, 10 ));
-    backgroundHeader2.setFillColor(sf::Color(0, 255, 0));
+    backgroundHeader2.setFillColor(sf::Color(0, 255, 0,150));
     backgroundHeader2.setPosition(488, 75);
     backgroundHeader2.rotate(-60);
+    
+    sf::RectangleShape backgroundHeader3(sf::Vector2f(606, 5 ));
+    backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
+    backgroundHeader3.setPosition(94, 75);
+    
+    sf::RectangleShape settingsBackground(sf::Vector2f(400, 500 ));
+    settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
+    settingsBackground.setPosition(-500, -500);
+    
+    sf::RectangleShape topbarBackground(sf::Vector2f( 606, 75 ));
+    topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
+    topbarBackground.setPosition(94, 0);
+  
+    
+    
     
     sf::Text text("Thermal Camera", font, 50);
     text.setFillColor(sf::Color::White);
@@ -348,33 +373,70 @@ int main(int, char const**)
             if(event.type == sf::Event::MouseMoved){
                 if(event.mouseMove.x > 0 && event.mouseMove.x < 94){
                     
-                    if(event.mouseMove.y > 0 && event.mouseMove.y < 119){
+                    if(event.mouseMove.y > 0 && event.mouseMove.y < 119){//Settings
                         selection.setPosition(0, 26);
+                        selectionText.setString("Settings");
+                        selectionText.setPosition(50 , 89);
+                        selectionTextBox.setPosition(50,89);
                     }
-                    if(event.mouseMove.y > 119 && event.mouseMove.y < 189){
-                    selection.setPosition(0, 119);
+                    if(event.mouseMove.y > 119 && event.mouseMove.y < 189){//New
+                        selection.setPosition(0, 119);
+                        selectionText.setString("Capture");
+                        selectionText.setPosition( 50 , 159);
+                        selectionTextBox.setPosition(50,159);
+                        
                     }
-                    if(event.mouseMove.y > 219 && event.mouseMove.y < 308){
-                    selection.setPosition(0, 219);
+                    if(event.mouseMove.y > 219 && event.mouseMove.y < 308){//Play
+                        selection.setPosition(0, 219);
+                        selectionText.setString("Play Capture");
+                        selectionText.setPosition( 50 , 278);
+                        selectionTextBox.setPosition(50,278);
                     }
-                    if(event.mouseMove.y > 308 && event.mouseMove.y < 402){
+                    if(event.mouseMove.y > 308 && event.mouseMove.y < 402){//Stop
                         selection.setPosition(0, 308);
+                        selectionText.setString("Stop Capture");
+                        selectionText.setPosition( 30 , 372);
+                        selectionTextBox.setPosition(30,372);
                     }
-                    if(event.mouseMove.y > 402 && event.mouseMove.y < 496){
+                    if(event.mouseMove.y > 402 && event.mouseMove.y < 496){//Save
                         selection.setPosition(0, 402);
+                        selectionText.setString("Save Capture");
+                        selectionText.setPosition( 30 , 439);
+                        selectionTextBox.setPosition(30,439);
                     }
-                    if(event.mouseMove.y > 496 && event.mouseMove.y < 590){
+                    if(event.mouseMove.y > 496 && event.mouseMove.y < 590){//Delete
                         selection.setPosition(0, 496);
+                        selectionText.setString("Delete Capture");
+                        selectionText.setPosition( 30 , 560);
+                        selectionTextBox.setPosition(30,560);
                     }
-                    if(event.mouseMove.y > 590 && event.mouseMove.y < 700){
+                    if(event.mouseMove.y > 590 && event.mouseMove.y < 700){//Quit
                         selection.setPosition(0, 590);
+                        selectionText.setString("Close Application");
+                        selectionText.setPosition( 30 , 670);
+                        selectionTextBox.setPosition(30,670);
                     }
                 }
-                else if(event.mouseMove.x > 94){
-                        selection.setPosition(-100, -100);
+                else if(event.mouseMove.x > 94){//Mouse not over on toolbar
+                        selection.setPosition(-100, -100);//Move Offscreen
+                        selectionText.setString("Void");
+                    selectionText.setPosition( -100 , -100);//Move Offscreen
+                        selectionTextBox.setPosition(-100,-100);//Move Offscreen
                     }
                 }
             
+            // left click...
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                sf::Vector2i position = sf::Mouse::getPosition(window);
+                if (position.x > 0 && position.x < 95){//Within toolbar
+                    if (position.y > 0 && position.y < 119){
+                       settingsBackground.setPosition(150, 100);
+                        menuLayer = 1;
+                    }
+                }
+            
+            
+            }
             
             
             
@@ -388,19 +450,30 @@ int main(int, char const**)
                 window.close();
             }
         }
-        
+   
         // Clear screen
         window.clear();
         
         //Background
         window.draw(background);
-
+        
+        // Draw the placeholder text
+        window.draw(topbarBackground);
+       // window.draw(backgroundHeader);
+        //window.draw(backgroundHeader2);
+        window.draw(backgroundHeader3);
+        
+        window.draw(text);
+        window.draw(r_text);
+        
         
         // Toolbar
+        
         window.draw(toolbarFrame);
         window.draw(toolbarHeader);
         
         window.draw(settings);
+        window.draw(settingsBackground);//Draw settings menu when clicked
         window.draw(record);
         window.draw(stop);
         window.draw(play);
@@ -409,18 +482,18 @@ int main(int, char const**)
         window.draw(quit);
         
         window.draw(selection);
+        window.draw(selectionTextBox);
+        window.draw(selectionText);
         
         //Draw output Grid
+       
+        if(menuLayer == 0){
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 window.draw(grid[i][j]);            }
         }
-        
-        // Draw the placeholder text
-        window.draw(backgroundHeader);
-        window.draw(backgroundHeader2);
-        window.draw(text);
-        window.draw(r_text);
+        }
+       
         
         
         //Draw the Terminal window
