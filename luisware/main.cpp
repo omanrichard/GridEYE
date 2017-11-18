@@ -27,6 +27,7 @@
 
 #define GRIDEYEADDRESS 0x68
 
+using namespace sf;
 
 class GridEYE{
     private:
@@ -92,7 +93,6 @@ void terminal::draw(void){
 /*/
 
 
-using namespace sf;
 GridEYE gridward(GRIDEYEADDRESS);
 
 // Here is a small helper for you! Have a look.
@@ -337,10 +337,10 @@ int main(int, char const**)
     r_text.setFillColor(sf::Color::Red);
     r_text.setPosition( 550 , 10);
     
-    //--------------------Settings Objects---------------------
-        sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
-        settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
-        settingsBackground.setPosition(-500, -500);
+    /*/----Settings Objects----/*/
+    sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
+    settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
+    settingsBackground.setPosition(-500, -500);
     
     Sprite settingsExit(t_close);
     settingsExit.setPosition(143,93);
@@ -370,7 +370,7 @@ int main(int, char const**)
 
     
     
-//---------------------- Draw -------------------------
+/*/----Draw ----/*/
     // Play the music
     //music.play();
 
@@ -458,30 +458,14 @@ int main(int, char const**)
             }            
             if( menuLayer == 1 ){
                 if(event.type == sf::Event::MouseMoved){
-                    if(event.mouseMove.x > 0 && event.mouseMove.x < 94){
-                        if(event.mouseMove.y > 0 && event.mouseMove.y < 119){//End button
-                            selection.setPosition(0, 26);
-                            selectionText.setString("Settings");
-                            selectionText.setPosition(50 , 89);
-                            selectionTextBox.setPosition(50,89);
-                        }
-                        if(event.mouseMove.y > 119 && event.mouseMove.y < 189){//New
-                            selection.setPosition(0, 119);
-                            selectionText.setString("Capture");
-                            selectionText.setPosition( 50 , 159);
-                            selectionTextBox.setPosition(50,159);
-                            
-                        }
-                        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                            sf::Vector2i position = sf::Mouse::getPosition(window);
-                            if (position.x > 0 && position.x < 95){//Within toolbar
-                                if (position.y > 0 && position.y < 119){
-                                    settingsBackground.setPosition(150, 100);
-                                    menuLayer = 1;
-                                }
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                        sf::Vector2i position = sf::Mouse::getPosition(window);
+                        if (position.x > 0 && position.x < 95){//Within toolbar
+                            if (position.y > 0 && position.y < 119){
+                                settingsBackground.setPosition(150, 100);
+                                menuLayer = 1;
                             }
                         }
-                        
                     }
                 }
             }
@@ -502,16 +486,15 @@ int main(int, char const**)
             
             /*/----Layer 1 "Settings"----/*/
             if(menuLayer == 1){
-                
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > 143  && position.x < 173){
                         if (position.y > 93 && position.y < 123){//settings Exit Button
                         menuLayer = 0;
-                        }}
+                    }
+                }
             }
             
-            }
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -539,14 +522,37 @@ int main(int, char const**)
         window.draw(r_text);
         
         
-       
-        
         /*/---Draw Settings Window----/*/
             if(menuLayer == 1){
-                //Exit button settings menu
+                
+                // Settings Background
                 window.draw(settingsBackground);//Draw settings menu when clicked
-                window.draw(settingsExit);
+                // Exit Button
+                window.draw(settingsExit);//Exit button settings menu
+               
+                // Frame Settings
+                window.draw(settingsTenFPS);
+                window.draw(settingsOneFps);
+                
+                // Collection Settings
+                window.draw(settingsMinsUp);
+                window.draw(settingsMinsDown);
+                window.draw(settingsSecondsUp);
+                window.draw(settingsSecondsDown);
+                
+                // Sensor Range Settings
+                window.draw(settingsRangeTrue);
+                window.draw(settingsRangeHuman)
+                // Reset Sensor
+                window.draw(settingsReset);
+                
+                // Apply Settings
+                window.draw(settingsApply);
+
+
+                
             }
+        
           
         /*/----Draw Toolbar----/*/
             
