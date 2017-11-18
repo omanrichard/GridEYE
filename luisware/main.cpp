@@ -584,7 +584,7 @@ int main(int, char const**)
                 // 10 FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 100)  && position.x < (rootY+175)){
+                    if (position.x > (rootx + 100)  && position.x < (rootx+175)){
                         if (position.y > (rootY+ 75) && position.y < (rootY+100)){//settings Exit Button
                             settingsTenFPS.setFillColor(sf::Color(255,144,255));
                         }
@@ -593,7 +593,7 @@ int main(int, char const**)
                 // One FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 325)  && position.x < (rootY+400)){
+                    if (position.x > (rootx + 325)  && position.x < (rootx+400)){
                         if (position.y > (rootY+75) && position.y < (rootY+100)){//settings Exit Button
                             settingsOneFPS.setFillColor(sf::Color(255,144,255));
                         }
@@ -602,7 +602,7 @@ int main(int, char const**)
                 // Minutes UP
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rootY+200)){
+                    if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){//settings Exit Button
                             settingsMinsUp.setFillColor(sf::Color(255,144,255));
                         }
@@ -620,7 +620,7 @@ int main(int, char const**)
                 // Seconds UP
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < 425){
+                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY + 175) && position.y < (rootY+200)){//settings Exit Button
                             settingsSecondsUp.setFillColor(sf::Color(255,144,255));
                         }
