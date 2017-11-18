@@ -644,12 +644,20 @@ int main(int, char const**)
                     }
                 }
                 // Seconds DOWN
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Trigger
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){
                             settingsSecondsDown.setFillColor(sf::Color(255,144,255));
                             recordSeconds--;
+                        }
+                    }
+                }
+                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Release
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
+                        if (position.y > (rootY+200) && position.y < (rootY+225)){
+                            settingsSecondsDown.setFillColor(sf::Color(0,255,0));
                         }
                     }
                 }
