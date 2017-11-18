@@ -38,6 +38,7 @@ class GridEYE{
     void reset(void);
     void test(int row, int col);//Draw Test pattern
     int r,g,b;
+    int FPS = 10;
 };
 
 GridEYE::GridEYE(int address){
@@ -593,6 +594,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 100)  && position.x < (rootx+175)){
                         if (position.y > (rootY+ 75) && position.y < (rootY+100)){
                             settingsTenFPS.setFillColor(sf::Color(255,144,255));
+                            gridward.FPS = 10;
                         }
                     }
                 }
@@ -602,6 +604,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 325)  && position.x < (rootx+400)){
                         if (position.y > (rootY+75) && position.y < (rootY+100)){
                             settingsOneFPS.setFillColor(sf::Color(255,144,255));
+                            gridward.FPS = 1;
                         }
                     }
                 }
@@ -665,6 +668,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 50)  && position.x < (rootx+200)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsReset.setFillColor(sf::Color(255,144,255));
+                            gridward.reset();
                         }
                     }
                 }
