@@ -346,7 +346,9 @@ int main(int, char const**)
     settingsExit.setPosition(143,93);
     settingsExit.scale(0.1, 0.1);
     
-    //Settings Buttons
+    //Settings Buttons Declare
+    int rootx;
+    int rootY;
     CircleShape settingsTenFPS;
     CircleShape settingsOneFPS;
     RectangleShape settingsMinsUp;
@@ -357,15 +359,60 @@ int main(int, char const**)
     CircleShape settingsRangeHuman;
     RectangleShape settingsReset;
     RectangleShape settingsApply;
-    
     RectangleShape settingsMinsBox;
     RectangleShape settingsSecondsBox;
     
+    //Set Button Colors
+    settingsTenFPS.setFillColor(sf::Color(30,144,255));
+    settingsOneFPS.setFillColor(sf::Color::White);
     
+    settingsMinsUp.setFillColor(sf::Color::Green);
+    settingsMinsDown.setFillColor(sf::Color::Red);
+    settingsSecondsUp.setFillColor(sf::Color::Green);
+    settingsSecondsDown.setFillColor(sf::Color::Red);
+    settingsMinsBox.setFillColor(sf::Color::White);
+    settingsSecondsBox.setFillColor(sf::Color::White);
+   
+    settingsRangeTrue.setFillColor(sf::Color(30,144,255));
+    settingsRangeHuman.setFillColor(sf::Color::White);
+    
+    settingsReset.setFillColor(sf::Color(30,144,255));
+    settingsApply.setFillColor(sf::Color(30,144,255));
+    
+    settingsMinsBox.setFillColor(sf::Color::Black);
+    settingsSecondsBox.setFillColor(sf::Color::Black);
+    
+    //settings Button Position
+    
+    settingsTenFPS.setPosition//Default
+    settingsOneFPS.setPosition
+    
+    settingsMinsBox.setPosition
+    settingsSecondsBox.setPosition
+    settingsMinsUp.setPosition
+    settingsMinsDown.setPosition
+    settingsSecondsUp.setPosition
+    settingsSecondsDown.setPosition
+    
+    settingsRangeTrue.setPosition
+    settingsRangeHuman.setPosition
+    
+    settingsReset.setPosition
+    settingsApply.setPosition
+    
+    settingsMinsBox.setPosition
+    settingsSecondsBox.setPosition
+    
+    
+    
+    
+    
+    
+    //Settings Text Declare
     Text settingsFPSText("Frames Per Second",font, 10);
     Text settingsFPSTextValTen("10 FPS", font, 10);
     Text settingsFPSTextValOne("10 FPS",font,10);
-    Text settngsMinsText;
+    Text settingsMinsText;
     Text settingsSecondsText;
     Text settingsRangeText("Sensor Dynamic Range",font,10);
     Text settingsRangeTextTrue("True",font,10);
@@ -373,8 +420,53 @@ int main(int, char const**)
     Text settingsResetText("Reset Sensor",font, 10);
     Text settingsApplyText("Apply Settings", font, 10);
     
+    //Settings Text Color
     settingsBackground.setPosition(150, 100);//Move settings background in place
+    settingsFPSText.setFillColor(sf::Color::Black);
+    settingsFPSTextValTen.setFillColor(sf::Color::Black);
+    settingsFPSTextValOne.setFillColor(sf::Color::Black);
+    settingsMinsText.setFillColor(sf::Color::Black);
+    settingsSecondsText.setFillColor(sf::Color::Black);
+    settingsRangeText.setFillColor(sf::Color::Black);
+    settingsRangeTextTrue.setFillColor(sf::Color::Black);
+    settingsResetText.setFillColor(sf::Color::Black);
+    settingsApplyText.setFillColor(sf::Color::Black);
     
+    
+    
+    
+    settingsFPSText.setPosition
+    settingsFPSTextValTen.setPosition
+    settingsFPSTextVal
+    settings
+    settings
+    settings
+    settings
+    
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    /*/
     
 
     
