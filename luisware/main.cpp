@@ -648,7 +648,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                            settingsMinsDown.setFillColor(sf::Color(0,255,0));
+                            settingsMinsDown.setFillColor(sf::Color(255,0,0));
                             recordMins--;
                         }
                     }
