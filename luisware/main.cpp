@@ -40,6 +40,7 @@ class GridEYE{
     void test(int row, int col);//Draw Test pattern
     int r,g,b;
     int FPS = 10;
+    short pixelL;
 };
 
 GridEYE::GridEYE(int address){
@@ -58,6 +59,7 @@ void GridEYE::test(int row, int col){
     r = rand() % 255;
     g = rand() % 255;
     b = rand() % 255;
+    pixelL = rand() % 255;
 }
 void GridEYE::update(void){
     
@@ -570,12 +572,20 @@ int main(int, char const**)
             
             /*/----Layer 0 "Home"----/*/
             if(menuLayer == 0){
+                //Settings
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 sf::Vector2i position = sf::Mouse::getPosition(window);
                 if (position.x > 0 && position.x < 95){//Within toolbar
                     if (position.y > 0 && position.y < 119){
                        
                         menuLayer = 1;
+                    }
+                }
+                //exit
+                if (position.x > 0 && position.x < 95){//Within toolbar
+                    if (position.y > 590 && position.y < 700){
+                        
+                        
                     }
                 }
             }
@@ -589,8 +599,10 @@ int main(int, char const**)
                     if (position.x > 143  && position.x < 173){
                         if (position.y > 93 && position.y < 123){//settings Exit Button
                             menuLayer = 0;
+
                         }
                     }
+                    
                 }
                 
                 // 10 FPS
@@ -642,7 +654,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
                             settingsMinsDown.setFillColor(sf::Color(255,144,255));
-                            if(recordMins >= 0){
+                            if(recordMins > 0){
                                 recordMins--;
                                 settingsMinsText.setString(std::to_string(recordMins));
                             }
@@ -667,7 +679,7 @@ int main(int, char const**)
                                 recordSeconds++;
                                 settingsSecondsText.setString(std::to_string(recordSeconds));
                             }
-                            else if(recordSeconds == 60 && recordMins < 50 ){
+                            else if(recordSeconds == 59 && recordMins < 50 ){
                                 recordSeconds = 0;
                                 recordMins++;
                                 settingsMinsText.setString(std::to_string(recordMins));
@@ -764,6 +776,7 @@ int main(int, char const**)
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsApply.setFillColor(sf::Color(0,255,0));
                             gridward.update();
+                            menuLayer = 0;
                         }
                     }
                 }
