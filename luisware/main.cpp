@@ -633,7 +633,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){
                             settingsMinsUp.setFillColor(sf::Color(0,255,0));
-                            recordMins++;
+                            
                         }
                     }
                 }
@@ -643,7 +643,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
                             settingsMinsDown.setFillColor(sf::Color(255,144,255));
-                            if(recordMins >= 0){
+                            if(recordMins > 0){
                                 recordMins--;
                                 settingsMinsText.setString(std::to_string(recordMins));
                             }
@@ -655,7 +655,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
                             settingsMinsDown.setFillColor(sf::Color(0,255,0));
-                            recordMins--;
+                            
                         }
                     }
                 }
@@ -669,7 +669,7 @@ int main(int, char const**)
                                 recordSeconds++;
                                 settingsSecondsText.setString(std::to_string(recordSeconds));
                             }
-                            else if(recordSeconds == 60 && recordMins < 50 ){
+                            else if(recordSeconds == 59 && recordMins < 50 ){
                                 recordSeconds = 0;
                                 recordMins++;
                                 settingsMinsText.setString(std::to_string(recordMins));
