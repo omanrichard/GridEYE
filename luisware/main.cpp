@@ -380,7 +380,7 @@ int main(int, char const**)
     
     //Set Button Colors
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
-    settingsOneFPS.setFillColor(sf::Color::White);
+    settingsOneFPS.setFillColor(sf::Color(135,206,250));
     
     settingsMinsUp.setFillColor(sf::Color::Green);
     settingsMinsDown.setFillColor(sf::Color::Red);
@@ -390,10 +390,31 @@ int main(int, char const**)
     settingsSecondsBox.setFillColor(sf::Color::White);
    
     settingsRangeTrue.setFillColor(sf::Color(30,144,255));
-    settingsRangeHuman.setFillColor(sf::Color::White);
+    settingsRangeHuman.setFillColor(sf::Color(135,206,250));
     
     settingsReset.setFillColor(sf::Color(30,144,255));
     settingsApply.setFillColor(sf::Color(30,144,255));
+    
+    
+    
+    
+    //Set Boarders
+     settingsRangeHuman.setOutlineColor(sf::Color::White);
+    settingsTenFPS.setOutlineColor(sf::Color::White);
+    settingsOneFPS.setOutlineColor(sf::Color::White);
+    
+    settingsMinsUp.setOutlineColor(sf::Color::White);
+    settingsMinsDown.setOutlineColor(sf::Color::White);
+    settingsSecondsUp.setOutlineColor(sf::Color::White);
+    settingsSecondsDown.setOutlineColor(sf::Color::White);
+    settingsMinsBox.setOutlineColor(sf::Color::White);
+    settingsSecondsBox.setOutlineColor(sf::Color::White);
+    
+    settingsRangeTrue.setOutlineColor(sf::Color::White);
+    settingsRangeHuman.setOutlineColor(sf::Color::White);
+    
+    settingsReset.setOutlineColor(sf::Color::White);
+    settingsApply.setOutlineColor(sf::Color::White);
     
    
     //settings Button Position
@@ -604,14 +625,16 @@ int main(int, char const**)
                     }
                     
                 }
-                
+                //Select: 30,144,255 Unselect: 135,206,250
                 // 10 FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 100)  && position.x < (rootx+175)){
                         if (position.y > (rootY+ 75) && position.y < (rootY+100)){
-                            settingsTenFPS.setFillColor(sf::Color(0,255,0));
-                            settingsOneFPS.setFillColor(sf::Color(255,0,0));
+                            settingsTenFPS.setFillColor(sf::Color(30,144,255));
+                            settingsTenFPS.setOutlineThickness(2);
+                            settingsOneFPS.setFillColor(sf::Color(135,206,250));
+                            settingsOneFPS.setOutlineThickness(0);
                             gridward.FPS = 10;
                         }
                     }
@@ -621,8 +644,12 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 325)  && position.x < (rootx+400)){
                         if (position.y > (rootY+75) && position.y < (rootY+100)){
-                            settingsOneFPS.setFillColor(sf::Color(0,255,0));
-                            settingsTenFPS.setFillColor(sf::Color(255,0,0));
+                            settingsOneFPS.setFillColor(sf::Color(30,144,255));
+                            settingsOneFPS.setOutlineThickness(2);
+
+                            settingsTenFPS.setFillColor(sf::Color(135,206,250));
+                            settingsTenFPS.setOutlineThickness(0);
+                            
                             gridward.FPS = 1;
                         }
                     }
@@ -644,7 +671,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){
-                            settingsMinsUp.setFillColor(sf::Color(0,255,0));
+                            settingsMinsUp.setFillColor(sf::Color(30,144,255));
                         }
                     }
                 }
@@ -665,7 +692,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                            settingsMinsDown.setFillColor(sf::Color(255,0,0));
+                            settingsMinsDown.setFillColor(sf::Color(135,206,250));
                         }
                     }
                 }
@@ -692,7 +719,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                            settingsSecondsUp.setFillColor(sf::Color(0,255,0));
+                            settingsSecondsUp.setFillColor(sf::Color(30,144,255));
                         }
                     }
                 }
@@ -719,7 +746,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){
-                            settingsSecondsDown.setFillColor(sf::Color(255,0,0));
+                            settingsSecondsDown.setFillColor(sf::Color(135,206,250));
                         }
                     }
                 }
@@ -728,8 +755,10 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
                         if (position.y > (rootY + 300) && position.y < (rootY + 325)){
-                            settingsRangeTrue.setFillColor(sf::Color(0,255,0));
-                            settingsRangeHuman.setFillColor(sf::Color(255,0,0));
+                            settingsRangeTrue.setFillColor(sf::Color(30,144,255));
+                            settingsRangeTrue.setOutlineThickness(2);
+                            settingsRangeHuman.setFillColor(sf::Color(135,206,250));
+                            settingsRangeHuman.setOutlineThickness(0);
                         }
                     }
                 }
@@ -738,8 +767,10 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
                         if (position.y > (rootY + 300) && position.y < (rootY + 325)){
-                            settingsRangeHuman.setFillColor(sf::Color(0,255,0));
-                            settingsRangeTrue.setFillColor(sf::Color(255,0,0));
+                            settingsRangeHuman.setFillColor(sf::Color(30,144,255));
+                            settingsRangeHuman.setOutlineThickness(2);
+                            settingsRangeTrue.setFillColor(sf::Color(135,206,250));
+                            settingsRangeTrue.setOutlineThickness(0);
 
                         }
                     }
@@ -749,10 +780,18 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 50)  && position.x < (rootx+200)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsReset.setFillColor(sf::Color(0,255,0));
+                            settingsReset.setFillColor(sf::Color(30,144,255));
                             gridward.reset();
-                            settingsRangeTrue.setFillColor(sf::Color(0,255,0));
-                            settingsTenFPS.setFillColor(sf::Color(0,255,0));
+                            settingsRangeHuman.setOutlineThickness(0);
+                            settingsRangeHuman.setFillColor(sf::Color(135,206,250));
+                            settingsRangeTrue.setFillColor(sf::Color(30,144,255));
+                            settingsRangeTrue.setOutlineThickness(2);
+                            
+                            
+                            settingsTenFPS.setOutlineThickness(2);
+                            settingsTenFPS.setFillColor(sf::Color(30,144,255));
+                            settingsOneFPS.setFillColor(sf::Color(135,206,250));
+                            settingsOneFPS.setOutlineThickness(0);
                             recordMins = 0;
                             settingsMinsText.setString(std::to_string(recordMins));
                             recordSeconds = 0;
@@ -774,7 +813,7 @@ int main(int, char const**)
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsApply.setFillColor(sf::Color(0,255,0));
+                            settingsApply.setFillColor(sf::Color(30,144,255));
                             gridward.update();
                             menuLayer = 0;
                         }
