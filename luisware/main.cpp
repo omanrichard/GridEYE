@@ -104,6 +104,7 @@ int i,j;
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, ect.
 int rootx = 150;
 int rootY = 100;
+
 int main(int, char const**)
 {
     
@@ -349,19 +350,19 @@ int main(int, char const**)
     settingsExit.scale(0.1, 0.1);
     
     //Settings Buttons Declare
-   
-    RectangleShape settingsTenFPS(sf::Vector2f(75,25));
-    RectangleShape settingsOneFPS(sf::Vector2f(75,25));
-    RectangleShape settingsMinsUp(sf::Vector2f(50,25));
-    RectangleShape settingsMinsDown(sf::Vector2f(50,25));
-    RectangleShape settingsSecondsUp(sf::Vector2f(50,25));
-    RectangleShape settingsSecondsDown(sf::Vector2f(50,25));
-    RectangleShape settingsRangeTrue(sf::Vector2f(100,25));
-    RectangleShape settingsRangeHuman(sf::Vector2f(100,25));
-    RectangleShape settingsReset(sf::Vector2f(150,25));
-    RectangleShape settingsApply(sf::Vector2f(150,25));
-    RectangleShape settingsMinsBox(sf::Vector2f(50,50));
-    RectangleShape settingsSecondsBox(sf::Vector2f(50,50));
+
+    CircleShape settingsTenFPS;
+    CircleShape settingsOneFPS;
+    RectangleShape settingsMinsUp;
+    RectangleShape settingsMinsDown;
+    RectangleShape settingsSecondsUp;
+    RectangleShape settingsSecondsDown;
+    CircleShape settingsRangeTrue;
+    CircleShape settingsRangeHuman;
+    RectangleShape settingsReset;
+    RectangleShape settingsApply;
+    RectangleShape settingsMinsBox;
+    RectangleShape settingsSecondsBox;
     
     //Set Button Colors
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -448,7 +449,21 @@ int main(int, char const**)
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+15 ,rootY+350 );
     
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
     
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
+    settings
     
     
 
@@ -569,15 +584,108 @@ int main(int, char const**)
             }
             
             /*/----Layer 1 "Settings"----/*/
-            if(menuLayer == 1){
+            if(menuLayer == 1){ // Hit Boxes
+                // Exit Button
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > 143  && position.x < 173){
                         if (position.y > 93 && position.y < 123){//settings Exit Button
-                        menuLayer = 0;
+                            menuLayer = 0;
+                        }
                     }
                 }
-            }
+                // 10 FPS
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 50)  && position.x < (rooty+175)){
+                        if (position.y > (rootY+25) && position.y < (rootY+50){//settings Exit Button
+                            settingsTenFPS.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // One FPS
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 325)  && position.x < (rooty+400)){
+                        if (position.y > (rootY+25) && position.y < (rootY+50){//settings Exit Button
+                            settingsOneFPS.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Minutes UP
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 150)  && position.x < (rooty+200)){
+                        if (position.y > (rootY+175) && position.y < (rootY+200){//settings Exit Button
+                            settingsMinsUp.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Minutes DOWN
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 150)  && position.x < (rootx +200)){
+                        if (position.y > (rootY + 200) && position.y < (rootY+225)){//settings Exit Button
+                            settingsMinsDown.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Seconds UP
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 375)  && position.x < 425){
+                        if (position.y > (rootY + 175) && position.y < (rootY+200)){//settings Exit Button
+                            settingsSecondsUp.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Seconds DOWN
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 375)  && position.x < (rootx+425){
+                        if (position.y > (rootY+200) && position.y < (rootY+225)){//settings Exit Button
+                            settingsSecondsDown.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Sensor TRUE
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
+                        if (position.y > (rootY+300) && position.y < 325){//settings Exit Button
+                            settingsRangeTrue.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // Sensor HUMAN
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
+                        if (position.y > (rootY +300) && position.y < (rootY+325)){//settings Exit Button
+                            settingsRangeHuman.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // RESET
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 50)  && position.x < (rootx+200)){
+                        if (position.y > (rootY + 350) && position.y < (rootY + 375))){//settings Exit Button
+                            settingsReset.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                // APPLY
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
+                        if (position.y > (rootY + 350) && position.y < (rootY + 375))){//settings Exit Button
+                            settingsApply.setFillColor(sf::Color(255,144,255));
+                        }
+                    }
+                }
+                           
+            
             }
             
             // Close window: exit
