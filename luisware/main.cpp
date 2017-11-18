@@ -102,6 +102,8 @@ int i,j;
 
 
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, ect.
+int rootx = 150;
+int rootY = 100;
 int main(int, char const**)
 {
     
@@ -347,20 +349,19 @@ int main(int, char const**)
     settingsExit.scale(0.1, 0.1);
     
     //Settings Buttons Declare
-    int rootx;
-    int rootY;
-    CircleShape settingsTenFPS;
-    CircleShape settingsOneFPS;
-    RectangleShape settingsMinsUp;
-    RectangleShape settingsMinsDown;
-    RectangleShape settingsSecondsUp;
-    RectangleShape settingsSecondsDown;
-    CircleShape settingsRangeTrue;
-    CircleShape settingsRangeHuman;
-    RectangleShape settingsReset;
-    RectangleShape settingsApply;
-    RectangleShape settingsMinsBox;
-    RectangleShape settingsSecondsBox;
+   
+    RectangleShape settingsTenFPS(sf::Vector2f(75,25));
+    RectangleShape settingsOneFPS(sf::Vector2f(75,25));
+    RectangleShape settingsMinsUp(sf::Vector2f(50,25));
+    RectangleShape settingsMinsDown(sf::Vector2f(50,25));
+    RectangleShape settingsSecondsUp(sf::Vector2f(50,25));
+    RectangleShape settingsSecondsDown(sf::Vector2f(50,25));
+    RectangleShape settingsRangeTrue(sf::Vector2f(100,25));
+    RectangleShape settingsRangeHuman(sf::Vector2f(100,25));
+    RectangleShape settingsReset(sf::Vector2f(150,25));
+    RectangleShape settingsApply(sf::Vector2f(150,25));
+    RectangleShape settingsMinsBox(sf::Vector2f(50,50));
+    RectangleShape settingsSecondsBox(sf::Vector2f(50,50));
     
     //Set Button Colors
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -379,29 +380,26 @@ int main(int, char const**)
     settingsReset.setFillColor(sf::Color(30,144,255));
     settingsApply.setFillColor(sf::Color(30,144,255));
     
-    settingsMinsBox.setFillColor(sf::Color::Black);
-    settingsSecondsBox.setFillColor(sf::Color::Black);
-    
+   
     //settings Button Position
     
-    settingsTenFPS.setPosition//Default
-    settingsOneFPS.setPosition
+    settingsTenFPS.setPosition(rootx+100 ,rootY+75 );//Default
+    settingsOneFPS.setPosition(rootx+325 ,rootY+75 );
     
-    settingsMinsBox.setPosition
-    settingsSecondsBox.setPosition
-    settingsMinsUp.setPosition
-    settingsMinsDown.setPosition
-    settingsSecondsUp.setPosition
-    settingsSecondsDown.setPosition
+    settingsMinsBox.setPosition(rootx+75 ,rootY+175 );
+    settingsSecondsBox.setPosition(rootx+300 ,rootY+175 );
+    settingsMinsUp.setPosition(rootx+150 ,rootY+175);
+    settingsMinsDown.setPosition(rootx+150 ,rootY+200);
+    settingsSecondsUp.setPosition(rootx+375 ,rootY+175 );
+    settingsSecondsDown.setPosition(rootx+375 ,rootY+200 );
     
-    settingsRangeTrue.setPosition
-    settingsRangeHuman.setPosition
+    settingsRangeTrue.setPosition(rootx+75 ,rootY+300 );
+    settingsRangeHuman.setPosition(rootx+325 ,rootY+300 );
     
-    settingsReset.setPosition
-    settingsApply.setPosition
+    settingsReset.setPosition(rootx+50 ,rootY+350 );
+    settingsApply.setPosition(rootx+300 ,rootY+350 );
     
-    settingsMinsBox.setPosition
-    settingsSecondsBox.setPosition
+
     
     
     
@@ -409,19 +407,19 @@ int main(int, char const**)
     
     
     //Settings Text Declare
-    Text settingsFPSText("Frames Per Second",font, 10);
-    Text settingsFPSTextValTen("10 FPS", font, 10);
-    Text settingsFPSTextValOne("10 FPS",font,10);
+    Text settingsFPSText("Frames Per Second",font, 30);
+    Text settingsFPSTextValTen("10 FPS", font, 20);
+    Text settingsFPSTextValOne("1 FPS",font,20);
     Text settingsMinsText;
     Text settingsSecondsText;
-    Text settingsRangeText("Sensor Dynamic Range",font,10);
-    Text settingsRangeTextTrue("True",font,10);
-    Text settingsRangeTextHuman("Human Mode",font, 10);
-    Text settingsResetText("Reset Sensor",font, 10);
-    Text settingsApplyText("Apply Settings", font, 10);
+    Text settingsRangeText("Sensor Dynamic Range",font,30);
+    Text settingsRangeTextTrue("True",font,20);
+    Text settingsRangeTextHuman("Human Mode",font, 20);
+    Text settingsResetText("Reset Sensor",font, 20);
+    Text settingsApplyText("Apply Settings", font, 20);
     
     //Settings Text Color
-    settingsBackground.setPosition(150, 100);//Move settings background in place
+    settingsBackground.setPosition(rootx,rootY);//Move settings background in place
     settingsFPSText.setFillColor(sf::Color::Black);
     settingsFPSTextValTen.setFillColor(sf::Color::Black);
     settingsFPSTextValOne.setFillColor(sf::Color::Black);
@@ -429,44 +427,26 @@ int main(int, char const**)
     settingsSecondsText.setFillColor(sf::Color::Black);
     settingsRangeText.setFillColor(sf::Color::Black);
     settingsRangeTextTrue.setFillColor(sf::Color::Black);
+    settingsRangeTextHuman.setFillColor(sf::Color::Black);
     settingsResetText.setFillColor(sf::Color::Black);
     settingsApplyText.setFillColor(sf::Color::Black);
     
     
     
     
-    settingsFPSText.setPosition
-    settingsFPSTextValTen.setPosition
-    settingsFPSTextVal
-    settings
-    settings
-    settings
-    settings
+    settingsFPSText.setPosition(rootx+50,rootY+25 );
+    settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
+    settingsFPSTextValOne.setPosition(rootx+325+10 ,rootY+75 );
+    settingsMinsText.setPosition(rootx+75 ,rootY+175 );
+    settingsSecondsText.setPosition(rootx+300 ,rootY+175 );
+    settingsRangeText.setPosition(rootx+50 ,rootY+250 );
+    settingsRangeTextTrue.setPosition(rootx+75+30 ,rootY+300 );
+    settingsRangeTextHuman.setPosition(rootx+325 ,rootY+300 );
+    settingsResetText.setPosition(rootx+50 ,rootY+350 );
+    settingsApplyText.setPosition(rootx+300 ,rootY+350 );
     
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
     
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
     
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    /*/
     
 
     
@@ -636,20 +616,39 @@ int main(int, char const**)
                 window.draw(settingsTenFPS);
                 window.draw(settingsOneFPS);
                 
+                window.draw(settingsFPSText);
+                window.draw(settingsFPSTextValTen);
+                window.draw(settingsFPSTextValOne);
+                
                 // Collection Settings
                 window.draw(settingsMinsUp);
                 window.draw(settingsMinsDown);
+                
                 window.draw(settingsSecondsUp);
                 window.draw(settingsSecondsDown);
+                
+                window.draw(settingsMinsBox);
+                window.draw(settingsSecondsBox);
+            
+                window.draw(settingsMinsText);
+                window.draw(settingsSecondsText);
                 
                 // Sensor Range Settings
                 window.draw(settingsRangeTrue);
                 window.draw(settingsRangeHuman);
+                
+                window.draw(settingsRangeText);
+                window.draw(settingsRangeTextTrue);
+                window.draw(settingsRangeTextHuman);
+                
+                
                 // Reset Sensor
                 window.draw(settingsReset);
+                window.draw(settingsResetText);
                 
                 // Apply Settings
                 window.draw(settingsApply);
+                window.draw(settingsApplyText);
 
 
                 
