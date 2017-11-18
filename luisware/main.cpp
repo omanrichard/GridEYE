@@ -166,6 +166,10 @@ int main(int, char const**)
     if (!t_quit.loadFromFile("gravestone.png")) {
         return EXIT_FAILURE;
     }
+    Texture t_close;
+    if(!t_close.loadFromFile("cancel.png")){
+        return EXIT_FAILURE;
+    }
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
@@ -338,12 +342,31 @@ int main(int, char const**)
         settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
         settingsBackground.setPosition(-500, -500);
     
-    CircleShape settingsExit;
-    settingsExit.setRadius(10);
-    settingsExit.setFillColor(Color(255,0,0));
-    settingsExit.setOutlineColor(Color(255,255,255));
-    settingsExit.setOutlineThickness(2);
+    Sprite settingsExit(t_close);
     settingsExit.setPosition(143,93);
+    settingsExit.scale(0.1, 0.1);
+    
+    //Settings Buttons
+    CircleShape settingsTenFPS;
+    CircleShape settingsOneFPS;
+    RectangleShape settingsMinsUp;
+    RectangleShape settingsMinsDown;
+    RectangleShape settingsSecondsUp;
+    RectangleShape settingsSecondsDown;
+    CircleShape settingsRangeTrue;
+    CircleShape settingsRangeHuman;
+    RectangleShape settingsReset;
+    RectangleShape settingsApply;
+    
+    RectangleShape settingsMinsBox;
+    RectangleShape settingsSecondsBox;
+    
+    Text settngsMinsText;
+    Text settingsSecondsText;
+    
+    
+    
+    
 
     
     
