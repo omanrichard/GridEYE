@@ -494,6 +494,7 @@ int main(int, char const**)
                     }
                 }
             }
+            }
             
             // Close window: exit
             if (event.type == sf::Event::Closed) {
@@ -532,7 +533,7 @@ int main(int, char const**)
                
                 // Frame Settings
                 window.draw(settingsTenFPS);
-                window.draw(settingsOneFps);
+                window.draw(settingsOneFPS);
                 
                 // Collection Settings
                 window.draw(settingsMinsUp);
@@ -542,7 +543,7 @@ int main(int, char const**)
                 
                 // Sensor Range Settings
                 window.draw(settingsRangeTrue);
-                window.draw(settingsRangeHuman)
+                window.draw(settingsRangeHuman);
                 // Reset Sensor
                 window.draw(settingsReset);
                 
