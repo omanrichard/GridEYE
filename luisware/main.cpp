@@ -316,9 +316,7 @@ int main(int, char const**)
     backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
     backgroundHeader3.setPosition(94, 75);
     
-    sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
-    settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
-    settingsBackground.setPosition(-500, -500);
+    
     
     sf::RectangleShape topbarBackground(sf::Vector2f( 606, 75 ));
     topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
@@ -335,8 +333,17 @@ int main(int, char const**)
     r_text.setFillColor(sf::Color::Red);
     r_text.setPosition( 550 , 10);
     
-    //--------------------Settings Sprites---------------------
+    //--------------------Settings Objects---------------------
+        sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
+        settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
+        settingsBackground.setPosition(-500, -500);
     
+    CircleShape settingsExit;
+    settingsExit.setRadius(15);
+    settingsExit.setFillColor(Color(255,0,0));
+    settingsExit.setOutlineColor(Color(255,255,255));
+    settingsExit.setOutlineThickness(5);
+    settingsExit.setPosition(143,93);
 
     
     
@@ -450,9 +457,15 @@ int main(int, char const**)
                                     menuLayer = 1;
                                 }
                             }
-                        }}
+                        }
+                        
+                    }
+                }
             }
-            // left click...
+            /*/----left click----/*/
+            
+            /*/----Layer 0 "Home"----/*/
+            if(menuLayer == 0){
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 sf::Vector2i position = sf::Mouse::getPosition(window);
                 if (position.x > 0 && position.x < 95){//Within toolbar
@@ -462,8 +475,19 @@ int main(int, char const**)
                     }
                 }
             }
+            }
             
+            /*/----Layer 1 "Settings"----/*/
+            if(menuLayer == 1){
+                
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (position.x > 0  && position.x < 95){//settings Exit Button
+                        menuLayer = 0;
+                    }
+            }
             
+            }
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -491,13 +515,22 @@ int main(int, char const**)
         window.draw(r_text);
         
         
-        // Toolbar
+       
         
+        /*/---Draw Settings Window----/*/
+            if(menuLayer == 1){
+        window.draw(settingsExit);//Exit button settings menu
+        window.draw(settingsBackground);//Draw settings menu when clicked
+            }
+          
+        /*/----Draw Toolbar----/*/
+            
         window.draw(toolbarFrame);
         window.draw(toolbarHeader);
-        
+            
         window.draw(settings);
-        window.draw(settingsBackground);//Draw settings menu when clicked
+            
+            
         window.draw(record);
         window.draw(stop);
         window.draw(play);
