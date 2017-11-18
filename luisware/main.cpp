@@ -36,6 +36,7 @@ class GridEYE{
     GridEYE(int address); //Hint: its at 0x68
     int read(int row, int col);
     void reset(void);
+    void update(void);
     void test(int row, int col);//Draw Test pattern
     int r,g,b;
     int FPS = 10;
@@ -57,6 +58,9 @@ void GridEYE::test(int row, int col){
     r = rand() % 255;
     g = rand() % 255;
     b = rand() % 255;
+}
+void GridEYE::update(void){
+    
 }
 
 
@@ -100,7 +104,8 @@ GridEYE gridward(GRIDEYEADDRESS);
 //#include "ResourcePath.hpp"
 
 int i,j;
-
+int recordMins = 0;
+int recordSeconds = 0;
 
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, ect.
 int rootx = 150;
@@ -614,6 +619,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx+200)){
                         if (position.y > (rootY+175) && position.y < (rootY+200)){
                             settingsMinsUp.setFillColor(sf::Color(255,144,255));
+                            recordMins++;
                         }
                     }
                 }
@@ -623,6 +629,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 150)  && position.x < (rootx +200)){
                         if (position.y > (rootY + 200) && position.y < (rootY+225)){
                             settingsMinsDown.setFillColor(sf::Color(255,144,255));
+                            recordMins--;
                         }
                     }
                 }
@@ -632,6 +639,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY + 175) && position.y < (rootY+200)){
                             settingsSecondsUp.setFillColor(sf::Color(255,144,255));
+                            recordSeconds++;
                         }
                     }
                 }
@@ -641,6 +649,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){
                             settingsSecondsDown.setFillColor(sf::Color(255,144,255));
+                            recordSeconds--;
                         }
                     }
                 }
@@ -678,6 +687,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsApply.setFillColor(sf::Color(255,144,255));
+                            gridward.update();
                         }
                     }
                 }
