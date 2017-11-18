@@ -351,18 +351,18 @@ int main(int, char const**)
     
     //Settings Buttons Declare
 
-    CircleShape settingsTenFPS;
-    CircleShape settingsOneFPS;
-    RectangleShape settingsMinsUp;
-    RectangleShape settingsMinsDown;
-    RectangleShape settingsSecondsUp;
-    RectangleShape settingsSecondsDown;
-    CircleShape settingsRangeTrue;
-    CircleShape settingsRangeHuman;
-    RectangleShape settingsReset;
-    RectangleShape settingsApply;
-    RectangleShape settingsMinsBox;
-    RectangleShape settingsSecondsBox;
+    RectangleShape settingsTenFPS(sf::Vector2f(75, 25 ));
+    RectangleShape settingsOneFPS(sf::Vector2f(75, 25 ));
+    RectangleShape settingsMinsUp(sf::Vector2f(50,25 ));
+    RectangleShape settingsMinsDown(sf::Vector2f(50,25));
+    RectangleShape settingsSecondsUp(sf::Vector2f(50,25 ));
+    RectangleShape settingsSecondsDown(sf::Vector2f(50,25 ));
+    RectangleShape settingsRangeTrue(sf::Vector2f(100,25 ));
+    RectangleShape settingsRangeHuman(sf::Vector2f(100,25 ));
+    RectangleShape settingsReset(sf::Vector2f(150,25 ));
+    RectangleShape settingsApply(sf::Vector2f(150, 25 ));
+    RectangleShape settingsMinsBox(sf::Vector2f(50, 50 ));
+    RectangleShape settingsSecondsBox(sf::Vector2f(50, 50 ));
     
     //Set Button Colors
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -449,21 +449,7 @@ int main(int, char const**)
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+15 ,rootY+350 );
     
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
     
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
-    settings
     
     
 
@@ -594,11 +580,12 @@ int main(int, char const**)
                         }
                     }
                 }
+                
                 // 10 FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 50)  && position.x < (rooty+175)){
-                        if (position.y > (rootY+25) && position.y < (rootY+50){//settings Exit Button
+                    if (position.x > (rootx + 50)  && position.x < (rootY+175)){
+                        if (position.y > (rootY+25) && position.y < (rootY+50)){//settings Exit Button
                             settingsTenFPS.setFillColor(sf::Color(255,144,255));
                         }
                     }
@@ -606,8 +593,8 @@ int main(int, char const**)
                 // One FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 325)  && position.x < (rooty+400)){
-                        if (position.y > (rootY+25) && position.y < (rootY+50){//settings Exit Button
+                    if (position.x > (rootx + 325)  && position.x < (rootY+400)){
+                        if (position.y > (rootY+25) && position.y < (rootY+50)){//settings Exit Button
                             settingsOneFPS.setFillColor(sf::Color(255,144,255));
                         }
                     }
@@ -615,8 +602,8 @@ int main(int, char const**)
                 // Minutes UP
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rooty+200)){
-                        if (position.y > (rootY+175) && position.y < (rootY+200){//settings Exit Button
+                    if (position.x > (rootx + 150)  && position.x < (rootY+200)){
+                        if (position.y > (rootY+175) && position.y < (rootY+200)){//settings Exit Button
                             settingsMinsUp.setFillColor(sf::Color(255,144,255));
                         }
                     }
@@ -642,7 +629,7 @@ int main(int, char const**)
                 // Seconds DOWN
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < (rootx+425){
+                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
                         if (position.y > (rootY+200) && position.y < (rootY+225)){//settings Exit Button
                             settingsSecondsDown.setFillColor(sf::Color(255,144,255));
                         }
@@ -670,7 +657,7 @@ int main(int, char const**)
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 50)  && position.x < (rootx+200)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375))){//settings Exit Button
+                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){//settings Exit Button
                             settingsReset.setFillColor(sf::Color(255,144,255));
                         }
                     }
@@ -679,7 +666,7 @@ int main(int, char const**)
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
                     if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375))){//settings Exit Button
+                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){//settings Exit Button
                             settingsApply.setFillColor(sf::Color(255,144,255));
                         }
                     }
