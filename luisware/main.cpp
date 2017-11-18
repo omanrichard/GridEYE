@@ -372,8 +372,8 @@ int main(int, char const**)
     Text settingsRangeTextHuman("Human Mode",font, 10);
     Text settingsResetText("Reset Sensor",font, 10);
     Text settingsApplyText("Apply Settings", font, 10);
-     
     
+    settingsBackground.setPosition(150, 100);//Move settings background in place
     
     
 
@@ -486,7 +486,7 @@ int main(int, char const**)
                 sf::Vector2i position = sf::Mouse::getPosition(window);
                 if (position.x > 0 && position.x < 95){//Within toolbar
                     if (position.y > 0 && position.y < 119){
-                       settingsBackground.setPosition(150, 100);
+                       
                         menuLayer = 1;
                     }
                 }
@@ -537,42 +537,28 @@ int main(int, char const**)
                 
                 // Settings Background
                 window.draw(settingsBackground);//Draw settings menu when clicked
-                window.draw(SettingsFPSText);
-                
                 // Exit Button
                 window.draw(settingsExit);//Exit button settings menu
-                
-
+               
                 // Frame Settings
                 window.draw(settingsTenFPS);
                 window.draw(settingsOneFPS);
-                window.draw(settingsFPSValTen);
-                window.draw(settingsFPSValOne);
                 
                 // Collection Settings
                 window.draw(settingsMinsUp);
                 window.draw(settingsMinsDown);
                 window.draw(settingsSecondsUp);
                 window.draw(settingsSecondsDown);
-                    //Text
-                window.draw(settingsMinsText);
-                window.draw(settingsSecondsText);
                 
                 // Sensor Range Settings
                 window.draw(settingsRangeTrue);
                 window.draw(settingsRangeHuman);
-                    //Text
-                window.draw(settingsRangeText);
-                window.draw(settingsRangeTextTrue);
-                window.draw(settingsRangeTextHuman);
-        
                 // Reset Sensor
                 window.draw(settingsReset);
-                window.draw(settingsResetText);
-            
+                
                 // Apply Settings
                 window.draw(settingsApply);
-                window.draw(settingsApplyText);
+
 
                 
             }
