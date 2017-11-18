@@ -511,8 +511,8 @@ int main(int, char const**)
                 window.draw(settingsOneFps);
                 
                 // Collection Settings
-                window.draw(settingsHoursUp);
-                window.draw(settingsHoursDown);
+                window.draw(settingsMinsUp);
+                window.draw(settingsMinsDown);
                 window.draw(settingsSecondsUp);
                 window.draw(settingsSecondsDown);
                 
