@@ -27,6 +27,7 @@
 
 #define GRIDEYEADDRESS 0x68
 
+using namespace sf;
 
 class GridEYE{
     private:
@@ -92,7 +93,6 @@ void terminal::draw(void){
 /*/
 
 
-using namespace sf;
 GridEYE gridward(GRIDEYEADDRESS);
 
 // Here is a small helper for you! Have a look.
