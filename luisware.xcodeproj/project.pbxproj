@@ -27,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		798DBF4A1FBFBA920090BCF6 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
 		79BC31AE1FBAB237005842D0 /* wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrench.png; sourceTree = "<group>"; };
 		79BC31AF1FBAB237005842D0 /* add-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-button.png"; sourceTree = "<group>"; };
 		79BC31B01FBAB237005842D0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -47,7 +48,6 @@
 		79EE7B4A1FBA8F8A00D8618D /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-2.png"; sourceTree = "<group>"; };
 		79EE7B4C1FBA8F8A00D8618D /* new-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new-file.png"; sourceTree = "<group>"; };
-		93A30E921FBD606D0088120C /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Event.hpp; path = ../../../Desktop/Event.hpp; sourceTree = "<group>"; };
 		93A30E961FBDD7CC0088120C /* Mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mouse.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,7 +85,7 @@
 				79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */,
 				79EE7B321FBA7F4100D8618D /* main.cpp */,
 				93A30E961FBDD7CC0088120C /* Mouse.hpp */,
-				93A30E921FBD606D0088120C /* Event.hpp */,
+				798DBF4A1FBFBA920090BCF6 /* Event.hpp */,
 				79EE7B341FBA7F4100D8618D /* Resources */,
 				79EE7B2D1FBA7F4100D8618D /* Supporting Files */,
 			);
