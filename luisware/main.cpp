@@ -336,9 +336,15 @@ int main(int, char const**)
     text.setFillColor(sf::Color::White);
     text.setPosition( 109 , 10);
     
-    sf::Text r_text("Recording", font, 30);
-    r_text.setFillColor(sf::Color::Red);
+    sf::Text r_text("Standy-by", font, 25);
+    r_text.setFillColor(sf::Color::Green);
     r_text.setPosition( 550 , 10);
+    
+    sf::Text recordingTimeText("00:00", font, 20);
+    recordingTimeText.setFillColor(sf::Color::White);
+    recordingTimeText.setPosition( 590 , 45);
+    
+    
     
     /*/----Settings Objects----/*/
     sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
@@ -412,8 +418,8 @@ int main(int, char const**)
     Text settingsFPSTextValTen("10 FPS", font, 20);
     Text settingsFPSTextValOne("1 FPS",font,20);
     Text settingsCollectionText("Collection Time",font,30);
-    Text settingsMinsText("99",font,60);
-    Text settingsSecondsText("99",font,60);
+    Text settingsMinsText("99",font,40);
+    Text settingsSecondsText("99",font,40);
     Text settingsRangeText("Sensor Dynamic Range",font,30);
     Text settingsRangeTextTrue("True",font,20);
     Text settingsRangeTextHuman("Human",font, 20);
@@ -439,15 +445,15 @@ int main(int, char const**)
     
     settingsFPSText.setPosition(rootx+50,rootY+25 );
     settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
-    settingsFPSTextValOne.setPosition(rootx+325+20 ,rootY+75 );
+    settingsFPSTextValOne.setPosition(rootx+325+15 ,rootY+75 );
     settingsMinsText.setPosition(rootx+75 ,rootY+175 );
     settingsCollectionText.setPosition(rootx+50, rootY+125);
     settingsSecondsText.setPosition(rootx+300 ,rootY+175 );
     settingsRangeText.setPosition(rootx+50 ,rootY+250 );
     settingsRangeTextTrue.setPosition(rootx+75+30 ,rootY+300 );
-    settingsRangeTextHuman.setPosition(rootx+325 ,rootY+300 );
+    settingsRangeTextHuman.setPosition(rootx+325+20 ,rootY+300 );
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
-    settingsApplyText.setPosition(rootx+300+15 ,rootY+350 );
+    settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
     
     
     
@@ -700,6 +706,7 @@ int main(int, char const**)
         
         window.draw(text);
         window.draw(r_text);
+        window.draw(recordingTimeText);
         
         
         /*/---Draw Settings Window----/*/
