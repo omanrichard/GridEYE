@@ -16,7 +16,7 @@
 
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <Event.hpp>
+#include "Event.hpp"
 //#include <wiringPi.h>
 #include <Mouse.hpp>
 #include <iostream>
@@ -35,7 +35,8 @@ class GridEYE{
     GridEYE(int address); //Hint: its at 0x68
     int read(int row, int col);
     void reset(void);
-    int test(int row, int col);//Draw Test pattern
+    void test(int row, int col);//Draw Test pattern
+    int r,g,b;
 };
 
 GridEYE::GridEYE(int address){
@@ -50,9 +51,10 @@ int GridEYE::read(int row, int col){
 void GridEYE::reset(void){
 
 }
-int GridEYE::test(int row, int col){
-    return row*col*4;
-    
+void GridEYE::test(int row, int col){
+    r = rand() % 255;
+    g = rand() % 255;
+    b = rand() % 255;
 }
 
 
@@ -135,52 +137,35 @@ int main(int, char const**)
     if(!t_background.loadFromFile("texture2.jpg")){
         return EXIT_FAILURE;
     }
-    
-    
-    
     Texture t_settings;
     if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
+        
     }
-    
-    
     Texture t_record;
     if (!t_record.loadFromFile("record.png")) {
         return EXIT_FAILURE;
     }
-   ;
-    
     Texture t_stop;
     if (!t_stop.loadFromFile("stop.png")) {
         return EXIT_FAILURE;
     }
-    
-    
     Texture t_play;
     if (!t_play.loadFromFile("play.png")) {
         return EXIT_FAILURE;
     }
-    
-    
     Texture t_trash;
     if (!t_trash.loadFromFile("trash.png")) {
         return EXIT_FAILURE;
     }
-  
-    
     Texture t_save;
     if (!t_save.loadFromFile("save.png")) {
         return EXIT_FAILURE;
     }
-    
     Texture t_quit;
     if (!t_quit.loadFromFile("gravestone.png")) {
         return EXIT_FAILURE;
     }
-    
-   
-    
-    
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
@@ -197,7 +182,8 @@ int main(int, char const**)
             gridy = (88+j*59);
             RectangleShape newPix(sf::Vector2f(58, 58));
             newPix.setPosition( gridx, gridy );
-            newPix.setFillColor(sf::Color(gridward.test(j*5,i*5),gridward.test(i,j),gridward.test(j*5,i)));
+            gridward.test(i,j);
+            newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
             grid[i][j] = newPix;
         }
     }
@@ -330,7 +316,7 @@ int main(int, char const**)
     backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
     backgroundHeader3.setPosition(94, 75);
     
-    sf::RectangleShape settingsBackground(sf::Vector2f(400, 500 ));
+    sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
     settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
     settingsBackground.setPosition(-500, -500);
     
@@ -361,7 +347,17 @@ int main(int, char const**)
     
     while (window.isOpen())
     {
-        
+        for( i=0 ; i < 8 ; i++ ){
+            for( j=0 ; j<8 ; j++ ){
+                gridx = (164+i*59);
+                gridy = (88+j*59);
+                RectangleShape newPix(sf::Vector2f(58, 58));
+                newPix.setPosition( gridx, gridy );
+                gridward.test(i,j);
+                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                grid[i][j] = newPix;
+            }
+        }
         window.draw(line);
         
         // Process events
