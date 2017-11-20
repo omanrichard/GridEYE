@@ -15,7 +15,7 @@
 #define gridEyeAddr 0x68 // or 0x69 Address
 
 using namespace std;
-int i,j,k;
+int r,c;
 
 /*/ --------------- GridEYE Constructor --------------- /*/
 GridEYE::GridEYE(int address){
@@ -43,9 +43,9 @@ void GridEYE::update(void){
 /*/ --------------- Frame Constructor --------------- /*/
 
 frame::frame(){
-    for( i=0 ; i<8 ; i++ ){
-        for( j=0 ; j<8 ;  j++){
-            this->sensor_values[i][j] = 0;
+    for( r=0 ; r < 8 ; r++ ){
+        for( c=0 ; c < 8 ; c++){
+            this->sensor_values[r][c] = 0;
         }
     }
     this->mean = 0;
@@ -54,45 +54,52 @@ frame::frame(){
 }
 
 frame::frame(GridEYE gridward){
-    for( i=0 ; i < 8 ; i++ ){
-        for( j=0 ; j < 8 ;  j++){
-            gridward.test( i,j );
-            this->sensor_values[i][j] = gridward.pixelL;  // Receive value from device, end transmission
+    for( r=0 ; r < 8 ; r++ ){
+        for( c=0 ; c < 8 ;  c++){
+            gridward.test( r,c );
+            this->sensor_values[r][c] = gridward.pixelL;  // Receive value from device, end transmission
         }
     }
     return;
 }
 
 /*/ --------------- Frame Methods --------------- /*/
-
-short frame::set_max(){
+void frame::set_max(){
     short temp = 0;
     
-    for( i=0 ; i < 8 ; i++ ){
-        for( j=0 ; j < 8 ; j++ ){
-            if( this->sensor_values[i][k] > temp )
-                temp = this->sensor_values[i][j];
+    for( r=0 ; r < 8 ; r++ ){
+        for( c=0 ; c < 8 ; c++ ){
+            if( this->sensor_values[r][c] > temp )
+                temp = this->sensor_values[r][c];
         }
     }
-    return;
+    this->max = temp;
 }
 
-float frame::set_mean(){
+void frame::set_mean(){
     float sum = 0;
     
-    for( i=0 ; i < 8 ; i++ ){
-        for( j=0 ; j < 8 ; j++ ){
-            sum += this->sensor_values[i][j];
+    for( r=0 ; r < 8 ; r++ ){
+        for( c=0 ; c < 8 ; c++ ){
+            sum += this->sensor_values[r][c];
         }
     }
     this->mean = sum/64;
 }
 
-void frame::get_data( GridEYE gridward ){
-    for( i=0 ; i < 8 ; i++ ){
-        for( j=0 ; j < 8 ;  j++){
-            gridward.test( i,j );
-            this->sensor_values[i][j] = gridward.pixelL;  // Receive value from device, end transmission
+short frame::get_max(){
+    return this->max;
+}
+
+float frame::get_mean(){
+    return this->mean;
+}
+
+void frame::import_data( GridEYE gridward ){
+    for( r=0 ; r < 8 ; r++ ){
+        for( c=0 ; c < 8 ;  c++){
+            gridward.test( r,c );
+            this->sensor_values[r][c] = gridward.pixelL;  // Receive value from device, end transmission
         }
     }
     return;
@@ -100,16 +107,16 @@ void frame::get_data( GridEYE gridward ){
 
 void frame::print(){
     
-    for( j=0 ; j < 8 ; j++){                                        // Frame No. : 1
+    for( c=0 ; c < 8 ; c++){                                        // Frame No. : 1
         cout << "\t"                                    // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-        << "[ " << this->sensor_values[j][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-        << "[ " << this->sensor_values[j][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-        << "[ " << this->sensor_values[j][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-        << "[ " << this->sensor_values[j][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-        << "[ " << this->sensor_values[j][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-        << "[ " << this->sensor_values[j][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-        << "[ " << this->sensor_values[j][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-        << "[ " << this->sensor_values[j][7] << " ] " << endl;
+        << "[ " << this->sensor_values[c][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+        << "[ " << this->sensor_values[c][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+        << "[ " << this->sensor_values[c][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+        << "[ " << this->sensor_values[c][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+        << "[ " << this->sensor_values[c][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+        << "[ " << this->sensor_values[c][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+        << "[ " << this->sensor_values[c][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+        << "[ " << this->sensor_values[c][7] << " ] " << endl;
     }
     return;
 }
@@ -127,14 +134,17 @@ frame::~frame(){
 
 /*/ --------------- Video Constructor --------------- /*/
 video::video(){
-
     frame* temp;
     
-    for( i=0 ; i<frameCount ; i++){
-        //temp = new frame( GridEYE gridward );//IDK What youre doing here but it doesnt like it
-        this->data.push_back( temp );
+    for( r=0 ; r<frameCount ; r++){
+        GridEYE gridward( gridEyeAddr );    // Initialize and I2C GridEYE stuff
+        temp = new frame( gridward );       // Collect data and create frame
+        this->data.push_back( temp );       // Store pointer in data Vector
         this->frameCount++;
     }
+    
+    this->set_max();
+    this->set_mean();
     return;
 }
 
@@ -146,57 +156,63 @@ void video::exportVideo( string filename ){
     frame* temp;
 
     newOutput << "Number of frames: " << frameCount << " " << endl;    // Copies data from memory to file
-    for( i = 0; i < frameCount; i++ ){
-        newOutput << "Frame No. : " << i << endl;
-        temp = this->data[i];
+    for( r=0; r < frameCount; r++ ){
+        newOutput << "Frame No. : " << r << endl;
+        temp = this->data[r];
                                                                    // Example Output
-        for( j=0 ; j < 8 ; j++){                                   // Frame No. : 1
-                newOutput << "\t[" << this->access( j, 0 ) << "] " // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8]
-                          <<   "[" << this->access( j, 1 ) << "] " // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-                          <<   "[" << this->access( j, 2 ) << "] " // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-                          <<   "[" << this->access( j, 3 ) << "] " // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-                          <<   "[" << this->access( j, 4 ) << "] " // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-                          <<   "[" << this->access( j, 5 ) << "] " // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-                          <<   "[" << this->access( j, 6 ) << "] " // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-                          <<   "[" << this->access( j, 7 ) << "] " // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+        for( c=0; c < 8 ; c++){                                   // Frame No. : 1
+                newOutput << "\t[" << this->access( c, 0 ) << "] " // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8]
+                          <<   "[" << this->access( c, 1 ) << "] " // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+                          <<   "[" << this->access( c, 2 ) << "] " // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+                          <<   "[" << this->access( c, 3 ) << "] " // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+                          <<   "[" << this->access( c, 4 ) << "] " // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+                          <<   "[" << this->access( c, 5 ) << "] " // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+                          <<   "[" << this->access( c, 6 ) << "] " // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+                          <<   "[" << this->access( c, 7 ) << "] " // TAB [57] [58] [59] [60] [61] [62] [63] [64]
                           << endl;
         }
-        /*/
+        
         newOutput << "\tMax value: " << this->get_max() << endl
-        << "\tAverage: " << this->get_mean() << endl << endl;
-         /*/
+                  << "\tAverage: "   << this->get_mean() << endl << endl;
+        
     }
     
     newOutput.close( ); // Close file
     return;
 }
 
-short video::set_max(){
-/*/
+void video::set_max(){
+    short temp;
+    
     while(temp < this->frameCount){
         frame* framePtr = data[temp];
-        for( i=0 ; i < 8 ; i++ ){
-            for( j=0 ; j < 8 ; j++ ){
-                if( framePtr->sensor_values[i][k] > temp )
-                    temp = framePtr->sensor_values[i][j];
+        for( r=0 ; r < 8 ; r++ ){
+            for( c=0 ; c < 8 ; c++ ){
+                if( framePtr->access(r,c) > temp )
+                    temp = framePtr->access(r,c);
             }
         }
+        framePtr->new_max( temp );
         temp++;
     }
 }
 
-float video::set_mean(){
+void video::set_mean(){
+    short temp;
+    float sum;
+    
     while(temp < this->frameCount){
         frame* framePtr = data[temp];
-        for( i=0 ; i < 8 ; i++ ){
-            for( j=0 ; j < 8 ; j++ ){
-                sum += framePtr->sensor_values[i][j];
+        for( r=0 ; r < 8 ; r++ ){
+            for( c=0 ; c < 8 ; c++ ){
+                sum += framePtr->access(r,c);
             }
         }
-        framePtr->mean = sum/64;
+        sum = sum/64;
+        framePtr->new_mean( sum );
         temp++;
     }
- /*/
+ 
 }
  
 /*/ --------------- End Video Methods --------------- /*/

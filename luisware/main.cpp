@@ -23,12 +23,12 @@
 #include <fstream>
 #include <vector>
 #include <string>
-
+#include "projectClasses.h"
 
 #define GRIDEYEADDRESS 0x68
 
 using namespace sf;
-
+/*/
 class GridEYE{
     private:
     
@@ -45,12 +45,12 @@ class GridEYE{
 
 GridEYE::GridEYE(int address){
     /*/
-     I2C begin transmission @ address
+     //I2C begin transmission @ address
      //Inisilize sensor
     /*/
 }
 int GridEYE::read(int row, int col){
-    /*/ read code /*/
+    
 }
 void GridEYE::reset(void){
 
@@ -66,7 +66,7 @@ void GridEYE::update(void){
 }
 
 
-/*/
+
 class terminal {
     private:
     std::string Row1;

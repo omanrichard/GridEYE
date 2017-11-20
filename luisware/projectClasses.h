@@ -43,8 +43,8 @@ private:                            // 0  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
     short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
                                     // 4  [] [] [] [] [] [] [] []
-    void set_max2();                 // 5  [] [] [] [] [] [] [] []
-    void set_mean2();                // 6  [] [] [] [] [] [] [] []
+    virtual void set_max();         // 5  [] [] [] [] [] [] [] []
+    virtual void set_mean();        // 6  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     frame();
@@ -52,14 +52,16 @@ public:
     ~frame();
     
     short access( short row , short col );
-    virtual short set_max();
-    virtual float set_mean();
+    short get_max();
+    float get_mean();
+    void new_max( short newMax );
+    void new_mean( float newMean );
     
     virtual void print();                  
-    void get_data( GridEYE gridward );
+    void import_data( GridEYE gridward );
 
 };
-
+/*
 class frame_mask : public frame {
 private:
     vector< string > scale;
@@ -73,23 +75,24 @@ public:
     void set_mask();
     
 };
+*/
 /*/ --------------- End Frame Class --------------- /*/
 
 /*/ --------------- Video Class --------------- /*/
 class video : public frame{
 private:
-    short frameCount;   // 10 Frames -> 1 Second
+    short frameCount;       // 10 Frames -> 1 Second
     vector< frame* > data;  // Storing up to 31,800 frames maximum
+    
+    void set_max();
+    void set_mean();
     
 public:
     video();
     ~video();
     
     void exportVideo( string filename );
-    void print();
-    
-    short set_max();
-    float set_mean();
+  //  void print();
 };
 /*/ --------------- End Video Class --------------- /*/
 
