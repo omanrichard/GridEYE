@@ -28,45 +28,8 @@
 #define GRIDEYEADDRESS 0x68
 
 using namespace sf;
-/*/
-class GridEYE{
-    private:
-    
-    public:
-    GridEYE(int address); //Hint: its at 0x68
-    int read(int row, int col);
-    void reset(void);
-    void update(void);
-    void test(int row, int col);//Draw Test pattern
-    int r,g,b;
-    int FPS = 10;
-    short pixelL;
-};
 
-GridEYE::GridEYE(int address){
-    /*/
-     //I2C begin transmission @ address
-     //Inisilize sensor
-    /*/
-}
-int GridEYE::read(int row, int col){
-    
-}
-void GridEYE::reset(void){
-
-}
-void GridEYE::test(int row, int col){
-    r = rand() % 255;
-    g = rand() % 255;
-    b = rand() % 255;
-    pixelL = rand() % 255;
-}
-void GridEYE::update(void){
-    
-}
-
-
-
+/*
 class terminal {
     private:
     std::string Row1;
@@ -83,6 +46,7 @@ class terminal {
     void clear(void);
     void draw(void);
 };
+     
 //length = 625, width = 94, x1 = 94, y1 = 596
 terminal::terminal(int x1, int y1, int length, int width){
     sf::RectangleShape terminal(sf::Vector2f( length, width ));
@@ -97,8 +61,8 @@ void terminal::draw(void){
     window.draw(terminalHeader);
     window.draw(terminal);
 }
-/*/
 
+*/
 
 GridEYE gridward(GRIDEYEADDRESS);
 
@@ -116,9 +80,16 @@ int rootY = 100;
 int main(int, char const**)
 {
     
+//----------- Frame storage test -----------
+    video test( gridward );         // Creates "video" using gridward in constructor
+    string testFile = "test.txt";
+    test.print();                   // Prints the random data in terminal
+    test.exportVideo( testFile );   // Exports to "test.txt"
+    
 //--------------------- Set up -----------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "ECE3220 Final Project");
+    
 /*
     // Set the Icon
     sf::Image icon;
@@ -131,19 +102,16 @@ int main(int, char const**)
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
-    sf::Text text("Boss Camera", font, 50);
-    text.setFillColor(sf::Color::Black);
 
     // Load a music to play
-*    sf::Music music;
+    sf::Music music;
     if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
         return EXIT_FAILURE;
     }
 */
     
-    // Load sprites to display
     
-    //----------------- Menu ---------------------
+    //----------------- Menu -----------------
     Texture t_background;
     if(!t_background.loadFromFile("texture2.jpg")){
         return EXIT_FAILURE;
@@ -151,7 +119,6 @@ int main(int, char const**)
     Texture t_settings;
     if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
-        
     }
     Texture t_record;
     if (!t_record.loadFromFile("record.png")) {
@@ -181,13 +148,13 @@ int main(int, char const**)
     if(!t_close.loadFromFile("cancel.png")){
         return EXIT_FAILURE;
     }
+    
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
     }
    
-    
-    //----------------- Camera Grid ----------------
+    //----------------- Camera Grid -----------------
     int gridx, gridy;
     RectangleShape grid[8][8];
     
@@ -203,9 +170,6 @@ int main(int, char const**)
         }
     }
     
-    
-  
-    
     sf::RectangleShape line( Vector2f( 1, 700) );
     line.setFillColor( Color::Black );
     line.setPosition(94, 0);
@@ -214,8 +178,8 @@ int main(int, char const**)
     line2.setFillColor( Color::Black );
     line2.setPosition(94, 606);
     
- /*/----------------Draw Toolbar----------------/*/
-   
+    
+    //----------------Draw Toolbar----------------
     sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
     toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
     toolbarFrame.setPosition(0, 0);
@@ -271,10 +235,7 @@ int main(int, char const**)
     
     
     
- /*/-----------------Draw Terminal Window-------------------/*/
-    
-    
-    
+    //-----------------Draw Terminal Window-------------------
     std::string terminalTextArray[6];
     
     sf::Text terminalText1("root@thermalCamera: Terminal text placeholder line 1", font, 12);
@@ -311,9 +272,7 @@ int main(int, char const**)
    
     
     
-    /*/---------------Background---------------/*/
-    
-    
+    //----------------- Background -----------------
     //sf::RectangleShape background(sf::Vector2f( 700, 700 ));
     //background.setFillColor(sf::Color(130, 117, 135));
     //background.setPosition(0, 0);
@@ -331,15 +290,10 @@ int main(int, char const**)
     backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
     backgroundHeader3.setPosition(94, 75);
     
-    
-    
     sf::RectangleShape topbarBackground(sf::Vector2f( 606, 75 ));
     topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
     topbarBackground.setPosition(94, 0);
   
-    
-    
-    
     sf::Text text("Thermal Camera", font, 50);
     text.setFillColor(sf::Color::White);
     text.setPosition( 109 , 10);
@@ -352,9 +306,9 @@ int main(int, char const**)
     recordingTimeText.setFillColor(sf::Color::White);
     recordingTimeText.setPosition( 590 , 45);
     
-    
-    
-    /*/----Settings Objects----/*/
+
+    //----------------- Settings Objects -----------------
+
     sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
     settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
     settingsBackground.setPosition(-500, -500);
@@ -364,7 +318,6 @@ int main(int, char const**)
     settingsExit.scale(0.1, 0.1);
     
     //Settings Buttons Declare
-
     RectangleShape settingsTenFPS(sf::Vector2f(75, 25 ));
     RectangleShape settingsOneFPS(sf::Vector2f(75, 25 ));
     RectangleShape settingsMinsUp(sf::Vector2f(50,25 ));
@@ -378,7 +331,7 @@ int main(int, char const**)
     RectangleShape settingsMinsBox(sf::Vector2f(50, 50 ));
     RectangleShape settingsSecondsBox(sf::Vector2f(50, 50 ));
     
-    //Set Button Colors
+    // Set Button Colors
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
     settingsOneFPS.setFillColor(sf::Color(135,206,250));
     
@@ -395,11 +348,7 @@ int main(int, char const**)
     settingsReset.setFillColor(sf::Color(30,144,255));
     settingsApply.setFillColor(sf::Color(30,144,255));
     
-    
-    
-    
-    //Set Boarders
-     settingsRangeHuman.setOutlineColor(sf::Color::White);
+    // Set Borders
     settingsTenFPS.setOutlineColor(sf::Color::White);
     settingsOneFPS.setOutlineColor(sf::Color::White);
     
@@ -417,9 +366,8 @@ int main(int, char const**)
     settingsApply.setOutlineColor(sf::Color::White);
     
    
-    //settings Button Position
-    
-    settingsTenFPS.setPosition(rootx+100 ,rootY+75 );//Default
+    // Settings Button Position
+    settingsTenFPS.setPosition(rootx+100 ,rootY+75 );   //Default
     settingsOneFPS.setPosition(rootx+325 ,rootY+75 );
     
     settingsMinsBox.setPosition(rootx+75 ,rootY+175 );
@@ -435,14 +383,7 @@ int main(int, char const**)
     settingsReset.setPosition(rootx+50 ,rootY+350 );
     settingsApply.setPosition(rootx+300 ,rootY+350 );
     
-
-    
-    
-    
-    
-    
-    
-    //Settings Text Declare
+    // Settings Text Declare
     Text settingsFPSText("Frames Per Second",font, 30);
     Text settingsFPSTextValTen("10 FPS", font, 20);
     Text settingsFPSTextValOne("1 FPS",font,20);
@@ -455,8 +396,8 @@ int main(int, char const**)
     Text settingsResetText("Reset Sensor",font, 20);
     Text settingsApplyText("Apply Settings", font, 20);
     
-    //Settings Text Color
-    settingsBackground.setPosition(rootx,rootY);//Move settings background in place
+    // Settings Text Color
+    settingsBackground.setPosition(rootx,rootY);    //Move settings background in place
     settingsFPSText.setFillColor(sf::Color::Black);
     settingsFPSTextValTen.setFillColor(sf::Color::Black);
     settingsFPSTextValOne.setFillColor(sf::Color::Black);
@@ -469,9 +410,7 @@ int main(int, char const**)
     settingsResetText.setFillColor(sf::Color::Black);
     settingsApplyText.setFillColor(sf::Color::Black);
     
-    
-    
-    
+    // Settings Text Position
     settingsFPSText.setPosition(rootx+50,rootY+25 );
     settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
     settingsFPSTextValOne.setPosition(rootx+325+15 ,rootY+75 );
@@ -483,23 +422,20 @@ int main(int, char const**)
     settingsRangeTextHuman.setPosition(rootx+325+20 ,rootY+300 );
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
-    
-    
-    
-    
 
     
     
-/*/----Draw ----/*/
-    // Play the music
-    //music.play();
+/*/---------- Draw ----------/*/
+// Play the music
+//music.play();
 
-/*/------------------------Start the game loop-----------------------
+/*/
+ ------------------------ Start the game loop -----------------------
  --------------------------------------------------------------------
  --------------------------------------------------------------------
- ------------------------------------------------------------------/*/
+ --------------------------------------------------------------------
+/*/
    
-    
     while (window.isOpen())
     {
         for( i=0 ; i < 8 ; i++ ){
@@ -518,7 +454,7 @@ int main(int, char const**)
         // Process events
         sf::Event event;
         while (window.pollEvent(event)){
-            //Menu selection
+            // Menu selection
             if( menuLayer == 0){
             
                 if(event.type == sf::Event::MouseMoved){
@@ -569,8 +505,8 @@ int main(int, char const**)
                     }
                     
                 }
-                else if(event.mouseMove.x > 94){//Mouse not over on toolbar
-                    selection.setPosition(-100, -100);//Move Offscreen
+                else if(event.mouseMove.x > 94){        //Mouse not over on toolbar
+                    selection.setPosition(-100, -100);  //Move Offscreen
                     selectionText.setString("Void");
                     selectionText.setPosition( -100 , -100);//Move Offscreen
                     selectionTextBox.setPosition(-100,-100);//Move Offscreen
@@ -580,7 +516,7 @@ int main(int, char const**)
                 if(event.type == sf::Event::MouseMoved){
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                         sf::Vector2i position = sf::Mouse::getPosition(window);
-                        if (position.x > 0 && position.x < 95){//Within toolbar
+                        if (position.x > 0 && position.x < 95){         //Within toolbar
                             if (position.y > 0 && position.y < 119){
                                 settingsBackground.setPosition(150, 100);
                                 menuLayer = 1;
@@ -596,14 +532,14 @@ int main(int, char const**)
                 //Settings
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 sf::Vector2i position = sf::Mouse::getPosition(window);
-                if (position.x > 0 && position.x < 95){//Within toolbar
+                if (position.x > 0 && position.x < 95){     //Within toolbar
                     if (position.y > 0 && position.y < 119){
                        
                         menuLayer = 1;
                     }
                 }
                 //exit
-                if (position.x > 0 && position.x < 95){//Within toolbar
+                if (position.x > 0 && position.x < 95){     //Within toolbar
                     if (position.y > 590 && position.y < 700){
                         window.close();
                         
@@ -612,8 +548,8 @@ int main(int, char const**)
             }
             }
             
-            /*/----Layer 1 "Settings"----/*/
-            if(menuLayer == 1){ // Hit Boxes
+            /*/---------- Layer 1 "Settings" ----------/*/
+            if(menuLayer == 1){
                 // Exit Button
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -625,7 +561,8 @@ int main(int, char const**)
                     }
                     
                 }
-                //Select: 30,144,255 Unselect: 135,206,250
+                
+                // Select: 30,144,255 Unselect: 135,206,250
                 // 10 FPS
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -912,7 +849,7 @@ int main(int, char const**)
             }
         
           
-        /*/----Draw Toolbar----/*/
+        /*/---------- Draw Toolbar ----------/*/
             
         window.draw(toolbarFrame);
         window.draw(toolbarHeader);
@@ -931,18 +868,17 @@ int main(int, char const**)
         window.draw(selectionTextBox);
         window.draw(selectionText);
         
-        //Draw output Grid
+        // Draw output Grid
        
         if(menuLayer == 0){
-        for( i=0 ; i < 8 ; i++ ){
-            for( j=0 ; j<8 ; j++ ){
-                window.draw(grid[i][j]);            }
-        }
+            for( i=0 ; i < 8 ; i++ ){
+                for( j=0 ; j<8 ; j++ ){
+                    window.draw(grid[i][j]);
+                }
+            }
         }
        
-        
-        
-        //Draw the Terminal window
+        // Draw the Terminal window
         std::string newText;
         
         for(int i = 0; i < 5; i++){

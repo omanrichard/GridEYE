@@ -15,7 +15,7 @@
 #define gridEyeAddr 0x68 // or 0x69 Address
 
 using namespace std;
-int r,c;
+int row,col;
 
 /*/ --------------- GridEYE Constructor --------------- /*/
 GridEYE::GridEYE(int address){
@@ -43,9 +43,9 @@ void GridEYE::update(void){
 /*/ --------------- Frame Constructor --------------- /*/
 
 frame::frame(){
-    for( r=0 ; r < 8 ; r++ ){
-        for( c=0 ; c < 8 ; c++){
-            this->sensor_values[r][c] = 0;
+    for( row=0 ; row < 8 ; row++ ){
+        for( col=0 ; col < 8 ; col++){
+            this->sensor_values[row][col] = 0;
         }
     }
     this->mean = 0;
@@ -54,12 +54,15 @@ frame::frame(){
 }
 
 frame::frame(GridEYE gridward){
-    for( r=0 ; r < 8 ; r++ ){
-        for( c=0 ; c < 8 ;  c++){
-            gridward.test( r,c );
-            this->sensor_values[r][c] = gridward.pixelL;  // Receive value from device, end transmission
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            gridward.test( row,col );
+            gridward.pixelL = gridward.g;
+            this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
         }
     }
+    set_max();
+    set_mean();
     return;
 }
 
@@ -67,10 +70,10 @@ frame::frame(GridEYE gridward){
 void frame::set_max(){
     short temp = 0;
     
-    for( r=0 ; r < 8 ; r++ ){
-        for( c=0 ; c < 8 ; c++ ){
-            if( this->sensor_values[r][c] > temp )
-                temp = this->sensor_values[r][c];
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            if( this->sensor_values[row][col] > temp )
+                temp = this->sensor_values[row][col];
         }
     }
     this->max = temp;
@@ -79,9 +82,9 @@ void frame::set_max(){
 void frame::set_mean(){
     float sum = 0;
     
-    for( r=0 ; r < 8 ; r++ ){
-        for( c=0 ; c < 8 ; c++ ){
-            sum += this->sensor_values[r][c];
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            sum += this->sensor_values[row][col];
         }
     }
     this->mean = sum/64;
@@ -96,10 +99,10 @@ float frame::get_mean(){
 }
 
 void frame::import_data( GridEYE gridward ){
-    for( r=0 ; r < 8 ; r++ ){
-        for( c=0 ; c < 8 ;  c++){
-            gridward.test( r,c );
-            this->sensor_values[r][c] = gridward.pixelL;  // Receive value from device, end transmission
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            gridward.test( row , col );
+            this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
         }
     }
     return;
@@ -107,16 +110,16 @@ void frame::import_data( GridEYE gridward ){
 
 void frame::print(){
     
-    for( c=0 ; c < 8 ; c++){                                        // Frame No. : 1
+    for( col = 0 ; col < 8 ; col++){                                        // Frame No. : 1
         cout << "\t"                                    // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-        << "[ " << this->sensor_values[c][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-        << "[ " << this->sensor_values[c][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-        << "[ " << this->sensor_values[c][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-        << "[ " << this->sensor_values[c][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-        << "[ " << this->sensor_values[c][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-        << "[ " << this->sensor_values[c][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-        << "[ " << this->sensor_values[c][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-        << "[ " << this->sensor_values[c][7] << " ] " << endl;
+        << "[ " << this->sensor_values[col][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+        << "[ " << this->sensor_values[col][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+        << "[ " << this->sensor_values[col][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+        << "[ " << this->sensor_values[col][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+        << "[ " << this->sensor_values[col][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+        << "[ " << this->sensor_values[col][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+        << "[ " << this->sensor_values[col][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+        << "[ " << this->sensor_values[col][7] << " ] " << endl;
     }
     return;
 }
@@ -133,16 +136,15 @@ frame::~frame(){
 
 
 /*/ --------------- Video Constructor --------------- /*/
-video::video(){
+video::video( GridEYE gridward ){
     frame* temp;
-    
-    for( r=0 ; r<frameCount ; r++){
-        GridEYE gridward( gridEyeAddr );    // Initialize and I2C GridEYE stuff
+    gridward.runTime=1;
+    this->frameCount = (gridward.FPS * gridward.runTime);
+    for( int x = 0 ; x < frameCount ; x++){
         temp = new frame( gridward );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
-        this->frameCount++;
+        //this->frameCount++;
     }
-    
     this->set_max();
     this->set_mean();
     return;
@@ -150,70 +152,94 @@ video::video(){
 
 /*/ --------------- Video Methods --------------- /*/
 void video::exportVideo( string filename ){
-    fstream newOutput;  // Creates/Opens new output file
+    fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );
     
-    frame* temp;
-
     newOutput << "Number of frames: " << frameCount << " " << endl;    // Copies data from memory to file
-    for( r=0; r < frameCount; r++ ){
-        newOutput << "Frame No. : " << r << endl;
-        temp = this->data[r];
-                                                                   // Example Output
-        for( c=0; c < 8 ; c++){                                   // Frame No. : 1
-                newOutput << "\t[" << this->access( c, 0 ) << "] " // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8]
-                          <<   "[" << this->access( c, 1 ) << "] " // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-                          <<   "[" << this->access( c, 2 ) << "] " // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-                          <<   "[" << this->access( c, 3 ) << "] " // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-                          <<   "[" << this->access( c, 4 ) << "] " // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-                          <<   "[" << this->access( c, 5 ) << "] " // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-                          <<   "[" << this->access( c, 6 ) << "] " // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-                          <<   "[" << this->access( c, 7 ) << "] " // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+    
+    for( int x = 0; x < frameCount; x++ ){                            // Example Output
+        frame* temp = (data[x]);
+        newOutput << "Frame No. : " << x << endl;                     // Frame No. : 1
+        for( int y = 0; y < 8 ; y++){
+                newOutput << "\t[" << temp->access( y, 0 ) << "] "    // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8]
+                          <<   "[" << temp->access( y, 1 ) << "] "    // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+                          <<   "[" << temp->access( y, 2 ) << "] "    // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+                          <<   "[" << temp->access( y, 3 ) << "] "    // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+                          <<   "[" << temp->access( y, 4 ) << "] "    // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+                          <<   "[" << temp->access( y, 5 ) << "] "    // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+                          <<   "[" << temp->access( y, 6 ) << "] "    // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+                          <<   "[" << temp->access( y, 7 ) << "] "    // TAB [57] [58] [59] [60] [61] [62] [63] [64]
                           << endl;
         }
-        
-        newOutput << "\tMax value: " << this->get_max() << endl
-                  << "\tAverage: "   << this->get_mean() << endl << endl;
-        
+        newOutput << "\tMax value: " << temp->get_max() << endl
+                  << "\tAverage: "   << temp->get_mean() << endl << endl;
     }
-    
     newOutput.close( ); // Close file
     return;
 }
 
 void video::set_max(){
     short temp;
+    frame* framePtr;
     
     while(temp < this->frameCount){
-        frame* framePtr = data[temp];
-        for( r=0 ; r < 8 ; r++ ){
-            for( c=0 ; c < 8 ; c++ ){
-                if( framePtr->access(r,c) > temp )
-                    temp = framePtr->access(r,c);
+        framePtr = data[temp];
+        for( row = 0 ; row < 8 ; row++ ){
+            for( col = 0 ; col < 8 ;  col++){
+                if( framePtr->access(row,col) > temp )
+                    temp = framePtr->access(row,col);
             }
         }
-        framePtr->new_max( temp );
         temp++;
     }
+    framePtr->new_max( temp );
+    return;
 }
 
 void video::set_mean(){
     short temp;
     float sum;
+    frame* framePtr = NULL;
     
     while(temp < this->frameCount){
-        frame* framePtr = data[temp];
-        for( r=0 ; r < 8 ; r++ ){
-            for( c=0 ; c < 8 ; c++ ){
-                sum += framePtr->access(r,c);
+        framePtr = data[temp];
+        for( row = 0 ; row < 8 ; row++ ){
+            for( col = 0 ; col < 8 ;  col++){
+                sum += framePtr->get_mean();
             }
         }
-        sum = sum/64;
-        framePtr->new_mean( sum );
         temp++;
     }
- 
+    framePtr->new_mean( sum / (64*frameCount) );
 }
- 
+
+void video::print(){
+    frame* temp;
+    for( row = 0 ; row < frameCount ; row++ ){
+        temp = this->data[row];
+        cout << "Frame No. : " << row + 1 << endl;
+        for( col = 0 ; col < 8 ; col++){                     // Frame No. : 1
+            cout << "\t"                               // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+            << "[ " << temp->access(col, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+            << "[ " << temp->access(col, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+            << "[ " << temp->access(col, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+            << "[ " << temp->access(col, 3) << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+            << "[ " << temp->access(col, 4) << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+            << "[ " << temp->access(col, 5) << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+            << "[ " << temp->access(col, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+            << "[ " << temp->access(col, 7) << " ]" << endl;
+        }
+    }
+}
+
+void frame::new_max( short newMax ){
+    this->max = newMax;
+}
+void frame::new_mean( float newMean ){
+    this->mean = newMean;
+}
+video::~video(){
+   
+}
 /*/ --------------- End Video Methods --------------- /*/
 

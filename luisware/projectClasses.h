@@ -30,6 +30,7 @@ public:
     void test(int row, int col);//Draw Test pattern
     int r,g,b;
     int FPS = 10;
+    int runTime;            // Run Time in Seconds
     short pixelL;
 };
 
@@ -54,6 +55,7 @@ public:
     short access( short row , short col );
     short get_max();
     float get_mean();
+    
     void new_max( short newMax );
     void new_mean( float newMean );
     
@@ -88,11 +90,11 @@ private:
     void set_mean();
     
 public:
-    video();
+    video( GridEYE gridward );
     ~video();
     
     void exportVideo( string filename );
-  //  void print();
+    void print();
 };
 /*/ --------------- End Video Class --------------- /*/
 
