@@ -22,7 +22,7 @@ friend class frame;
 private:
     
 public:
-    GridEYE(int address); //Hint: its at 0x68
+    GridEYE(int address); //Hint: My board has it set at 0x68 :)
     
     int read(int row, int col);
     void reset(void);
@@ -110,6 +110,25 @@ public:
     void print();
 };
 /*/ --------------- End Session Class --------------- /*/
+
+/*/ --------------- Terminal (Stack) Class --------------- /*/
+class terminal{
+    private:
+    string rootText; //Text before input
+    vector<string> stack; //Text vector
+    public:
+        terminal(int size, string text = "root");
+        void setRoot(string text);//Sets text before input
+        void print(string input); //Prints on same line
+        
+        string read(int index);//Function to allow SFML to read lines from the terminal
+    
+    
+
+};
+
+/*/ --------------- End Terminal (Stack) Class --------------- /*/
+
 
 #endif /* projectClasses_h */
 

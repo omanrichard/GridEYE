@@ -64,8 +64,8 @@ void terminal::draw(void){
 
 */
 
-GridEYE gridward(GRIDEYEADDRESS);
-
+GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
+terminal stackward(6, "Thermal Camera");            //Creats the terminal Stack with 6 black lines
 // Here is a small helper for you! Have a look.
 //#include "ResourcePath.hpp"
 
@@ -571,26 +571,31 @@ int main(int, char const**)
                          //Start Capture
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
+                            stackward.print("Starting Capture");
                             //set led to green
                             }
                          //Play capture
                          if (position.y > 189 && position.y < 308){
                              recordStatus = false;//Stop recording data
+                              stackward.print("Entering Playback Mode");
                              menuLayer = 2;//Change layer to playback
                          }
                          //Stop capture
                          if (position.y >308 && position.y < 402){
                              recordStatus = false;//Stop recording data
+                              stackward.print("Stopping Capture");
                              //set led to red
                          }
                          //Save capture
                          if (position.y > 402 && position.y < 496){
                              recordStatus = false;//Stop recording data
+                              stackward.print("Saving Capture");
                              //set led to red
                          }
                          //Delete capture
                          if (position.y > 496 && position.y < 590){
                              recordStatus = false;//Stop recording data
+                              stackward.print("Deleting Capture");
                              //set led to red
                          }
                          //exit
@@ -934,24 +939,17 @@ int main(int, char const**)
         }
        
         // Draw the Terminal window
-        std::string newText;
-        
-        for(int i = 0; i < 5; i++){
-            terminalTextArray[i] = terminalTextArray[i+1];
-        }
-        terminalTextArray[5] = newText;
-       /*/
-        terminalText1.setString(terminalTextArray[0]);
-        terminalText2.setString(terminalTextArray[1]);
-        terminalText3.setString(terminalTextArray[2]);
-        terminalText4.setString(terminalTextArray[3]);
-        terminalText5.setString(terminalTextArray[4]);
-        terminalText6.setString(terminalTextArray[5]);
-        /*/
-        
         
         window.draw(terminalHeader);
         window.draw(terminal);
+        
+        terminalText1.setString(stackward.read(5));
+        terminalText2.setString(stackward.read(4));
+        terminalText3.setString(stackward.read(3));
+        terminalText4.setString(stackward.read(2));
+        terminalText5.setString(stackward.read(1));
+        terminalText6.setString(stackward.read(0));
+        
         window.draw(terminalText1);
         window.draw(terminalText2);
         window.draw(terminalText3);

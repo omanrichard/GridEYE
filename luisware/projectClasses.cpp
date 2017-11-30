@@ -243,3 +243,24 @@ video::~video(){
 }
 /*/ --------------- End Video Methods --------------- /*/
 
+/*/ --------------- Terminal (Stack) Methods --------------- /*/
+terminal::terminal(int size, string text){
+    for(int i = 0; i <= size; i++){
+        stack.push_back(" "); //Adds empty values to prevent crash
+   }
+    rootText = text;
+    
+}
+
+void terminal::print(string input){
+    stack.insert(stack.begin(),rootText+":"+input);
+    
+}
+string terminal::read(int index){
+    return stack[index];
+}
+void terminal::setRoot(string text){
+    rootText = text;
+}
+/*/ --------------- End Terminal (Stack) Methods --------------- /*/
+
