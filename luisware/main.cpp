@@ -70,12 +70,16 @@ GridEYE gridward(GRIDEYEADDRESS);
 //#include "ResourcePath.hpp"
 
 int i,j;
-int recordMins = 0;
-int recordSeconds = 0;
+int recordMins = 0; //Seconds to be recorded
+int recordSeconds = 0;//Minuetes to be recorded
+int recordTrackerSeconds = 0;//Current number of seconds recorded
+int recordTrackerMins = 0;//Current number of mins recorded
+bool recordStatus = false; //Not recording
+int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, Playback is 2;
 
-int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, ect.
-int rootx = 150;
-int rootY = 100;
+
+int rootx = 150;//What are these used for?
+int rootY = 100;//What are these used for?
 
 int main(int, char const**)
 {
@@ -298,9 +302,9 @@ int main(int, char const**)
     text.setFillColor(sf::Color::White);
     text.setPosition( 109 , 10);
     
-    sf::Text r_text("Standy-by", font, 25);
-    r_text.setFillColor(sf::Color::Green);
-    r_text.setPosition( 550 , 10);
+    sf::Text recordText("Standy-by", font, 25);
+    recordText.setFillColor(sf::Color::Green);
+    recordText.setPosition( 550 , 10);
     
     sf::Text recordingTimeText("00:00", font, 20);
     recordingTimeText.setFillColor(sf::Color::White);
@@ -431,13 +435,40 @@ int main(int, char const**)
 
 /*/
  ------------------------ Start the game loop -----------------------
- --------------------------------------------------------------------
+ ---------------------------GO Johnny GO!----------------------------
  --------------------------------------------------------------------
  --------------------------------------------------------------------
 /*/
    
-    while (window.isOpen())
+    while (window.isOpen()) //While the window is open.
     {
+        
+        //Recording Control
+        if(recordStatus == true){
+            recordText.setString("Recording");
+            recordText.setFillColor(sf::Color::Red);
+            recordingTimeText.setString(std::to_string(recordTrackerMins)+":"+std::to_string(recordTrackerSeconds));//Update Timer
+            
+            //Add something here to check if 1 second has passed. Maybe read the clock?
+            recordTrackerSeconds++;//Incriment seconds
+            
+            if(recordTrackerSeconds == 60){//At 60 seconds
+                recordTrackerSeconds = 0;//Reset seconds to zero
+                recordTrackerMins++;//Incriment Minuets
+            }
+            
+        }
+        if(recordStatus == false){
+            recordText.setString("Standy-by");
+             recordText.setFillColor(sf::Color::Green);
+            
+        }
+        
+        
+        
+        
+        
+        //sets each gridward pixel
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 gridx = (164+i*59);
@@ -451,11 +482,11 @@ int main(int, char const**)
         }
         window.draw(line);
         
-        // Process events
+        // Process events. This monitors mouse movements and clicks
         sf::Event event;
         while (window.pollEvent(event)){
             // Menu selection
-            if( menuLayer == 0){
+            if( menuLayer == 0){//This the
             
                 if(event.type == sf::Event::MouseMoved){
                     if(event.mouseMove.x > 0 && event.mouseMove.x < 94){
@@ -465,7 +496,7 @@ int main(int, char const**)
                             selectionText.setPosition(50 , 89);
                             selectionTextBox.setPosition(50,89);
                         }
-                        if(event.mouseMove.y > 119 && event.mouseMove.y < 189){//New
+                        if(event.mouseMove.y > 119 && event.mouseMove.y < 189){//New Capture
                         selection.setPosition(0, 119);
                         selectionText.setString("Capture");
                         selectionText.setPosition( 50 , 159);
@@ -528,25 +559,49 @@ int main(int, char const**)
             /*/----left click----/*/
             
             /*/----Layer 0 "Home"----/*/
-            if(menuLayer == 0){
-                //Settings
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                sf::Vector2i position = sf::Mouse::getPosition(window);
-                if (position.x > 0 && position.x < 95){     //Within toolbar
-                    if (position.y > 0 && position.y < 119){
-                       
-                        menuLayer = 1;
-                    }
-                }
-                //exit
-                if (position.x > 0 && position.x < 95){     //Within toolbar
-                    if (position.y > 590 && position.y < 700){
-                        window.close();
+            if(menuLayer == 0){//Base Layer
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
+                    sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
+                     if (position.x > 0 && position.x < 95){     //Within toolbar
+                         
+                         //Settings
+                        if (position.y > 0 && position.y < 119){
+                            menuLayer = 1; //Change layer to settings layer
+                        }
+                         //Start Capture
+                        if (position.y > 119 && position.y < 189){
+                            recordStatus = true;//Start recording data
+                            //set led to green
+                            }
+                         //Play capture
+                         if (position.y > 189 && position.y < 308){
+                             recordStatus = false;//Stop recording data
+                             menuLayer = 2;//Change layer to playback
+                         }
+                         //Stop capture
+                         if (position.y >308 && position.y < 402){
+                             recordStatus = false;//Stop recording data
+                             //set led to red
+                         }
+                         //Save capture
+                         if (position.y > 402 && position.y < 496){
+                             recordStatus = false;//Stop recording data
+                             //set led to red
+                         }
+                         //Delete capture
+                         if (position.y > 496 && position.y < 590){
+                             recordStatus = false;//Stop recording data
+                             //set led to red
+                         }
+                         //exit
+                        if (position.y > 590 && position.y < 700){
+                            window.close();//Close Window
                         
-                    }
-                }
-            }
-            }
+                        }
+                    }//End within toolbar
+                
+                }//End left mouse button click
+            }//End Menu layer 1
             
             /*/---------- Layer 1 "Settings" ----------/*/
             if(menuLayer == 1){
@@ -793,7 +848,7 @@ int main(int, char const**)
         window.draw(backgroundHeader3);
         
         window.draw(text);
-        window.draw(r_text);
+        window.draw(recordText);
         window.draw(recordingTimeText);
         
         
