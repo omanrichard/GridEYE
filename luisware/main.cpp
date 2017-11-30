@@ -795,6 +795,9 @@ int main(int, char const**)
                             settingsMinsText.setString(std::to_string(recordMins));
                             recordSeconds = 0;
                             settingsSecondsText.setString(std::to_string(recordSeconds));
+                            stackward.print("Reset","Grid-EYE");
+                    
+                            
                             
                         }
                     }
@@ -814,6 +817,7 @@ int main(int, char const**)
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsApply.setFillColor(sf::Color(30,144,255));
                             gridward.update();
+                            stackward.print("Settings Applied");
                             menuLayer = 0;
                         }
                     }

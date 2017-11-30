@@ -253,8 +253,11 @@ terminal::terminal(int size, string text){
 }
 
 void terminal::print(string input){
-    stack.insert(stack.begin(),rootText+":"+input);
+    stack.insert(stack.begin(),rootText+" : "+input);
     
+}
+void terminal::print(string input, string text){
+    stack.insert(stack.begin(),text+" : "+input);
 }
 string terminal::read(int index){
     return stack[index];

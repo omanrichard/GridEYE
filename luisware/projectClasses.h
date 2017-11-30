@@ -120,7 +120,7 @@ class terminal{
         terminal(int size, string text = "root");
         void setRoot(string text);//Sets text before input
         void print(string input); //Prints on same line
-        
+        void print(string input, string text);
         string read(int index);//Function to allow SFML to read lines from the terminal
     
     
