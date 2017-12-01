@@ -156,7 +156,7 @@ class terminal{
 
 };
 
-/*/ --------------- End Terminal (Stack) Class --------------- /*/
+/*/ --------------- ETerminal (Stack) Class --------------- /*/
 class playBar{
 private:
     sf::Font playBarFont;
@@ -181,8 +181,39 @@ public:
     void setCurrentTime(time_t currentTime);
     virtual void draw(sf::RenderWindow &window);
 };
-
-
+/*/ ---------------  Toolbar Class --------------- /*/
+class toolbar{
+    private:
+    
+    sf::Texture t_settings;
+    sf::Texture t_record;
+    sf::Texture t_stop;
+    sf::Texture t_play;
+    sf::Texture t_trash;
+    sf::Texture t_save;
+    sf::Texture t_quit;
+    
+    sf::Sprite settings;
+    sf::Sprite record;
+    sf::Sprite play;
+    sf::Sprite stop;
+    sf::Sprite save;
+    sf::Sprite trash;
+    sf::Sprite quit;
+    
+    sf::RectangleShape toolbarFrame;
+    sf::RectangleShape toolbarHeader;
+    
+    public:
+    toolbar(void);
+    virtual void draw(sf::RenderWindow &window);
+    
+    
+    
+    
+    
+};
+/*/ --------------- Toolbar Class --------------- /*/
 
 #endif /* projectClasses_h */
 

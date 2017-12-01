@@ -35,7 +35,7 @@ using namespace sf;
 //Global Objects
 GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
-
+toolbar toolward;
 
 int i,j;
 
@@ -72,65 +72,7 @@ int main(int, char const**)
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "ECE3220 Final Project");
     
-/*
-    // Set the Icon
-    sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
-    }
-    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    // Create a graphical text to display
-    sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
 
-    // Load a music to play
-    sf::Music music;
-    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
-        return EXIT_FAILURE;
-    }
-*/
-    
-    
-    //----------------- Menu -----------------
-    Texture t_background;
-    if(!t_background.loadFromFile("texture2.jpg")){
-        return EXIT_FAILURE;
-    }
-    Texture t_settings;
-    if (!t_settings.loadFromFile("settings.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_record;
-    if (!t_record.loadFromFile("record.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_stop;
-    if (!t_stop.loadFromFile("stop.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_play;
-    if (!t_play.loadFromFile("play.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_trash;
-    if (!t_trash.loadFromFile("trash.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_save;
-    if (!t_save.loadFromFile("save.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_quit;
-    if (!t_quit.loadFromFile("gravestone.png")) {
-        return EXIT_FAILURE;
-    }
-    Texture t_close;
-    if(!t_close.loadFromFile("cancel.png")){
-        return EXIT_FAILURE;
-    }
-    
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
@@ -163,16 +105,17 @@ int main(int, char const**)
     //---------------Draw Playbar-----------
     playBar progressBar(sf::Vector2f(35, 375),1);
     //----------------Draw Toolbar----------------
-    sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
-    toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
-    toolbarFrame.setPosition(0, 0);
+   
     
-    sf::RectangleShape toolbarHeader(sf::Vector2f( 5, 700 ));
-    toolbarHeader.setFillColor(sf::Color(0, 0, 0,100));
-    toolbarHeader.setPosition(89, 0);
     
-    Sprite background(t_background);
-    background.setPosition(0,0);
+ 
+  
+    
+    
+    
+    
+    
+    
     
     sf::RectangleShape selection(sf::Vector2f( 89, 70 ));
     selection.setFillColor(sf::Color(0, 0, 0, 100));
@@ -188,35 +131,16 @@ int main(int, char const**)
     
     
     
-    Sprite settings( t_settings );
-    settings.setPosition( 15, 30 );
-    settings.scale(0.50, 0.50);
     
-    Sprite record( t_record );
-    record.setPosition( 15, 109+15 );
-    record.scale(0.50, 0.50);
+    sf::Texture t_background;
+    sf::Sprite background;
+    background.setPosition(0,0);
     
-    Sprite play( t_play );
-    play.setPosition( 15, 188+30 );
-    play.scale(0.50, 0.50);
-    
-    Sprite stop( t_stop );
-    stop.setPosition( 15, 267+45);
-    stop.scale(0.50, 0.50);
-
-    Sprite save( t_save );
-    save.setPosition( 15, 346+60 );
-    save.scale(0.50, 0.50);
-    
-    Sprite trash( t_trash );
-    trash.setPosition( 15, 425+75 );
-    trash.scale(0.50, 0.50);
-    
-    Sprite quit( t_quit );
-    quit.setPosition( 15, 504+90 );
-    quit.scale(0.50, 0.50);
-    
-    
+    if(!t_background.loadFromFile("texture2.jpg")){
+        return EXIT_FAILURE;
+    }
+    background.setTexture(t_background);
+    window.draw(background);
     
     //-----------------Draw Terminal Window-------------------
 
@@ -280,8 +204,13 @@ int main(int, char const**)
     sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
     settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
     settingsBackground.setPosition(-500, -500);
+    sf::Texture t_close;
+    if(!t_close.loadFromFile("cancel.png")){
+        return EXIT_FAILURE;
+    }
     
-    Sprite settingsExit(t_close);
+    Sprite settingsExit;
+    settingsExit.setTexture(t_close);
     settingsExit.setPosition(143,93);
     settingsExit.scale(0.1, 0.1);
     
@@ -898,18 +827,9 @@ int main(int, char const**)
           
         /*/---------- Draw Toolbar ----------/*/
             
-        window.draw(toolbarFrame);
-        window.draw(toolbarHeader);
+      
             
-        window.draw(settings);
-            
-            
-        window.draw(record);
-        window.draw(stop);
-        window.draw(play);
-        window.draw(trash);
-        window.draw(save);
-        window.draw(quit);
+        
         
         window.draw(selection);
         window.draw(selectionTextBox);
@@ -926,8 +846,8 @@ int main(int, char const**)
         }
        
         // Draw the Terminal window
+        toolward.draw(window);
         stackward.draw(window);
-       
         progressBar.draw(window);
         
         

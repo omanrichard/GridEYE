@@ -533,3 +533,77 @@ void playBar::record(time_t currentTime){
     endTimeText.setString("00:00");
     fillBar.setScale(1,1);
 }
+toolbar::toolbar(void){
+    
+    if (!t_settings.loadFromFile("settings.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_record.loadFromFile("record.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_stop.loadFromFile("stop.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_play.loadFromFile("play.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_trash.loadFromFile("trash.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_save.loadFromFile("save.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_quit.loadFromFile("gravestone.png")) {
+        return EXIT_FAILURE;
+    }
+    
+    
+    
+    
+    
+    play.setTexture( t_play );
+    settings.setTexture( t_settings );
+    record.setTexture( t_record );
+    stop.setTexture( t_stop );
+    save.setTexture( t_save );
+    trash.setTexture( t_trash );
+    quit.setTexture( t_quit );
+    
+    settings.setPosition( 15, 30 );
+    record.setPosition( 15, 109+15 );
+    play.setPosition( 15, 188+30 );
+    stop.setPosition( 15, 267+45);
+    save.setPosition( 15, 346+60 );
+    trash.setPosition( 15, 425+75 );
+    quit.setPosition( 15, 504+90 );
+    toolbarFrame.setPosition(0, 0);
+    toolbarHeader.setPosition(89, 0);
+    
+    toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
+    toolbarHeader.setFillColor(sf::Color(0, 0, 0,100));
+    
+    settings.scale(0.50, 0.50);
+    record.scale(0.50, 0.50);
+    play.scale(0.50, 0.50);
+    stop.scale(0.50, 0.50);
+    save.scale(0.50, 0.50);
+    trash.scale(0.50, 0.50);
+    quit.scale(0.50, 0.50);
+    
+    toolbarFrame.setSize(sf::Vector2f( 94, 700 ));
+    toolbarHeader.setSize(sf::Vector2f( 5, 700 ));
+    
+    
+    
+}
+void toolbar::draw(sf::RenderWindow &window){
+                    window.draw(toolbarFrame);
+                    window.draw(toolbarHeader);
+                    window.draw(settings);
+                   window.draw(record);
+                   window.draw(stop);
+                   window.draw(play);
+                   window.draw(trash);
+                   window.draw(save);
+                   window.draw(quit);
+}
