@@ -214,7 +214,7 @@ class toolbar{
 /*/ --------------- Settings Menu Class --------------- /*/
 class settingsMenu{
     private:
-    
+    int menuLayer = 1;
     int rootx = 150;//Settings Menu upper left corner
     int rootY = 100;//Settings Menu upper left corner
     int recordMins = 0; //Seconds to be recorded - Is this still being used?
@@ -254,7 +254,9 @@ class settingsMenu{
 public:
         settingsMenu(void);
         void onClick(sf::RenderWindow &window);
-    virtual void draw(sf::RenderWindow &window);
+        void setMeunLayer(int currentMenuLayer);
+        int Exit(void);
+        virtual void draw(sf::RenderWindow &window);
     
 };
 

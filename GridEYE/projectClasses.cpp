@@ -752,7 +752,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x > 143  && position.x < 173){
             if (position.y > 93 && position.y < 123){//settings Exit Button
-                //menuLayer = 0;
+                menuLayer = 0;
                 
             }
         }
@@ -955,7 +955,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){
                 settingsApply.setFillColor(sf::Color(30,144,255));
                 //gridward.update();
                 //stackward.print("Settings Applied");
-                //menuLayer = 0;
+                menuLayer = 0;
             }
         }
     }
@@ -1013,5 +1013,10 @@ void settingsMenu::draw(sf::RenderWindow &window){
     window.draw(settingsApply);
     window.draw(settingsApplyText);
 }
-
+int settingsMenu::Exit(void){
+    return menuLayer;
+}
+void settingsMenu::setMeunLayer(int currentMenuLayer){
+    menuLayer = currentMenuLayer;
+}
 

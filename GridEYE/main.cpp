@@ -401,17 +401,16 @@ int main(int, char const**)
                 }//End left mouse button click
             }//End Menu layer 1
             
-            /*/---------- Layer 1 "Settings" ----------/*/
+            //Settings Menu
             if(menuLayer == 1){
+                setward.setMeunLayer(menuLayer);
                 setward.onClick(window);
-                
+                menuLayer = setward.Exit();
             }
-            
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window.close();
@@ -439,12 +438,10 @@ int main(int, char const**)
             if(menuLayer == 1){
                 setward.draw(window);
             }
-                // Settings Background
              
         
           
         /*/---------- Draw Toolbar ----------/*/
-            
         
         window.draw(selection);
         window.draw(selectionTextBox);
@@ -465,10 +462,6 @@ int main(int, char const**)
         stackward.draw(window);
         progressBar.draw(window);
         
-        
-        
-        //window.draw(line);
-        //window.draw(line2);
         
         // Update the window
         window.display();
