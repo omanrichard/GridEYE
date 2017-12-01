@@ -535,6 +535,10 @@ void playBar::record(time_t currentTime){
 }
 toolbar::toolbar(void){
     
+    if (!toolbarFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    
     if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
     }
@@ -556,9 +560,6 @@ toolbar::toolbar(void){
     if (!t_quit.loadFromFile("gravestone.png")) {
         return EXIT_FAILURE;
     }
-    
-    
-    
     
     
     play.setTexture( t_play );
@@ -593,20 +594,106 @@ toolbar::toolbar(void){
     toolbarFrame.setSize(sf::Vector2f( 94, 700 ));
     toolbarHeader.setSize(sf::Vector2f( 5, 700 ));
     
+    selection.setSize(sf::Vector2f( 89, 70 ));
+    selection.setFillColor(sf::Color(0, 0, 0, 100));
+    selection.setPosition(-100, -100);
+    
+    
+    selectionTextBox.setSize(sf::Vector2f( 94, 20 ));
+    selectionTextBox.setFillColor(sf::Color(255, 255, 255, 100));
+    selectionTextBox.setPosition(-100, -100);
+    
+    selectionText.setString("void");
+    selectionText.setCharacterSize(8);
+    selectionText.setFont(toolbarFont);
+    selectionText.setFillColor(sf::Color::Black);
+    selectionText.setPosition( -100 , -100);
+    
     
     
 }
+//Draws toolbar
 void toolbar::draw(sf::RenderWindow &window){
-                    window.draw(toolbarFrame);
-                    window.draw(toolbarHeader);
-                    window.draw(settings);
-                   window.draw(record);
-                   window.draw(stop);
-                   window.draw(play);
-                   window.draw(trash);
-                   window.draw(save);
-                   window.draw(quit);
+    //Draws Objects on display buffer
+    window.draw(toolbarFrame);
+    window.draw(toolbarHeader);
+    window.draw(settings);
+    window.draw(record);
+    window.draw(stop);
+    window.draw(play);
+    window.draw(trash);
+    window.draw(save);
+    window.draw(quit);
+    window.draw(selection);
+    window.draw(selectionTextBox);
+    window.draw(selectionText);
 }
+//Toolbar Mouse Events
+void toolbar::event(sf::Event &toolbarEvent){
+    //When mouse moves over menu item, semi transparent box is drawn over them
+    if(toolbarEvent.type == sf::Event::MouseMoved){//If event is Mousedmoved type
+        if(toolbarEvent.mouseMove.x > 0 && toolbarEvent.mouseMove.x < 94){//if Mouse is within toolbar
+            //Settings
+            if(toolbarEvent.mouseMove.y > 0 && toolbarEvent.mouseMove.y < 119){
+                selection.setPosition(0, 26);
+                selectionText.setString("Settings");
+                selectionText.setPosition(50 , 89);
+                selectionTextBox.setPosition(50,89);
+            }
+            //New Capture
+            if(toolbarEvent.mouseMove.y > 119 && toolbarEvent.mouseMove.y < 189){
+                selection.setPosition(0, 119);
+                selectionText.setString("Capture");
+                selectionText.setPosition( 50 , 159);
+                selectionTextBox.setPosition(50,159);
+                
+            }
+            //Play Capture
+            if(toolbarEvent.mouseMove.y > 219 && toolbarEvent.mouseMove.y < 308){
+                selection.setPosition(0, 219);
+                selectionText.setString("Play Capture");
+                selectionText.setPosition( 50 , 278);
+                selectionTextBox.setPosition(50,278);
+            }
+            //Stop Capture
+            if(toolbarEvent.mouseMove.y > 308 && toolbarEvent.mouseMove.y < 402){
+                selection.setPosition(0, 308);
+                selectionText.setString("Stop Capture");
+                selectionText.setPosition( 30 , 372);
+                selectionTextBox.setPosition(30,372);
+            }
+            //Save Capture
+            if(toolbarEvent.mouseMove.y > 402 && toolbarEvent.mouseMove.y < 496){
+                selection.setPosition(0, 402);
+                selectionText.setString("Save Capture");
+                selectionText.setPosition( 30 , 439);
+                selectionTextBox.setPosition(30,439);
+            }
+            //Delete Capture
+            if(toolbarEvent.mouseMove.y > 496 && toolbarEvent.mouseMove.y < 590){
+                selection.setPosition(0, 496);
+                selectionText.setString("Delete Capture");
+                selectionText.setPosition( 30 , 560);
+                selectionTextBox.setPosition(30,560);
+            }
+            //Ouit Program
+            if(toolbarEvent.mouseMove.y > 590 && toolbarEvent.mouseMove.y < 700){
+                selection.setPosition(0, 590);
+                selectionText.setString("Close Application");
+                selectionText.setPosition( 30 , 670);
+                selectionTextBox.setPosition(30,670);
+            }
+        }
+        //Moves Selection objects offscreen when mouse exits hit box
+        else if(toolbarEvent.mouseMove.x > 94){
+            selectionText.setString("Void");
+            selectionText.setPosition( -100 , -100);
+            selectionTextBox.setPosition(-100,-100);
+            selection.setPosition(-100, -100);
+        }
+    }
+}
+
 
 settingsMenu::settingsMenu(void){
     

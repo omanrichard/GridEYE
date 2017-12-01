@@ -184,7 +184,7 @@ public:
 /*/ ---------------  Toolbar Class --------------- /*/
 class toolbar{
     private:
-    
+    //Toolbar Texture Objects
     sf::Texture t_settings;
     sf::Texture t_record;
     sf::Texture t_stop;
@@ -192,7 +192,7 @@ class toolbar{
     sf::Texture t_trash;
     sf::Texture t_save;
     sf::Texture t_quit;
-    
+    //Toolbar Sprite Objects
     sf::Sprite settings;
     sf::Sprite record;
     sf::Sprite play;
@@ -200,14 +200,19 @@ class toolbar{
     sf::Sprite save;
     sf::Sprite trash;
     sf::Sprite quit;
-    
+    //Toolbar Background Shapes
     sf::RectangleShape toolbarFrame;
     sf::RectangleShape toolbarHeader;
+    //Toolbar Selection Objects
+    sf::Font toolbarFont;
+    sf::RectangleShape selection;
+    sf::RectangleShape selectionTextBox;
+    sf::Text selectionText;
     
     public:
     toolbar(void);
     virtual void draw(sf::RenderWindow &window);
-    
+    virtual void event(sf::Event &toolbarEvent);
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 

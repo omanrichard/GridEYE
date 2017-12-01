@@ -109,23 +109,9 @@ int main(int, char const**)
  
   
     
+ 
     
-    
-    
-    
-    
-    
-    sf::RectangleShape selection(sf::Vector2f( 89, 70 ));
-    selection.setFillColor(sf::Color(0, 0, 0, 100));
-    selection.setPosition(-100, -100);
-    
-    sf::RectangleShape selectionTextBox(sf::Vector2f( 94, 20 ));
-    selectionTextBox.setFillColor(sf::Color(255, 255, 255, 100));
-    selectionTextBox.setPosition(-100, -100);
-    
-    sf::Text selectionText("void", font, 10);
-    selectionText.setFillColor(sf::Color::Black);
-    selectionText.setPosition( -100 , -100);
+
     
     
     
@@ -270,74 +256,7 @@ int main(int, char const**)
         while(window.pollEvent(event)){
             // Menu selection
             if( menuLayer == 0){//This the
-            
-                if(event.type == sf::Event::MouseMoved){
-                    if(event.mouseMove.x > 0 && event.mouseMove.x < 94){
-                        if(event.mouseMove.y > 0 && event.mouseMove.y < 119){//Settings
-                            selection.setPosition(0, 26);
-                            selectionText.setString("Settings");
-                            selectionText.setPosition(50 , 89);
-                            selectionTextBox.setPosition(50,89);
-                        }
-                        if(event.mouseMove.y > 119 && event.mouseMove.y < 189){//New Capture
-                        selection.setPosition(0, 119);
-                        selectionText.setString("Capture");
-                        selectionText.setPosition( 50 , 159);
-                        selectionTextBox.setPosition(50,159);
-                        
-                        }
-                        if(event.mouseMove.y > 219 && event.mouseMove.y < 308){//Play
-                            selection.setPosition(0, 219);
-                            selectionText.setString("Play Capture");
-                            selectionText.setPosition( 50 , 278);
-                            selectionTextBox.setPosition(50,278);
-                        }
-                        if(event.mouseMove.y > 308 && event.mouseMove.y < 402){//Stop
-                            selection.setPosition(0, 308);
-                            selectionText.setString("Stop Capture");
-                            selectionText.setPosition( 30 , 372);
-                            selectionTextBox.setPosition(30,372);
-                        }
-                        if(event.mouseMove.y > 402 && event.mouseMove.y < 496){//Save
-                            selection.setPosition(0, 402);
-                            selectionText.setString("Save Capture");
-                            selectionText.setPosition( 30 , 439);
-                            selectionTextBox.setPosition(30,439);
-                        }
-                        if(event.mouseMove.y > 496 && event.mouseMove.y < 590){//Delete
-                            selection.setPosition(0, 496);
-                            selectionText.setString("Delete Capture");
-                            selectionText.setPosition( 30 , 560);
-                            selectionTextBox.setPosition(30,560);
-                        }
-                        if(event.mouseMove.y > 590 && event.mouseMove.y < 700){//Quit
-                            selection.setPosition(0, 590);
-                            selectionText.setString("Close Application");
-                            selectionText.setPosition( 30 , 670);
-                            selectionTextBox.setPosition(30,670);
-                        }
-                    }
-                    
-                }
-                else if(event.mouseMove.x > 94){        //Mouse not over on toolbar
-                    selection.setPosition(-100, -100);  //Move Offscreen
-                    selectionText.setString("Void");
-                    selectionText.setPosition( -100 , -100);//Move Offscreen
-                    selectionTextBox.setPosition(-100,-100);//Move Offscreen
-                }
-            }            
-            if( menuLayer == 1 ){
-                if(event.type == sf::Event::MouseMoved){
-                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                        sf::Vector2i position = sf::Mouse::getPosition(window);
-                        if (position.x > 0 && position.x < 95){         //Within toolbar
-                            if (position.y > 0 && position.y < 119){
-                                //settingsBackground.setPosition(150, 100);
-                                //menuLayer = 1;
-                            }
-                        }
-                    }
-                }
+                toolward.event(event);
             }
             /*/----left click----/*/
             
@@ -442,9 +361,7 @@ int main(int, char const**)
           
         /*/---------- Draw Toolbar ----------/*/
         
-        window.draw(selection);
-        window.draw(selectionTextBox);
-        window.draw(selectionText);
+   
         
         // Draw output Grid
        
