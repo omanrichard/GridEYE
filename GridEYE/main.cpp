@@ -249,7 +249,7 @@ int main(int, char const**)
                         gridy = (98+j*51);
                         RectangleShape newPix(sf::Vector2f(50, 50));
                         newPix.setPosition( gridx, gridy );             // Eventually
-                                                    // pixelMask.setMask( tempFrame->access(short row, short col );
+                                                                        // pixelMask.setMask( tempFrame->access(short row, short col );
                         newPix.setFillColor(sf::Color(gridward.r, framePtr->access(i, j) ,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
                         grid[i][j] = newPix;
                     }
@@ -329,7 +329,7 @@ int main(int, char const**)
                              stackward.print("Stopping Capture");
                              //set led to red
                              
-                             currentSession.addVideo(vPtr);
+                             currentSession.addVideo(vPtr); // Adds recorded video to the video stack
                              
                          }
                          //Save capture
@@ -347,6 +347,8 @@ int main(int, char const**)
                              recordStatus = false;//Stop recording data
                               stackward.print("Deleting Capture");
                              //set led to red
+                             
+                             currentSession.undoRec(); // Removes recorded video from the video stack
                          }
                          //exit
                         if (position.y > 590 && position.y < 700){

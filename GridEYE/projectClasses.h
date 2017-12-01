@@ -51,7 +51,7 @@ public:
 /*/ --------------- Frame Class --------------- /*/
 class frame{                        //      Stores sensor data
                                     //     0  1  2  3  4  5  6  7
-private:                            // 0  [] [] [] [] [] [] [] []
+protected:                            // 0  [] [] [] [] [] [] [] []
     float mean;                     // 1  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
     short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
@@ -60,18 +60,19 @@ private:                            // 0  [] [] [] [] [] [] [] []
     virtual void set_mean();        // 6  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
+    /*
     frame();
     frame(GridEYE gridward);
     ~frame();
-    
+    */
     short access( short row , short col );
-    short get_max();
-    float get_mean();
+    virtual short get_max() =0;
+    virtual float get_mean() =0;
     
     void new_max( short newMax );
     void new_mean( float newMean );
     
-    virtual void print();
+    virtual void print() =0;
 
 };
 
@@ -93,11 +94,15 @@ public:
 /*/ --------------- End Frame Class --------------- /*/
 
 /*/ --------------- Video Class --------------- /*/
-class video : public frame{
+class video{
 private:
     short frameCount;       // 10 Frames -> 1 Second
+    short FPS;
+    int runtime;
+
     vector< frame* > data;  // Storing up to 31,800 frames maximum
     
+    void set_runtime();
     void set_max();
     void set_mean();
     
