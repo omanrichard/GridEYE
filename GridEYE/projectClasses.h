@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 
 #ifndef projectClasses_h
 #define projectClasses_h
@@ -132,7 +133,18 @@ class terminal{
 };
 
 /*/ --------------- End Terminal (Stack) Class --------------- /*/
-
+class playBar{
+private:
+    sf::Texture t_background;
+    sf::Texture t_fillBar;
+    sf::Sprite background;
+    sf::Sprite fillBar;
+    
+public:
+    playBar(int x, int y, int scale);
+    void update(int percent);
+    virtual void draw(sf::RenderWindow &window);
+};
 
 #endif /* projectClasses_h */
 

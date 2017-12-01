@@ -410,7 +410,7 @@ int main(int, char const**)
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
 
     
-    
+ playBar progressBar(200,500,1);
 /*/---------- Draw ----------/*/
 // Play the music
 //music.play();
@@ -938,7 +938,7 @@ int main(int, char const**)
         window.draw(terminalText4);
         window.draw(terminalText5);
         window.draw(terminalText6);
-       
+        progressBar.draw(window);
         
         
         

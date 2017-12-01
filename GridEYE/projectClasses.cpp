@@ -297,3 +297,28 @@ void terminal::setRoot(string text){
 }
 /*/ --------------- End Terminal (Stack) Methods --------------- /*/
 
+playBar::playBar(int x, int y, int scale){
+    if (!t_background.loadFromFile("audio-player.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_fillBar.loadFromFile("progress.png")) {
+        return EXIT_FAILURE;
+    }
+    background.setTexture(t_background);
+    fillBar.setTexture(t_fillBar);
+    background.setPosition(x-150,y-150);
+    background.scale(scale, scale);
+    
+    fillBar.setPosition(x,y);
+    fillBar.scale(1, 1);
+}
+void playBar::update(int percent){
+  
+    
+   
+    
+}
+void playBar::draw(sf::RenderWindow &window){
+    window.draw(background);
+    window.draw(fillBar);
+}
