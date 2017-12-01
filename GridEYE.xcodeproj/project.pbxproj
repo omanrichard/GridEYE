@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79024B331FD0F65B00F9AC77 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 79024B311FD0F65B00F9AC77 /* progress.png */; };
+		79024B341FD0F65B00F9AC77 /* audio-player.png in Resources */ = {isa = PBXBuildFile; fileRef = 79024B321FD0F65B00F9AC77 /* audio-player.png */; };
 		798DBF4D1FBFFAC00090BCF6 /* projectClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */; };
 		79BC31B11FBAB237005842D0 /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AE1FBAB237005842D0 /* wrench.png */; };
 		79BC31B21FBAB237005842D0 /* add-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AF1FBAB237005842D0 /* add-button.png */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79024B311FD0F65B00F9AC77 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
+		79024B321FD0F65B00F9AC77 /* audio-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player.png"; sourceTree = "<group>"; };
 		798DBF4A1FBFBA920090BCF6 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
 		798DBF4B1FBFFAC00090BCF6 /* projectClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = projectClasses.h; sourceTree = "<group>"; };
 		798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projectClasses.cpp; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 		79EE7B341FBA7F4100D8618D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79024B321FD0F65B00F9AC77 /* audio-player.png */,
+				79024B311FD0F65B00F9AC77 /* progress.png */,
 				79BC31AF1FBAB237005842D0 /* add-button.png */,
 				79BC31B01FBAB237005842D0 /* delete.png */,
 				79BC31AE1FBAB237005842D0 /* wrench.png */,
@@ -189,12 +195,14 @@
 				79EE7B521FBA8F8A00D8618D /* download.png in Resources */,
 				79EE7B4D1FBA8F8A00D8618D /* settings.png in Resources */,
 				79BC31B31FBAB237005842D0 /* delete.png in Resources */,
+				79024B331FD0F65B00F9AC77 /* progress.png in Resources */,
 				79BC31B21FBAB237005842D0 /* add-button.png in Resources */,
 				79EE7B511FBA8F8A00D8618D /* note.png in Resources */,
 				79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */,
 				79EE7B501FBA8F8A00D8618D /* close.png in Resources */,
 				79EE7B4F1FBA8F8A00D8618D /* home.png in Resources */,
 				79BC31B11FBAB237005842D0 /* wrench.png in Resources */,
+				79024B341FD0F65B00F9AC77 /* audio-player.png in Resources */,
 				79EE7B3A1FBA7F4100D8618D /* sansation.ttf in Resources */,
 				79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */,
 				79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */,
