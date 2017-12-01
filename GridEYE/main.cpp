@@ -539,8 +539,10 @@ int main(int, char const**)
                             progressBar.setStartTime(recordStartTime);
                             stackward.print("Starting Capture");
                             
+                            cout << "Adding Video" << endl;
                             vPtr = new video( gridward ); // Run for 65 sec at 10 FPS
                             currentSession.addVideo( vPtr );
+                            cout << "Video added to session" << endl;
                             
                             //set led to green
                             }
