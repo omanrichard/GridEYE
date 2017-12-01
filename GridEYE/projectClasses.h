@@ -102,9 +102,12 @@ private:
     void set_mean();
     
 public:
+    video();
     video( GridEYE gridward );
     ~video();
     
+    void addFrame(GridEYE gridward);
+
     void exportVideo( string filename );
     void print();
 };
