@@ -466,8 +466,8 @@ void playBar::setTime(time_t start,time_t end){
     endTime = end;
 }
 void playBar::record(time_t currentTime){
-    double recordTime = difftime(startTime,endTime);
-    sprintf(timeTextBuffer,"%.2f:%.2f",recordTime/60,recordTime,recordTime/60);
-    currentTimeText.setString(timeTextBuffer);
+    double seconds = difftime(currentTime,startTime);
+    currentTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60))));
+    endTimeText.setString("00:00");
     fillBar.setScale(1,1);
 }
