@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 #include <math.h>
-
+#include <mouse.hpp>
 #ifndef projectClasses_h
 #define projectClasses_h
 
@@ -208,12 +208,59 @@ class toolbar{
     toolbar(void);
     virtual void draw(sf::RenderWindow &window);
     
+};
+/*/ --------------- End Toolbar Class --------------- /*/
+
+/*/ --------------- Settings Menu Class --------------- /*/
+class settingsMenu{
+    private:
+    
+    int rootx = 150;//Settings Menu upper left corner
+    int rootY = 100;//Settings Menu upper left corner
+    int recordMins = 0; //Seconds to be recorded - Is this still being used?
+    int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
+    sf::Font settingsFont;
+    // Settings Text Declare
+    sf::Text settingsFPSText;
+    sf::Text settingsFPSTextValTen;
+    sf::Text settingsFPSTextValOne;
+    sf::Text settingsCollectionText;
+    sf::Text settingsMinsText;
+    sf::Text settingsSecondsText;
+    sf::Text settingsRangeText;
+    sf::Text settingsRangeTextTrue;
+    sf::Text settingsRangeTextHuman;
+    sf::Text settingsResetText;
+    sf::Text settingsApplyText;
+    //Settings Object Declare
+    sf::RectangleShape settingsBackground;
+    sf::Sprite settingsExit;
+    sf::Texture t_close;
+    //Settings Button Declare
+    sf::RectangleShape settingsTenFPS;
+    sf::RectangleShape settingsOneFPS;
+    sf::RectangleShape settingsMinsUp;
+    sf::RectangleShape settingsMinsDown;
+    sf::RectangleShape settingsSecondsUp;
+    sf::RectangleShape settingsSecondsDown;
+    sf::RectangleShape settingsRangeTrue;
+    sf::RectangleShape settingsRangeHuman;
+    sf::RectangleShape settingsReset;
+    sf::RectangleShape settingsApply;
+    sf::RectangleShape settingsMinsBox;
+    sf::RectangleShape settingsSecondsBox;
     
     
-    
+public:
+        settingsMenu(void);
+        void onClick(sf::RenderWindow &window);
+    virtual void draw(sf::RenderWindow &window);
     
 };
-/*/ --------------- Toolbar Class --------------- /*/
+
+/*/ --------------- Settings Menu Class --------------- /*/
+
+
 
 #endif /* projectClasses_h */
 

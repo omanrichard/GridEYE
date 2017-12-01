@@ -36,12 +36,12 @@ using namespace sf;
 GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
 toolbar toolward;
+settingsMenu setward;
 
 int i,j;
 
 //Time Variables
-int recordMins = 0; //Seconds to be recorded - Is this still being used?
-int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
+
 bool recordStatus = false; //True: Recording; False: Not recording
 
 char recordTimeBuffer[11]; //Holds formatted time
@@ -56,8 +56,6 @@ time_t recordEndTime; //Time when recording Ends
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, Playback is 2;
 
 
-int rootx = 150;//Settings Menu upper left corner
-int rootY = 100;//Settings Menu upper left corner
 
 int main(int, char const**)
 {
@@ -201,123 +199,6 @@ int main(int, char const**)
 
     //----------------- Settings Objects -----------------
 
-    sf::RectangleShape settingsBackground(sf::Vector2f(500, 400 ));
-    settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
-    settingsBackground.setPosition(-500, -500);
-    sf::Texture t_close;
-    if(!t_close.loadFromFile("cancel.png")){
-        return EXIT_FAILURE;
-    }
-    
-    Sprite settingsExit;
-    settingsExit.setTexture(t_close);
-    settingsExit.setPosition(143,93);
-    settingsExit.scale(0.1, 0.1);
-    
-    //Settings Buttons Declare
-    RectangleShape settingsTenFPS(sf::Vector2f(75, 25 ));
-    RectangleShape settingsOneFPS(sf::Vector2f(75, 25 ));
-    RectangleShape settingsMinsUp(sf::Vector2f(50,25 ));
-    RectangleShape settingsMinsDown(sf::Vector2f(50,25));
-    RectangleShape settingsSecondsUp(sf::Vector2f(50,25 ));
-    RectangleShape settingsSecondsDown(sf::Vector2f(50,25 ));
-    RectangleShape settingsRangeTrue(sf::Vector2f(100,25 ));
-    RectangleShape settingsRangeHuman(sf::Vector2f(100,25 ));
-    RectangleShape settingsReset(sf::Vector2f(150,25 ));
-    RectangleShape settingsApply(sf::Vector2f(150, 25 ));
-    RectangleShape settingsMinsBox(sf::Vector2f(50, 50 ));
-    RectangleShape settingsSecondsBox(sf::Vector2f(50, 50 ));
-    
-    // Set Button Colors
-    settingsTenFPS.setFillColor(sf::Color(30,144,255));
-    settingsOneFPS.setFillColor(sf::Color(135,206,250));
-    
-    settingsMinsUp.setFillColor(sf::Color::Green);
-    settingsMinsDown.setFillColor(sf::Color::Red);
-    settingsSecondsUp.setFillColor(sf::Color::Green);
-    settingsSecondsDown.setFillColor(sf::Color::Red);
-    settingsMinsBox.setFillColor(sf::Color::White);
-    settingsSecondsBox.setFillColor(sf::Color::White);
-   
-    settingsRangeTrue.setFillColor(sf::Color(30,144,255));
-    settingsRangeHuman.setFillColor(sf::Color(135,206,250));
-    
-    settingsReset.setFillColor(sf::Color(30,144,255));
-    settingsApply.setFillColor(sf::Color(30,144,255));
-    
-    // Set Borders
-    settingsTenFPS.setOutlineColor(sf::Color::White);
-    settingsOneFPS.setOutlineColor(sf::Color::White);
-    
-    settingsMinsUp.setOutlineColor(sf::Color::White);
-    settingsMinsDown.setOutlineColor(sf::Color::White);
-    settingsSecondsUp.setOutlineColor(sf::Color::White);
-    settingsSecondsDown.setOutlineColor(sf::Color::White);
-    settingsMinsBox.setOutlineColor(sf::Color::White);
-    settingsSecondsBox.setOutlineColor(sf::Color::White);
-    
-    settingsRangeTrue.setOutlineColor(sf::Color::White);
-    settingsRangeHuman.setOutlineColor(sf::Color::White);
-    
-    settingsReset.setOutlineColor(sf::Color::White);
-    settingsApply.setOutlineColor(sf::Color::White);
-    
-   
-    // Settings Button Position
-    settingsTenFPS.setPosition(rootx+100 ,rootY+75 );   //Default
-    settingsOneFPS.setPosition(rootx+325 ,rootY+75 );
-    settingsMinsBox.setPosition(rootx+75 ,rootY+175 );
-    settingsSecondsBox.setPosition(rootx+300 ,rootY+175 );
-    settingsMinsUp.setPosition(rootx+150 ,rootY+175);
-    settingsMinsDown.setPosition(rootx+150 ,rootY+200);
-    settingsSecondsUp.setPosition(rootx+375 ,rootY+175 );
-    settingsSecondsDown.setPosition(rootx+375 ,rootY+200 );
-    settingsRangeTrue.setPosition(rootx+75 ,rootY+300 );
-    settingsRangeHuman.setPosition(rootx+325 ,rootY+300 );
-    settingsReset.setPosition(rootx+50 ,rootY+350 );
-    settingsApply.setPosition(rootx+300 ,rootY+350 );
-    
-    // Settings Text Declare
-    Text settingsFPSText("Frames Per Second",font, 30);
-    Text settingsFPSTextValTen("10 FPS", font, 20);
-    Text settingsFPSTextValOne("1 FPS",font,20);
-    Text settingsCollectionText("Collection Time",font,30);
-    Text settingsMinsText("0",font,40);
-    Text settingsSecondsText("0",font,40);
-    Text settingsRangeText("Sensor Dynamic Range",font,30);
-    Text settingsRangeTextTrue("True",font,20);
-    Text settingsRangeTextHuman("Human",font, 20);
-    Text settingsResetText("Reset Sensor",font, 20);
-    Text settingsApplyText("Apply Settings", font, 20);
-    
-    // Settings Text Color
-    settingsBackground.setPosition(rootx,rootY);    //Move settings background in place
-    settingsFPSText.setFillColor(sf::Color::Black);
-    settingsFPSTextValTen.setFillColor(sf::Color::Black);
-    settingsFPSTextValOne.setFillColor(sf::Color::Black);
-    settingsCollectionText.setFillColor(sf::Color::Black);
-    settingsMinsText.setFillColor(sf::Color::Black);
-    settingsSecondsText.setFillColor(sf::Color::Black);
-    settingsRangeText.setFillColor(sf::Color::Black);
-    settingsRangeTextTrue.setFillColor(sf::Color::Black);
-    settingsRangeTextHuman.setFillColor(sf::Color::Black);
-    settingsResetText.setFillColor(sf::Color::Black);
-    settingsApplyText.setFillColor(sf::Color::Black);
-    
-    // Settings Text Position
-    settingsFPSText.setPosition(rootx+50,rootY+25 );
-    settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
-    settingsFPSTextValOne.setPosition(rootx+325+15 ,rootY+75 );
-    settingsMinsText.setPosition(rootx+75 ,rootY+175 );
-    settingsCollectionText.setPosition(rootx+50, rootY+125);
-    settingsSecondsText.setPosition(rootx+300 ,rootY+175 );
-    settingsRangeText.setPosition(rootx+50 ,rootY+250 );
-    settingsRangeTextTrue.setPosition(rootx+75+30 ,rootY+300 );
-    settingsRangeTextHuman.setPosition(rootx+325+20 ,rootY+300 );
-    settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
-    settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
-
-    
  
 /*/---------- Draw ----------/*/
 // Play the music
@@ -386,7 +267,7 @@ int main(int, char const**)
         
         // Process events. This monitors mouse movements and clicks
         sf::Event event;
-        while (window.pollEvent(event)){
+        while(window.pollEvent(event)){
             // Menu selection
             if( menuLayer == 0){//This the
             
@@ -451,8 +332,8 @@ int main(int, char const**)
                         sf::Vector2i position = sf::Mouse::getPosition(window);
                         if (position.x > 0 && position.x < 95){         //Within toolbar
                             if (position.y > 0 && position.y < 119){
-                                settingsBackground.setPosition(150, 100);
-                                menuLayer = 1;
+                                //settingsBackground.setPosition(150, 100);
+                                //menuLayer = 1;
                             }
                         }
                     }
@@ -462,7 +343,7 @@ int main(int, char const**)
             
             /*/----Layer 0 "Home"----/*/
             if(menuLayer == 0){//Base Layer
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
                     sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
                      if (position.x > 0 && position.x < 95){     //Within toolbar
                          
@@ -522,227 +403,8 @@ int main(int, char const**)
             
             /*/---------- Layer 1 "Settings" ----------/*/
             if(menuLayer == 1){
-                // Exit Button
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > 143  && position.x < 173){
-                        if (position.y > 93 && position.y < 123){//settings Exit Button
-                            menuLayer = 0;
-
-                        }
-                    }
-                    
-                }
+                setward.onClick(window);
                 
-                // Select: 30,144,255 Unselect: 135,206,250
-                // 10 FPS
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 100)  && position.x < (rootx+175)){
-                        if (position.y > (rootY+ 75) && position.y < (rootY+100)){
-                            settingsTenFPS.setFillColor(sf::Color(30,144,255));
-                            settingsTenFPS.setOutlineThickness(2);
-                            settingsOneFPS.setFillColor(sf::Color(135,206,250));
-                            settingsOneFPS.setOutlineThickness(0);
-                            gridward.setFPS(10);
-                        }
-                    }
-                }
-                // One FPS
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 325)  && position.x < (rootx+400)){
-                        if (position.y > (rootY+75) && position.y < (rootY+100)){
-                            settingsOneFPS.setFillColor(sf::Color(30,144,255));
-                            settingsOneFPS.setOutlineThickness(2);
-
-                            settingsTenFPS.setFillColor(sf::Color(135,206,250));
-                            settingsTenFPS.setOutlineThickness(0);
-                            
-                            gridward.setFPS(1);
-                        }
-                    }
-                }
-                // Minutes UP
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rootx+200)){
-                        if (position.y > (rootY+175) && position.y < (rootY+200)){
-                            settingsMinsUp.setFillColor(sf::Color(255,144,255));
-                            if(recordMins <= 50){
-                                recordMins++;
-                                settingsMinsText.setString(std::to_string(recordMins));
-                            }
-                        }
-                    }
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rootx+200)){
-                        if (position.y > (rootY+175) && position.y < (rootY+200)){
-                            settingsMinsUp.setFillColor(sf::Color(30,144,255));
-                        }
-                    }
-                }
-                // Minutes DOWN
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rootx +200)){
-                        if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                            settingsMinsDown.setFillColor(sf::Color(255,144,255));
-                            if(recordMins > 0){
-                                recordMins--;
-                                settingsMinsText.setString(std::to_string(recordMins));
-                            }
-                        }
-                    }
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 150)  && position.x < (rootx +200)){
-                        if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                            settingsMinsDown.setFillColor(sf::Color(135,206,250));
-                        }
-                    }
-                }
-                // Seconds UP
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-                        if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                            settingsSecondsUp.setFillColor(sf::Color(255,144,255));
-                            if(recordSeconds < 59){
-                                recordSeconds++;
-                                if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
-                                settingsSecondsText.setString(std::to_string(recordSeconds));
-                            }
-                            else if(recordSeconds == 59 && recordMins < 50 ){
-                                recordSeconds = 0;
-                                recordMins++;
-                                settingsMinsText.setString(std::to_string(recordMins));
-                                settingsSecondsText.setString(std::to_string(recordSeconds));
-                            }
-                        }
-                    }
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-                        if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                            settingsSecondsUp.setFillColor(sf::Color(30,144,255));
-                        }
-                    }
-                }
-                // Seconds DOWN
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Trigger
-                    
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-                        if (position.y > (rootY+200) && position.y < (rootY+225)){
-                            settingsSecondsDown.setFillColor(sf::Color(255,144,255));
-                            if(recordSeconds > 0){
-                                recordSeconds--;
-                                if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
-                                settingsSecondsText.setString(std::to_string(recordSeconds));
-                            }
-                            if(recordSeconds == 0){
-                                recordSeconds = 59;
-                                settingsSecondsText.setString(std::to_string(recordSeconds));
-                            }
-                        }
-                    }
-                
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Release
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-                        if (position.y > (rootY+200) && position.y < (rootY+225)){
-                            settingsSecondsDown.setFillColor(sf::Color(135,206,250));
-                        }
-                    }
-                }
-                // Sensor TRUE
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
-                        if (position.y > (rootY + 300) && position.y < (rootY + 325)){
-                            settingsRangeTrue.setFillColor(sf::Color(30,144,255));
-                            settingsRangeTrue.setOutlineThickness(2);
-                            settingsRangeHuman.setFillColor(sf::Color(135,206,250));
-                            settingsRangeHuman.setOutlineThickness(0);
-                        }
-                    }
-                }
-                // Sensor HUMAN
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
-                        if (position.y > (rootY + 300) && position.y < (rootY + 325)){
-                            settingsRangeHuman.setFillColor(sf::Color(30,144,255));
-                            settingsRangeHuman.setOutlineThickness(2);
-                            settingsRangeTrue.setFillColor(sf::Color(135,206,250));
-                            settingsRangeTrue.setOutlineThickness(0);
-
-                        }
-                    }
-                }
-                // RESET
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 50)  && position.x < (rootx+200)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsReset.setFillColor(sf::Color(30,144,255));
-                            gridward.reset();
-                            settingsRangeHuman.setOutlineThickness(0);
-                            settingsRangeHuman.setFillColor(sf::Color(135,206,250));
-                            settingsRangeTrue.setFillColor(sf::Color(30,144,255));
-                            settingsRangeTrue.setOutlineThickness(2);
-                            
-                            
-                            settingsTenFPS.setOutlineThickness(2);
-                            settingsTenFPS.setFillColor(sf::Color(30,144,255));
-                            settingsOneFPS.setFillColor(sf::Color(135,206,250));
-                            settingsOneFPS.setOutlineThickness(0);
-                            recordMins = 0;
-                            settingsMinsText.setString(std::to_string(recordMins));
-                            recordSeconds = 0;
-                            settingsSecondsText.setString(std::to_string(recordSeconds));
-                            stackward.print("Reset","Grid-EYE");
-                    
-                            
-                            
-                        }
-                    }
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 50)  && position.x < (rootx+200)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsReset.setFillColor(sf::Color(255,144,255));
-                        }
-                    }
-                }
-                // APPLY
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsApply.setFillColor(sf::Color(30,144,255));
-                            //gridward.update();
-                            stackward.print("Settings Applied");
-                            menuLayer = 0;
-                        }
-                    }
-                }
-                if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    sf::Vector2i position = sf::Mouse::getPosition(window);
-                    if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
-                        if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                            settingsApply.setFillColor(sf::Color(255,144,255));
-                            //gridward.update();
-                        }
-                    }
-                }
             }
             
             // Close window: exit
@@ -775,61 +437,14 @@ int main(int, char const**)
         
         /*/---Draw Settings Window----/*/
             if(menuLayer == 1){
-                
-                // Settings Background
-                window.draw(settingsBackground);//Draw settings menu when clicked
-                // Exit Button
-                window.draw(settingsExit);//Exit button settings menu
-               
-                // Frame Settings
-                window.draw(settingsTenFPS);
-                window.draw(settingsOneFPS);
-                
-                window.draw(settingsFPSText);
-                window.draw(settingsFPSTextValTen);
-                window.draw(settingsFPSTextValOne);
-                
-                // Collection Settings
-                window.draw(settingsMinsUp);
-                window.draw(settingsMinsDown);
-                
-                window.draw(settingsSecondsUp);
-                window.draw(settingsSecondsDown);
-                
-                window.draw(settingsMinsBox);
-                window.draw(settingsSecondsBox);
-                
-                window.draw(settingsCollectionText);
-                window.draw(settingsMinsText);
-                window.draw(settingsSecondsText);
-                
-                // Sensor Range Settings
-                window.draw(settingsRangeTrue);
-                window.draw(settingsRangeHuman);
-                
-                window.draw(settingsRangeText);
-                window.draw(settingsRangeTextTrue);
-                window.draw(settingsRangeTextHuman);
-                
-                
-                // Reset Sensor
-                window.draw(settingsReset);
-                window.draw(settingsResetText);
-                
-                // Apply Settings
-                window.draw(settingsApply);
-                window.draw(settingsApplyText);
-
-
-                
+                setward.draw(window);
             }
+                // Settings Background
+             
         
           
         /*/---------- Draw Toolbar ----------/*/
             
-      
-            
-        
         
         window.draw(selection);
         window.draw(selectionTextBox);
