@@ -17,28 +17,37 @@ using namespace std;
 
 /*/ ----------- GrideEye Class ---------- /*/
 class GridEYE{
-friend class frame;
+    friend class video;
     
 private:
+    float mean;
+    short max;
+    short sensor_values[8][8];
+    int FPS;
+    
+ //   virtual void set_max();
+ //   virtual void set_mean();
     
 public:
     GridEYE(int address); //Hint: My board has it set at 0x68 :)
     
-    int read(int row, int col);
+    short read(int row, int col);
     void reset(void);
-    void update(void);
-    void test(int row, int col);//Draw Test pattern
-    int r,g,b;
-    int FPS = 10;
-    int runTime;            // Run Time in Seconds
+    void test(int row, int col);    //Draw Test pattern
+    int runTime;                    // Run Time in Seconds
     short pixelL;
+    int r,g,b;
+    int getFPS();
+    
+ //   virtual void print();
+    void setFPS( int temp );
 };
 
 /*/ ---------- End GridEYE Class ---------- /*/
 
 /*/ --------------- Frame Class --------------- /*/
 class frame{                        //      Stores sensor data
-friend class GridEYE;               //     0  1  2  3  4  5  6  7
+                                    //     0  1  2  3  4  5  6  7
 private:                            // 0  [] [] [] [] [] [] [] []
     float mean;                     // 1  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
@@ -59,8 +68,7 @@ public:
     void new_max( short newMax );
     void new_mean( float newMean );
     
-    virtual void print();                  
-    void import_data( GridEYE gridward );
+    virtual void print();
 
 };
 

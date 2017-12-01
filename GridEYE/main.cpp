@@ -455,7 +455,7 @@ int main(int, char const**)
                 gridy = (98+j*51);
                 RectangleShape newPix(sf::Vector2f(50, 50));
                 newPix.setPosition( gridx, gridy );             // Eventually
-                gridward.test(i,j);                             //pixelMask.setMask( tempFrame->access(short row, short col );
+                gridward.test(i,j);                             // pixelMask.setMask( tempFrame->access(short row, short col );
                 newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
                 grid[i][j] = newPix;
             }
@@ -613,7 +613,7 @@ int main(int, char const**)
                             settingsTenFPS.setOutlineThickness(2);
                             settingsOneFPS.setFillColor(sf::Color(135,206,250));
                             settingsOneFPS.setOutlineThickness(0);
-                            gridward.FPS = 10;
+                            gridward.setFPS(10);
                         }
                     }
                 }
@@ -628,7 +628,7 @@ int main(int, char const**)
                             settingsTenFPS.setFillColor(sf::Color(135,206,250));
                             settingsTenFPS.setOutlineThickness(0);
                             
-                            gridward.FPS = 1;
+                            gridward.setFPS(1);
                         }
                     }
                 }
@@ -797,7 +797,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsApply.setFillColor(sf::Color(30,144,255));
-                            gridward.update();
+                            //gridward.update();
                             stackward.print("Settings Applied");
                             menuLayer = 0;
                         }
@@ -808,7 +808,7 @@ int main(int, char const**)
                     if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
                         if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                             settingsApply.setFillColor(sf::Color(255,144,255));
-                            gridward.update();
+                            //gridward.update();
                         }
                     }
                 }
