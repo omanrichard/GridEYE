@@ -159,7 +159,8 @@ int main(int, char const**)
     line2.setFillColor( Color::Black );
     line2.setPosition(94, 606);
     
-    
+    //---------------Draw Playbar-----------
+    playBar progressBar(sf::Vector2f(35, 375),1);
     //----------------Draw Toolbar----------------
     sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
     toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
@@ -409,10 +410,8 @@ int main(int, char const**)
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
 
-    // Declare Video, Mask, Session stuff
-    // video* activeVid;
-    // frame* tempFrame;
     
+ 
 /*/---------- Draw ----------/*/
 // Play the music
 //music.play();
@@ -941,7 +940,9 @@ int main(int, char const**)
         window.draw(terminalText4);
         window.draw(terminalText5);
         window.draw(terminalText6);
-       
+        progressBar.setTime(recordStartTime,recordEndTime);
+        progressBar.setCurrentTime(time(NULL));
+        progressBar.draw(window);
         
         
         
