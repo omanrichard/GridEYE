@@ -61,11 +61,11 @@ int rootY = 100;//Settings Menu upper left corner
 int main(int, char const**)
 {
     
-//----------- Frame storage test -----------
-    video test( gridward );         // Creates "video" using gridward in constructor
-    string testFile = "test.txt";
-    test.print();                   // Prints the random data in terminal
-    test.exportVideo( testFile );   // Exports to "test.txt"
+    
+//----------- Frame Capture experiment -----------
+    video* vPtr = NULL;
+    session currentSession;
+   
     
 //--------------------- Set up -----------------------------------
     // Create the main window
@@ -414,7 +414,8 @@ int main(int, char const**)
             progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
-            progressBar.record(recordEndTime);
+            
+           
             
         }
         if(recordStatus == false){
@@ -538,6 +539,8 @@ int main(int, char const**)
                             progressBar.setStartTime(recordStartTime);
                             stackward.print("Starting Capture");
                             
+                            vPtr = new video( gridward ); // Run for 65 sec at 10 FPS
+                            currentSession.addVideo( vPtr );
                             
                             //set led to green
                             }
@@ -556,7 +559,11 @@ int main(int, char const**)
                          //Save capture
                          if (position.y > 402 && position.y < 496){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Saving Capture");
+                             stackward.print("Saving Capture");
+                             
+                             cout << "Exporting Video" << endl;
+                             vPtr->exportVideo( "Test.text" );
+                             cout << "Success" << endl;
                              //set led to red
                          }
                          //Delete capture
