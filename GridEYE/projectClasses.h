@@ -254,8 +254,8 @@ class settingsMenu{
 public:
         settingsMenu(void);
         void onClick(sf::RenderWindow &window);
-        void setMeunLayer(int currentMenuLayer);
-        int Exit(void);
+       
+        int exit(void);
         virtual void draw(sf::RenderWindow &window);
     
 };

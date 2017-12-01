@@ -746,23 +746,20 @@ settingsMenu::settingsMenu(void){
     
 }
 
-void settingsMenu::onClick(sf::RenderWindow &window){
-    // Exit Button
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > 143  && position.x < 173){
-            if (position.y > 93 && position.y < 123){//settings Exit Button
-                menuLayer = 0;
-                
-            }
-        }
+void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
+    // Colors - Select: 30,144,255 Unselect: 135,206,250
+    menuLayer = 1; //Set internal menuLayer reference
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
+        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
         
-    }
-    
-    // Select: 30,144,255 Unselect: 135,206,250
-    // 10 FPS
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        //Settings Exit Button
+        if (position.x > 143  && position.x < 173){//Add root to this
+            if (position.y > 93 && position.y < 123){//Add root to this
+                menuLayer = 0;
+        }}
+        
+        // 10 FPS
         if (position.x > (rootx + 100)  && position.x < (rootx+175)){
             if (position.y > (rootY+ 75) && position.y < (rootY+100)){
                 settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -770,27 +767,19 @@ void settingsMenu::onClick(sf::RenderWindow &window){
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
                 settingsOneFPS.setOutlineThickness(0);
                 //gridward.setFPS(10);
-            }
-        }
-    }
-    // One FPS
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        }}
+    
+        // One FPS
         if (position.x > (rootx + 325)  && position.x < (rootx+400)){
             if (position.y > (rootY+75) && position.y < (rootY+100)){
                 settingsOneFPS.setFillColor(sf::Color(30,144,255));
                 settingsOneFPS.setOutlineThickness(2);
-                
                 settingsTenFPS.setFillColor(sf::Color(135,206,250));
                 settingsTenFPS.setOutlineThickness(0);
-                
                 //gridward.setFPS(1);
-            }
-        }
-    }
-    // Minutes UP
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        }}
+    
+        // Minutes UP
         if (position.x > (rootx + 150)  && position.x < (rootx+200)){
             if (position.y > (rootY+175) && position.y < (rootY+200)){
                 settingsMinsUp.setFillColor(sf::Color(255,144,255));
@@ -798,122 +787,69 @@ void settingsMenu::onClick(sf::RenderWindow &window){
                     recordMins++;
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
-            }
-        }
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 150)  && position.x < (rootx+200)){
-            if (position.y > (rootY+175) && position.y < (rootY+200)){
-                settingsMinsUp.setFillColor(sf::Color(30,144,255));
-            }
-        }
-    }
-    // Minutes DOWN
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 150)  && position.x < (rootx +200)){
+        }}
+    
+        // Minutes DOWN
+       if (position.x > (rootx + 150)  && position.x < (rootx +200)){
             if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                settingsMinsDown.setFillColor(sf::Color(255,144,255));
-                if(recordMins > 0){
-                    recordMins--;
-                    settingsMinsText.setString(std::to_string(recordMins));
-                }
-            }
-        }
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 150)  && position.x < (rootx +200)){
-            if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                settingsMinsDown.setFillColor(sf::Color(135,206,250));
-            }
-        }
-    }
-    // Seconds UP
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   // Trigger
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-            if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                settingsSecondsUp.setFillColor(sf::Color(255,144,255));
-                if(recordSeconds < 59){
-                    recordSeconds++;
-                    if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
-                    settingsSecondsText.setString(std::to_string(recordSeconds));
-                }
-                else if(recordSeconds == 59 && recordMins < 50 ){
-                    recordSeconds = 0;
-                    recordMins++;
-                    settingsMinsText.setString(std::to_string(recordMins));
-                    settingsSecondsText.setString(std::to_string(recordSeconds));
-                }
-            }
-        }
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-            if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                settingsSecondsUp.setFillColor(sf::Color(30,144,255));
-            }
-        }
-    }
-    // Seconds DOWN
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Trigger
+                    settingsMinsDown.setFillColor(sf::Color(255,144,255));
+                    if(recordMins > 0){
+                        recordMins--;
+                        settingsMinsText.setString(std::to_string(recordMins));
+                    }
+        }}
+        // Seconds UP
+            if (position.x > (rootx + 375)  && position.x < (rootx+425)){
+                if (position.y > (rootY + 175) && position.y < (rootY+200)){
+                    settingsSecondsUp.setFillColor(sf::Color(255,144,255));
+                    if(recordSeconds < 59){
+                        recordSeconds++;
+                        if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
+                        settingsSecondsText.setString(std::to_string(recordSeconds));
+                    }
+                    else if(recordSeconds == 59 && recordMins < 50 ){
+                        recordSeconds = 0;
+                        recordMins++;
+                        settingsMinsText.setString(std::to_string(recordMins));
+                        settingsSecondsText.setString(std::to_string(recordSeconds));
+                    }
+        }}
         
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        // Seconds DOWN
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY+200) && position.y < (rootY+225)){
                 settingsSecondsDown.setFillColor(sf::Color(255,144,255));
-                if(recordSeconds > 0){
-                    recordSeconds--;
-                    if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
-                    settingsSecondsText.setString(std::to_string(recordSeconds));
-                }
-                if(recordSeconds == 0){
-                    recordSeconds = 59;
-                    settingsSecondsText.setString(std::to_string(recordSeconds));
-                }
-            }
-        }
+                    if(recordSeconds > 0){
+                        recordSeconds--;
+                        if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
+                        settingsSecondsText.setString(std::to_string(recordSeconds));
+                    }
+                    if(recordSeconds == 0){
+                        recordSeconds = 59;
+                        settingsSecondsText.setString(std::to_string(recordSeconds));
+                    }
+        }}
         
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){//Release
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 375)  && position.x < (rootx+425)){
-            if (position.y > (rootY+200) && position.y < (rootY+225)){
-                settingsSecondsDown.setFillColor(sf::Color(135,206,250));
-            }
-        }
-    }
-    // Sensor TRUE
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        // Sensor TRUE
         if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
             if (position.y > (rootY + 300) && position.y < (rootY + 325)){
                 settingsRangeTrue.setFillColor(sf::Color(30,144,255));
                 settingsRangeTrue.setOutlineThickness(2);
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeHuman.setOutlineThickness(0);
-            }
-        }
-    }
-    // Sensor HUMAN
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+        }}
+        
+        // Sensor HUMAN
         if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
             if (position.y > (rootY + 300) && position.y < (rootY + 325)){
                 settingsRangeHuman.setFillColor(sf::Color(30,144,255));
                 settingsRangeHuman.setOutlineThickness(2);
                 settingsRangeTrue.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setOutlineThickness(0);
-                
-            }
-        }
-    }
-    // RESET
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+                    
+        }}
+    
+        // RESET
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsReset.setFillColor(sf::Color(30,144,255));
@@ -922,8 +858,6 @@ void settingsMenu::onClick(sf::RenderWindow &window){
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setFillColor(sf::Color(30,144,255));
                 settingsRangeTrue.setOutlineThickness(2);
-                
-                
                 settingsTenFPS.setOutlineThickness(2);
                 settingsTenFPS.setFillColor(sf::Color(30,144,255));
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
@@ -933,90 +867,89 @@ void settingsMenu::onClick(sf::RenderWindow &window){
                 recordSeconds = 0;
                 settingsSecondsText.setString(std::to_string(recordSeconds));
                 //stackward.print("Reset","Grid-EYE");
-                
-                
-                
-            }
-        }
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x > (rootx + 50)  && position.x < (rootx+200)){
-            if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                settingsReset.setFillColor(sf::Color(255,144,255));
-            }
-        }
-    }
-    // APPLY
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        sf::Vector2i position = sf::Mouse::getPosition(window);
+                    
+        }}
+        
+        // APPLY
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(30,144,255));
                 //gridward.update();
                 //stackward.print("Settings Applied");
                 menuLayer = 0;
-            }
-        }
-    }
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+        }}
+    }//end button down
+    
+    
+    //
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
         sf::Vector2i position = sf::Mouse::getPosition(window);
+    
+        //MINS UP
+        if (position.x > (rootx + 150)  && position.x < (rootx+200)){
+            if (position.y > (rootY+175) && position.y < (rootY+200)){
+                settingsMinsUp.setFillColor(sf::Color(30,144,255));
+        }}
+    
+        //Mins Down
+        if (position.x > (rootx + 150)  && position.x < (rootx +200)){
+            if (position.y > (rootY + 200) && position.y < (rootY+225)){
+                settingsMinsDown.setFillColor(sf::Color(135,206,250));
+        }}
+    
+        //seconds up
+        if (position.x > (rootx + 375)  && position.x < (rootx+425)){
+            if (position.y > (rootY + 175) && position.y < (rootY+200)){
+                settingsSecondsUp.setFillColor(sf::Color(30,144,255));
+        }}
+
+        //seconds down
+        if (position.x > (rootx + 375)  && position.x < (rootx+425)){
+            if (position.y > (rootY+200) && position.y < (rootY+225)){
+                settingsSecondsDown.setFillColor(sf::Color(135,206,250));
+        }}
+        //reset
+        if (position.x > (rootx + 50)  && position.x < (rootx+200)){
+            if (position.y > (rootY + 350) && position.y < (rootY + 375)){
+                settingsReset.setFillColor(sf::Color(255,144,255));
+        }}
+        //apply
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
-                settingsApply.setFillColor(sf::Color(255,144,255));
+                settingsApply.setFillColor(sf::Color(255,255,255));
                 //gridward.update();
-            }
-        }
+        }}
     }
 }
 void settingsMenu::draw(sf::RenderWindow &window){
-    window.draw(settingsBackground);//Draw settings menu when clicked
-    // Exit Button
-    window.draw(settingsExit);//Exit button settings menu
-    
-    // Frame Settings
+    window.draw(settingsBackground);
+    window.draw(settingsExit);
     window.draw(settingsTenFPS);
     window.draw(settingsOneFPS);
-    
     window.draw(settingsFPSText);
     window.draw(settingsFPSTextValTen);
     window.draw(settingsFPSTextValOne);
-    
-    // Collection Settings
     window.draw(settingsMinsUp);
     window.draw(settingsMinsDown);
-    
     window.draw(settingsSecondsUp);
     window.draw(settingsSecondsDown);
-    
     window.draw(settingsMinsBox);
     window.draw(settingsSecondsBox);
-    
     window.draw(settingsCollectionText);
     window.draw(settingsMinsText);
     window.draw(settingsSecondsText);
-    
-    // Sensor Range Settings
     window.draw(settingsRangeTrue);
     window.draw(settingsRangeHuman);
-    
     window.draw(settingsRangeText);
     window.draw(settingsRangeTextTrue);
     window.draw(settingsRangeTextHuman);
-    
-    
-    // Reset Sensor
     window.draw(settingsReset);
     window.draw(settingsResetText);
-    
-    // Apply Settings
     window.draw(settingsApply);
     window.draw(settingsApplyText);
 }
-int settingsMenu::Exit(void){
+int settingsMenu::exit(void){
     return menuLayer;
 }
-void settingsMenu::setMeunLayer(int currentMenuLayer){
-    menuLayer = currentMenuLayer;
-}
+
 

@@ -403,9 +403,8 @@ int main(int, char const**)
             
             //Settings Menu
             if(menuLayer == 1){
-                setward.setMeunLayer(menuLayer);
                 setward.onClick(window);
-                menuLayer = setward.Exit();
+                menuLayer = setward.exit();
             }
             // Close window: exit
             if (event.type == sf::Event::Closed) {
