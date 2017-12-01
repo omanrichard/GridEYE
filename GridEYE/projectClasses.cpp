@@ -210,7 +210,6 @@ video::video(){
 }
 video::video( GridEYE gridward ){
     frame* temp;
-    gridward.runTime = 65;
     gridward.setFPS( 10 );
     
     this->frameCount = (gridward.getFPS() * gridward.runTime);
@@ -230,8 +229,6 @@ void video::addFrame(GridEYE gridward){
     frame* temp = new frame( gridward );
     this->data.push_back(temp);
     this->frameCount++;
-    this->set_max();
-    this->set_mean();
 }
 
 void video::exportVideo( string filename ){
@@ -239,6 +236,9 @@ void video::exportVideo( string filename ){
     newOutput.open( filename, ios::out );
     
     newOutput << "*" << frameCount;    // Copies data from memory to file
+    
+    this->set_mean();
+    this->set_max();
     
     for( int x = 0; x < frameCount; x++ ){
         frame* temp = (data[x]);
@@ -259,6 +259,15 @@ void video::exportVideo( string filename ){
     }
     newOutput.close( ); // Close file
     return;
+}
+
+frame* video::getFrame( int index ){
+    frame* temp = this->data[index];
+    return temp;
+}
+
+short video::getframeCount(){
+    return this->frameCount;
 }
 
 void video::set_max(){
@@ -295,6 +304,8 @@ void video::set_mean(){
     }
     framePtr->new_mean( sum / (64*frameCount) );
 }
+
+
 
 void video::print(){
     frame* temp;

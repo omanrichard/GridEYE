@@ -43,6 +43,7 @@ int i,j;
 int recordMins = 0; //Seconds to be recorded - Is this still being used?
 int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
 bool recordStatus = false; //True: Recording; False: Not recording
+bool playbackStatus = false;
 
 char recordTimeBuffer[11]; //Holds formatted time
 struct tm * currentTimeStruct;//Time structure required for formatted time
@@ -400,7 +401,10 @@ int main(int, char const**)
  --------------------------------------------------------------------
  --------------------------------------------------------------------
 /*/
-   
+    float tempt;
+    frame* framePtr;
+    int fcount = 0;
+    
     while (window.isOpen()) //While the window is open.
     {
         
@@ -415,15 +419,18 @@ int main(int, char const**)
             progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
-            
-            
-            
-            
+        
             
             float tenthSecond = 0.1;
-            if(difftime(time(NULL),lastCaptureTime >= tenthSecond)){
+            tempt = (difftime( time(NULL), lastCaptureTime));
+            
+            if( (tempt) >= 0.1 ){
+                cout << tempt << endl << endl;
+
                 lastCaptureTime = time(NULL);
-             
+        
+                vPtr->addFrame( gridward );
+                
             }
             
         }
@@ -432,15 +439,38 @@ int main(int, char const**)
              recordText.setFillColor(sf::Color::Green);
         }
         
+        if(playbackStatus == true){
+            recordText.setString("Replaying");//Changes "Stand-By" To "Replaying"
+            recordText.setFillColor(sf::Color::Red);//"Sets "Replaying" Text to Red
+            
+            if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
+            for( int x=0 ; x<fcount ; x++ ){
+                framePtr = vPtr->getFrame(x);
+                for( i=0 ; i < 8 ; i++ ){
+                    for( j=0 ; j<8 ; j++ ){
+                        gridx = (200+i*51);
+                        gridy = (98+j*51);
+                        RectangleShape newPix(sf::Vector2f(50, 50));
+                        newPix.setPosition( gridx, gridy );             // Eventually
+                                                    // pixelMask.setMask( tempFrame->access(short row, short col );
+                        newPix.setFillColor(sf::Color(gridward.r, framePtr->access(i, j) ,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
+                        grid[i][j] = newPix;
+                    }
+                }
+                lastCaptureTime = time( NULL);
+                
+            }
+                playbackStatus = false;
         
-        
+            }
+        }
         
         // Eventual Additions to control grid colors
         /*
          activeVid = session.current[ session.vCount ]; // Active frame
          tempFrame = activeVid->data[];                 // Frame to draw controlled somehow
         */
-        
+        else{
         //sets each gridward pixel
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
@@ -452,6 +482,7 @@ int main(int, char const**)
                 newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
                 grid[i][j] = newPix;
             }
+        }
         }
         window.draw(line);
         
@@ -549,21 +580,27 @@ int main(int, char const**)
                             progressBar.setStartTime(recordStartTime);
                             stackward.print("Starting Capture");
                             
-                          
+                            vPtr = new video;
                             
                             //set led to green
                             }
                          //Play capture
                          if (position.y > 189 && position.y < 308){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Entering Playback Mode");
+                             stackward.print("Entering Playback Mode");
                              menuLayer = 2;//Change layer to playback
+                             
+                             playbackStatus = true;
+                             fcount = vPtr->getframeCount();
                          }
                          //Stop capture
                          if (position.y >308 && position.y < 402){
                              recordStatus = false;//Stop recording data
                              stackward.print("Stopping Capture");
                              //set led to red
+                             
+                             currentSession.addVideo(vPtr);
+                             
                          }
                          //Save capture
                          if (position.y > 402 && position.y < 496){
@@ -571,7 +608,7 @@ int main(int, char const**)
                              stackward.print("Saving Capture");
                              
                              cout << "Exporting Video" << endl;
-                             vPtr->exportVideo( "Test.text" );
+                             vPtr->exportVideo( "Test1.txt" );
                              cout << "Success" << endl;
                              //set led to red
                          }

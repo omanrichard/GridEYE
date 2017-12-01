@@ -107,9 +107,12 @@ public:
     ~video();
     
     void addFrame(GridEYE gridward);
+    frame* getFrame( int index );
 
+    short getframeCount();
     void exportVideo( string filename );
     void print();
+    
 };
 /*/ --------------- End Video Class --------------- /*/
 
