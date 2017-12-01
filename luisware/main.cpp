@@ -17,7 +17,7 @@
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "Event.hpp"
-//#include <wiringPi.h>
+//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
 #include <Mouse.hpp>
 #include <iostream>
 #include <fstream>
@@ -31,40 +31,7 @@
 
 using namespace sf;
 
-/*
-class terminal {
-    private:
-    std::string Row1;
-    std::string Row2;
-    std::string Row3;
-    std::string Row4;
-    std::string Row5;
-    std::string Row6;
-    std::string Row7;
-    
-    public:
-    terminal(int x1,int y1,int length,int width);
-    void write(std::string newText);
-    void clear(void);
-    void draw(void);
-};
-     
-//length = 625, width = 94, x1 = 94, y1 = 596
-terminal::terminal(int x1, int y1, int length, int width){
-    sf::RectangleShape terminal(sf::Vector2f( length, width ));
-    terminal.setFillColor(sf::Color::Black);
-    terminal.setPosition(x1, y1+10);
-    
-    sf::RectangleShape terminalHeader(sf::Vector2f( length, 10 ));
-    terminalHeader.setFillColor(sf::Color(255,94,20));
-    terminalHeader.setPosition(x1, y1);
-}
-void terminal::draw(void){
-    window.draw(terminalHeader);
-    window.draw(terminal);
-}
 
-*/
 //Global Objects
 GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
@@ -88,8 +55,8 @@ time_t recordEndTime; //Time when recording Ends
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, Playback is 2;
 
 
-int rootx = 150;//What are these used for?
-int rootY = 100;//What are these used for?
+int rootx = 150;//Settings Menu upper left corner
+int rootY = 100;//Settings Menu upper left corner
 
 int main(int, char const**)
 {
@@ -481,9 +448,9 @@ int main(int, char const**)
         //sets each gridward pixel
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
-                gridx = (164+i*59);
-                gridy = (88+j*59);
-                RectangleShape newPix(sf::Vector2f(58, 58));
+                gridx = (200+i*51);
+                gridy = (98+j*51);
+                RectangleShape newPix(sf::Vector2f(50, 50));
                 newPix.setPosition( gridx, gridy );
                 gridward.test(i,j);
                 newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
