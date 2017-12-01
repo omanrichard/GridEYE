@@ -48,6 +48,7 @@ char recordTimeBuffer[11]; //Holds formatted time
 struct tm * currentTimeStruct;//Time structure required for formatted time
 
 time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
+time_t lastCaptureTime;//Time at which the most recent capture was taken - used for fps control
 time_t recordStartTime; //Time when recording starts
 time_t recordEndTime; //Time when recording Ends
 
@@ -415,7 +416,15 @@ int main(int, char const**)
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
             
-           
+            
+            
+            
+            
+            float tenthSecond = 0.1;
+            if(difftime(time(NULL),lastCaptureTime >= tenthSecond)){
+                lastCaptureTime = time(NULL);
+             
+            }
             
         }
         if(recordStatus == false){
@@ -536,13 +545,11 @@ int main(int, char const**)
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
                             recordStartTime = time(NULL); //Set current time as start time
+                            lastCaptureTime = recordStartTime;
                             progressBar.setStartTime(recordStartTime);
                             stackward.print("Starting Capture");
                             
-                            cout << "Adding Video" << endl;
-                            vPtr = new video( gridward ); // Run for 65 sec at 10 FPS
-                            currentSession.addVideo( vPtr );
-                            cout << "Video added to session" << endl;
+                          
                             
                             //set led to green
                             }
