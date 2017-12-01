@@ -206,7 +206,7 @@ frame::~frame(){
 /*/ --------------- Video Constructor --------------- /*/
 video::video( GridEYE gridward ){
     frame* temp;
-    gridward.runTime=1;
+    gridward.runTime = 65;
     
     this->frameCount = (gridward.getFPS() * gridward.runTime);
     
