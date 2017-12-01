@@ -336,17 +336,14 @@ int main(int, char const**)
     // Settings Button Position
     settingsTenFPS.setPosition(rootx+100 ,rootY+75 );   //Default
     settingsOneFPS.setPosition(rootx+325 ,rootY+75 );
-    
     settingsMinsBox.setPosition(rootx+75 ,rootY+175 );
     settingsSecondsBox.setPosition(rootx+300 ,rootY+175 );
     settingsMinsUp.setPosition(rootx+150 ,rootY+175);
     settingsMinsDown.setPosition(rootx+150 ,rootY+200);
     settingsSecondsUp.setPosition(rootx+375 ,rootY+175 );
     settingsSecondsDown.setPosition(rootx+375 ,rootY+200 );
-    
     settingsRangeTrue.setPosition(rootx+75 ,rootY+300 );
     settingsRangeHuman.setPosition(rootx+325 ,rootY+300 );
-    
     settingsReset.setPosition(rootx+50 ,rootY+350 );
     settingsApply.setPosition(rootx+300 ,rootY+350 );
     
@@ -408,9 +405,13 @@ int main(int, char const**)
         
         //Recording Control
         if(recordStatus == true){
+            
+            
+            
             recordText.setString("Recording");//Changes "Stand-By" To "Recording"
             recordText.setFillColor(sf::Color::Red);//"Sets "Recoding" Text to Red
             recordEndTime = time(NULL);//Sets current time to end time
+            progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
             
@@ -421,6 +422,9 @@ int main(int, char const**)
             recordText.setString("Standy-by");
              recordText.setFillColor(sf::Color::Green);
         }
+        
+        
+        
         
         // Eventual Additions to control grid colors
         /*
@@ -532,6 +536,7 @@ int main(int, char const**)
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
                             recordStartTime = time(NULL); //Set current time as start time
+                            progressBar.setStartTime(recordStartTime);
                             stackward.print("Starting Capture");
                             
                             vPtr = new video( gridward ); // Run for 65 sec at 10 FPS
@@ -914,8 +919,6 @@ int main(int, char const**)
         // Draw the Terminal window
         stackward.draw(window);
        
-        progressBar.setTime(recordStartTime,recordEndTime);
-        progressBar.setCurrentTime(time(NULL));
         progressBar.draw(window);
         
         
