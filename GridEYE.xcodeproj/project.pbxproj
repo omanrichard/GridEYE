@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		79024B371FD0F6F400F9AC77 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 79024B351FD0F6F400F9AC77 /* progress.png */; };
 		79024B381FD0F6F400F9AC77 /* audio-player.png in Resources */ = {isa = PBXBuildFile; fileRef = 79024B361FD0F6F400F9AC77 /* audio-player.png */; };
+		79024B3A1FD0FD9300F9AC77 /* GridEYE-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79024B391FD0FD9200F9AC77 /* GridEYE-Info.plist */; };
 		798DBF4D1FBFFAC00090BCF6 /* projectClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */; };
 		79BC31B11FBAB237005842D0 /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AE1FBAB237005842D0 /* wrench.png */; };
 		79BC31B21FBAB237005842D0 /* add-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC31AF1FBAB237005842D0 /* add-button.png */; };
@@ -27,12 +28,12 @@
 		79EE7B521FBA8F8A00D8618D /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4A1FBA8F8A00D8618D /* download.png */; };
 		79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */; };
 		79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4C1FBA8F8A00D8618D /* new-file.png */; };
-		938E1D681FD0E333008185A1 /* GridEYE-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 938E1D671FD0E333008185A1 /* GridEYE-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		79024B351FD0F6F400F9AC77 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
 		79024B361FD0F6F400F9AC77 /* audio-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player.png"; sourceTree = "<group>"; };
+		79024B391FD0FD9200F9AC77 /* GridEYE-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GridEYE-Info.plist"; sourceTree = "<group>"; };
 		798DBF4A1FBFBA920090BCF6 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
 		798DBF4B1FBFFAC00090BCF6 /* projectClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = projectClasses.h; sourceTree = "<group>"; };
 		798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projectClasses.cpp; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		79EE7B4A1FBA8F8A00D8618D /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-2.png"; sourceTree = "<group>"; };
 		79EE7B4C1FBA8F8A00D8618D /* new-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new-file.png"; sourceTree = "<group>"; };
-		938E1D671FD0E333008185A1 /* GridEYE-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GridEYE-Info.plist"; path = "../../../Downloads/GridEYE-Info.plist"; sourceTree = "<group>"; };
 		93A30E961FBDD7CC0088120C /* Mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mouse.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +105,7 @@
 		79EE7B2D1FBA7F4100D8618D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				938E1D671FD0E333008185A1 /* GridEYE-Info.plist */,
+				79024B391FD0FD9200F9AC77 /* GridEYE-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -196,6 +196,7 @@
 				79EE7B521FBA8F8A00D8618D /* download.png in Resources */,
 				79EE7B4D1FBA8F8A00D8618D /* settings.png in Resources */,
 				79BC31B31FBAB237005842D0 /* delete.png in Resources */,
+				79024B3A1FD0FD9300F9AC77 /* GridEYE-Info.plist in Resources */,
 				79BC31B21FBAB237005842D0 /* add-button.png in Resources */,
 				79EE7B511FBA8F8A00D8618D /* note.png in Resources */,
 				79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */,
@@ -207,7 +208,6 @@
 				79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */,
 				79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */,
 				79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */,
-				938E1D681FD0E333008185A1 /* GridEYE-Info.plist in Resources */,
 				79EE7B361FBA7F4100D8618D /* cute_image.jpg in Resources */,
 				79024B381FD0F6F400F9AC77 /* audio-player.png in Resources */,
 			);
@@ -337,7 +337,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/../../Downloads/GridEYE-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/GridEYE/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -347,7 +347,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/../../Downloads/GridEYE-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/GridEYE/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
