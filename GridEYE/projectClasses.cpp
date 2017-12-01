@@ -139,7 +139,9 @@ frame::~frame(){
 video::video( GridEYE gridward ){
     frame* temp;
     gridward.runTime=1;
+    
     this->frameCount = (gridward.FPS * gridward.runTime);
+    
     for( int x = 0 ; x < frameCount ; x++){
         temp = new frame( gridward );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
@@ -163,13 +165,13 @@ void video::exportVideo( string filename ){
         newOutput << "&" << temp->get_max() << "&" << temp->get_mean();     // & indicates sub-data value
         for( int y = 0; y < 8 ; y++){
                 newOutput << "@" << "$" << temp->access( y, 0 )             // @ indicates row begin
-                          <<   "$" << temp->access( y, 1 )
-                          <<   "$" << temp->access( y, 2 )                  // $ indicates data value
-                          <<   "$" << temp->access( y, 3 )
-                          <<   "$" << temp->access( y, 4 )
-                          <<   "$" << temp->access( y, 5 )
-                          <<   "$" << temp->access( y, 6 )
-                          <<   "$" << temp->access( y, 7 );
+                                 << "$" << temp->access( y, 1 )
+                                 << "$" << temp->access( y, 2 )                  // $ indicates data value
+                                 << "$" << temp->access( y, 3 )
+                                 << "$" << temp->access( y, 4 )
+                                 << "$" << temp->access( y, 5 )
+                                 << "$" << temp->access( y, 6 )
+                                 << "$" << temp->access( y, 7 );
         }
         newOutput << "#"; // End Packet
         
