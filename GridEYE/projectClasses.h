@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <time.h>
 
 #ifndef projectClasses_h
 #define projectClasses_h
@@ -136,14 +137,24 @@ class terminal{
 /*/ --------------- End Terminal (Stack) Class --------------- /*/
 class playBar{
 private:
+    sf::Font playBarFont;
     sf::Texture t_background;
     sf::Texture t_fillBar;
     sf::Sprite background;
     sf::Sprite fillBar;
+    sf::Vector2f fillPos;
+    sf::Text currentTimeText;
+    sf::Text endTimeText;
+    char timeTextBuffer[8];
+    struct tm * timeTextStruct;
+    time_t startTime;
+    time_t endTime;
     
 public:
-    playBar(int x, int y, int scale);
-    void update(int percent);
+    playBar(sf::Vector2f position, int scale);
+    void update(double percent);
+    void spin(void);
+    void setTime(time_t end);
     virtual void draw(sf::RenderWindow &window);
 };
 

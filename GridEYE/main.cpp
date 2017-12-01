@@ -159,7 +159,8 @@ int main(int, char const**)
     line2.setFillColor( Color::Black );
     line2.setPosition(94, 606);
     
-    
+    //---------------Draw Playbar-----------
+    playBar progressBar(sf::Vector2f(35, 375),1);
     //----------------Draw Toolbar----------------
     sf::RectangleShape toolbarFrame(sf::Vector2f( 94, 700 ));
     toolbarFrame.setFillColor(sf::Color(132, 101, 142,100));
@@ -410,7 +411,7 @@ int main(int, char const**)
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
 
     
- playBar progressBar(200,500,1);
+ 
 /*/---------- Draw ----------/*/
 // Play the music
 //music.play();
@@ -939,6 +940,7 @@ int main(int, char const**)
         window.draw(terminalText4);
         window.draw(terminalText5);
         window.draw(terminalText6);
+        progressBar.update(50);
         progressBar.draw(window);
         
         
