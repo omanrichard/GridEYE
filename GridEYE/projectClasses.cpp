@@ -245,6 +245,34 @@ video::~video(){
 }
 /*/ --------------- End Video Methods --------------- /*/
 
+/*/ --------------- Session Methods --------------- /*/
+session::session(){     // Default Constructor
+    this->vCount = 0;                           // Initializes video count to zero
+    cout << "Session Started" << endl << endl;
+    return;
+}
+session::session( video* newVid ){ // Default constructor adds video pointer to session array
+    cout << "Session Started" << endl << endl;
+    this->current.push_back( newVid );
+    this->vCount++;
+}
+
+
+void session::addVideo( video* newVid ){
+    this->current.push_back( newVid ); // Append "active" recording to video stack
+    this->vCount++;                     // Update video count value
+}
+
+void session::undoRec(){        // Removes "active" recording from the stack of videos
+    this->current.pop_back();   // pop_back() removes last value, decrements vector size by 1
+    this->vCount--;             // update video count value
+}
+
+session::~session(){}
+
+/*/ --------------- End Session Methods --------------- /*/
+
+
 /*/ --------------- Terminal (Stack) Methods --------------- /*/
 terminal::terminal(int size, string text){
     for(int i = 0; i <= size; i++){

@@ -101,12 +101,16 @@ public:
 /*/ --------------- Session Class --------------- /*/
 class session{
 private:
-    vector< class video* > currentSession;
+    vector< video* > current;
+    int vCount;
     
 public:
     session();
+    session( video* newVid );
     ~session();
     
+    void addVideo( video* newVid );
+    void undoRec();
     void print();
 };
 /*/ --------------- End Session Class --------------- /*/
