@@ -11,6 +11,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <time.h>
+#include <math.h>
 
 #ifndef projectClasses_h
 #define projectClasses_h
@@ -171,11 +172,14 @@ private:
     time_t currentTime;
 public:
     playBar(sf::Vector2f position, int scale);
-    void spin(void);
+    void record(time_t currentTime);
+    void setStartTime(time_t start);
     void setTime(time_t start,time_t end);
     void setCurrentTime(time_t currentTime);
     virtual void draw(sf::RenderWindow &window);
 };
+
+
 
 #endif /* projectClasses_h */
 
