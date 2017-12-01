@@ -153,7 +153,7 @@ private:
 public:
     playBar(sf::Vector2f position, int scale);
     void spin(void);
-    void setEndTime(time_t end);
+    void setTime(time_t start,time_t end);
     void setCurrentTime(time_t currentTime);
     virtual void draw(sf::RenderWindow &window);
 };

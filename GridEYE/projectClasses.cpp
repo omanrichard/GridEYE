@@ -333,12 +333,12 @@ playBar::playBar(sf::Vector2f position, int scale){
     endTimeText.setString(timeTextBuffer);
     
     currentTimeText.setCharacterSize(12);
-    currentTimeText.setColor(sf::Color::White);
+    currentTimeText.setFillColor(sf::Color::White);
     currentTimeText.setFont(playBarFont);
     currentTimeText.setPosition(position.x+465,position.y+158);
     
     endTimeText.setCharacterSize(12);
-    endTimeText.setColor(sf::Color::White);
+    endTimeText.setFillColor(sf::Color::White);
     endTimeText.setFont(playBarFont);
     endTimeText.setPosition(position.x+510,position.y+158);
     
@@ -356,11 +356,11 @@ void playBar::setCurrentTime(time_t time){
 void playBar::draw(sf::RenderWindow &window){
    
     timeTextStruct = localtime(&currentTime);
-    strftime (timeTextBuffer,8,"%R",timeTextStruct);
+    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     currentTimeText.setString(timeTextBuffer);
     
     timeTextStruct = localtime(&endTime);
-    strftime (timeTextBuffer,8,"%R",timeTextStruct);
+    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     endTimeText.setString(timeTextBuffer);
     
     window.draw(background);
@@ -368,6 +368,7 @@ void playBar::draw(sf::RenderWindow &window){
     window.draw(currentTimeText);
     window.draw(endTimeText);
 }
-void playBar::setEndTime(time_t end){
+void playBar::setTime(time_t start,time_t end){
+    startTime = start;
     endTime = end;
 }

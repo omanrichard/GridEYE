@@ -940,7 +940,7 @@ int main(int, char const**)
         window.draw(terminalText4);
         window.draw(terminalText5);
         window.draw(terminalText6);
-        progressBar.setEndTime(recordEndTime);
+        progressBar.setTime(recordStartTime,recordEndTime);
         progressBar.setCurrentTime(time(NULL));
         progressBar.draw(window);
         
