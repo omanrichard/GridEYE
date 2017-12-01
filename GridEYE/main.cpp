@@ -24,6 +24,7 @@
 #include <vector>
 #include <string>
 #include "projectClasses.h"
+#include "graphicClasses.h"
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
@@ -343,8 +344,7 @@ int main(int, char const**)
         
         // Draw the placeholder text
         window.draw(topbarBackground);
-       // window.draw(backgroundHeader);
-        //window.draw(backgroundHeader2);
+       
         window.draw(backgroundHeader3);
         
         window.draw(text);
@@ -352,31 +352,33 @@ int main(int, char const**)
         window.draw(recordingTimeText);
         
         
-        /*/---Draw Settings Window----/*/
-            if(menuLayer == 1){
-                setward.draw(window);
-            }
-             
+ 
         
-          
-        /*/---------- Draw Toolbar ----------/*/
-        
-   
-        
-        // Draw output Grid
-       
-        if(menuLayer == 0){
-            for( i=0 ; i < 8 ; i++ ){
-                for( j=0 ; j<8 ; j++ ){
-                    window.draw(grid[i][j]);
+        /*/-------- Layer control -------/*/
+        switch(menuLayer){
+            case 0: //Home Screen
+                toolward.draw(window); //Toolbar
+                stackward.draw(window);//Terminal
+                progressBar.draw(window);//Playback bar
+                //Grid
+                for( i=0 ; i < 8 ; i++ ){
+                    for( j=0 ; j<8 ; j++ ){
+                        window.draw(grid[i][j]);
+                    }
                 }
-            }
+                
+                break;
+            case 1: //Settings Menu
+                toolward.draw(window);//Toolbar
+                stackward.draw(window);//Terminal
+                setward.draw(window);//Settings Menu
+                
+                break;
+            case 2: //Playback Mode
+                break;
         }
-       
-        // Draw the Terminal window
-        toolward.draw(window);
-        stackward.draw(window);
-        progressBar.draw(window);
+        
+    
         
         
         // Update the window
