@@ -68,6 +68,8 @@ public:
     short get_max();
     float get_mean();
     
+    void addFrame(GridEYE gridward);
+    
     void new_max( short newMax );
     void new_mean( float newMean );
     
@@ -102,6 +104,7 @@ private:
     void set_mean();
     
 public:
+    video();
     video( GridEYE gridward );
     ~video();
     

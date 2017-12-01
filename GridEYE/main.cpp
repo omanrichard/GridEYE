@@ -540,9 +540,7 @@ int main(int, char const**)
                             stackward.print("Starting Capture");
                             
                             cout << "Adding Video" << endl;
-                            vPtr = new video( gridward ); // Run for 65 sec at 10 FPS
-                            currentSession.addVideo( vPtr );
-                            cout << "Video added to session" << endl;
+                            vPtr = new video(); // Run for 65 sec at 10 FPS
                             
                             //set led to green
                             }

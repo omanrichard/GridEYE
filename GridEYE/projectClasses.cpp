@@ -204,6 +204,10 @@ frame::~frame(){
 
 
 /*/ --------------- Video Constructor --------------- /*/
+video::video(){
+    this->frameCount = 0;
+    
+}
 video::video( GridEYE gridward ){
     frame* temp;
     gridward.runTime = 65;
@@ -222,6 +226,14 @@ video::video( GridEYE gridward ){
 }
 
 /*/ --------------- Video Methods --------------- /*/
+void video::addFrame(GridEYE gridward){
+    frame* temp = new frame( gridward );
+    this->data.push_back(temp);
+    this->frameCount++;
+    this->set_max();
+    this->set_mean();
+}
+
 void video::exportVideo( string filename ){
     fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );
