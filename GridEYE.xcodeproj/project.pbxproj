@@ -25,6 +25,7 @@
 		79EE7B521FBA8F8A00D8618D /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4A1FBA8F8A00D8618D /* download.png */; };
 		79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */; };
 		79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4C1FBA8F8A00D8618D /* new-file.png */; };
+		938E1D681FD0E333008185A1 /* GridEYE-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 938E1D671FD0E333008185A1 /* GridEYE-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +36,6 @@
 		79BC31AF1FBAB237005842D0 /* add-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-button.png"; sourceTree = "<group>"; };
 		79BC31B01FBAB237005842D0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		79EE7B2A1FBA7F4100D8618D /* GridEYE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridEYE.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		79EE7B2E1FBA7F4100D8618D /* GridEYE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GridEYE-Info.plist"; sourceTree = "<group>"; };
 		79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		79EE7B321FBA7F4100D8618D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -51,6 +51,7 @@
 		79EE7B4A1FBA8F8A00D8618D /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-2.png"; sourceTree = "<group>"; };
 		79EE7B4C1FBA8F8A00D8618D /* new-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new-file.png"; sourceTree = "<group>"; };
+		938E1D671FD0E333008185A1 /* GridEYE-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GridEYE-Info.plist"; path = "../../../Downloads/GridEYE-Info.plist"; sourceTree = "<group>"; };
 		93A30E961FBDD7CC0088120C /* Mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mouse.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,7 +101,7 @@
 		79EE7B2D1FBA7F4100D8618D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				79EE7B2E1FBA7F4100D8618D /* GridEYE-Info.plist */,
+				938E1D671FD0E333008185A1 /* GridEYE-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -199,6 +200,7 @@
 				79EE7B4E1FBA8F8A00D8618D /* play-button.png in Resources */,
 				79EE7B381FBA7F4100D8618D /* nice_music.ogg in Resources */,
 				79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */,
+				938E1D681FD0E333008185A1 /* GridEYE-Info.plist in Resources */,
 				79EE7B361FBA7F4100D8618D /* cute_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,7 +329,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/GridEYE/GridEYE-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../../Downloads/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -337,7 +339,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "$(SRCROOT)/GridEYE/GridEYE-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../../Downloads/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
