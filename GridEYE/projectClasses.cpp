@@ -329,9 +329,9 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     timeTextStruct = localtime(&endTime);
     strftime (timeTextBuffer,8,"%R",timeTextStruct);
-    
     currentTimeText.setString(timeTextBuffer);
     endTimeText.setString(timeTextBuffer);
+    
     currentTimeText.setCharacterSize(12);
     currentTimeText.setColor(sf::Color::White);
     currentTimeText.setFont(playBarFont);
@@ -345,17 +345,29 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     
 }
-void playBar::update(double percent){
-    percent = percent/100;
+void playBar::setCurrentTime(time_t time){
+    currentTime = time;
+    double totalSeconds = difftime(endTime,startTime);
+    double percent = difftime(currentTime,startTime);
+    percent = totalSeconds/percent;
     fillBar.setScale(percent,1);
   
 }
 void playBar::draw(sf::RenderWindow &window){
+   
+    timeTextStruct = localtime(&currentTime);
+    strftime (timeTextBuffer,8,"%R",timeTextStruct);
+    currentTimeText.setString(timeTextBuffer);
+    
+    timeTextStruct = localtime(&endTime);
+    strftime (timeTextBuffer,8,"%R",timeTextStruct);
+    endTimeText.setString(timeTextBuffer);
+    
     window.draw(background);
     window.draw(fillBar);
     window.draw(currentTimeText);
     window.draw(endTimeText);
 }
-void playBar::setTime(time_t end){
+void playBar::setEndTime(time_t end){
     endTime = end;
 }

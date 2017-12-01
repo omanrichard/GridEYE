@@ -149,12 +149,12 @@ private:
     struct tm * timeTextStruct;
     time_t startTime;
     time_t endTime;
-    
+    time_t currentTime;
 public:
     playBar(sf::Vector2f position, int scale);
-    void update(double percent);
     void spin(void);
-    void setTime(time_t end);
+    void setEndTime(time_t end);
+    void setCurrentTime(time_t currentTime);
     virtual void draw(sf::RenderWindow &window);
 };
 
