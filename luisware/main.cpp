@@ -439,6 +439,11 @@ int main(int, char const**)
             recordText.setString("Standy-by");
              recordText.setFillColor(sf::Color::Green);
             
+            currentTime = time(NULL);//Set Current Time
+            currentTimeStruct = localtime(&currentTime);//Update Time Structure with current Time
+            strftime (recordTimeBuffer,11,"%r",currentTimeStruct);//Formate Time as string
+            recordingTimeText.setString(recordTimeBuffer);//Set TimeTextObject to current time
+            
         }
         
         
