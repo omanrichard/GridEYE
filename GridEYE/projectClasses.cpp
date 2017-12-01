@@ -11,24 +11,45 @@
 #include <vector>
 #include <string>
 #include "projectClasses.h"
-#include <time.h>
+//#include <wiringPiI2C.h>
 
-#define gridEyeAddr 0x68 // or 0x69 Address
+#define gridEyeAddr 0x68
 
 using namespace std;
 int row,col;
 
 /*/ --------------- GridEYE Constructor --------------- /*/
 GridEYE::GridEYE(int address){
-    /*/
+    /*
      I2C begin transmission @ address
-     //Inisilize sensor
-     /*/
+     int temp = 0;
+     int pixAddr = 0x80;
+     
+     int fd = wiringPiI2CSetup( gridEyeAddr );
+     
+     wiringPiI2CWrite( fd, cmd );
+     
+     for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            wiringPiI2CWriteReg16( fd, pixAddr, 1 );
+            temp = wiringPiI2CReadReg16(fd, pixAddr);  // Receive value from device, end transmission
+     
+            temp = temp >> 4;                   // Thermistor data is 12-bit
+                                            // Shift 4 will remove 4-bit precision bits
+            this->sensor_values[row][col] = (short)temp;
+            pixAddr += 2;
+        }
+     }
+     set_max();
+     set_mean();
+     return;
+     */
 }
 /*/ --------------- GridEYE Methods --------------- /*/
-int GridEYE::read(int row, int col){
-    /*/ read code /*/
+short GridEYE::read(int row, int col){
+    return this->sensor_values[row][col];    //Accesses data point in data array
 }
+
 void GridEYE::reset(void){
     FPS = 10;
 }
@@ -37,8 +58,14 @@ void GridEYE::test(int row, int col){
     g = rand() % 255;
     b = rand() % 255;
 }
-void GridEYE::update(void){
-    
+
+int GridEYE::getFPS(){
+    return this->FPS;
+}
+
+void GridEYE::setFPS(int temp){
+    this->FPS = temp;
+    return;
 }
 /*/ --------------- End GridEYE --------------- /*/
 /*/ --------------- Frame Constructor --------------- /*/
@@ -99,20 +126,10 @@ float frame::get_mean(){
     return this->mean;
 }
 
-void frame::import_data( GridEYE gridward ){
-    for( row = 0 ; row < 8 ; row++ ){
-        for( col = 0 ; col < 8 ;  col++){
-            gridward.test( row , col );
-            this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
-        }
-    }
-    return;
-}
-
 void frame::print(){
     
     for( col = 0 ; col < 8 ; col++){                                        // Frame No. : 1
-        cout << "\t"                                    // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+        cout << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
         << "[ " << this->sensor_values[col][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
         << "[ " << this->sensor_values[col][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
         << "[ " << this->sensor_values[col][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
@@ -128,6 +145,7 @@ void frame::print(){
 short frame::access( short row , short col ){
         return this->sensor_values[row][col];    //Accesses data point in data array
 }
+
 /*/ ----- Frame Destructor ----- /*/
 frame::~frame(){
 }
@@ -141,7 +159,7 @@ video::video( GridEYE gridward ){
     frame* temp;
     gridward.runTime=1;
     
-    this->frameCount = (gridward.FPS * gridward.runTime);
+    this->frameCount = (gridward.getFPS() * gridward.runTime);
     
     for( int x = 0 ; x < frameCount ; x++){
         temp = new frame( gridward );       // Collect data and create frame
