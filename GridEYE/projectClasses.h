@@ -64,21 +64,22 @@ public:
     void import_data( GridEYE gridward );
 
 };
+
 /*
-class frame_mask : public frame {
+class pixelMask {
 private:
-    vector< string > scale;
-    string mask[8][8];
+ short r;
+ short g;
+ short b;
     
 public:
     frame_mask();
     ~frame_mask();
     
-    void print();
-    void set_mask();
-    
+    void setMask( short temp ); // Uses algorithm to determine RGB values
 };
 */
+
 /*/ --------------- End Frame Class --------------- /*/
 
 /*/ --------------- Video Class --------------- /*/
@@ -102,7 +103,7 @@ public:
 /*/ --------------- Session Class --------------- /*/
 class session{
 private:
-    vector< video* > current;
+    vector< video* > current; // session.current[vCount] 
     int vCount;
     
 public:
@@ -110,8 +111,8 @@ public:
     session( video* newVid );
     ~session();
     
-    void addVideo( video* newVid );
-    void undoRec();
+    void addVideo( video* newVid ); // Implement Save button
+    void undoRec();                 // Implement Delete Button
     void print();
 };
 /*/ --------------- End Session Class --------------- /*/

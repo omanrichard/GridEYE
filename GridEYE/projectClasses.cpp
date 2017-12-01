@@ -220,8 +220,8 @@ void video::print(){
     for( row = 0 ; row < frameCount ; row++ ){
         temp = this->data[row];
         cout << "Frame No. : " << row + 1 << endl;
-        for( col = 0 ; col < 8 ; col++){                     // Frame No. : 1
-            cout << "\t"                               // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+        for( col = 0 ; col < 8 ; col++){                // Frame No. : 1
+            cout << "\t"                                // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
             << "[ " << temp->access(col, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
             << "[ " << temp->access(col, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
             << "[ " << temp->access(col, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
@@ -251,15 +251,23 @@ session::session(){     // Default Constructor
     cout << "Session Started" << endl << endl;
     return;
 }
-session::session( video* newVid ){ // Default constructor adds video pointer to session array
+
+session::session( video* newVid ){      // constructor adds video pointer to session array
     cout << "Session Started" << endl << endl;
-    this->current.push_back( newVid );
-    this->vCount++;
+    try{
+        if( !( this->vCount < 1 ) )
+            throw -1;                       // Maybe throw error class instead, can do something later in main
+        this->current.push_back( newVid );  // Adds video pointer into the array in first position
+        this->vCount++;
+    }
+    catch( int ){
+        cout << "Exception Handled" << endl;
+    }
 }
 
 
 void session::addVideo( video* newVid ){
-    this->current.push_back( newVid ); // Append "active" recording to video stack
+    this->current.push_back( newVid );  // Append "active" recording to video stack
     this->vCount++;                     // Update video count value
 }
 
