@@ -28,6 +28,7 @@
 		79EE7B521FBA8F8A00D8618D /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4A1FBA8F8A00D8618D /* download.png */; };
 		79EE7B531FBA8F8A00D8618D /* play-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */; };
 		79EE7B541FBA8F8A00D8618D /* new-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EE7B4C1FBA8F8A00D8618D /* new-file.png */; };
+		9333FB3A1FD1D54700F28E44 /* graphicClasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9333FB391FD1D54700F28E44 /* graphicClasses.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,8 @@
 		79EE7B4A1FBA8F8A00D8618D /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		79EE7B4B1FBA8F8A00D8618D /* play-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-2.png"; sourceTree = "<group>"; };
 		79EE7B4C1FBA8F8A00D8618D /* new-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new-file.png"; sourceTree = "<group>"; };
+		9333FB381FD1D50600F28E44 /* graphicClasses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphicClasses.h; sourceTree = "<group>"; };
+		9333FB391FD1D54700F28E44 /* graphicClasses.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicClasses.cpp; sourceTree = "<group>"; };
 		93A30E961FBDD7CC0088120C /* Mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mouse.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				798DBF4B1FBFFAC00090BCF6 /* projectClasses.h */,
+				9333FB381FD1D50600F28E44 /* graphicClasses.h */,
+				9333FB391FD1D54700F28E44 /* graphicClasses.cpp */,
 				798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */,
 				79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */,
 				79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */,
@@ -239,6 +244,7 @@
 				79EE7B331FBA7F4100D8618D /* main.cpp in Sources */,
 				79EE7B301FBA7F4100D8618D /* ResourcePath.mm in Sources */,
 				798DBF4D1FBFFAC00090BCF6 /* projectClasses.cpp in Sources */,
+				9333FB3A1FD1D54700F28E44 /* graphicClasses.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

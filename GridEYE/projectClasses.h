@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 #include <math.h>
-
+#include <mouse.hpp>
 #ifndef projectClasses_h
 #define projectClasses_h
 
@@ -133,90 +133,11 @@ public:
 };
 /*/ --------------- End Session Class --------------- /*/
 
-/*/ --------------- Terminal (Stack) Class --------------- /*/
-class terminal{
-    private:
-    string rootText; //Text before input
-    vector<string> stack;
-    sf::Font terminalFont;
-    sf::Text terminalText1;
-    sf::Text terminalText2;
-    sf::Text terminalText3;
-    sf::Text terminalText4;
-    sf::Text terminalText5;
-    sf::Text terminalText6;
-    sf::RectangleShape terminalHeader;
-    sf::RectangleShape terminalBackground;
-    //Text vector
-    public:
-        terminal(int size, string text = "root");
-        void setRoot(string text);//Sets text before input
-        void print(string input); //Prints on same line
-        void print(string input, string text);
-        string read(int index);//Function to allow SFML to read lines from the terminal
-        virtual void draw(sf::RenderWindow &window);
-    
 
-};
 
-/*/ --------------- ETerminal (Stack) Class --------------- /*/
-class playBar{
-private:
-    sf::Font playBarFont;
-    sf::Texture t_background;
-    sf::Texture t_fillBar;
-    sf::Sprite background;
-    sf::Sprite fillBar;
-    sf::Vector2f fillPos;
-    sf::Text currentTimeText;
-    sf::Text endTimeText;
-    
-    char timeTextBuffer[8];
-    struct tm * timeTextStruct;
-    time_t startTime;
-    time_t endTime;
-    time_t currentTime;
-public:
-    playBar(sf::Vector2f position, int scale);
-    void record(time_t currentTime);
-    void setStartTime(time_t start);
-    void setTime(time_t start,time_t end);
-    void setCurrentTime(time_t currentTime);
-    virtual void draw(sf::RenderWindow &window);
-};
-/*/ ---------------  Toolbar Class --------------- /*/
-class toolbar{
-    private:
-    
-    sf::Texture t_settings;
-    sf::Texture t_record;
-    sf::Texture t_stop;
-    sf::Texture t_play;
-    sf::Texture t_trash;
-    sf::Texture t_save;
-    sf::Texture t_quit;
-    
-    sf::Sprite settings;
-    sf::Sprite record;
-    sf::Sprite play;
-    sf::Sprite stop;
-    sf::Sprite save;
-    sf::Sprite trash;
-    sf::Sprite quit;
-    
-    sf::RectangleShape toolbarFrame;
-    sf::RectangleShape toolbarHeader;
-    
-    public:
-    toolbar(void);
-    virtual void draw(sf::RenderWindow &window);
-    
-    
-    
-    
-    
-};
-/*/ --------------- Toolbar Class --------------- /*/
+/*/ --------------- Settings Menu Class --------------- /*/
+
+
 
 #endif /* projectClasses_h */
 
