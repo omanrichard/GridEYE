@@ -67,6 +67,55 @@ void GridEYE::setFPS(int temp){
     this->FPS = temp;
     return;
 }
+/*
+void GridEYE::set_max(){
+    short temp = 0;
+    
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            if( this->sensor_values[row][col] > temp )
+                temp = this->sensor_values[row][col];
+        }
+    }
+    this->max = temp;
+}
+
+void GridEYE::set_mean(){
+    float sum = 0;
+    
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            sum += this->sensor_values[row][col];
+        }
+    }
+    this->mean = sum/64;
+}
+
+short GridEYE::get_max(){
+    return this->max;
+}
+
+float GridEYE::get_mean(){
+    return this->mean;
+}
+
+void GridEYE::print(){
+    
+    for( col = 0 ; col < 8 ; col++){                                        // Frame No. : 1
+        cout << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+        << "[ " << this->sensor_values[col][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+        << "[ " << this->sensor_values[col][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+        << "[ " << this->sensor_values[col][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+        << "[ " << this->sensor_values[col][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+        << "[ " << this->sensor_values[col][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+        << "[ " << this->sensor_values[col][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+        << "[ " << this->sensor_values[col][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+        << "[ " << this->sensor_values[col][7] << " ] " << endl;
+    }
+    return;
+}
+*/
+
 /*/ --------------- End GridEYE --------------- /*/
 /*/ --------------- Frame Constructor --------------- /*/
 
@@ -185,7 +234,7 @@ void video::exportVideo( string filename ){
         for( int y = 0; y < 8 ; y++){
                 newOutput << "@" << "$" << temp->access( y, 0 )             // @ indicates row begin
                                  << "$" << temp->access( y, 1 )
-                                 << "$" << temp->access( y, 2 )                  // $ indicates data value
+                                 << "$" << temp->access( y, 2 )             // $ indicates data value
                                  << "$" << temp->access( y, 3 )
                                  << "$" << temp->access( y, 4 )
                                  << "$" << temp->access( y, 5 )
