@@ -355,6 +355,56 @@ terminal::terminal(int size, string text){
         stack.push_back(" "); //Adds empty values to prevent crash
    }
     rootText = text;
+   
+    if (!terminalFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    
+    terminalText1.setString("UNDEFINED");
+    terminalText2.setString("UNDEFINED");
+    terminalText3.setString("UNDEFINED");
+    terminalText4.setString("UNDEFINED");
+    terminalText5.setString("UNDEFINED");
+    terminalText6.setString("UNDEFINED");
+    
+    terminalText1.setFont(terminalFont);
+    terminalText2.setFont(terminalFont);
+    terminalText3.setFont(terminalFont);
+    terminalText4.setFont(terminalFont);
+    terminalText5.setFont(terminalFont);
+    terminalText6.setFont(terminalFont);
+    
+    terminalText1.setCharacterSize(12);
+    terminalText2.setCharacterSize(12);
+    terminalText3.setCharacterSize(12);
+    terminalText4.setCharacterSize(12);
+    terminalText5.setCharacterSize(12);
+    terminalText6.setCharacterSize(12);
+   
+    terminalBackground.setSize(sf::Vector2f( 625, 94 ));
+    terminalHeader.setSize(sf::Vector2f( 625, 10 ));
+    
+    terminalText1.setFillColor(sf::Color(0,255,0));
+    terminalText2.setFillColor(sf::Color(0,255,0));
+    terminalText3.setFillColor(sf::Color(0,255,0));
+    terminalText4.setFillColor(sf::Color(0,255,0));
+    terminalText5.setFillColor(sf::Color(0,255,0));
+    terminalText6.setFillColor(sf::Color(0,255,0));
+    
+    terminalBackground.setFillColor(sf::Color(0,0,0,150));
+    terminalHeader.setFillColor(sf::Color(255,94,20,150));
+    
+    terminalText1.setPosition( 100 , 608);
+    terminalText2.setPosition( 100 , 622);
+    terminalText3.setPosition( 100 , 636);
+    terminalText4.setPosition( 100 , 650);
+    terminalText5.setPosition( 100 , 664);
+    terminalText6.setPosition( 100 , 678);
+    
+    terminalBackground.setPosition(94, 606);
+    terminalHeader.setPosition(94, 596);
+    
+    
     
 }
 
@@ -370,6 +420,27 @@ string terminal::read(int index){
 }
 void terminal::setRoot(string text){
     rootText = text;
+}
+void terminal::draw(sf::RenderWindow &window){
+    
+    terminalText1.setString(stack[5]);
+    terminalText2.setString(stack[4]);
+    terminalText3.setString(stack[3]);
+    terminalText4.setString(stack[2]);
+    terminalText5.setString(stack[1]);
+    terminalText6.setString(stack[0]);
+    
+    window.draw(terminalText1);
+    window.draw(terminalText2);
+    window.draw(terminalText3);
+    window.draw(terminalText4);
+    window.draw(terminalText5);
+    window.draw(terminalText6);
+    window.draw(terminalBackground);
+    window.draw(terminalHeader);
+    
+    
+    
 }
 /*/ --------------- End Terminal (Stack) Methods --------------- /*/
 

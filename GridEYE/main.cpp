@@ -220,37 +220,17 @@ int main(int, char const**)
     //-----------------Draw Terminal Window-------------------
 
     
-    sf::Text terminalText1("UNDEFINED", font, 12);
-    terminalText1.setFillColor(sf::Color(0,255,0));
-    terminalText1.setPosition( 100 , 608);
+  
     
-    sf::Text terminalText2("UNDEFINED", font, 12);
-    terminalText2.setFillColor(sf::Color(0,255,0));
-    terminalText2.setPosition( 100 , 622);
     
-    sf::Text terminalText3("UNDEFINED", font, 12);
-    terminalText3.setFillColor(sf::Color(0,255,0));
-    terminalText3.setPosition( 100 , 636);
     
-    sf::Text terminalText4("UNDEFINED", font, 12);
-    terminalText4.setFillColor(sf::Color(0,255,0));
-    terminalText4.setPosition( 100 , 650);
     
-    sf::Text terminalText5("UNDEFINED", font, 12);
-    terminalText5.setFillColor(sf::Color(0,255,0));
-    terminalText5.setPosition( 100 , 664);
     
-    sf::Text terminalText6("UNDEFINED", font, 12);
-    terminalText6.setFillColor(sf::Color(0,255,0));
-    terminalText6.setPosition( 100 , 678);
     
-    sf::RectangleShape terminal(sf::Vector2f( 625, 94 ));
-    terminal.setFillColor(sf::Color(0,0,0,150));
-    terminal.setPosition(94, 606);
     
-    sf::RectangleShape terminalHeader(sf::Vector2f( 625, 10 ));
-    terminalHeader.setFillColor(sf::Color(255,94,20,150));
-    terminalHeader.setPosition(94, 596);
+
+    
+    
    
     
     
@@ -923,23 +903,8 @@ int main(int, char const**)
         }
        
         // Draw the Terminal window
-        
-        window.draw(terminalHeader);
-        window.draw(terminal);
-        
-        terminalText1.setString(stackward.read(5));
-        terminalText2.setString(stackward.read(4));
-        terminalText3.setString(stackward.read(3));
-        terminalText4.setString(stackward.read(2));
-        terminalText5.setString(stackward.read(1));
-        terminalText6.setString(stackward.read(0));
-        
-        window.draw(terminalText1);
-        window.draw(terminalText2);
-        window.draw(terminalText3);
-        window.draw(terminalText4);
-        window.draw(terminalText5);
-        window.draw(terminalText6);
+        stackward.draw(window);
+       
         progressBar.setTime(recordStartTime,recordEndTime);
         progressBar.setCurrentTime(time(NULL));
         progressBar.draw(window);

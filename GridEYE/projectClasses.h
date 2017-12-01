@@ -130,14 +130,24 @@ public:
 class terminal{
     private:
     string rootText; //Text before input
-    vector<string> stack; //Text vector
+    vector<string> stack;
+    sf::Font terminalFont;
+    sf::Text terminalText1;
+    sf::Text terminalText2;
+    sf::Text terminalText3;
+    sf::Text terminalText4;
+    sf::Text terminalText5;
+    sf::Text terminalText6;
+    sf::RectangleShape terminalHeader;
+    sf::RectangleShape terminalBackground;
+    //Text vector
     public:
         terminal(int size, string text = "root");
         void setRoot(string text);//Sets text before input
         void print(string input); //Prints on same line
         void print(string input, string text);
         string read(int index);//Function to allow SFML to read lines from the terminal
-    
+        virtual void draw(sf::RenderWindow &window);
     
 
 };
@@ -153,6 +163,7 @@ private:
     sf::Vector2f fillPos;
     sf::Text currentTimeText;
     sf::Text endTimeText;
+    
     char timeTextBuffer[8];
     struct tm * timeTextStruct;
     time_t startTime;
