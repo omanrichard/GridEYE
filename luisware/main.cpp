@@ -24,7 +24,9 @@
 #include <vector>
 #include <string>
 #include "projectClasses.h"
-
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
 #define GRIDEYEADDRESS 0x68
 
 using namespace sf;
@@ -63,18 +65,26 @@ void terminal::draw(void){
 }
 
 */
-
+//Global Objects
 GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
-terminal stackward(6, "Thermal Camera");            //Creats the terminal Stack with 6 black lines
-// Here is a small helper for you! Have a look.
-//#include "ResourcePath.hpp"
+terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
+
 
 int i,j;
-int recordMins = 0; //Seconds to be recorded
-int recordSeconds = 0;//Minuetes to be recorded
-int recordTrackerSeconds = 0;//Current number of seconds recorded
-int recordTrackerMins = 0;//Current number of mins recorded
-bool recordStatus = false; //Not recording
+
+//Time Variables
+int recordMins = 0; //Seconds to be recorded - Is this still being used?
+int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
+bool recordStatus = false; //True: Recording; False: Not recording
+
+char recordTimeBuffer[11]; //Holds formatted time
+struct tm * currentTimeStruct;//Time structure required for formatted time
+
+time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
+time_t recordStartTime; //Time when recording starts
+time_t recordEndTime; //Time when recording Ends
+
+
 int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, Playback is 2;
 
 
@@ -240,29 +250,29 @@ int main(int, char const**)
     
     
     //-----------------Draw Terminal Window-------------------
-    std::string terminalTextArray[6];
+
     
-    sf::Text terminalText1("root@thermalCamera: Terminal text placeholder line 1", font, 12);
+    sf::Text terminalText1("UNDEFINED", font, 12);
     terminalText1.setFillColor(sf::Color(0,255,0));
     terminalText1.setPosition( 100 , 608);
     
-    sf::Text terminalText2("root@thermalCamera: Terminal text placeholder line 2", font, 12);
+    sf::Text terminalText2("UNDEFINED", font, 12);
     terminalText2.setFillColor(sf::Color(0,255,0));
     terminalText2.setPosition( 100 , 622);
     
-    sf::Text terminalText3("root@thermalCamera: Terminal text placeholder line 3", font, 12);
+    sf::Text terminalText3("UNDEFINED", font, 12);
     terminalText3.setFillColor(sf::Color(0,255,0));
     terminalText3.setPosition( 100 , 636);
     
-    sf::Text terminalText4("root@thermalCamera: Terminal text placeholder line 4", font, 12);
+    sf::Text terminalText4("UNDEFINED", font, 12);
     terminalText4.setFillColor(sf::Color(0,255,0));
     terminalText4.setPosition( 100 , 650);
     
-    sf::Text terminalText5("root@thermalCamera: Terminal text placeholder line 5", font, 12);
+    sf::Text terminalText5("UNDEFINED", font, 12);
     terminalText5.setFillColor(sf::Color(0,255,0));
     terminalText5.setPosition( 100 , 664);
     
-    sf::Text terminalText6("root@thermalCamera: Terminal text placeholder line 6", font, 12);
+    sf::Text terminalText6("UNDEFINED", font, 12);
     terminalText6.setFillColor(sf::Color(0,255,0));
     terminalText6.setPosition( 100 , 678);
     
@@ -306,9 +316,14 @@ int main(int, char const**)
     recordText.setFillColor(sf::Color::Green);
     recordText.setPosition( 550 , 10);
     
-    sf::Text recordingTimeText("00:00", font, 20);
+    
+    
+    currentTime = time(NULL);
+    currentTimeStruct = localtime(&currentTime);
+    strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+    sf::Text recordingTimeText(recordTimeBuffer, font, 20);
     recordingTimeText.setFillColor(sf::Color::White);
-    recordingTimeText.setPosition( 590 , 45);
+    recordingTimeText.setPosition( 560 , 45);
     
 
     //----------------- Settings Objects -----------------
@@ -445,17 +460,12 @@ int main(int, char const**)
         
         //Recording Control
         if(recordStatus == true){
-            recordText.setString("Recording");
-            recordText.setFillColor(sf::Color::Red);
-            recordingTimeText.setString(std::to_string(recordTrackerMins)+":"+std::to_string(recordTrackerSeconds));//Update Timer
+            recordText.setString("Recording");//Changes "Stand-By" To "Recording"
+            recordText.setFillColor(sf::Color::Red);//"Sets "Recoding" Text to Red
+            recordEndTime = time(NULL);//Sets current time to end time
+            double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
+            recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
             
-            //Add something here to check if 1 second has passed. Maybe read the clock?
-            recordTrackerSeconds++;//Incriment seconds
-            
-            if(recordTrackerSeconds == 60){//At 60 seconds
-                recordTrackerSeconds = 0;//Reset seconds to zero
-                recordTrackerMins++;//Incriment Minuets
-            }
             
         }
         if(recordStatus == false){
@@ -571,6 +581,7 @@ int main(int, char const**)
                          //Start Capture
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
+                            recordStartTime = time(NULL); //Set current time as start time
                             stackward.print("Starting Capture");
                             //set led to green
                             }
@@ -583,7 +594,7 @@ int main(int, char const**)
                          //Stop capture
                          if (position.y >308 && position.y < 402){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Stopping Capture");
+                             stackward.print("Stopping Capture");
                              //set led to red
                          }
                          //Save capture
