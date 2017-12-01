@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:luisware.xcodeproj">
+      location = "self:/Users/Richard/Workspaces/Xcode Projects/ECE 3220/luisware/GridEYE.xcodeproj">
    </FileRef>
 </Workspace>
