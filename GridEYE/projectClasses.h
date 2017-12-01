@@ -18,39 +18,9 @@
 
 using namespace std;
 
-/*/ ----------- GrideEye Class ---------- /*/
-class GridEYE{
-    friend class video;
-    
-private:
-    float mean;
-    short max;
-    short sensor_values[8][8];
-    int FPS;
-    
- //   virtual void set_max();
- //   virtual void set_mean();
-    
-public:
-    GridEYE(int address); //Hint: My board has it set at 0x68 :)
-    
-    short read(int row, int col);
-    void reset(void);
-    void test(int row, int col);    //Draw Test pattern
-    int runTime;                    // Run Time in Seconds
-    short pixelL;
-    int r,g,b;
-    int getFPS();
-    
- //   virtual void print();
-    void setFPS( int temp );
-};
-
-/*/ ---------- End GridEYE Class ---------- /*/
-
 /*/ --------------- Frame Class --------------- /*/
 class frame{                        //      Stores sensor data
-                                    //     0  1  2  3  4  5  6  7
+    //     0  1  2  3  4  5  6  7
 protected:                            // 0  [] [] [] [] [] [] [] []
     float mean;                     // 1  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
@@ -61,10 +31,10 @@ protected:                            // 0  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     /*
-    frame();
-    frame(GridEYE gridward);
-    ~frame();
-    */
+     frame();
+     frame(GridEYE gridward);
+     ~frame();
+     */
     short access( short row , short col );
     virtual short get_max() =0;
     virtual float get_mean() =0;
@@ -73,8 +43,39 @@ public:
     void new_mean( float newMean );
     
     virtual void print() =0;
-
+    
 };
+
+/*/ ----------- GrideEye Class ---------- /*/
+class GridEYE : public frame{
+    friend class video;
+private:
+    void set_max();
+    void set_mean();
+    
+public:
+    GridEYE();
+    GridEYE(int address); //Hint: My board has it set at 0x68 :)
+    ~GridEYE();
+    
+    void reset(void);
+    void test(int row, int col);    //Draw Test pattern
+    int runTime;                    // Run Time in Seconds
+    short pixelL;
+    int r,g,b;
+    int FPS;
+    
+    short get_max();
+    float get_mean();
+    
+    int getFPS();
+    void setFPS( int temp );
+    void print();
+};
+
+/*/ ---------- End GridEYE Class ---------- /*/
+
+
 
 /*
 class pixelMask {
@@ -96,10 +97,13 @@ public:
 /*/ --------------- Video Class --------------- /*/
 class video{
 private:
-    short frameCount;       // 10 Frames -> 1 Second
+    short frameCount; // frameCount = FPS * runtime
     short FPS;
     int runtime;
 
+    short max;
+    float mean;
+    
     vector< frame* > data;  // Storing up to 31,800 frames maximum
     
     void set_runtime();
@@ -111,7 +115,7 @@ public:
     video( GridEYE gridward );
     ~video();
     
-    void addFrame(GridEYE gridward);
+    void addFrame(GridEYE* gPtr);
     frame* getFrame( int index );
 
     short getframeCount();

@@ -65,7 +65,7 @@ int main(int, char const**)
     
 //----------- Frame Capture experiment -----------
     video* vPtr = NULL;
-    session currentSession;
+    session currentSession; // Begins session
    
     
 //--------------------- Set up -----------------------------------
@@ -201,6 +201,7 @@ int main(int, char const**)
     float tempt;
     frame* framePtr;
     int fcount = 0;
+    GridEYE* gPtr;
     
     while (window.isOpen()) //While the window is open.
     {
@@ -225,8 +226,9 @@ int main(int, char const**)
                 cout << tempt << endl << endl;
 
                 lastCaptureTime = time(NULL);
-        
-                vPtr->addFrame( gridward );
+                gPtr = new GridEYE;
+                // Eventually: gPtr= new GridEYE( GRIDEYEADDRESS );
+                vPtr->addFrame( gPtr );
                 
             }
             
