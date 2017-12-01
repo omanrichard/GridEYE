@@ -34,8 +34,8 @@
 		79BC31AE1FBAB237005842D0 /* wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrench.png; sourceTree = "<group>"; };
 		79BC31AF1FBAB237005842D0 /* add-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-button.png"; sourceTree = "<group>"; };
 		79BC31B01FBAB237005842D0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
-		79EE7B2A1FBA7F4100D8618D /* luisware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = luisware.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		79EE7B2E1FBA7F4100D8618D /* luisware-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luisware-Info.plist"; sourceTree = "<group>"; };
+		79EE7B2A1FBA7F4100D8618D /* GridEYE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridEYE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79EE7B2E1FBA7F4100D8618D /* GridEYE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GridEYE-Info.plist"; sourceTree = "<group>"; };
 		79EE7B2F1FBA7F4100D8618D /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		79EE7B311FBA7F4100D8618D /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		79EE7B321FBA7F4100D8618D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		79EE7B201FBA7F4100D8618D = {
 			isa = PBXGroup;
 			children = (
-				79EE7B2C1FBA7F4100D8618D /* luisware */,
+				79EE7B2C1FBA7F4100D8618D /* GridEYE */,
 				79EE7B2B1FBA7F4100D8618D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,12 +76,12 @@
 		79EE7B2B1FBA7F4100D8618D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				79EE7B2A1FBA7F4100D8618D /* luisware.app */,
+				79EE7B2A1FBA7F4100D8618D /* GridEYE.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		79EE7B2C1FBA7F4100D8618D /* luisware */ = {
+		79EE7B2C1FBA7F4100D8618D /* GridEYE */ = {
 			isa = PBXGroup;
 			children = (
 				798DBF4C1FBFFAC00090BCF6 /* projectClasses.cpp */,
@@ -94,13 +94,13 @@
 				79EE7B341FBA7F4100D8618D /* Resources */,
 				79EE7B2D1FBA7F4100D8618D /* Supporting Files */,
 			);
-			path = luisware;
+			path = GridEYE;
 			sourceTree = "<group>";
 		};
 		79EE7B2D1FBA7F4100D8618D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				79EE7B2E1FBA7F4100D8618D /* luisware-Info.plist */,
+				79EE7B2E1FBA7F4100D8618D /* GridEYE-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -130,9 +130,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		79EE7B291FBA7F4100D8618D /* luisware */ = {
+		79EE7B291FBA7F4100D8618D /* GridEYE */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 79EE7B3F1FBA7F4100D8618D /* Build configuration list for PBXNativeTarget "luisware" */;
+			buildConfigurationList = 79EE7B3F1FBA7F4100D8618D /* Build configuration list for PBXNativeTarget "GridEYE" */;
 			buildPhases = (
 				79EE7B251FBA7F4100D8618D /* Sources */,
 				79EE7B261FBA7F4100D8618D /* Frameworks */,
@@ -143,9 +143,9 @@
 			);
 			dependencies = (
 			);
-			name = luisware;
+			name = GridEYE;
 			productName = luisware;
-			productReference = 79EE7B2A1FBA7F4100D8618D /* luisware.app */;
+			productReference = 79EE7B2A1FBA7F4100D8618D /* GridEYE.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -163,7 +163,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 79EE7B241FBA7F4100D8618D /* Build configuration list for PBXProject "luisware" */;
+			buildConfigurationList = 79EE7B241FBA7F4100D8618D /* Build configuration list for PBXProject "GridEYE" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -175,7 +175,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				79EE7B291FBA7F4100D8618D /* luisware */,
+				79EE7B291FBA7F4100D8618D /* GridEYE */,
 			);
 		};
 /* End PBXProject section */
@@ -327,7 +327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "luisware/luisware-Info.plist";
+				INFOPLIST_FILE = "luisware/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -337,7 +337,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "luisware/luisware-Info.plist";
+				INFOPLIST_FILE = "luisware/GridEYE-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -346,7 +346,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		79EE7B241FBA7F4100D8618D /* Build configuration list for PBXProject "luisware" */ = {
+		79EE7B241FBA7F4100D8618D /* Build configuration list for PBXProject "GridEYE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				79EE7B3D1FBA7F4100D8618D /* Debug */,
@@ -355,7 +355,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		79EE7B3F1FBA7F4100D8618D /* Build configuration list for PBXNativeTarget "luisware" */ = {
+		79EE7B3F1FBA7F4100D8618D /* Build configuration list for PBXNativeTarget "GridEYE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				79EE7B401FBA7F4100D8618D /* Debug */,
