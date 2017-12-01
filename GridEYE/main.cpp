@@ -409,7 +409,9 @@ int main(int, char const**)
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
 
-    
+    // Declare Video, Mask, Session stuff
+    // video* activeVid;
+    // frame* tempFrame;
     
 /*/---------- Draw ----------/*/
 // Play the music
@@ -438,12 +440,13 @@ int main(int, char const**)
         if(recordStatus == false){
             recordText.setString("Standy-by");
              recordText.setFillColor(sf::Color::Green);
-            
         }
         
-        
-        
-        
+        // Eventual Additions to control grid colors
+        /*
+         activeVid = session.current[ session.vCount ]; // Active frame
+         tempFrame = activeVid->data[];                 // Frame to draw controlled somehow
+        */
         
         //sets each gridward pixel
         for( i=0 ; i < 8 ; i++ ){
@@ -451,9 +454,9 @@ int main(int, char const**)
                 gridx = (200+i*51);
                 gridy = (98+j*51);
                 RectangleShape newPix(sf::Vector2f(50, 50));
-                newPix.setPosition( gridx, gridy );
-                gridward.test(i,j);
-                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                newPix.setPosition( gridx, gridy );             // Eventually
+                gridward.test(i,j);                             //pixelMask.setMask( tempFrame->access(short row, short col );
+                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
                 grid[i][j] = newPix;
             }
         }
