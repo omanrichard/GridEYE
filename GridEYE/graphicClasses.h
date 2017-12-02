@@ -155,6 +155,20 @@ public:
     
 };
 
+class topBar {
+    private:
+        int mode = 0; //Default
+    sf::Text modeText;
+    sf::Text titleText;
+    sf::Text subText;
+    sf::Font topBarFont;
+    
+public:
+    topBar(void);
+    virtual void draw(sf::RenderWindow &window);
+    void update(void);
+    void setMode(int newMode);
+};
 
 
 #endif /* graphicClasses_h */

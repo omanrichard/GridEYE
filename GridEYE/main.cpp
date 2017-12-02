@@ -38,6 +38,7 @@ GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
 toolbar toolward;
 settingsMenu setward;
+topBar topward;
 
 int i,j;
 
@@ -145,9 +146,7 @@ int main(int, char const**)
     
     
     //----------------- Background -----------------
-    //sf::RectangleShape background(sf::Vector2f( 700, 700 ));
-    //background.setFillColor(sf::Color(130, 117, 135));
-    //background.setPosition(0, 0);
+    
     
     sf::RectangleShape backgroundHeader(sf::Vector2f( 400, 10 ));
     backgroundHeader.setFillColor(sf::Color(0, 255, 0,150));
@@ -166,13 +165,7 @@ int main(int, char const**)
     topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
     topbarBackground.setPosition(94, 0);
   
-    sf::Text text("Thermal Camera", font, 50);
-    text.setFillColor(sf::Color::White);
-    text.setPosition( 109 , 10);
-    
-    sf::Text recordText("Standy-by", font, 25);
-    recordText.setFillColor(sf::Color::Green);
-    recordText.setPosition( 550 , 10);
+  
     
     
     
@@ -206,8 +199,7 @@ int main(int, char const**)
             
             
             
-            recordText.setString("Recording");//Changes "Stand-By" To "Recording"
-            recordText.setFillColor(sf::Color::Red);//"Sets "Recoding" Text to Red
+            topward.setMode(1);//Changes "Stand-By" To "Recording"
             recordEndTime = time(NULL);//Sets current time to end time
             progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
@@ -225,8 +217,8 @@ int main(int, char const**)
             
         }
         if(recordStatus == false){
-            recordText.setString("Standy-by");
-             recordText.setFillColor(sf::Color::Green);
+            topward.setMode(0);
+        
         }
         
         
@@ -258,11 +250,9 @@ int main(int, char const**)
             // Menu selection
             if( menuLayer == 0){//This the
                 toolward.event(event);
-            }
-            /*/----left click----/*/
             
-            /*/----Layer 0 "Home"----/*/
-            if(menuLayer == 0){//Base Layer
+            
+                //Base Layer
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
                     sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
                      if (position.x > 0 && position.x < 95){     //Within toolbar
@@ -319,12 +309,20 @@ int main(int, char const**)
                     }//End within toolbar
                 
                 }//End left mouse button click
+            
+            
             }//End Menu layer 1
+            
+            
             
             //Settings Menu
             if(menuLayer == 1){
-                setward.onClick(window);
-                menuLayer = setward.exit();
+                setward.onClick(window); //Scans buffer for corosponing inputs.
+                menuLayer = setward.exit();//setting m
+            }
+            //Playback Mode
+            if(menuLayer == 2){
+                
             }
             // Close window: exit
             if (event.type == sf::Event::Closed) {
@@ -347,8 +345,7 @@ int main(int, char const**)
        
         window.draw(backgroundHeader3);
         
-        window.draw(text);
-        window.draw(recordText);
+        
         window.draw(recordingTimeText);
         
         
@@ -360,6 +357,7 @@ int main(int, char const**)
                 toolward.draw(window); //Toolbar
                 stackward.draw(window);//Terminal
                 progressBar.draw(window);//Playback bar
+                topward.draw(window);
                 //Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
@@ -372,9 +370,12 @@ int main(int, char const**)
                 toolward.draw(window);//Toolbar
                 stackward.draw(window);//Terminal
                 setward.draw(window);//Settings Menu
-                
+                topward.draw(window);
                 break;
             case 2: //Playback Mode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
                 break;
         }
         
