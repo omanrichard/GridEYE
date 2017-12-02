@@ -28,13 +28,13 @@
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
-#define GRIDEYEADDRESS 0x68
+#define PDE 0x68
 
 using namespace sf;
 
 
 //Global Objects
-GridEYE gridward(GRIDEYEADDRESS); //Creats the Grid Eye Object
+GridEYE gridward(PDE); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
 toolbar toolward;
 settingsMenu setward;
@@ -226,9 +226,9 @@ int main(int, char const**)
                 cout << tempt << endl << endl;
 
                 lastCaptureTime = time(NULL);
-                gPtr = new GridEYE;
+                framePtr = new frame(gridward);
                 // Eventually: gPtr= new GridEYE( GRIDEYEADDRESS );
-                vPtr->addFrame( gPtr );
+                vPtr->addFrame( framePtr );
                 
             }
             
@@ -243,33 +243,20 @@ int main(int, char const**)
             recordText.setFillColor(sf::Color::Red);//"Sets "Replaying" Text to Red
             
             if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
-            for( int x=0 ; x<fcount ; x++ ){
-                framePtr = vPtr->getFrame(x);
-                for( i=0 ; i < 8 ; i++ ){
-                    for( j=0 ; j<8 ; j++ ){
-                        gridx = (200+i*51);
-                        gridy = (98+j*51);
-                        RectangleShape newPix(sf::Vector2f(50, 50));
-                        newPix.setPosition( gridx, gridy );             // Eventually
-                                                                        // pixelMask.setMask( tempFrame->access(short row, short col );
-                        newPix.setFillColor(sf::Color(gridward.r, framePtr->access(i, j) ,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
-                        grid[i][j] = newPix;
-                    }
-                }
+           
                 lastCaptureTime = time( NULL);
                 
             }
                 playbackStatus = false;
         
             }
-        }
+        
         
         // Eventual Additions to control grid colors
         /*
          activeVid = session.current[ session.vCount ]; // Active frame
          tempFrame = activeVid->data[];                 // Frame to draw controlled somehow
         */
-        else{
         //sets each gridward pixel
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
@@ -282,7 +269,7 @@ int main(int, char const**)
                 grid[i][j] = newPix;
             }
         }
-        }
+    
         window.draw(line);
         
         // Process events. This monitors mouse movements and clicks
