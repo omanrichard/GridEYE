@@ -141,7 +141,7 @@ int main(int, char const**)
             
             
             recordEndTime = time(NULL);//Sets current time to end time
-            progressBar.record(recordEndTime);
+            playward.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
         
@@ -198,7 +198,7 @@ int main(int, char const**)
     
    
         
-        // Process events. This monitors mouse movements and clicks
+/*/ --------- Process events ---------/*/
         sf::Event event;
         while(window.pollEvent(event)){
             toolward.event(event);//Handles Mouse moving events
@@ -206,25 +206,58 @@ int main(int, char const**)
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
+                
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
+                
+                //Capture Video
+                if(menuLayer == 2){//Executes Once when Capture is clicked
+                    
+                    
+                    //Insert Code Here
+                    
+                    
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
+                //Playback Viode
+                if(menuLayer == 3){//Executes Once when Playback is clicked
+                    
+                    
+                    //Insert Code Here
+                    
+                    
+                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
+                if(menuLayer == 4){//Executes Once when Stop is clicked
+                    
+                
+                    //Insert Code Here
+               
+                
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
                 //Export Video
-                if(menuLayer == 5){
+                if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     vPtr->exportVideo( "Test1.txt" );
                     stackward.print("Success");
                     menuLayer = 0;
                     toolward.sync(menuLayer);
                 }
-                if(menuLayer == 6){
+                if(menuLayer == 6){///Executes Once when Delete is clicked
+                
+                
+                    //Insert Code to Delete Video Here
+                
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
-                menuLayer = toolward.exit();
-                stackward.print(std::to_string(menuLayer));
+                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
+                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
                 topward.setMode(menuLayer);//Set topbar to current mode
             }
            
@@ -248,49 +281,41 @@ int main(int, char const**)
        
         window.draw(recordingTimeText);
         
+        topward.draw(window);
+        toolward.draw(window); //Toolbar
+        stackward.draw(window);//Terminal
         /*/-------- Layer control -------/*/
+        
+        
         switch(menuLayer){
                
                 
                 break;
             default:
-                toolward.draw(window); //Toolbar
-                stackward.draw(window);//Terminal
-                progressBar.draw(window);//Playback bar
-                topward.draw(window);
                 //Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
                         window.draw(grid[i][j]);
                     }
                 }
-                
-                topward.draw(window);
                 toolward.draw(window);
                 stackward.draw(window);
                 break;
             case 1: //Settings Menu
-                toolward.draw(window);//Toolbar
-                stackward.draw(window);//Terminal
                 setward.draw(window);//Settings Menu
-                topward.draw(window);
                 break;
             case 2: //Capture Mode
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+                playward.draw(window);
                 break;
             case 3://PlaybackMode
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+                playward.draw(window);
                 break;
             case 4://Stop Capture
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+              
+                
+                
                 currentSession.addVideo(vPtr);
-                menuLayer = 0;
+               
                 break;
           
         
