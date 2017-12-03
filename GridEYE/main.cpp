@@ -103,7 +103,7 @@ int main(int, char const**)
 
     topward.setMode(0);
     
-    currentTime = time(NULL);
+ 
     currentTimeStruct = localtime(&currentTime);
     strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
     sf::Text recordingTimeText(recordTimeBuffer, font, 20);
@@ -138,26 +138,10 @@ int main(int, char const**)
         
         //Recording Control
         if(recordStatus == true){
-            
-            double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
+           
+            double seconds = difftime(currentTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
-        
-            
-            float tenthSecond = 0.1;
-            tempt = (difftime( time(NULL), lastCaptureTime));
-            
-            if( (tempt) >= 0.1 ){
-                cout << tempt << endl << endl;
-
-                lastCaptureTime = time(NULL);
-                framePtr = new frame(gridward);
-                // Eventually: gPtr= new GridEYE( GRIDEYEADDRESS );
-                vPtr->addFrame( framePtr );
-                
             }
-            
-        }
-     
         
         if(playbackStatus == true){
             
@@ -202,9 +186,12 @@ int main(int, char const**)
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
+                
                 if(recordStatus == true){//Stop recording video on click
                     recordEndTime = time(NULL);
                     recordStatus = false;
+                    menuLayer = 4;
+                    toolward.sync(menuLayer);
                 }
                 //Settings Menu
                 if(menuLayer == 1){
@@ -232,11 +219,14 @@ int main(int, char const**)
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 if(menuLayer == 4){//Executes Once when Stop is clicked
+                    if(recordStatus == true){
                     recordEndTime = time(NULL);
                     recordStatus = false;
+                    playward.setTime(recordStartTime,recordEndTime);
+                    }
                     //Insert Code Here
                
-                
+                    menuLayer = 0; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 //Export Video
@@ -299,6 +289,9 @@ int main(int, char const**)
                 }
                 toolward.draw(window);
                 stackward.draw(window);
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
                 break;
             case 1: //Settings Menu
                 setward.draw(window);//Settings Menu
