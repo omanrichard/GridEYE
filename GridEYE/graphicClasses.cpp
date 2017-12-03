@@ -346,6 +346,10 @@ void toolbar::event(sf::Event &toolbarEvent){
     }
 }
 
+void toolbar::onClick(sf::RenderWindow &window){
+
+
+}
 
 settingsMenu::settingsMenu(void){
     
@@ -687,6 +691,7 @@ void settingsMenu::draw(sf::RenderWindow &window){
     window.draw(settingsApply);
     window.draw(settingsApplyText);
 }
+
 int settingsMenu::exit(void){
     return menuLayer;
 }

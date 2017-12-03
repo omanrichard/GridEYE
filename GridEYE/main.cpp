@@ -113,19 +113,7 @@ int main(int, char const**)
     background.setTexture(t_background);//maps background text to background sprite
     background.setPosition(0,0);//move background sprite to origin
     window.draw(background);//draws background
-    
 
-    
-
-    
-    
-
-    
-
-
-  
-  
-    
     topward.setMode(0);
     
     currentTime = time(NULL);
@@ -225,9 +213,9 @@ int main(int, char const**)
         sf::Event event;
         while(window.pollEvent(event)){
             // Menu selection
-            if( menuLayer == 0){//This the
-                toolward.event(event);
-            
+            if( menuLayer == 0){
+                toolward.event(event);//Handles Mouse moving events
+                toolward.onClick(window);//Handles Mouse click events
             
                 //Base Layer
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
@@ -273,9 +261,9 @@ int main(int, char const**)
                              recordStatus = false;//Stop recording data
                              stackward.print("Saving Capture");
                              
-                             cout << "Exporting Video" << endl;
+                             stackward.print("Exporting Video");
                              vPtr->exportVideo( "Test1.txt" );
-                             cout << "Success" << endl;
+                             stackward.print("Success");
                              //set led to red
                          }
                          //Delete capture

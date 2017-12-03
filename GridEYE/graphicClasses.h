@@ -103,6 +103,7 @@ public:
     toolbar(void);
     virtual void draw(sf::RenderWindow &window);
     virtual void event(sf::Event &toolbarEvent);
+    virtual void onClick(sf::RenderWindow &window);
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 
