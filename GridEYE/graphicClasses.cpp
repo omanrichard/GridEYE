@@ -111,6 +111,8 @@ void terminal::draw(sf::RenderWindow &window){
 /*/ --------------- End Terminal (Stack) Methods --------------- /*/
 
 playBar::playBar(sf::Vector2f position, int scale){
+ 
+    origin = position;
     if (!t_background.loadFromFile("audio-player.png")) {
         return EXIT_FAILURE;
     }
@@ -131,7 +133,7 @@ playBar::playBar(sf::Vector2f position, int scale){
     fillBar.setPosition(fillPos);
     fillBar.scale(1, 1);
     
-    timeTextStruct = localtime(&endTime);
+    timeTextStruct = localtime(&clipEnd);
     strftime (timeTextBuffer,8,"%R",timeTextStruct);
     currentTimeText.setString(timeTextBuffer);
     endTimeText.setString(timeTextBuffer);
@@ -149,42 +151,67 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     
 }
-void playBar::setCurrentTime(time_t time){
-    currentTime = time;
-    double totalSeconds = difftime(endTime,startTime);
-    double percent = difftime(currentTime,startTime);
-    percent = totalSeconds/percent;
-    fillBar.setScale(percent,1);
-    
-    timeTextStruct = localtime(&currentTime);
+void playBar::setCurrentTime(void){
+ 
+    timeTextStruct = localtime(&clipStart);
     strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     currentTimeText.setString(timeTextBuffer);
     
-    timeTextStruct = localtime(&endTime);
+    timeTextStruct = localtime(&clipEnd);
     strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     endTimeText.setString(timeTextBuffer);
 }
 void playBar::draw(sf::RenderWindow &window){
-    
-    
     
     window.draw(background);
     window.draw(fillBar);
     window.draw(currentTimeText);
     window.draw(endTimeText);
 }
-void playBar::setStartTime(time_t start){
-    startTime = start;
+
+void playBar::onClick(sf::RenderWindow &window){
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
+        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
+        
+        //playBar playward(sf::Vector2f(35, 375),1);
+            if (position.x > origin.x+190  && position.x < origin.x+230){
+                if (position.y > origin.y+150  && position.y < origin.y+180) {
+                    window.close();
+                }
+            }
+    }
 }
-void playBar::setTime(time_t start,time_t end){
-    startTime = start;
-    endTime = end;
+void playBar::setClipStartTime(time_t start){
+    clipStart = start;
 }
-void playBar::record(time_t currentTime){
-    double seconds = difftime(currentTime,startTime);
-    currentTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60))));
+void playBar::setClipEndTime(time_t end){
+    clipEnd = end;
+    playbackTime = difftime(clipEnd, clipStart);
+    endTimeText.setString(std::to_string(int(playbackTime)));
+    
+    
+}
+void playBar::setPlaybackStartTime(time_t start){
+    playbackStart = start;
+}
+void playBar::setPlaybackEndTime(time_t end){
+    
+}
+void playBar::playback(void){
+    elapsedTime = difftime(time(NULL), playbackStart);
+    if(elapsedTime <= playbackTime){
+    currentTimeText.setString(std::to_string(int(elapsedTime)));
+    double percent = elapsedTime/playbackTime;
+    fillBar.setScale(percent, 1);
+    }
+    
+
+}
+void playBar::record(void){
+    elapsedTime = difftime(time(NULL),clipStart);
+    currentTimeText.setString(std::to_string(int(elapsedTime)));
     endTimeText.setString("00:00");
-    fillBar.setScale(1,1);
+    fillBar.setScale(1-elapsedTime/100,1);
 }
 toolbar::toolbar(void){
     
@@ -802,6 +829,10 @@ void topBar::setMode(int newMode){
             case 3:
                 modeText.setFillColor(sf::Color::Yellow);
                 modeText.setString("Play Back");
+                break;
+            case 4:
+                modeText.setFillColor(sf::Color(0,115,115));
+                modeText.setString("Replay");
                 break;
         }
     };

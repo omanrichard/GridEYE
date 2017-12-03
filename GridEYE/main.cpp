@@ -182,7 +182,7 @@ int main(int, char const**)
     
    
         
-/*/ --------- Process events ---------/*/
+/*/ --------- Process events CLICKS CLICKS CLICKS ---------/*/
         sf::Event event;
         while(window.pollEvent(event)){
             toolward.event(event);//Handles Mouse moving events
@@ -192,8 +192,6 @@ int main(int, char const**)
                 toolward.onClick(window,stackward);//Handles Mouse click events
                 
                 if(recordStatus == true){//Stop recording video on click
-                    recordEndTime = time(NULL);
-                    recordStatus = false;
                     menuLayer = 4;
                     toolward.sync(menuLayer);
                 }
@@ -209,6 +207,7 @@ int main(int, char const**)
                 //Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
                     recordStartTime = time(NULL);
+                    playward.setClipStartTime(recordStartTime);
                     recordStatus = true;
                     //Insert Code Here
                     
@@ -217,8 +216,9 @@ int main(int, char const**)
                 }
                 //Playback Viode
                 if(menuLayer == 3){//Executes Once when Playback is clicked
-                    
-                    
+                    playward.onClick(window);
+                    playward.setPlaybackStartTime(time(NULL));
+                
                     //Insert Code Here
                     
                     
@@ -228,7 +228,7 @@ int main(int, char const**)
                     if(recordStatus == true){
                     recordEndTime = time(NULL);
                     recordStatus = false;
-                    playward.setTime(recordStartTime,recordEndTime);
+                    playward.setClipEndTime(recordEndTime);
                     }
                     //Insert Code Here
                
@@ -310,10 +310,17 @@ int main(int, char const**)
                 
                 break;
             case 2: //Capture Mode
-                playward.draw(window);
+                playward.record();//Playbar Recording Animations
+                playward.draw(window);//Update window object
                 break;
             case 3://PlaybackMode
-                playward.draw(window);
+                
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
+                playward.playback();//Playbar Playback animations
+                playward.draw(window);//Update window object
                 break;
            
                
