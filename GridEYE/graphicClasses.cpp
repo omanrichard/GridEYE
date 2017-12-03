@@ -14,6 +14,7 @@
 #include "graphicClasses.h"
 
 
+
 /*/ --------------- Terminal (Stack) Methods --------------- /*/
 terminal::terminal(int size, string text){
     for(int i = 0; i <= size; i++){
@@ -346,13 +347,39 @@ void toolbar::event(sf::Event &toolbarEvent){
     }
 }
 
-void toolbar::onClick(sf::RenderWindow &window){
+void toolbar::onClick(sf::RenderWindow &window, terminal &stackward){
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
         sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
             if (position.x > 0 && position.x < 95){//Within toolbar
                 //Settings
                 if (position.y > 0 && position.y < 119){
                     menuLayer = 1; //Change layer to settings layer
+                }
+                //Start Capture
+                if (position.y > 119 && position.y < 189){
+                    stackward.print("Starting Capture");
+                }
+                
+                //Play capture
+                if (position.y > 189 && position.y < 308){
+                    stackward.print("Entering Playback Mode");
+                    menuLayer = 2;//Change layer to playback
+                }
+                //Stop Caputre
+                  if (position.y >308 && position.y < 402){
+                      stackward.print("Stopping Capture");
+                  }
+                //Save capture
+                if (position.y > 402 && position.y < 496){
+                    stackward.print("Saving Capture");
+                }
+                //Delete capture
+                if (position.y > 496 && position.y < 590){
+                    stackward.print("Deleting Capture");
+                }
+                //exit - quit program
+                if (position.y > 590 && position.y < 700){
+                    window.close();//Close Window
                 }
             }
         

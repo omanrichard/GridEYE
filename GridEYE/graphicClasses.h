@@ -13,6 +13,7 @@
 #include <time.h>
 #include <math.h>
 #include <mouse.hpp>
+#include "projectClasses.h"
 
 #ifndef graphicClasses_h
 #define graphicClasses_h
@@ -106,7 +107,7 @@ public:
     void sync(int newMenuLayer);
     virtual void draw(sf::RenderWindow &window);
     virtual void event(sf::Event &toolbarEvent);
-    virtual void onClick(sf::RenderWindow &window);
+    virtual void onClick(sf::RenderWindow &window, terminal &stackward);
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 

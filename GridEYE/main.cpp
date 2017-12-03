@@ -215,14 +215,14 @@ int main(int, char const**)
             // Menu selection
             if( menuLayer == 0){
                 toolward.event(event);//Handles Mouse moving events
-                toolward.onClick(window);//Handles Mouse click events
+                toolward.onClick(window,stackward);//Handles Mouse click events
             
                 //Base Layer
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
                     sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
                      if (position.x > 0 && position.x < 95){     //Within toolbar
                          
-                         //Settings
+                         
                        
                          //Start Capture
                         if (position.y > 119 && position.y < 189){
@@ -230,7 +230,7 @@ int main(int, char const**)
                             recordStartTime = time(NULL); //Set current time as start time
                             lastCaptureTime = recordStartTime;
                             progressBar.setStartTime(recordStartTime);
-                            stackward.print("Starting Capture");
+                            
                             
                             vPtr = new video;
                             
@@ -239,8 +239,7 @@ int main(int, char const**)
                          //Play capture
                          if (position.y > 189 && position.y < 308){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Entering Playback Mode");
-                             menuLayer = 2;//Change layer to playback
+                             
                              
                              playbackStatus = true;
                              fcount = vPtr->getframeCount();
@@ -248,7 +247,7 @@ int main(int, char const**)
                          //Stop capture
                          if (position.y >308 && position.y < 402){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Stopping Capture");
+                             
                              //set led to red
                              
                              currentSession.addVideo(vPtr); // Adds recorded video to the video stack
@@ -257,7 +256,7 @@ int main(int, char const**)
                          //Save capture
                          if (position.y > 402 && position.y < 496){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Saving Capture");
+                             
                              
                              stackward.print("Exporting Video");
                              vPtr->exportVideo( "Test1.txt" );
@@ -267,33 +266,29 @@ int main(int, char const**)
                          //Delete capture
                          if (position.y > 496 && position.y < 590){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Deleting Capture");
+                              
                              //set led to red
                              
                              currentSession.undoRec(); // Removes recorded video from the video stack
                          }
-                         //exit
-                        if (position.y > 590 && position.y < 700){
-                            window.close();//Close Window
+                      
                         
-                        }
-                    }//End within toolbar
+                        
+                    }
                 
-                }//End left mouse button click
+                }
             
                 menuLayer = toolward.exit();//Allows toolbar to change Menu layer
-            }//End Menu layer 1
-            
-            
-            
+            }
             //Settings Menu
             if(menuLayer == 1){
                 setward.onClick(window); //Scans buffer for corosponing inputs.
+                menuLayer = toolward.exit();
                 menuLayer = setward.exit();//Allows settings menu to Menu layers
             }
             //Playback Mode
             if(menuLayer == 2){
-                
+                menuLayer = toolward.exit();
             }
             
             //Sync all elements
