@@ -154,13 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GridEYE/main.cpp"
-            timestampString = "533803007.184656"
+            timestampString = "533948562.009527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
-            landmarkName = "main(int, char const**)"
-            landmarkType = "9">
+            startingLineNumber = "419"
+            endingLineNumber = "419">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

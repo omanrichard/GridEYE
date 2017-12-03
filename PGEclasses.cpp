@@ -1,81 +1,54 @@
 //
-//  projectClasses.cpp
-//  Project
+//  PGEclasses.cpp
+//  GridEYE Test Program
 //
-//  Created by Grant Hilgert and Richard Oman on 11/11/17.
+//  Created by Richard Oman on 12/1/17.
 //  Copyright © 2017 Richard Oman. All rights reserved.
 //
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include "projectClasses.h"
-//#include <wiringPiI2C.h>
+#include "PGEclasses.hpp"
 
-#define PGE 0x68
+#define PGE     0x68    // Panasonic GridEye Address
+#define PCR     0x00    // Power Control Register// Normal Mode Cmd: 0x00
+#define RESET   0x01    // Reset Register
+#define FrRate  0x02    // Frame Rate Register//    10/default: 0x00, 1: 0x01
 
-using namespace std;
-int row,col;
-
-//-----------------------------------------------------------------
-// GridEYE Constructors
-//-----------------------------------------------------------------GridEYE::GridEYE(){
-
-GridEYE::GridEYE(){
-    /*
-     GridEYE::GridEYE(){
-        fd = wiringPiI2CSetup( PGE );
-        wiringPiI2CWriteReg16(fd, PCR, 0);
-     
-        FPS = 10;
-        runtime = 10;
-     
-     }
-     */
-}
-
-GridEYE::GridEYE( int address ){
-    FPS = 10;
-    runtime = 10;
-}
+int row, col;
 
 //-----------------------------------------------------------------
 // GridEYE Methods
 //-----------------------------------------------------------------
+GridEYE::GridEYE(){
+    fd = wiringPiI2CSetup( PGE );
+    wiringPiI2CWriteReg16(fd, PCR, 0);
+}
+
 int GridEYE::read( int pixAddr ){
     int temp = 0;
-    /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr ); // Receive value from pixel
     temp = temp >> 4;                           // Thermistor has 12-bit data
-    // Shift 4 removes precision Bits, makes short data 8-bit temperature
-     */
+                                                // Shift 4 removes precision Bits, makes short data 8-bit temperature
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
-    runtime = 10;
+    wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+    DR = true;
+    return;
 }
 
-void GridEYE::test(int row, int col){
-    r = rand() % 255;
-    g = rand() % 255;
-    b = rand() % 255;
+int GridEYE::getfd(){
+    return this->fd;
 }
 
 int GridEYE::getFPS(){
     return this->FPS;
 }
 
-void GridEYE::setRunTime( int newTime ){
-    this->runtime = newTime;
-}
-
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    /*
     try{
         if( temp == 1 || temp == 10 )
             throw -1;
@@ -83,21 +56,20 @@ void GridEYE::setFPS(int temp){
             wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
             wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
-    }
+        }
     catch( int ){
         cout << "Exception Handled: invalid setting value" << endl;
     }
-     */
     return;
 }
 
-GridEYE::~GridEYE(){
-    
+void GridEYE::setRunTime( int newTime ){
+    this->runtime = newTime;
 }
 
-//----------------------------------------------------------------
+//-----------------------------------------------------------------
 // Frame Methods
-//----------------------------------------------------------------
+//-----------------------------------------------------------------
 frame::frame(){
     for( row=0 ; row < 8 ; row++ ){
         for( col=0 ; col < 8 ; col++){
@@ -109,20 +81,24 @@ frame::frame(){
     return;
 }
 
-frame::frame(GridEYE gridward){
+frame::frame(GridEYE* gPtr){
+    int temp = 0;
+    int pixAddr = 0x80;
+    
     for( row = 0 ; row < 8 ; row++ ){
         for( col = 0 ; col < 8 ;  col++){
-            gridward.test( row,col );
-            gridward.pixelL = gridward.g;
-            this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
+            temp = gPtr->read( pixAddr );                // Read Thermistor Data
+            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
+            pixAddr += 2;                                   // Increment to next pixel
         }
     }
+    this->print();
     set_max();
     set_mean();
     return;
+    
+    return;
 }
-//-----------------------------------------------------------------
-
 //-----------------------------------------------------------------
 // Frame Methods
 //-----------------------------------------------------------------
@@ -181,7 +157,6 @@ frame::~frame(){
 }
 //-----------------------------------------------------------------
 
-
 //-----------------------------------------------------------------
 // Video Constructors
 //-----------------------------------------------------------------
@@ -189,27 +164,27 @@ video::video(){
     this->frameCount = 0;
     
 }
-video::video( GridEYE gridward ){
+video::video( GridEYE* gPtr ){
     frame* temp;
-    gridward.runtime = 65;
-    gridward.setFPS( 10 );
     
-    this->frameCount = (gridward.getFPS() * gridward.runtime);
+    frameCount = (gPtr->FPS * gPtr->runtime);
     
     for( int x = 0 ; x < frameCount ; x++){
-        temp = new frame( gridward );       // Collect data and create frame
+        temp = new frame( gPtr );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
-        //this->frameCount++;
     }
+    this->set_max();
+    this->set_mean();
     return;
 }
-
 //-----------------------------------------------------------------
 // Video Methods
 //-----------------------------------------------------------------
 void video::addFrame(frame* fPtr){
     this->data.push_back(fPtr);
     this->frameCount++;
+    this->set_max();
+    this->set_mean();
 }
 
 void video::exportVideo( string filename ){
@@ -237,10 +212,10 @@ void video::exportVideo( string filename ){
     newOutput.close( ); // Close file
     return;
 }
-/*
+
 void video::set_max(){
-    short temp;
-    frame* framePtr;
+    short temp = 0;
+    frame* framePtr = NULL;
     
     while(temp < this->frameCount){
         framePtr = data[temp];
@@ -252,12 +227,13 @@ void video::set_max(){
         }
         temp++;
     }
+    framePtr->new_max( temp );
     return;
 }
 
 void video::set_mean(){
-    short temp;
-    float sum;
+    short temp = 0;
+    float sum = 0;
     frame* framePtr = NULL;
     
     while(temp < this->frameCount){
@@ -271,7 +247,6 @@ void video::set_mean(){
     }
     framePtr->new_mean( sum / (64*frameCount) );
 }
- */
 
 void video::print(){
     frame* temp;
@@ -292,8 +267,8 @@ void video::print(){
     }
 }
 
-int video::getframeCount(){
-    return this->frameCount;
+void video::set_runtime( int val ){
+    runtime = FPS * frameCount;
 }
 
 video::~video(){
@@ -336,7 +311,6 @@ void session::undoRec(){        // Removes "active" recording from the stack of 
 }
 
 session::~session(){}
+
 //-----------------------------------------------------------------
-
-
 
