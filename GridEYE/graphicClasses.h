@@ -164,7 +164,7 @@ private:
     sf::Vector2f fillPos;
     sf::Text currentTimeText;
     sf::Text endTimeText;
-    
+    sf::Vector2f origin;
     char timeTextBuffer[8];
     struct tm * timeTextStruct;
     time_t clipStart;

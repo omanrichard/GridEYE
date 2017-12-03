@@ -112,7 +112,7 @@ void terminal::draw(sf::RenderWindow &window){
 
 playBar::playBar(sf::Vector2f position, int scale){
  
-    
+    origin = position;
     if (!t_background.loadFromFile("audio-player.png")) {
         return EXIT_FAILURE;
     }
@@ -167,6 +167,18 @@ void playBar::draw(sf::RenderWindow &window){
     window.draw(fillBar);
     window.draw(currentTimeText);
     window.draw(endTimeText);
+}
+
+void playBar::onClick(sf::RenderWindow &window){
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
+        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
+        
+    
+            if (position.x > origin.x+510  && origin.x < 173){
+                if (position.y > origin.y+158  && origin.y < 158) {
+        }
+            }
+    }
 }
 void playBar::setClipStartTime(time_t start){
     clipStart = start;
