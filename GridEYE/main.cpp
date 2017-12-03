@@ -334,7 +334,32 @@ int main(int, char const**)
                 setward.draw(window);//Settings Menu
                 topward.draw(window);
                 break;
-            case 2: //Playback Mode
+            case 2: //Capture Mode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 3://PlaybackMode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 4://Stop Capture
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 5://Save Capture
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 6://Delete Capture
+                break;
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+            case 7://Exit Program
                 topward.draw(window);
                 toolward.draw(window);
                 stackward.draw(window);
