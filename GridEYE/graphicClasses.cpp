@@ -347,8 +347,24 @@ void toolbar::event(sf::Event &toolbarEvent){
 }
 
 void toolbar::onClick(sf::RenderWindow &window){
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
+        sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
+            if (position.x > 0 && position.x < 95){//Within toolbar
+                //Settings
+                if (position.y > 0 && position.y < 119){
+                    menuLayer = 1; //Change layer to settings layer
+                }
+            }
+        
 
+}
+}
 
+int toolbar::exit(void){
+    return menuLayer;
+}
+void toolbar::sync(int newMenuLayer){
+    menuLayer = newMenuLayer;
 }
 
 settingsMenu::settingsMenu(void){

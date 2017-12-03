@@ -223,9 +223,7 @@ int main(int, char const**)
                      if (position.x > 0 && position.x < 95){     //Within toolbar
                          
                          //Settings
-                        if (position.y > 0 && position.y < 119){
-                            menuLayer = 1; //Change layer to settings layer
-                        }
+                       
                          //Start Capture
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
@@ -283,7 +281,7 @@ int main(int, char const**)
                 
                 }//End left mouse button click
             
-            
+                menuLayer = toolward.exit();//Allows toolbar to change Menu layer
             }//End Menu layer 1
             
             
@@ -291,12 +289,16 @@ int main(int, char const**)
             //Settings Menu
             if(menuLayer == 1){
                 setward.onClick(window); //Scans buffer for corosponing inputs.
-                menuLayer = setward.exit();//setting m
+                menuLayer = setward.exit();//Allows settings menu to Menu layers
             }
             //Playback Mode
             if(menuLayer == 2){
                 
             }
+            
+            //Sync all elements
+            toolward.sync(menuLayer);
+            
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
