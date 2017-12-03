@@ -111,6 +111,8 @@ void terminal::draw(sf::RenderWindow &window){
 /*/ --------------- End Terminal (Stack) Methods --------------- /*/
 
 playBar::playBar(sf::Vector2f position, int scale){
+ 
+    
     if (!t_background.loadFromFile("audio-player.png")) {
         return EXIT_FAILURE;
     }
@@ -172,7 +174,7 @@ void playBar::setClipStartTime(time_t start){
 void playBar::setClipEndTime(time_t end){
     clipEnd = end;
     playbackTime = difftime(clipEnd, clipStart);
-    endTimeText.setString(std::to_string(playbackTime));
+    endTimeText.setString(std::to_string(int(playbackTime)));
     
     
 }
@@ -185,17 +187,18 @@ void playBar::setPlaybackEndTime(time_t end){
 void playBar::playback(void){
     elapsedTime = difftime(time(NULL), playbackStart);
     if(elapsedTime <= playbackTime){
-    currentTimeText.setString(std::to_string(elapsedTime));
-    float percent = float(elapsedTime)/float(playbackTime);
+    currentTimeText.setString(std::to_string(int(elapsedTime)));
+    double percent = elapsedTime/playbackTime;
     fillBar.setScale(percent, 1);
     }
+    
 
 }
 void playBar::record(void){
-    double seconds = difftime(time(NULL),clipStart);
-    currentTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60))));
+    elapsedTime = difftime(time(NULL),clipStart);
+    currentTimeText.setString(std::to_string(int(elapsedTime)));
     endTimeText.setString("00:00");
-    fillBar.setScale(1,1);
+    fillBar.setScale(1-elapsedTime/100,1);
 }
 toolbar::toolbar(void){
     
@@ -813,6 +816,10 @@ void topBar::setMode(int newMode){
             case 3:
                 modeText.setFillColor(sf::Color::Yellow);
                 modeText.setString("Play Back");
+                break;
+            case 4:
+                modeText.setFillColor(sf::Color(0,115,115));
+                modeText.setString("Replay");
                 break;
         }
     };

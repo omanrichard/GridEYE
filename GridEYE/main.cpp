@@ -305,11 +305,17 @@ int main(int, char const**)
                 
                 break;
             case 2: //Capture Mode
-                playward.draw(window);
+                playward.record();//Playbar Recording Animations
+                playward.draw(window);//Update window object
                 break;
             case 3://PlaybackMode
-                playward.playback();
-                playward.draw(window);
+                
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
+                playward.playback();//Playbar Playback animations
+                playward.draw(window);//Update window object
                 break;
            
                

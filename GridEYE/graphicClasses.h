@@ -47,36 +47,7 @@ public:
 };
 
 /*/ --------------- ETerminal (Stack) Class --------------- /*/
-class playBar{
-private:
-    sf::Font playBarFont;
-    sf::Texture t_background;
-    sf::Texture t_fillBar;
-    sf::Sprite background;
-    sf::Sprite fillBar;
-    sf::Vector2f fillPos;
-    sf::Text currentTimeText;
-    sf::Text endTimeText;
-    
-    char timeTextBuffer[8];
-    struct tm * timeTextStruct;
-    time_t clipStart;
-    time_t clipEnd;
-    time_t playbackStart;
-    int playbackTime = 0;
-    int elapsedTime = 0;
-public:
-    playBar(sf::Vector2f position, int scale);
-    void onClick(sf::RenderWindow &window);
-    void setClipStartTime(time_t start);
-    void setClipEndTime(time_t end);
-    void setPlaybackStartTime(time_t start);
-    void setPlaybackEndTime(time_t end);
-    void setCurrentTime(void);
-    void record(void);
-    void playback(void);
-    virtual void draw(sf::RenderWindow &window);
-};
+
 
 /*/ ---------------  Toolbar Class --------------- /*/
 class toolbar{
@@ -181,7 +152,37 @@ public:
     virtual void draw(sf::RenderWindow &window);
     void update(void);
     void setMode(int newMode);
+   
 };
-
+class playBar {
+private:
+    sf::Font playBarFont;
+    sf::Texture t_background;
+    sf::Texture t_fillBar;
+    sf::Sprite background;
+    sf::Sprite fillBar;
+    sf::Vector2f fillPos;
+    sf::Text currentTimeText;
+    sf::Text endTimeText;
+    
+    char timeTextBuffer[8];
+    struct tm * timeTextStruct;
+    time_t clipStart;
+    time_t clipEnd;
+    time_t playbackStart;
+    double playbackTime = 0;
+    double elapsedTime = 0;
+public:
+    playBar(sf::Vector2f position, int scale);
+    void onClick(sf::RenderWindow &window);
+    void setClipStartTime(time_t start);
+    void setClipEndTime(time_t end);
+    void setPlaybackStartTime(time_t start);
+    void setPlaybackEndTime(time_t end);
+    void setCurrentTime(void);
+    void record(void);
+    void playback(void);
+    virtual void draw(sf::RenderWindow &window);
+};
 
 #endif /* graphicClasses_h */
