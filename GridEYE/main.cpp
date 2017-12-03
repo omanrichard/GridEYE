@@ -39,7 +39,7 @@ terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank
 toolbar toolward;
 settingsMenu setward;
 topBar topward;
-playBar progressBar(sf::Vector2f(35, 375),1);
+playBar playward(sf::Vector2f(35, 375),1);
 int i,j;
 
 //Time Variables
@@ -149,7 +149,7 @@ int main(int, char const**)
             
             
             recordEndTime = time(NULL);//Sets current time to end time
-            progressBar.record(recordEndTime);
+            playward.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
         
@@ -285,49 +285,41 @@ int main(int, char const**)
        
         window.draw(recordingTimeText);
         
+        topward.draw(window);
+        toolward.draw(window); //Toolbar
+        stackward.draw(window);//Terminal
         /*/-------- Layer control -------/*/
+        
+        
         switch(menuLayer){
                
                 
                 break;
             default:
-                toolward.draw(window); //Toolbar
-                stackward.draw(window);//Terminal
-                progressBar.draw(window);//Playback bar
-                topward.draw(window);
                 //Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
                         window.draw(grid[i][j]);
                     }
                 }
-                
-                topward.draw(window);
                 toolward.draw(window);
                 stackward.draw(window);
                 break;
             case 1: //Settings Menu
-                toolward.draw(window);//Toolbar
-                stackward.draw(window);//Terminal
                 setward.draw(window);//Settings Menu
-                topward.draw(window);
                 break;
             case 2: //Capture Mode
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+                playward.draw(window);
                 break;
             case 3://PlaybackMode
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+                playward.draw(window);
                 break;
             case 4://Stop Capture
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
+              
+                
+                
                 currentSession.addVideo(vPtr);
-                menuLayer = 0;
+               
                 break;
           
         
