@@ -39,7 +39,7 @@ terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank
 toolbar toolward;
 settingsMenu setward;
 topBar topward;
-
+playBar progressBar(sf::Vector2f(35, 375),1);
 int i,j;
 
 //Time Variables
@@ -68,11 +68,11 @@ int main(int, char const**)
     session currentSession;
    
     
-//--------------------- Set up -----------------------------------
+//--------------------- Set up --------------------//
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(700, 700), "ECE3220 Final Project");
+    sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     
-
+    //Loads font - soon to be depreciated
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
@@ -94,80 +94,38 @@ int main(int, char const**)
         }
     }
     
-    sf::RectangleShape line( Vector2f( 1, 700) );
+    sf::RectangleShape line( Vector2f( 1, 700) );//What is this? - Can we move it or deleted it
     line.setFillColor( Color::Black );
     line.setPosition(94, 0);
     
-    RectangleShape line2( Vector2f( 625, 1));
-    line2.setFillColor( Color::Black );
-    line2.setPosition(94, 606);
-    
-    //---------------Draw Playbar-----------
-    playBar progressBar(sf::Vector2f(35, 375),1);
-    //----------------Draw Toolbar----------------
-   
-    
-    
- 
-  
-    
- 
-    
 
     
+ 
+    //----------------- Background -----------------//
+   
+    sf::Texture t_background;//Background text - stays global for now
+    sf::Sprite background;//Background Sprite - stays global for now
     
-    
-    
-    sf::Texture t_background;
-    sf::Sprite background;
-    background.setPosition(0,0);
-    
-    if(!t_background.loadFromFile("texture2.jpg")){
-        return EXIT_FAILURE;
+    if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
+        return EXIT_FAILURE;//Exit program and report error if file can be found
     }
-    background.setTexture(t_background);
-    window.draw(background);
+    background.setTexture(t_background);//maps background text to background sprite
+    background.setPosition(0,0);//move background sprite to origin
+    window.draw(background);//draws background
     
-    //-----------------Draw Terminal Window-------------------
 
-    
-  
-    
-    
-    
-    
-    
-    
     
 
     
     
-   
+
     
-    
-    //----------------- Background -----------------
-    
-    
-    sf::RectangleShape backgroundHeader(sf::Vector2f( 400, 10 ));
-    backgroundHeader.setFillColor(sf::Color(0, 255, 0,150));
-    backgroundHeader.setPosition(94, 70);
-    
-    sf::RectangleShape backgroundHeader2(sf::Vector2f( 400, 10 ));
-    backgroundHeader2.setFillColor(sf::Color(0, 255, 0,150));
-    backgroundHeader2.setPosition(488, 75);
-    backgroundHeader2.rotate(-60);
-    
-    sf::RectangleShape backgroundHeader3(sf::Vector2f(606, 5 ));
-    backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
-    backgroundHeader3.setPosition(94, 75);
-    
-    sf::RectangleShape topbarBackground(sf::Vector2f( 606, 75 ));
-    topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
-    topbarBackground.setPosition(94, 0);
+
+
   
   
     
-    
+    topward.setMode(0);
     
     currentTime = time(NULL);
     currentTimeStruct = localtime(&currentTime);
@@ -177,7 +135,7 @@ int main(int, char const**)
     recordingTimeText.setPosition( 560 , 45);
     
 
-    //----------------- Settings Objects -----------------
+
 
  
 /*/---------- Draw ----------/*/
@@ -276,7 +234,7 @@ int main(int, char const**)
                          //Play capture
                          if (position.y > 189 && position.y < 308){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Entering Playback Mode");
+                             stackward.print("Entering Playback Mode");
                              menuLayer = 2;//Change layer to playback
                          }
                          //Stop capture
@@ -336,20 +294,12 @@ int main(int, char const**)
    
         // Clear screen
         window.clear();
-        
         //Background
         window.draw(background);
         
         // Draw the placeholder text
-        window.draw(topbarBackground);
        
-        window.draw(backgroundHeader3);
-        
-        
         window.draw(recordingTimeText);
-        
-        
- 
         
         /*/-------- Layer control -------/*/
         switch(menuLayer){

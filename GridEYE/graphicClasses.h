@@ -162,6 +162,8 @@ class topBar {
     sf::Text titleText;
     sf::Text subText;
     sf::Font topBarFont;
+    sf::RectangleShape background;
+    sf::RectangleShape header;
     
 public:
     topBar(void);

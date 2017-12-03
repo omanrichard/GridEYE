@@ -700,8 +700,20 @@ topBar::topBar(void){
         return EXIT_FAILURE;
     }
     
+    //Rectangle Shape Objects
+    background.setSize(sf::Vector2f( 606, 75 ));
+    header.setSize(sf::Vector2f(606, 5 ));
+    
+    background.setFillColor(sf::Color(0, 0, 0,50));
+    header.setFillColor(sf::Color(255, 94, 20,150));
+                    
+    background.setPosition(94, 0);
+    header.setPosition(94, 75);
+    
+    
+    //Text Objects
     modeText.setString("Booting");
-    titleText.setString("Thermal Camera");
+    titleText.setString("Panasonic Grid-EYE");
     subText.setString("Created by Grant Hilgert and Richard Oman");
     
     modeText.setCharacterSize(30);
@@ -730,16 +742,21 @@ void topBar::setMode(int newMode){
             case 0:
                 modeText.setFillColor(sf::Color::Green);
                 modeText.setString("Stand-By");
+                break;
             case 1:
                 modeText.setFillColor(sf::Color::Red);
                 modeText.setString("Recording");
+                break;
             case 2:
                 modeText.setFillColor(sf::Color::Yellow);
-                modeText.setString("Play Back");                
+                modeText.setString("Play Back");
+                break;
         }
     };
 
 void topBar::draw(sf::RenderWindow &window){
+    window.draw(background);
+    window.draw(header);
     window.draw(modeText);
     window.draw(titleText);
     window.draw(subText);
