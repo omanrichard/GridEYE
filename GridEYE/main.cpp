@@ -113,19 +113,7 @@ int main(int, char const**)
     background.setTexture(t_background);//maps background text to background sprite
     background.setPosition(0,0);//move background sprite to origin
     window.draw(background);//draws background
-    
 
-    
-
-    
-    
-
-    
-
-
-  
-  
-    
     topward.setMode(0);
     
     currentTime = time(NULL);
@@ -225,26 +213,24 @@ int main(int, char const**)
         sf::Event event;
         while(window.pollEvent(event)){
             // Menu selection
-            if( menuLayer == 0){//This the
-                toolward.event(event);
-            
+            if( menuLayer == 0){
+                toolward.event(event);//Handles Mouse moving events
+                toolward.onClick(window,stackward);//Handles Mouse click events
             
                 //Base Layer
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
                     sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
                      if (position.x > 0 && position.x < 95){     //Within toolbar
                          
-                         //Settings
-                        if (position.y > 0 && position.y < 119){
-                            menuLayer = 1; //Change layer to settings layer
-                        }
+                         
+                       
                          //Start Capture
                         if (position.y > 119 && position.y < 189){
                             recordStatus = true;//Start recording data
                             recordStartTime = time(NULL); //Set current time as start time
                             lastCaptureTime = recordStartTime;
                             progressBar.setStartTime(recordStartTime);
-                            stackward.print("Starting Capture");
+                            
                             
                             vPtr = new video;
                             
@@ -253,8 +239,7 @@ int main(int, char const**)
                          //Play capture
                          if (position.y > 189 && position.y < 308){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Entering Playback Mode");
-                             menuLayer = 2;//Change layer to playback
+                             
                              
                              playbackStatus = true;
                              fcount = vPtr->getframeCount();
@@ -262,7 +247,7 @@ int main(int, char const**)
                          //Stop capture
                          if (position.y >308 && position.y < 402){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Stopping Capture");
+                             
                              //set led to red
                              
                              currentSession.addVideo(vPtr); // Adds recorded video to the video stack
@@ -271,44 +256,44 @@ int main(int, char const**)
                          //Save capture
                          if (position.y > 402 && position.y < 496){
                              recordStatus = false;//Stop recording data
-                             stackward.print("Saving Capture");
                              
-                             cout << "Exporting Video" << endl;
+                             
+                             stackward.print("Exporting Video");
                              vPtr->exportVideo( "Test1.txt" );
-                             cout << "Success" << endl;
+                             stackward.print("Success");
                              //set led to red
                          }
                          //Delete capture
                          if (position.y > 496 && position.y < 590){
                              recordStatus = false;//Stop recording data
-                              stackward.print("Deleting Capture");
+                              
                              //set led to red
                              
                              currentSession.undoRec(); // Removes recorded video from the video stack
                          }
-                         //exit
-                        if (position.y > 590 && position.y < 700){
-                            window.close();//Close Window
+                      
                         
-                        }
-                    }//End within toolbar
+                        
+                    }
                 
-                }//End left mouse button click
+                }
             
-            
-            }//End Menu layer 1
-            
-            
-            
+                menuLayer = toolward.exit();//Allows toolbar to change Menu layer
+            }
             //Settings Menu
             if(menuLayer == 1){
                 setward.onClick(window); //Scans buffer for corosponing inputs.
-                menuLayer = setward.exit();//setting m
+                menuLayer = toolward.exit();
+                menuLayer = setward.exit();//Allows settings menu to Menu layers
             }
             //Playback Mode
             if(menuLayer == 2){
-                
+                menuLayer = toolward.exit();
             }
+            
+            //Sync all elements
+            toolward.sync(menuLayer);
+            
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -349,7 +334,32 @@ int main(int, char const**)
                 setward.draw(window);//Settings Menu
                 topward.draw(window);
                 break;
-            case 2: //Playback Mode
+            case 2: //Capture Mode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 3://PlaybackMode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 4://Stop Capture
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 5://Save Capture
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+                break;
+            case 6://Delete Capture
+                break;
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
+            case 7://Exit Program
                 topward.draw(window);
                 toolward.draw(window);
                 stackward.draw(window);

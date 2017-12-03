@@ -13,6 +13,7 @@
 #include <time.h>
 #include <math.h>
 #include <mouse.hpp>
+#include "projectClasses.h"
 
 #ifndef graphicClasses_h
 #define graphicClasses_h
@@ -74,6 +75,7 @@ public:
 /*/ ---------------  Toolbar Class --------------- /*/
 class toolbar{
 private:
+    int menuLayer = 0;//Default
     //Toolbar Texture Objects
     sf::Texture t_settings;
     sf::Texture t_record;
@@ -101,8 +103,11 @@ private:
     
 public:
     toolbar(void);
+    int exit(void);//Changes menu layer
+    void sync(int newMenuLayer);
     virtual void draw(sf::RenderWindow &window);
     virtual void event(sf::Event &toolbarEvent);
+    virtual void onClick(sf::RenderWindow &window, terminal &stackward);
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 
