@@ -39,7 +39,7 @@ terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank
 toolbar toolward;
 settingsMenu setward;
 topBar topward;
-playBar progressBar(sf::Vector2f(35, 375),1);
+playBar playward(sf::Vector2f(35, 375),1);
 
 int i,j;
 int gridx, gridy;
