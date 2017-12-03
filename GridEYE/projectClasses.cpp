@@ -34,7 +34,7 @@ GridEYE::GridEYE(){
      }
      */
 }
-
+// Will remove eventually
 GridEYE::GridEYE( int address ){
     FPS = 10;
     runtime = 10;
@@ -48,8 +48,8 @@ int GridEYE::read( int pixAddr ){
     /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr ); // Receive value from pixel
-    temp = temp >> 4;                           // Thermistor has 12-bit data
-    // Shift 4 removes precision Bits, makes short data 8-bit temperature
+    temp = temp >> 2;                           // Thermistor has 12-bit data
+                                                // Shift 2 removes precision Bits, makes short data 8-bit temperature
      */
     return temp;
 }
@@ -57,6 +57,9 @@ int GridEYE::read( int pixAddr ){
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
+    //wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+    DR = true;
+    return;
 }
 
 void GridEYE::test(int row, int col){
@@ -65,12 +68,23 @@ void GridEYE::test(int row, int col){
     b = rand() % 255;
 }
 
+int GridEYE::getfd(){
+    return this->fd;
+}
+
 int GridEYE::getFPS(){
     return this->FPS;
 }
 
 void GridEYE::setRunTime( int newTime ){
-    this->runtime = newTime;
+    try{
+        if( newTime >= 3579139 )
+            throw 0;
+        this->runtime = newTime;
+    }
+    catch( int ){
+        cout << "exception handled invalid time. max time is 60 minutes" << endl;
+    }
 }
 
 void GridEYE::setFPS(int temp){
@@ -91,8 +105,95 @@ void GridEYE::setFPS(int temp){
     return;
 }
 
+void GridEYE::setDR( bool nDR ){
+    this->DR = nDR;
+}
+
+
 GridEYE::~GridEYE(){
     
+}
+
+//-----------------------------------------------------------------
+// pixMask Methods
+//-----------------------------------------------------------------
+pixMask::pixMask(){
+    this->r = 0;
+    this->g = 0;
+    this->b = 0;
+    
+    return;
+}
+
+pixMask::~pixMask(){}
+
+int pixMask::getr(){
+    return this->r;
+}
+
+int pixMask::getg(){
+    return this->g;
+}
+
+int pixMask::getb(){
+    return this->b;
+}
+
+void pixMask::update( short temp ){
+    int R1 = 0;
+    int G1 = 0;
+    int B1 = 0;
+    int phase = 1;
+    
+    for(int i = 0; i < 255; i++){
+        if( temp >= i && temp < i+1){
+            this->r = R1;
+            this->g = G1;
+            this->b = B1;
+        }
+        
+        if(phase == 7){
+            G1 += 7;
+            B1 += 7;
+        }
+        
+        if(phase == 6){
+            G1 -= 7;
+            if(G1 <= 0)
+                phase = 7;
+        }
+        
+        if(phase == 5){
+            R1 += 7;
+            if(R1 >= 252)
+                phase = 6;
+        }
+        
+        if(phase == 4){
+            B1 -= 7;
+            if(B1 <= 0)
+                phase = 5;
+        }
+        
+        if(phase == 3){
+            G1 += 7;
+            if( G1 >= 252)
+                phase = 4;
+        }
+        
+        if(phase == 2){
+            R1 -= 7;
+            if( R1 <= 0)
+                phase = 3;
+        }
+        
+        if(phase == 1){
+            R1 += 7;
+            B1 += 7;
+            if( R1 >= 252)
+                phase = 2;
+        }
+    } // end for
 }
 
 //----------------------------------------------------------------
@@ -115,6 +216,22 @@ frame::frame(GridEYE gridward){
             gridward.test( row,col );
             gridward.pixelL = gridward.g;
             this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
+        }
+    }
+    set_max();
+    set_mean();
+    return;
+}
+
+frame::frame(GridEYE* gPtr){
+    int temp = 0;
+    int pixAddr = 0x80;
+    
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            temp = gPtr->read( pixAddr );                // Read Thermistor Data
+            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
+            pixAddr += 2;                                   // Increment to next pixel
         }
     }
     set_max();
@@ -156,6 +273,20 @@ short frame::get_max(){
 float frame::get_mean(){
     return this->mean;
 }
+
+void frame::updateFrame( GridEYE gPtr ){
+    int temp = 0;
+    int pixAddr = 0x80;
+    
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            temp = gPtr.read( pixAddr );                // Read Thermistor Data
+            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
+            pixAddr += 2;                                   // Increment to next pixel
+        }
+    }
+}
+
 
 void frame::print(){
     
@@ -204,12 +335,32 @@ video::video( GridEYE gridward ){
     return;
 }
 
+video::video( GridEYE* gPtr ){
+    frame* temp;
+    
+    frameCount = (1 * 10);
+    
+    for( int x = 0 ; x < frameCount ; x++){
+      //  delayMicroseconds(500000);
+        temp = new frame( gPtr );       // Collect data and create frame
+        this->data.push_back( temp );       // Store pointer in data Vector
+    }
+    //this->set_max();
+    //this->set_mean();
+    return;
+}
 //-----------------------------------------------------------------
 // Video Methods
 //-----------------------------------------------------------------
 void video::addFrame(frame* fPtr){
     this->data.push_back(fPtr);
     this->frameCount++;
+    //this->set_max();
+    //this->set_mean();
+}
+
+int video::getframeCount(){
+    return this->frameCount;
 }
 
 void video::exportVideo( string filename ){
@@ -257,10 +408,42 @@ void video::print(){
     }
 }
 
-int video::getframeCount(){
-    return this->frameCount;
+/*
+void video::set_max(){
+    short temp = 0;
+    frame* framePtr = NULL;
+    
+    while(temp < this->frameCount){
+        framePtr = data[temp];
+        for( row = 0 ; row < 8 ; row++ ){
+            for( col = 0 ; col < 8 ;  col++){
+                if( framePtr->access(row,col) > temp )
+                    temp = framePtr->access(row,col);
+            }
+        }
+        temp++;
+    }
+    framePtr->new_max( temp );
+    return;
 }
 
+void video::set_mean(){
+    short temp = 0;
+    float sum = 0;
+    frame* framePtr = NULL;
+    
+    while(temp < this->frameCount){
+        framePtr = data[temp];
+        for( row = 0 ; row < 8 ; row++ ){
+            for( col = 0 ; col < 8 ;  col++){
+                sum += framePtr->get_mean();
+            }
+        }
+        temp++;
+    }
+    framePtr->new_mean( sum / (64*frameCount) );
+}
+*/
 video::~video(){
     
 }

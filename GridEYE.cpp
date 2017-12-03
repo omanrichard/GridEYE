@@ -42,7 +42,6 @@ public:
     ~GridEYE();
     
     void reset();
-    void wake();
     int read( int pixAddr );
     
     void setFPS( int temp );
@@ -80,9 +79,9 @@ protected:                          // 0  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
     short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
                                     // 4  [] [] [] [] [] [] [] []
-    void set_max();         // 5  [] [] [] [] [] [] [] []
-    void set_mean();        // 6  [] [] [] [] [] [] [] []
-    // 7  [] [] [] [] [] [] [] []
+    void set_max();                 // 5  [] [] [] [] [] [] [] []
+    void set_mean();                // 6  [] [] [] [] [] [] [] []
+                                    // 7  [] [] [] [] [] [] [] []
 public:
     
     frame();
@@ -106,8 +105,6 @@ public:
 class video{
 private:
     short frameCount; // frameCount = FPS * runtime
-    short FPS;
-    int runtime;
     
     short max;
     float mean;
@@ -123,9 +120,7 @@ public:
     ~video();
     
     void addFrame( frame* fPtr );
-    frame* getFrame( int index );
     
-    void set_runtime( int val );
     short getframeCount();
     void exportVideo( string filename );
     void print(pixMask* pixPtr);
@@ -186,6 +181,9 @@ int main(int argc, const char * argv[]) {
 GridEYE::GridEYE(){
     fd = wiringPiI2CSetup( PGE );
     wiringPiI2CWriteReg16(fd, PCR, 0);
+
+    FPS = 10;
+    runtime = 10;
 }
 
 int GridEYE::read( int pixAddr ){
@@ -259,8 +257,6 @@ frame::frame(GridEYE* gPtr){
     }
     set_max();
     set_mean();
-    return;
-    
     return;
 }
 //-----------------------------------------------------------------
@@ -517,7 +513,7 @@ int pixMask::getr(){
 int pixMask::getg(){
 	return this->g;
 }
-
+    
 int pixMask::getb(){
 	return this->b;
 }

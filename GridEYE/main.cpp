@@ -40,7 +40,9 @@ toolbar toolward;
 settingsMenu setward;
 topBar topward;
 playBar playward(sf::Vector2f(35, 375),1);
+
 int i,j;
+int gridx, gridy;
 
 //Time Variables
 
@@ -63,16 +65,20 @@ int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, sett
 int main(int, char const**)
 {
     
-    
 //----------- Frame Capture experiment -----------
     video* vPtr = NULL;
     session currentSession; // Begins session
-   
+    frame activeFrame;
+    pixMask pixel;
+    int temp = 0;
+    int pixAddr = 0x80;
+    
     
 //--------------------- Set up --------------------//
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
-    
+    window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
+
     //Loads font - soon to be depreciated
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
@@ -80,25 +86,9 @@ int main(int, char const**)
     }
    
     //----------------- Camera Grid -----------------
-    int gridx, gridy;
-    RectangleShape grid[8][8];
-    
-    for( i=0 ; i < 8 ; i++ ){
-        for( j=0 ; j<8 ; j++ ){
-            gridx = (164+i*59);
-            gridy = (88+j*59);
-            RectangleShape newPix(sf::Vector2f(58, 58));
-            newPix.setPosition( gridx, gridy );
-            gridward.test(i,j);
-            newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
-            grid[i][j] = newPix;
-        }
-    }
-    
-  
+    sf::RectangleShape grid[8][8];
+    RectangleShape newPix(sf::Vector2f(50, 50));
 
-    
- 
     //----------------- Background -----------------//
    
     sf::Texture t_background;//Background text - stays global for now
@@ -139,6 +129,8 @@ int main(int, char const**)
     int fcount = 0;
     GridEYE* gPtr;
     vPtr = new video;
+    
+
     while (window.isOpen()) //While the window is open.
     {
         currentTime = time(NULL);//Updates Current Time
@@ -178,21 +170,24 @@ int main(int, char const**)
         
             }
         
+        // For real-time window drawing experiment
+        pixAddr = 0x80;
+        temp = 0;
         
-        // Eventual Additions to control grid colors
-        /*
-         activeVid = session.current[ session.vCount ]; // Active frame
-         tempFrame = activeVid->data[];                 // Frame to draw controlled somehow
-        */
-        //sets each gridward pixel
+        // Draws the Grid
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 gridx = (200+i*51);
                 gridy = (98+j*51);
-                RectangleShape newPix(sf::Vector2f(50, 50));
-                newPix.setPosition( gridx, gridy );             // Eventually
-                gridward.test(i,j);                             // pixelMask.setMask( tempFrame->access(short row, short col );
-                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
+                newPix.setPosition( gridx, gridy );
+                
+                gridward.test(i,j);
+                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                
+                /*
+                pixel.update( gridward.read(pixAddr) );
+                newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
+                */
                 grid[i][j] = newPix;
             }
         }
@@ -203,6 +198,7 @@ int main(int, char const**)
         sf::Event event;
         while(window.pollEvent(event)){
             toolward.event(event);//Handles Mouse moving events
+            
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events

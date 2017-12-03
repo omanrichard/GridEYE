@@ -24,13 +24,13 @@ using namespace std;
 class GridEYE{
     friend class video;
 private:
-    int runtime;
-    int FPS;
-    
-    
-    
+    int FPS;        // 1 or 10 FPS
+    int runtime;    // Run Time in seconds
+    bool DR;        // True: TRUE, Human: FALSE
+    int fd;         // File Descriptor for I2C functions
+
 public:
-    GridEYE(); //Hint: My board has it set at 0x68 :)
+    GridEYE();      //Hint: My board has it set at 0x68 :)
     GridEYE( int frames, int time );
     GridEYE( int address );
     ~GridEYE();
@@ -38,14 +38,36 @@ public:
     int read(int pixAddr);
     
     void reset(void);
-    void test(int row, int col);    //Draw Test pattern
     
+    //removing soon
+    void test(int row, int col);    //Draw Test pattern
     short pixelL;
     int r,g,b;
-
-    void setRunTime( int newTime );
+    //
+    void setRunTime( int nTime );
+    void setFPS( int nFPS );
+    void setDR( bool nDR );
+    
     int getFPS();
-    void setFPS( int temp );
+    int getfd();
+};
+
+//-----------------------------------------------------------------
+// pixMask Class
+//-----------------------------------------------------------------
+class pixMask{
+private:
+    int r,g,b;
+    
+public:
+    pixMask();
+    ~pixMask();
+    
+    void update( short temp );
+    
+    int getr();    // access r value
+    int getg();    // access g value
+    int getb();    // access b value
 };
 
 
@@ -53,43 +75,32 @@ public:
 // Frame
 //-----------------------------------------------------------------
 class frame{                        //      Stores sensor data
-    //     0  1  2  3  4  5  6  7
+                                    //     0  1  2  3  4  5  6  7
 private:                            // 0  [] [] [] [] [] [] [] []
     float mean;                     // 1  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
     short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
-    // 4  [] [] [] [] [] [] [] []
-    virtual void set_max();         // 5  [] [] [] [] [] [] [] []
-    virtual void set_mean();        // 6  [] [] [] [] [] [] [] []
-    // 7  [] [] [] [] [] [] [] []
+                                    // 4  [] [] [] [] [] [] [] []
+    void set_max();                 // 5  [] [] [] [] [] [] [] []
+    void set_mean();                // 6  [] [] [] [] [] [] [] []
+                                    // 7  [] [] [] [] [] [] [] []
 public:
     frame();
     frame(GridEYE gridward);
+    frame( GridEYE* gPtr );
     ~frame();
     
     short access( short row , short col );
     short get_max();
     float get_mean();
     
-    virtual void print();
+    void new_max( short newMax );
+    void new_mean( float newMean );
+    
+    void updateFrame( GridEYE PGE );
+    void print();
     
 };
-
-/*
- class pixelMask {
- private:
- short r;
- short g;
- short b;
- 
- public:
- frame_mask();
- ~frame_mask();
- 
- void setMask( short temp ); // Uses algorithm to determine RGB values
- };
- */
-
 
 //-----------------------------------------------------------------
 // Video
@@ -99,12 +110,17 @@ private:
     short frameCount;       // 10 Frames -> 1 Second
     vector< frame* > data;  // Storing up to 31,800 frames maximum
     
-   // void set_max();
-    //void set_mean();
+    short max;
+    float mean;
+    
+    void set_max();
+    void set_mean();
     
 public:
     video();
     video( GridEYE gridward );
+    // Call using pointer or object?
+    video( GridEYE* gPtr );
     ~video();
     
     void addFrame(frame* fptr);
