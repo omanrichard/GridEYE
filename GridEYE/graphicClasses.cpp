@@ -690,6 +690,80 @@ void settingsMenu::draw(sf::RenderWindow &window){
 int settingsMenu::exit(void){
     return menuLayer;
 }
+
+
+/*/ -------- topBar Layer --------/*/
+
+topBar::topBar(void){
+   
+    if (!topBarFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    
+    //Rectangle Shape Objects
+    background.setSize(sf::Vector2f( 606, 75 ));
+    header.setSize(sf::Vector2f(606, 5 ));
+    
+    background.setFillColor(sf::Color(0, 0, 0,50));
+    header.setFillColor(sf::Color(255, 94, 20,150));
+                    
+    background.setPosition(94, 0);
+    header.setPosition(94, 75);
+    
+    
+    //Text Objects
+    modeText.setString("Booting");
+    titleText.setString("Panasonic Grid-EYE");
+    subText.setString("Created by Grant Hilgert and Richard Oman");
+    
+    modeText.setCharacterSize(30);
+    titleText.setCharacterSize(36);
+    subText.setCharacterSize(15);
+    
+    modeText.setFont(topBarFont);
+    titleText.setFont(topBarFont);
+    subText.setFont(topBarFont);
+    
+    modeText.setFillColor(sf::Color::White);
+    titleText.setFillColor(sf::Color::White);
+    subText.setFillColor(sf::Color::Magenta);
+    
+    modeText.setPosition( 550 , 10);
+    titleText.setPosition( 109 , 10);
+    subText.setPosition(109,55);
+    
+}
+void topBar::setMode(int newMode){
+    mode = newMode;
+    update();
+}
+    void topBar::update(void){
+        switch(mode){
+            case 0:
+                modeText.setFillColor(sf::Color::Green);
+                modeText.setString("Stand-By");
+                break;
+            case 1:
+                modeText.setFillColor(sf::Color::Red);
+                modeText.setString("Recording");
+                break;
+            case 2:
+                modeText.setFillColor(sf::Color::Yellow);
+                modeText.setString("Play Back");
+                break;
+        }
+    };
+
+void topBar::draw(sf::RenderWindow &window){
+    window.draw(background);
+    window.draw(header);
+    window.draw(modeText);
+    window.draw(titleText);
+    window.draw(subText);
+    
+}
+
+
 /*/
 backgroundGraphics::backgroundGraphics(void){
     if(!t_background.loadFromFile("texture2.jpg")){

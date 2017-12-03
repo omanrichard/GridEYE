@@ -38,7 +38,8 @@ GridEYE gridward(PDE); //Creats the Grid Eye Object
 terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
 toolbar toolward;
 settingsMenu setward;
-
+topBar topward;
+playBar progressBar(sf::Vector2f(35, 375),1);
 int i,j;
 
 //Time Variables
@@ -68,11 +69,11 @@ int main(int, char const**)
     session currentSession; // Begins session
    
     
-//--------------------- Set up -----------------------------------
+//--------------------- Set up --------------------//
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(700, 700), "ECE3220 Final Project");
+    sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     
-
+    //Loads font - soon to be depreciated
     sf::Font font;
     if (!font.loadFromFile("sansation.ttf")) {
         return EXIT_FAILURE;
@@ -94,88 +95,38 @@ int main(int, char const**)
         }
     }
     
-    sf::RectangleShape line( Vector2f( 1, 700) );
+    sf::RectangleShape line( Vector2f( 1, 700) );//What is this? - Can we move it or deleted it
     line.setFillColor( Color::Black );
     line.setPosition(94, 0);
     
-    RectangleShape line2( Vector2f( 625, 1));
-    line2.setFillColor( Color::Black );
-    line2.setPosition(94, 606);
-    
-    //---------------Draw Playbar-----------
-    playBar progressBar(sf::Vector2f(35, 375),1);
-    //----------------Draw Toolbar----------------
-   
-    
-    
- 
-  
-    
- 
-    
 
     
+ 
+    //----------------- Background -----------------//
+   
+    sf::Texture t_background;//Background text - stays global for now
+    sf::Sprite background;//Background Sprite - stays global for now
     
-    
-    
-    sf::Texture t_background;
-    sf::Sprite background;
-    background.setPosition(0,0);
-    
-    if(!t_background.loadFromFile("texture2.jpg")){
-        return EXIT_FAILURE;
+    if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
+        return EXIT_FAILURE;//Exit program and report error if file can be found
     }
-    background.setTexture(t_background);
-    window.draw(background);
+    background.setTexture(t_background);//maps background text to background sprite
+    background.setPosition(0,0);//move background sprite to origin
+    window.draw(background);//draws background
     
-    //-----------------Draw Terminal Window-------------------
 
-    
-  
-    
-    
-    
-    
-    
-    
     
 
     
     
-   
+
     
-    
-    //----------------- Background -----------------
-    //sf::RectangleShape background(sf::Vector2f( 700, 700 ));
-    //background.setFillColor(sf::Color(130, 117, 135));
-    //background.setPosition(0, 0);
-    
-    sf::RectangleShape backgroundHeader(sf::Vector2f( 400, 10 ));
-    backgroundHeader.setFillColor(sf::Color(0, 255, 0,150));
-    backgroundHeader.setPosition(94, 70);
-    
-    sf::RectangleShape backgroundHeader2(sf::Vector2f( 400, 10 ));
-    backgroundHeader2.setFillColor(sf::Color(0, 255, 0,150));
-    backgroundHeader2.setPosition(488, 75);
-    backgroundHeader2.rotate(-60);
-    
-    sf::RectangleShape backgroundHeader3(sf::Vector2f(606, 5 ));
-    backgroundHeader3.setFillColor(sf::Color(255, 94, 20,150));
-    backgroundHeader3.setPosition(94, 75);
-    
-    sf::RectangleShape topbarBackground(sf::Vector2f( 606, 75 ));
-    topbarBackground.setFillColor(sf::Color(0, 0, 0,50));
-    topbarBackground.setPosition(94, 0);
+
+
   
-    sf::Text text("Thermal Camera", font, 50);
-    text.setFillColor(sf::Color::White);
-    text.setPosition( 109 , 10);
+  
     
-    sf::Text recordText("Standy-by", font, 25);
-    recordText.setFillColor(sf::Color::Green);
-    recordText.setPosition( 550 , 10);
-    
-    
+    topward.setMode(0);
     
     currentTime = time(NULL);
     currentTimeStruct = localtime(&currentTime);
@@ -185,7 +136,7 @@ int main(int, char const**)
     recordingTimeText.setPosition( 560 , 45);
     
 
-    //----------------- Settings Objects -----------------
+
 
  
 /*/---------- Draw ----------/*/
@@ -211,8 +162,7 @@ int main(int, char const**)
             
             
             
-            recordText.setString("Recording");//Changes "Stand-By" To "Recording"
-            recordText.setFillColor(sf::Color::Red);//"Sets "Recoding" Text to Red
+            topward.setMode(1);//Changes "Stand-By" To "Recording"
             recordEndTime = time(NULL);//Sets current time to end time
             progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
@@ -234,14 +184,13 @@ int main(int, char const**)
             
         }
         if(recordStatus == false){
-            recordText.setString("Standy-by");
-             recordText.setFillColor(sf::Color::Green);
+            topward.setMode(0);
+        
         }
         
         if(playbackStatus == true){
-            recordText.setString("Replaying");//Changes "Stand-By" To "Replaying"
-            recordText.setFillColor(sf::Color::Red);//"Sets "Replaying" Text to Red
-            
+            topward.setMode(3);//Changes "Stand-By" To "Replaying"
+           
             if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
            
                 lastCaptureTime = time( NULL);
@@ -278,11 +227,9 @@ int main(int, char const**)
             // Menu selection
             if( menuLayer == 0){//This the
                 toolward.event(event);
-            }
-            /*/----left click----/*/
             
-            /*/----Layer 0 "Home"----/*/
-            if(menuLayer == 0){//Base Layer
+            
+                //Base Layer
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
                     sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
                      if (position.x > 0 && position.x < 95){     //Within toolbar
@@ -347,12 +294,20 @@ int main(int, char const**)
                     }//End within toolbar
                 
                 }//End left mouse button click
+            
+            
             }//End Menu layer 1
+            
+            
             
             //Settings Menu
             if(menuLayer == 1){
-                setward.onClick(window);
-                menuLayer = setward.exit();
+                setward.onClick(window); //Scans buffer for corosponing inputs.
+                menuLayer = setward.exit();//setting m
+            }
+            //Playback Mode
+            if(menuLayer == 2){
+                
             }
             // Close window: exit
             if (event.type == sf::Event::Closed) {
@@ -366,21 +321,12 @@ int main(int, char const**)
    
         // Clear screen
         window.clear();
-        
         //Background
         window.draw(background);
         
         // Draw the placeholder text
-        window.draw(topbarBackground);
        
-        window.draw(backgroundHeader3);
-        
-        window.draw(text);
-        window.draw(recordText);
         window.draw(recordingTimeText);
-        
-        
- 
         
         /*/-------- Layer control -------/*/
         switch(menuLayer){
@@ -388,6 +334,7 @@ int main(int, char const**)
                 toolward.draw(window); //Toolbar
                 stackward.draw(window);//Terminal
                 progressBar.draw(window);//Playback bar
+                topward.draw(window);
                 //Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
@@ -400,9 +347,12 @@ int main(int, char const**)
                 toolward.draw(window);//Toolbar
                 stackward.draw(window);//Terminal
                 setward.draw(window);//Settings Menu
-                
+                topward.draw(window);
                 break;
             case 2: //Playback Mode
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
                 break;
         }
         
