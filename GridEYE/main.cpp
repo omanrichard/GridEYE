@@ -206,30 +206,31 @@ int main(int, char const**)
         // Process events. This monitors mouse movements and clicks
         sf::Event event;
         while(window.pollEvent(event)){
-            //Mouse Events
             toolward.event(event);//Handles Mouse moving events
-            toolward.onClick(window,stackward);//Handles Mouse click events
-            
-            //Settings Menu
-            if(menuLayer == 1){
-                setward.onClick(window); //Scans buffer for corosponing inputs.
-                menuLayer = setward.exit();//Allows settings menu to Menu layers
-                toolward.sync(menuLayer);//Sync toolbar to current menu layer
+            //The Follow events only happen on each click
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                toolward.onClick(window,stackward);//Handles Mouse click events
+                //Settings Menu
+                if(menuLayer == 1){
+                    setward.onClick(window); //Scans buffer for corosponing inputs.
+                    menuLayer = setward.exit();//Allows settings menu to Menu layers
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
+                //Export Video
+                if(menuLayer == 5){
+                    stackward.print("Exporting Video");
+                    vPtr->exportVideo( "Test1.txt" );
+                    stackward.print("Success");
+                    menuLayer = 0;
+                    toolward.sync(menuLayer);
+                }
+                if(menuLayer == 6){
+                }
+                
+                menuLayer = toolward.exit();
+                stackward.print(std::to_string(menuLayer));
+                topward.setMode(menuLayer);//Set topbar to current mode
             }
-            //Export Video
-            if(menuLayer == 5){
-                stackward.print("Exporting Video");
-                vPtr->exportVideo( "Test1.txt" );
-                stackward.print("Success");
-                menuLayer = 0;
-                toolward.sync(menuLayer);
-            }
-            if(menuLayer == 6){
-            }
-            topward.setMode(menuLayer);//Set topbar to current mode
-            menuLayer = toolward.exit();
-            stackward.print(std::to_string(menuLayer));
-            
            
             
             // Close window: exit
