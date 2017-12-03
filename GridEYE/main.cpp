@@ -193,6 +193,8 @@ int main(int, char const**)
                     menuLayer = 4;
                     toolward.sync(menuLayer);
                 }
+                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
+                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
@@ -245,8 +247,7 @@ int main(int, char const**)
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
-                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
-                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
+                
                 topward.setMode(menuLayer);//Set topbar to current mode
             }
            
@@ -289,12 +290,20 @@ int main(int, char const**)
                 }
                 toolward.draw(window);
                 stackward.draw(window);
+                //Clock Functions
                 currentTimeStruct = localtime(&currentTime);
                 recordingTimeText.setString(recordTimeBuffer);
                 strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
                 break;
             case 1: //Settings Menu
                 setward.draw(window);//Settings Menu
+                
+                //Clock Functions
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
                 break;
             case 2: //Capture Mode
                 playward.draw(window);
@@ -302,13 +311,9 @@ int main(int, char const**)
             case 3://PlaybackMode
                 playward.draw(window);
                 break;
-            case 4://Stop Capture
-              
-                
-                
-                currentSession.addVideo(vPtr);
+           
                
-                break;
+               
           
         
             
