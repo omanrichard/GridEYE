@@ -203,32 +203,65 @@ int main(int, char const**)
     
    
         
-        // Process events. This monitors mouse movements and clicks
+/*/ --------- Process events ---------/*/
         sf::Event event;
         while(window.pollEvent(event)){
             toolward.event(event);//Handles Mouse moving events
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
+                
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
+                
+                //Capture Video
+                if(menuLayer == 2){//Executes Once when Capture is clicked
+                    
+                    
+                    //Insert Code Here
+                    
+                    
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
+                //Playback Viode
+                if(menuLayer == 3){//Executes Once when Playback is clicked
+                    
+                    
+                    //Insert Code Here
+                    
+                    
+                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
+                if(menuLayer == 4){//Executes Once when Stop is clicked
+                    
+                
+                    //Insert Code Here
+               
+                
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                }
                 //Export Video
-                if(menuLayer == 5){
+                if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     vPtr->exportVideo( "Test1.txt" );
                     stackward.print("Success");
                     menuLayer = 0;
                     toolward.sync(menuLayer);
                 }
-                if(menuLayer == 6){
+                if(menuLayer == 6){///Executes Once when Delete is clicked
+                
+                
+                    //Insert Code to Delete Video Here
+                
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
-                menuLayer = toolward.exit();
-                stackward.print(std::to_string(menuLayer));
+                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
+                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
                 topward.setMode(menuLayer);//Set topbar to current mode
             }
            
