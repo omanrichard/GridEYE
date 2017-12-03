@@ -17,17 +17,21 @@
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "Event.hpp"
-//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
 #include <Mouse.hpp>
+
+//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+
 #include "projectClasses.h"
 #include "graphicClasses.h"
+
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
+
 #define PDE 0x68
 
 using namespace sf;
