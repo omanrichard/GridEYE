@@ -173,10 +173,11 @@ void playBar::onClick(sf::RenderWindow &window){
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
         sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
         
-    
-            if (position.x > origin.x+510  && origin.x < 173){
-                if (position.y > origin.y+158  && origin.y < 158) {
-        }
+        //playBar playward(sf::Vector2f(35, 375),1);
+            if (position.x > origin.x+190  && position.x < origin.x+230){
+                if (position.y > origin.y+150  && position.y < origin.y+180) {
+                    window.close();
+                }
             }
     }
 }

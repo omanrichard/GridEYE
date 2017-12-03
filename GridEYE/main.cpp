@@ -212,8 +212,9 @@ int main(int, char const**)
                 }
                 //Playback Viode
                 if(menuLayer == 3){//Executes Once when Playback is clicked
+                    playward.onClick(window);
                     playward.setPlaybackStartTime(time(NULL));
-                    
+                
                     //Insert Code Here
                     
                     

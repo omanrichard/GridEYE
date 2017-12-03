@@ -167,11 +167,11 @@ private:
     sf::Vector2f origin;
     char timeTextBuffer[8];
     struct tm * timeTextStruct;
-    time_t clipStart;
-    time_t clipEnd;
-    time_t playbackStart;
-    double playbackTime = 0;
-    double elapsedTime = 0;
+    time_t clipStart; //Actual time at which clip was recorded
+    time_t clipEnd; //Actual time at which clip was finished recording
+    time_t playbackStart; //Actual time that the replay started playing
+    double playbackTime = 0; //Length of the clip in seconds. Calculated from clipStart and clip Ends
+    double elapsedTime = 0; //Curent lenght of the playpack in seconds. Calculated from playbackStart and time(NULL)
 public:
     playBar(sf::Vector2f position, int scale);
     void onClick(sf::RenderWindow &window);
