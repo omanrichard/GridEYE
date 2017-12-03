@@ -206,38 +206,29 @@ int main(int, char const**)
         // Process events. This monitors mouse movements and clicks
         sf::Event event;
         while(window.pollEvent(event)){
-            // Menu selection
+            //Mouse Events
             toolward.event(event);//Handles Mouse moving events
             toolward.onClick(window,stackward);//Handles Mouse click events
-            topward.setMode(menuLayer);
-            if( menuLayer == 0){
-                
-            }
+            
             //Settings Menu
             if(menuLayer == 1){
-               
                 setward.onClick(window); //Scans buffer for corosponing inputs.
-                menuLayer = toolward.exit();
                 menuLayer = setward.exit();//Allows settings menu to Menu layers
+                toolward.sync(menuLayer);//Sync toolbar to current menu layer
             }
-            //Capture Mode
-            if(menuLayer == 2){
-                
-                menuLayer = toolward.exit();
-            }
-            //Playback Mode
-            if(menuLayer == 3){
-                
-                menuLayer = toolward.exit();
-            }
-            if(menuLayer == 4){
-            }
+            //Export Video
             if(menuLayer == 5){
+                stackward.print("Exporting Video");
+                vPtr->exportVideo( "Test1.txt" );
+                stackward.print("Success");
+                menuLayer = 0;
+                toolward.sync(menuLayer);
             }
             if(menuLayer == 6){
             }
-            
-            menuLayer = toolward.exit();//Allows toolbar to change Menu layer
+            topward.setMode(menuLayer);//Set topbar to current mode
+            menuLayer = toolward.exit();
+            stackward.print(std::to_string(menuLayer));
             
            
             
@@ -262,7 +253,10 @@ int main(int, char const**)
         
         /*/-------- Layer control -------/*/
         switch(menuLayer){
-            case 0: //Home Screen
+               
+                
+                break;
+            default:
                 toolward.draw(window); //Toolbar
                 stackward.draw(window);//Terminal
                 progressBar.draw(window);//Playback bar
@@ -274,6 +268,9 @@ int main(int, char const**)
                     }
                 }
                 
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
                 break;
             case 1: //Settings Menu
                 toolward.draw(window);//Toolbar
@@ -298,25 +295,9 @@ int main(int, char const**)
                 currentSession.addVideo(vPtr);
                 menuLayer = 0;
                 break;
-            case 5://Save Capture
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-                stackward.print("Exporting Video");
-                vPtr->exportVideo( "Test1.txt" );
-                stackward.print("Success");
-                menuLayer = 0;
-                break;
-            case 6://Delete Capture
-                break;
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-            case 7://Exit Program
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-                break;
+          
+        
+            
         }
         
     
