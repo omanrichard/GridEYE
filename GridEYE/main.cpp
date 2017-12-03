@@ -107,7 +107,7 @@ int main(int, char const**)
 
     topward.setMode(0);
     
-    currentTime = time(NULL);
+ 
     currentTimeStruct = localtime(&currentTime);
     strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
     sf::Text recordingTimeText(recordTimeBuffer, font, 20);
@@ -138,43 +138,23 @@ int main(int, char const**)
     while (window.isOpen()) //While the window is open.
     {
         currentTime = time(NULL);//Updates Current Time
+        
+        
         //Recording Control
         if(recordStatus == true){
-            
-            
-            
-            
-            recordEndTime = time(NULL);//Sets current time to end time
-            playward.record(recordEndTime);
-            double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
+           
+            double seconds = difftime(currentTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
-        
-            
-            float tenthSecond = 0.1;
-            tempt = (difftime( time(NULL), lastCaptureTime));
-            
-            if( (tempt) >= 0.1 ){
-                cout << tempt << endl << endl;
-
-                lastCaptureTime = time(NULL);
-                framePtr = new frame(gridward);
-                // Eventually: gPtr= new GridEYE( GRIDEYEADDRESS );
-                vPtr->addFrame( framePtr );
-                
             }
-            
-        }
-     
         
         if(playbackStatus == true){
-            topward.setMode(3);//Changes "Stand-By" To "Replaying"
+            
            
             if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
-           
                 lastCaptureTime = time( NULL);
                 
             }
-                playbackStatus = false;
+            
         
             }
         
@@ -210,10 +190,15 @@ int main(int, char const**)
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
+                
                 if(recordStatus == true){//Stop recording video on click
                     recordEndTime = time(NULL);
                     recordStatus = false;
+                    menuLayer = 4;
+                    toolward.sync(menuLayer);
                 }
+                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
+                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
@@ -240,11 +225,14 @@ int main(int, char const**)
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 if(menuLayer == 4){//Executes Once when Stop is clicked
+                    if(recordStatus == true){
                     recordEndTime = time(NULL);
                     recordStatus = false;
+                    playward.setTime(recordStartTime,recordEndTime);
+                    }
                     //Insert Code Here
                
-                
+                    menuLayer = 0; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 //Export Video
@@ -263,8 +251,7 @@ int main(int, char const**)
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
-                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
-                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
+                
                 topward.setMode(menuLayer);//Set topbar to current mode
             }
            
@@ -307,9 +294,20 @@ int main(int, char const**)
                 }
                 toolward.draw(window);
                 stackward.draw(window);
+                //Clock Functions
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
                 break;
             case 1: //Settings Menu
                 setward.draw(window);//Settings Menu
+                
+                //Clock Functions
+                currentTimeStruct = localtime(&currentTime);
+                recordingTimeText.setString(recordTimeBuffer);
+                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+                
                 break;
             case 2: //Capture Mode
                 playward.draw(window);
@@ -317,13 +315,9 @@ int main(int, char const**)
             case 3://PlaybackMode
                 playward.draw(window);
                 break;
-            case 4://Stop Capture
-              
-                
-                
-                currentSession.addVideo(vPtr);
+           
                
-                break;
+               
           
         
             
