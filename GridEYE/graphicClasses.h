@@ -60,15 +60,21 @@ private:
     
     char timeTextBuffer[8];
     struct tm * timeTextStruct;
-    time_t startTime;
-    time_t endTime;
-    time_t currentTime;
+    time_t clipStart;
+    time_t clipEnd;
+    time_t playbackStart;
+    int playbackTime = 0;
+    int elapsedTime = 0;
 public:
     playBar(sf::Vector2f position, int scale);
-    void record(time_t currentTime);
-    void setStartTime(time_t start);
-    void setTime(time_t start,time_t end);
-    void setCurrentTime(time_t currentTime);
+    void onClick(sf::RenderWindow &window);
+    void setClipStartTime(time_t start);
+    void setClipEndTime(time_t end);
+    void setPlaybackStartTime(time_t start);
+    void setPlaybackEndTime(time_t end);
+    void setCurrentTime(void);
+    void record(void);
+    void playback(void);
     virtual void draw(sf::RenderWindow &window);
 };
 

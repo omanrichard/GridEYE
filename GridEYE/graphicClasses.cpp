@@ -131,7 +131,7 @@ playBar::playBar(sf::Vector2f position, int scale){
     fillBar.setPosition(fillPos);
     fillBar.scale(1, 1);
     
-    timeTextStruct = localtime(&endTime);
+    timeTextStruct = localtime(&clipEnd);
     strftime (timeTextBuffer,8,"%R",timeTextStruct);
     currentTimeText.setString(timeTextBuffer);
     endTimeText.setString(timeTextBuffer);
@@ -149,18 +149,13 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     
 }
-void playBar::setCurrentTime(time_t time){
-    currentTime = time;
-    double totalSeconds = difftime(endTime,startTime);
-    double percent = difftime(currentTime,startTime);
-    percent = totalSeconds/percent;
-    fillBar.setScale(percent,1);
-    
-    timeTextStruct = localtime(&currentTime);
+void playBar::setCurrentTime(void){
+ 
+    timeTextStruct = localtime(&clipStart);
     strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     currentTimeText.setString(timeTextBuffer);
     
-    timeTextStruct = localtime(&endTime);
+    timeTextStruct = localtime(&clipEnd);
     strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     endTimeText.setString(timeTextBuffer);
 }
@@ -173,15 +168,33 @@ void playBar::draw(sf::RenderWindow &window){
     window.draw(currentTimeText);
     window.draw(endTimeText);
 }
-void playBar::setStartTime(time_t start){
-    startTime = start;
+void playBar::setClipStartTime(time_t start){
+    clipStart = start;
 }
-void playBar::setTime(time_t start,time_t end){
-    startTime = start;
-    endTime = end;
+void playBar::setClipEndTime(time_t end){
+    clipEnd = end;
+    playbackTime = difftime(clipEnd, clipStart);
+    endTimeText.setString(std::to_string(playbackTime));
+    
+    
 }
-void playBar::record(time_t currentTime){
-    double seconds = difftime(currentTime,startTime);
+void playBar::setPlaybackStartTime(time_t start){
+    playbackStart = start;
+}
+void playBar::setPlaybackEndTime(time_t end){
+    
+}
+void playBar::playback(void){
+    elapsedTime = difftime(time(NULL), playbackStart);
+    if(elapsedTime <= playbackTime){
+    currentTimeText.setString(std::to_string(elapsedTime));
+    float percent = elapsedTime/playbackTime;
+    fillBar.scale(percent, 1);
+    }
+    
+}
+void playBar::record(void){
+    double seconds = difftime(time(NULL),clipStart);
     currentTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60))));
     endTimeText.setString("00:00");
     fillBar.setScale(1,1);
