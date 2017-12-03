@@ -77,7 +77,14 @@ int GridEYE::getFPS(){
 }
 
 void GridEYE::setRunTime( int newTime ){
-    this->runtime = newTime;
+    try{
+        if( newTime >= 3579139 )
+            throw 0;
+        this->runtime = newTime;
+    }
+    catch( int ){
+        cout << "exception handled invalid time. max time is 60 minutes" << endl;
+    }
 }
 
 void GridEYE::setFPS(int temp){
@@ -97,6 +104,11 @@ void GridEYE::setFPS(int temp){
      */
     return;
 }
+
+void GridEYE::setDR( bool nDR ){
+    this->DR = nDR;
+}
+
 
 GridEYE::~GridEYE(){
     
@@ -261,6 +273,20 @@ short frame::get_max(){
 float frame::get_mean(){
     return this->mean;
 }
+
+void frame::updateFrame( GridEYE gPtr ){
+    int temp = 0;
+    int pixAddr = 0x80;
+    
+    for( row = 0 ; row < 8 ; row++ ){
+        for( col = 0 ; col < 8 ;  col++){
+            temp = gPtr.read( pixAddr );                // Read Thermistor Data
+            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
+            pixAddr += 2;                                   // Increment to next pixel
+        }
+    }
+}
+
 
 void frame::print(){
     

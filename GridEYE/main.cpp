@@ -67,8 +67,10 @@ int main(int, char const**)
 //----------- Frame Capture experiment -----------
     video* vPtr = NULL;
     session currentSession; // Begins session
-   
-    
+    frame activeFrame;
+    pixMask pixel;
+    int temp = 0;
+    int pixAddr = 0x80;
 //--------------------- Set up --------------------//
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
@@ -188,21 +190,23 @@ int main(int, char const**)
         
             }
         
-        
-        // Eventual Additions to control grid colors
-        /*
-         activeVid = session.current[ session.vCount ]; // Active frame
-         tempFrame = activeVid->data[];                 // Frame to draw controlled somehow
-        */
         //sets each gridward pixel
+        pixAddr = 0x80;
+        temp = 0;
         for( i=0 ; i < 8 ; i++ ){
             for( j=0 ; j<8 ; j++ ){
                 gridx = (200+i*51);
                 gridy = (98+j*51);
                 RectangleShape newPix(sf::Vector2f(50, 50));
-                newPix.setPosition( gridx, gridy );             // Eventually
-                gridward.test(i,j);                             // pixelMask.setMask( tempFrame->access(short row, short col );
-                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));   // color( pixelMask.r, pixelMask.g, pixelMask.b )
+                newPix.setPosition( gridx, gridy );
+                
+                gridward.test(i,j);
+                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                
+                /*
+                pixel.update( gridward.read(pixAddr) );
+                newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
+                */
                 grid[i][j] = newPix;
             }
         }

@@ -38,14 +38,16 @@ public:
     int read(int pixAddr);
     
     void reset(void);
+    
+    //removing soon
     void test(int row, int col);    //Draw Test pattern
-    // Removing soon
     short pixelL;
     int r,g,b;
-
-    void setRunTime( int newTime );
-    void setFPS( int temp );
-
+    //
+    void setRunTime( int nTime );
+    void setFPS( int nFPS );
+    void setDR( bool nDR );
+    
     int getFPS();
     int getfd();
 };
@@ -95,6 +97,7 @@ public:
     void new_max( short newMax );
     void new_mean( float newMean );
     
+    void updateFrame( GridEYE PGE );
     void print();
     
 };
