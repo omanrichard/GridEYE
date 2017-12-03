@@ -791,15 +791,15 @@ void topBar::setMode(int newMode){
 }
     void topBar::update(void){
         switch(mode){
-            case 0:
+            default:
                 modeText.setFillColor(sf::Color::Green);
                 modeText.setString("Stand-By");
                 break;
-            case 1:
+            case 2:
                 modeText.setFillColor(sf::Color::Red);
                 modeText.setString("Recording");
                 break;
-            case 2:
+            case 3:
                 modeText.setFillColor(sf::Color::Yellow);
                 modeText.setString("Play Back");
                 break;

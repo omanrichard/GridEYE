@@ -209,45 +209,25 @@ int main(int, char const**)
             // Menu selection
             toolward.event(event);//Handles Mouse moving events
             toolward.onClick(window,stackward);//Handles Mouse click events
+            topward.setMode(menuLayer);
             if( menuLayer == 0){
-                
-            
-                     
-                            
-                            
-                
-                            
-                            //set led to green
-                        
-                       
-                      
-                       
-                        
-                         
-                      
-                        
-                        
-                 
-                
-                
-
                 
             }
             //Settings Menu
             if(menuLayer == 1){
-                topward.setMode(0);
+               
                 setward.onClick(window); //Scans buffer for corosponing inputs.
                 menuLayer = toolward.exit();
                 menuLayer = setward.exit();//Allows settings menu to Menu layers
             }
             //Capture Mode
             if(menuLayer == 2){
-                topward.setMode(1);//Changes "Stand-By" To "Recording"
+                
                 menuLayer = toolward.exit();
             }
             //Playback Mode
             if(menuLayer == 3){
-                topward.setMode(3);//Changes to Playback mode
+                
                 menuLayer = toolward.exit();
             }
             if(menuLayer == 4){
