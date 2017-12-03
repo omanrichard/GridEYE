@@ -358,24 +358,28 @@ void toolbar::onClick(sf::RenderWindow &window, terminal &stackward){
                 //Start Capture
                 if (position.y > 119 && position.y < 189){
                     stackward.print("Starting Capture");
+                    menuLayer = 2;//set Capture Mode
                 }
                 
                 //Play capture
                 if (position.y > 189 && position.y < 308){
                     stackward.print("Entering Playback Mode");
-                    menuLayer = 2;//Change layer to playback
+                    menuLayer = 3;//Change layer to playback
                 }
                 //Stop Caputre
                   if (position.y >308 && position.y < 402){
                       stackward.print("Stopping Capture");
+                      menuLayer = 4;
                   }
                 //Save capture
                 if (position.y > 402 && position.y < 496){
                     stackward.print("Saving Capture");
+                    menuLayer = 5;
                 }
                 //Delete capture
                 if (position.y > 496 && position.y < 590){
                     stackward.print("Deleting Capture");
+                    menuLayer = 6;
                 }
                 //exit - quit program
                 if (position.y > 590 && position.y < 700){
@@ -787,15 +791,15 @@ void topBar::setMode(int newMode){
 }
     void topBar::update(void){
         switch(mode){
-            case 0:
+            default:
                 modeText.setFillColor(sf::Color::Green);
                 modeText.setString("Stand-By");
                 break;
-            case 1:
+            case 2:
                 modeText.setFillColor(sf::Color::Red);
                 modeText.setString("Recording");
                 break;
-            case 2:
+            case 3:
                 modeText.setFillColor(sf::Color::Yellow);
                 modeText.setString("Play Back");
                 break;

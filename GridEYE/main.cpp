@@ -97,10 +97,7 @@ int main(int, char const**)
         }
     }
     
-    sf::RectangleShape line( Vector2f( 1, 700) );//What is this? - Can we move it or deleted it
-    line.setFillColor( Color::Black );
-    line.setPosition(94, 0);
-    
+  
 
     
  
@@ -143,7 +140,7 @@ int main(int, char const**)
     frame* framePtr;
     int fcount = 0;
     GridEYE* gPtr;
-    
+    vPtr = new video;
     while (window.isOpen()) //While the window is open.
     {
         
@@ -152,7 +149,7 @@ int main(int, char const**)
             
             
             
-            topward.setMode(1);//Changes "Stand-By" To "Recording"
+            
             recordEndTime = time(NULL);//Sets current time to end time
             progressBar.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
@@ -173,10 +170,7 @@ int main(int, char const**)
             }
             
         }
-        if(recordStatus == false){
-            topward.setMode(0);
-        
-        }
+     
         
         if(playbackStatus == true){
             topward.setMode(3);//Changes "Stand-By" To "Replaying"
@@ -211,92 +205,37 @@ int main(int, char const**)
             }
         }
     
-        window.draw(line);
+   
         
         // Process events. This monitors mouse movements and clicks
         sf::Event event;
         while(window.pollEvent(event)){
-            // Menu selection
-            if( menuLayer == 0){
-                toolward.event(event);//Handles Mouse moving events
+            toolward.event(event);//Handles Mouse moving events
+            //The Follow events only happen on each click
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
-            
-                //Base Layer
-                if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
-                    sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
-                     if (position.x > 0 && position.x < 95){     //Within toolbar
-                         
-                         
-                       
-                         //Start Capture
-                        if (position.y > 119 && position.y < 189){
-                            recordStatus = true;//Start recording data
-                            recordStartTime = time(NULL); //Set current time as start time
-                            lastCaptureTime = recordStartTime;
-                            progressBar.setStartTime(recordStartTime);
-                            
-                            
-                            vPtr = new video;
-                            
-                            //set led to green
-                            }
-                         //Play capture
-                         if (position.y > 189 && position.y < 308){
-                             recordStatus = false;//Stop recording data
-                             
-                             
-                             playbackStatus = true;
-                             fcount = vPtr->getframeCount();
-                         }
-                         //Stop capture
-                         if (position.y >308 && position.y < 402){
-                             recordStatus = false;//Stop recording data
-                             
-                             //set led to red
-                             
-                             currentSession.addVideo(vPtr); // Adds recorded video to the video stack
-                             
-                         }
-                         //Save capture
-                         if (position.y > 402 && position.y < 496){
-                             recordStatus = false;//Stop recording data
-                             
-                             
-                             stackward.print("Exporting Video");
-                             vPtr->exportVideo( "Test1.txt" );
-                             stackward.print("Success");
-                             //set led to red
-                         }
-                         //Delete capture
-                         if (position.y > 496 && position.y < 590){
-                             recordStatus = false;//Stop recording data
-                              
-                             //set led to red
-                             
-                             currentSession.undoRec(); // Removes recorded video from the video stack
-                         }
-                      
-                        
-                        
-                    }
-                
+                //Settings Menu
+                if(menuLayer == 1){
+                    setward.onClick(window); //Scans buffer for corosponing inputs.
+                    menuLayer = setward.exit();//Allows settings menu to Menu layers
+                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
-            
-                menuLayer = toolward.exit();//Allows toolbar to change Menu layer
-            }
-            //Settings Menu
-            if(menuLayer == 1){
-                setward.onClick(window); //Scans buffer for corosponing inputs.
+                //Export Video
+                if(menuLayer == 5){
+                    stackward.print("Exporting Video");
+                    vPtr->exportVideo( "Test1.txt" );
+                    stackward.print("Success");
+                    menuLayer = 0;
+                    toolward.sync(menuLayer);
+                }
+                if(menuLayer == 6){
+                }
+                
                 menuLayer = toolward.exit();
-                menuLayer = setward.exit();//Allows settings menu to Menu layers
+                stackward.print(std::to_string(menuLayer));
+                topward.setMode(menuLayer);//Set topbar to current mode
             }
-            //Playback Mode
-            if(menuLayer == 2){
-                menuLayer = toolward.exit();
-            }
-            
-            //Sync all elements
-            toolward.sync(menuLayer);
+           
             
             // Close window: exit
             if (event.type == sf::Event::Closed) {
@@ -319,7 +258,10 @@ int main(int, char const**)
         
         /*/-------- Layer control -------/*/
         switch(menuLayer){
-            case 0: //Home Screen
+               
+                
+                break;
+            default:
                 toolward.draw(window); //Toolbar
                 stackward.draw(window);//Terminal
                 progressBar.draw(window);//Playback bar
@@ -331,6 +273,9 @@ int main(int, char const**)
                     }
                 }
                 
+                topward.draw(window);
+                toolward.draw(window);
+                stackward.draw(window);
                 break;
             case 1: //Settings Menu
                 toolward.draw(window);//Toolbar
@@ -352,26 +297,17 @@ int main(int, char const**)
                 topward.draw(window);
                 toolward.draw(window);
                 stackward.draw(window);
+                currentSession.addVideo(vPtr);
+                menuLayer = 0;
                 break;
-            case 5://Save Capture
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-                break;
-            case 6://Delete Capture
-                break;
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-            case 7://Exit Program
-                topward.draw(window);
-                toolward.draw(window);
-                stackward.draw(window);
-                break;
+          
+        
+            
         }
         
     
-        
+        //Sync all elements
+        toolward.sync(menuLayer);
         
         // Update the window
         window.display();
