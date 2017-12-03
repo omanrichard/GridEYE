@@ -141,7 +141,7 @@ int main(int, char const**)
     vPtr = new video;
     while (window.isOpen()) //While the window is open.
     {
-        
+        currentTime = time(NULL);//Updates Current Time
         //Recording Control
         if(recordStatus == true){
             
@@ -210,7 +210,10 @@ int main(int, char const**)
             //The Follow events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
-                
+                if(recordStatus == true){//Stop recording video on click
+                    recordEndTime = time(NULL);
+                    recordStatus = false;
+                }
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
@@ -220,8 +223,8 @@ int main(int, char const**)
                 
                 //Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    
-                    
+                    recordStartTime = time(NULL);
+                    recordStatus = true;
                     //Insert Code Here
                     
                     
@@ -237,8 +240,8 @@ int main(int, char const**)
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 if(menuLayer == 4){//Executes Once when Stop is clicked
-                    
-                
+                    recordEndTime = time(NULL);
+                    recordStatus = false;
                     //Insert Code Here
                
                 
