@@ -142,14 +142,11 @@ int main(int, char const**)
     while (window.isOpen()) //While the window is open.
     {
         currentTime = time(NULL);//Updates Current Time
+        
+        
         //Recording Control
         if(recordStatus == true){
             
-            
-            
-            
-            recordEndTime = time(NULL);//Sets current time to end time
-            playward.record(recordEndTime);
             double seconds = difftime(recordEndTime, recordStartTime);//Caculates Elapsed Time
             recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
         
@@ -171,14 +168,13 @@ int main(int, char const**)
      
         
         if(playbackStatus == true){
-            topward.setMode(3);//Changes "Stand-By" To "Replaying"
+            
            
             if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
-           
                 lastCaptureTime = time( NULL);
                 
             }
-                playbackStatus = false;
+            
         
             }
         
