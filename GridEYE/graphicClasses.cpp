@@ -161,8 +161,6 @@ void playBar::setCurrentTime(void){
 }
 void playBar::draw(sf::RenderWindow &window){
     
-    
-    
     window.draw(background);
     window.draw(fillBar);
     window.draw(currentTimeText);
@@ -188,10 +186,10 @@ void playBar::playback(void){
     elapsedTime = difftime(time(NULL), playbackStart);
     if(elapsedTime <= playbackTime){
     currentTimeText.setString(std::to_string(elapsedTime));
-    float percent = elapsedTime/playbackTime;
-    fillBar.scale(percent, 1);
+    float percent = float(elapsedTime)/float(playbackTime);
+    fillBar.setScale(percent, 1);
     }
-    
+
 }
 void playBar::record(void){
     double seconds = difftime(time(NULL),clipStart);
