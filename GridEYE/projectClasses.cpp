@@ -237,41 +237,6 @@ void video::exportVideo( string filename ){
     newOutput.close( ); // Close file
     return;
 }
-/*
-void video::set_max(){
-    short temp;
-    frame* framePtr;
-    
-    while(temp < this->frameCount){
-        framePtr = data[temp];
-        for( row = 0 ; row < 8 ; row++ ){
-            for( col = 0 ; col < 8 ;  col++){
-                if( framePtr->access(row,col) > temp )
-                    temp = framePtr->access(row,col);
-            }
-        }
-        temp++;
-    }
-    return;
-}
-
-void video::set_mean(){
-    short temp;
-    float sum;
-    frame* framePtr = NULL;
-    
-    while(temp < this->frameCount){
-        framePtr = data[temp];
-        for( row = 0 ; row < 8 ; row++ ){
-            for( col = 0 ; col < 8 ;  col++){
-                sum += framePtr->get_mean();
-            }
-        }
-        temp++;
-    }
-    framePtr->new_mean( sum / (64*frameCount) );
-}
- */
 
 void video::print(){
     frame* temp;
@@ -323,7 +288,6 @@ session::session( video* newVid ){      // constructor adds video pointer to ses
         cout << "Exception Handled" << endl;
     }
 }
-
 
 void session::addVideo( video* newVid ){
     this->current.push_back( newVid );  // Append "active" recording to video stack
