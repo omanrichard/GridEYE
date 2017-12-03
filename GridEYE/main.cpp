@@ -189,9 +189,8 @@ int main(int, char const**)
         }
         
         if(playbackStatus == true){
-            recordText.setString("Replaying");//Changes "Stand-By" To "Replaying"
-            recordText.setFillColor(sf::Color::Red);//"Sets "Replaying" Text to Red
-            
+            topward.setMode(3);//Changes "Stand-By" To "Replaying"
+           
             if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
            
                 lastCaptureTime = time( NULL);
