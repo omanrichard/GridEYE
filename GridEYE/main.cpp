@@ -1,43 +1,28 @@
 
-//
-// Disclaimer:
-// ----------
-//
-// This code will work only if you selected window, graphics and audio.
-//
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resources, use the helper
-// function `resourcePath()` from ResourcePath.hpp
-//
-
 //#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include "Event.hpp"
-#include <Mouse.hpp>
+#include <SFML/Graphics.hpp>                //Grahpics Librars
+#include "Event.hpp"                        //Mouse Move Events
+#include <Mouse.hpp>                        //Mouse Clicks
 
-//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
+//#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
-#include <fstream>
+#include <fstream>                          //FILE I/O
 #include <vector>
 #include <string>
-
-#include "projectClasses.h"
-#include "graphicClasses.h"
-
-#include <time.h>
-#include <math.h>
+#include <time.h>                           //Time Functions
+#include <math.h>                           //Math Functions
 #include <stdio.h>
 
-#define PDE 0x68
+
+#include "projectClasses.h"                 //Video File Objects Classes
+#include "graphicClasses.h"                 //User Interface Objects Classes
+
+//GPIO
+//#define GREENLED 7 - I need to look at my schematic                         //GPIO pin connected to Green LED Anode
+//#define REDLED   7 - I need to look at my schematic                       //GPIO Pin connected to Red LED Anode
+#define PDE 0x68                            //Grid-EYE I2C Address
 
 using namespace sf;
-
-
-//Global Variables and Objects
 
 //Global Objects
 GridEYE gridward(PDE);                      //Grid Eye Object
@@ -53,9 +38,10 @@ int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playb
 bool recordStatus = false;                  //True: Recording; False: Not Recording
 bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
 
-//GPIO
-#define GREENLED 7                          //GPIO pin connected to Green LED Anode
-#define REDLED   7                          //GPIO Pin connected to Red LED Anode
+int recordTime = 0;                        //Time to record the video
+
+
+
 
 
 int i,j;
@@ -63,20 +49,13 @@ int gridx, gridy;
 
 
 
-char recordTimeBuffer[11]; //Holds formatted time
-struct tm * currentTimeStruct;//Time structure required for formatted time
-
-time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
-//time_t lastCaptureTime;//Time at which the most recent capture was taken - used for fps control
-//time_t recordStartTime; //Time when recording starts
-//time_t recordEndTime; //Time when recording Ends
 
 
 int main(int, char const**)
 {
     
 //-----------------------------------------------------------------
-// Video Capture Experiment Variables
+// Video Capture Experiment Variables - Can we delete this?
 //-----------------------------------------------------------------
     video* vPtr = NULL;
     frame* fPtr = NULL;
@@ -94,11 +73,7 @@ int main(int, char const**)
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     window.setFramerateLimit(30);   // Sets Window Framerate to 60 FPS
 
-    //Loads font - soon to be depreciated
-    sf::Font font;
-    if (!font.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+   
    
     //----------------- Camera Grid -----------------
     sf::RectangleShape grid[8][8];
@@ -116,15 +91,10 @@ int main(int, char const**)
     background.setPosition(0,0);//move background sprite to origin
     window.draw(background);//draws background
 
-    topward.setMode(0);
+    
     
  
-    currentTimeStruct = localtime(&currentTime);
-    strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
-    sf::Text recordingTimeText(recordTimeBuffer, font, 20);
-    recordingTimeText.setFillColor(sf::Color::White);
-    recordingTimeText.setPosition( 560 , 45);
-    
+  
 
     
 
@@ -146,18 +116,9 @@ int main(int, char const**)
     int fcount = 0;
     GridEYE* gPtr = &gridward;
     
-
+    topward.setMode(0); //Set Mode to standy By
     while (window.isOpen()) //While the window is open.
     {
-        currentTime = time(NULL);//Updates Current Time
-        
-        
-        
-           
-           
-        
-        
-            
         
         
         
@@ -169,7 +130,7 @@ int main(int, char const**)
     
    
 //----------------------------------------------------------------
-// Process Events CLICKS CLICKS CLICKS
+// Process Events
 //-----------------------------------------------------------------
         sf::Event event;
         
@@ -194,6 +155,7 @@ int main(int, char const**)
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
+                    recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
                     
                     //Insert Code Here
@@ -253,35 +215,43 @@ int main(int, char const**)
             }
            
             
-            // Close window: exit
+            //Terminate Applicaiton Events
+            
+            //On Window Close Click
             if (event.type == sf::Event::Closed) {
-                window.close();
+                
+                window.close();                 //Close Window / Quit Application
             }
-            // Escape pressed: exit
+            //On Key Press
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                window.close();
+        
+                window.close();                 //Close Window / Quit Application
             }
         }
    
-        // Clear screen
-        window.clear();
-        //Background
-        window.draw(background);
+   
+        window.clear();                         //Clears Screen Object of all Elements
+    
+        window.draw(background);                //Draws Background Object First
+        topward.updateClock(time(NULL));        //Updates Clock
         
-        // Draw the background and clock
-        window.draw(recordingTimeText);
-        topward.draw(window);//Top Menu
-        stackward.draw(window);//Terminal
-        toolward.draw(window); //Toolbar
+        topward.draw(window);                   //Draws Top Bar
+        stackward.draw(window);                 //Draws Terminal
+        toolward.draw(window);                  //Draws Toolbar
+       
+        
+        
+        
         /*/-------- Layer control -------/*/
         
         
-        switch(menuLayer){
+            switch(menuLayer){
                
                 
                 break;
             default:
                 
+                    
                 // Active Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
@@ -302,26 +272,19 @@ int main(int, char const**)
                     }
                 }
                 
-                toolward.draw(window);
-                stackward.draw(window);
-                //Clock Functions
-                currentTimeStruct = localtime(&currentTime);
-                recordingTimeText.setString(recordTimeBuffer);
-                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+               
+               
                 
                 break;
-            case 1: //Settings Menu
-                setward.draw(window);//Settings Menu
+            case 1:                                //Settings Menu
+                setward.draw(window);                   //Settings Menu
                 
-                //Clock Functions
-                currentTimeStruct = localtime(&currentTime);
-                recordingTimeText.setString(recordTimeBuffer);
-                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+              
                 
                 break;
-            case 2: //Capture Mode
-                playward.record();//Playbar Recording Animations
-                playward.draw(window);//Update window object
+            case 2:                               //Capture Mode
+                playward.record(recordTime, recordStatus,topward); //Playbar Recording Control
+                playward.draw(window);                  //Update window object
                 break;
             case 3://PlaybackMode
                 

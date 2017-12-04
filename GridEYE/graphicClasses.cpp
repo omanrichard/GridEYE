@@ -15,16 +15,20 @@
 
 
 
+/*/ -------- Interactive Base Class --------/*/
+
+interactiveObject::interactiveObject(void){
+    if (!defaultFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+}
+
 /*/ --------------- Terminal (Stack) Methods --------------- /*/
 terminal::terminal(int size, string text){
     for(int i = 0; i <= size; i++){
         stack.push_back(" "); //Adds empty values to prevent crash
     }
     rootText = text;
-    
-    if (!terminalFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
     
     terminalText1.setString("UNDEFINED");
     terminalText2.setString("UNDEFINED");
@@ -33,12 +37,12 @@ terminal::terminal(int size, string text){
     terminalText5.setString("UNDEFINED");
     terminalText6.setString("UNDEFINED");
     
-    terminalText1.setFont(terminalFont);
-    terminalText2.setFont(terminalFont);
-    terminalText3.setFont(terminalFont);
-    terminalText4.setFont(terminalFont);
-    terminalText5.setFont(terminalFont);
-    terminalText6.setFont(terminalFont);
+    terminalText1.setFont(defaultFont);
+    terminalText2.setFont(defaultFont);
+    terminalText3.setFont(defaultFont);
+    terminalText4.setFont(defaultFont);
+    terminalText5.setFont(defaultFont);
+    terminalText6.setFont(defaultFont);
     
     terminalText1.setCharacterSize(12);
     terminalText2.setCharacterSize(12);
@@ -81,9 +85,7 @@ void terminal::print(string input){
 void terminal::print(string input, string text){
     stack.insert(stack.begin(),text+" : "+input);
 }
-string terminal::read(int index){
-    return stack[index];
-}
+
 void terminal::setRoot(string text){
     rootText = text;
 }
@@ -113,9 +115,7 @@ void terminal::draw(sf::RenderWindow &window){
 
 toolbar::toolbar(void){
     
-    if (!toolbarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+ 
     
     if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
@@ -182,7 +182,7 @@ toolbar::toolbar(void){
     
     selectionText.setString("void");
     selectionText.setCharacterSize(15);
-    selectionText.setFont(toolbarFont);
+    selectionText.setFont(defaultFont);
     selectionText.setFillColor(sf::Color(55,55,255)); //light blue
     selectionText.setPosition( -100 , -100);
     
@@ -334,9 +334,7 @@ settingsMenu::settingsMenu(void){
     if(!t_close.loadFromFile("cancel.png")){
         return EXIT_FAILURE;
     }
-    if (!settingsFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+ 
     settingsExit.setTexture(t_close);
     settingsExit.setPosition(143,93);
     settingsExit.scale(0.1, 0.1);
@@ -385,17 +383,17 @@ settingsMenu::settingsMenu(void){
     settingsResetText.setString("Reset Sensor");
     settingsApplyText.setString("Apply Settings");
     //Set font
-    settingsFPSText.setFont(settingsFont);
-    settingsFPSTextValTen.setFont(settingsFont);
-    settingsFPSTextValOne.setFont(settingsFont);
-    settingsCollectionText.setFont(settingsFont);
-    settingsMinsText.setFont(settingsFont);
-    settingsSecondsText.setFont(settingsFont);
-    settingsRangeText.setFont(settingsFont);
-    settingsRangeTextTrue.setFont(settingsFont);
-    settingsRangeTextHuman.setFont(settingsFont);
-    settingsResetText.setFont(settingsFont);
-    settingsApplyText.setFont(settingsFont);
+    settingsFPSText.setFont(defaultFont);
+    settingsFPSTextValTen.setFont(defaultFont);
+    settingsFPSTextValOne.setFont(defaultFont);
+    settingsCollectionText.setFont(defaultFont);
+    settingsMinsText.setFont(defaultFont);
+    settingsSecondsText.setFont(defaultFont);
+    settingsRangeText.setFont(defaultFont);
+    settingsRangeTextTrue.setFont(defaultFont);
+    settingsRangeTextHuman.setFont(defaultFont);
+    settingsResetText.setFont(defaultFont);
+    settingsApplyText.setFont(defaultFont);
     //Set Size
     settingsBackground.setSize(sf::Vector2f(500, 400 ));
     settingsTenFPS.setSize(sf::Vector2f(75, 25 ));
@@ -679,49 +677,57 @@ int settingsMenu::exit(void){
 /*/ -------- topBar Layer --------/*/
 
 topBar::topBar(void){
-   
-    if (!topBarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
     
+    //Updates Time
+    time_t tempTime = time(NULL);
+    clockStruct = localtime(&tempTime);
+    strftime (clockTextBuffer,11,"%r",clockStruct);
+    
+  
     //Rectangle Shape Objects
     background.setSize(sf::Vector2f( 606, 75 ));
-    header.setSize(sf::Vector2f(606, 5 ));
-    
     background.setFillColor(sf::Color(0, 0, 0,50));
-    header.setFillColor(sf::Color(255, 94, 20,150));
-                    
     background.setPosition(94, 0);
+    
+    header.setSize(sf::Vector2f(606, 5 ));
+    header.setFillColor(sf::Color(255, 94, 20,150));
     header.setPosition(94, 75);
     
     
     //Text Objects
+    //Mode
     modeText.setString("Booting");
-    titleText.setString("Panasonic Grid-EYE");
-    subText.setString("Created by Grant Hilgert and Richard Oman");
-    
     modeText.setCharacterSize(30);
-    titleText.setCharacterSize(36);
-    subText.setCharacterSize(15);
-    
-    modeText.setFont(topBarFont);
-    titleText.setFont(topBarFont);
-    subText.setFont(topBarFont);
-    
+    modeText.setFont(defaultFont);
     modeText.setFillColor(sf::Color::White);
-    titleText.setFillColor(sf::Color::White);
-    subText.setFillColor(sf::Color::Magenta);
-    
     modeText.setPosition( 550 , 10);
+    //Title
+    titleText.setString("Panasonic Grid-EYE");
+    titleText.setCharacterSize(36);
+    titleText.setFont(defaultFont);
+    titleText.setFillColor(sf::Color::White);
     titleText.setPosition( 109 , 10);
+    //Subtitle
+    subText.setString("Created by Grant Hilgert and Richard Oman");
+    subText.setCharacterSize(15);
+    subText.setFont(defaultFont);
+    subText.setFillColor(sf::Color::Magenta);
     subText.setPosition(109,55);
+    //Clock
+    clockText.setString(clockTextBuffer);
+    clockText.setFont(defaultFont);
+    clockText.setCharacterSize(20);
+    clockText.setString(clockTextBuffer);
+    clockText.setFillColor(sf::Color::White);
+    clockText.setPosition( 560 , 45);
     
+   
 }
 void topBar::setMode(int newMode){
     mode = newMode;
-    update();
+    updateMode();
 }
-    void topBar::update(void){
+    void topBar::updateMode(void){
         switch(mode){
             default:
                 modeText.setFillColor(sf::Color::Green);
@@ -730,6 +736,7 @@ void topBar::setMode(int newMode){
             case 2:
                 modeText.setFillColor(sf::Color::Red);
                 modeText.setString("Recording");
+                clipStart = time(NULL);
                 break;
             case 3:
                 modeText.setFillColor(sf::Color::Yellow);
@@ -748,7 +755,31 @@ void topBar::draw(sf::RenderWindow &window){
     window.draw(modeText);
     window.draw(titleText);
     window.draw(subText);
+    window.draw(clockText);
     
+}
+
+void topBar::updateClock(time_t currentTime){
+    elapsedTime = difftime(time(NULL), clipStart);
+    switch(mode){
+        default:
+            clockStruct = localtime(&currentTime);                  //Stores Current Time into struct
+            strftime (clockTextBuffer,11,"%r",clockStruct);         //Creates Formated String
+            clockText.setString(clockTextBuffer);                   //Updates Text Object
+            break;
+        case 2:
+            if(int(elapsedTime/60) < 10){
+                if(int(fmod(elapsedTime,60)) < 10){
+                    clockText.setString("0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60))));
+                } else  clockText.setString("0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60))));
+            }
+            else{
+                if(int(fmod(elapsedTime,60)) < 10){
+                    clockText.setString(std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60))));
+                } else  clockText.setString(std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60))));
+            }
+            
+    }
 }
 
 playBar::playBar(sf::Vector2f position, int scale){
@@ -760,9 +791,7 @@ playBar::playBar(sf::Vector2f position, int scale){
     if (!t_fillBar.loadFromFile("progress.png")) {
         return EXIT_FAILURE;
     }
-    if (!playBarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+
     
     background.setTexture(t_background);
     fillBar.setTexture(t_fillBar);
@@ -781,12 +810,12 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     currentTimeText.setCharacterSize(12);
     currentTimeText.setFillColor(sf::Color::White);
-    currentTimeText.setFont(playBarFont);
+    currentTimeText.setFont(defaultFont);
     currentTimeText.setPosition(position.x+465,position.y+158);
     
     endTimeText.setCharacterSize(12);
     endTimeText.setFillColor(sf::Color::White);
-    endTimeText.setFont(playBarFont);
+    endTimeText.setFont(defaultFont);
     endTimeText.setPosition(position.x+510,position.y+158);
     
     
@@ -864,7 +893,6 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
             
         
         currentTimeText.setString(bufferA + " / " + bufferB);
-        //currentTimeText.setString(std::to_string(int(elapsedTime)));//Old implemntation
         double percent = elapsedTime/playbackTime;
         fillBar.setScale(percent, 1);
     }
@@ -876,8 +904,10 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
     }
     
 }
-void playBar::record(void){
+void playBar::record(int setRecordTime, bool &recordMode, topBar &topbar){
     elapsedTime = difftime(time(NULL),clipStart);
+    
+    if(elapsedTime < setRecordTime){
     if(int(elapsedTime/60) < 10){
         if(int(fmod(elapsedTime,60)) < 10){
             bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
@@ -888,9 +918,16 @@ void playBar::record(void){
             bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
         } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
     }
+    fillBar.setScale(1-elapsedTime/100,1);
+    }
+    else if(elapsedTime > setRecordTime){
+        recordMode = false;
+        topbar.setMode(0);
+    }
     bufferB = "00:00";
     currentTimeText.setString(bufferA + " / " + bufferB);
-    fillBar.setScale(1-elapsedTime/100,1);
+    
+    
 }
 
 

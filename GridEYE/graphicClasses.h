@@ -20,12 +20,31 @@
 
 using namespace std;
 
+
+//Interactive Base Class
+class interactiveObject {
+    protected:
+    sf::Font defaultFont;                                       //Font for Each object to use
+    int menuLayer = 0;                                          //Each Object
+   
+    public:
+    interactiveObject(void);
+    
+    virtual void draw(sf::RenderWindow &window){};
+    virtual void onClick(sf::RenderWindow &window){};
+    virtual void event(sf::Event &toolbarEvent){};
+};
+
 /*/ --------------- Terminal (Stack) Class --------------- /*/
-class terminal{
+
+class terminal : interactiveObject {
+friend class interactiveObject;
 private:
+    
     string rootText; //Text before input
-    vector<string> stack;
-    sf::Font terminalFont;
+    vector<string> stack; //Stack Vector
+    
+    //SFML Objects
     sf::Text terminalText1;
     sf::Text terminalText2;
     sf::Text terminalText3;
@@ -34,14 +53,20 @@ private:
     sf::Text terminalText6;
     sf::RectangleShape terminalHeader;
     sf::RectangleShape terminalBackground;
-    //Text vector
+    
 public:
+    
+    //Setup Functions
     terminal(int size, string text = "root");
     void setRoot(string text);//Sets text before input
+    
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+    
+    //Action Functions
     void print(string input); //Prints on same line
     void print(string input, string text);
-    string read(int index);//Function to allow SFML to read lines from the terminal
-    virtual void draw(sf::RenderWindow &window);
+  
     
     
 };
@@ -50,9 +75,9 @@ public:
 
 
 /*/ ---------------  Toolbar Class --------------- /*/
-class toolbar{
+class toolbar : interactiveObject {
 private:
-    int menuLayer = 0;//Default
+    
     //Toolbar Texture Objects
     sf::Texture t_settings;
     sf::Texture t_record;
@@ -73,30 +98,35 @@ private:
     sf::RectangleShape toolbarFrame;
     sf::RectangleShape toolbarHeader;
     //Toolbar Selection Objects
-    sf::Font toolbarFont;
     sf::RectangleShape selection;
     sf::RectangleShape selectionTextBox;
     sf::Text selectionText;
     
 public:
+    //Setup Functions
     toolbar(void);
+    
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+    void event(sf::Event &toolbarEvent);
+    void onClick(sf::RenderWindow &window, terminal &stackward);
+    //Action Functions
+    
     int exit(void);//Changes menu layer
     void sync(int newMenuLayer);
-    virtual void draw(sf::RenderWindow &window);
-    virtual void event(sf::Event &toolbarEvent);
-    virtual void onClick(sf::RenderWindow &window, terminal &stackward);
+  
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 
 /*/ --------------- Settings Menu Class --------------- /*/
-class settingsMenu{
+class settingsMenu : interactiveObject {
 private:
     int menuLayer = 1;
     int rootx = 150;//Settings Menu upper left corner
     int rootY = 100;//Settings Menu upper left corner
     int recordMins = 0; //Seconds to be recorded - Is this still being used?
     int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
-    sf::Font settingsFont;
+
     // Settings Text Declare
     sf::Text settingsFPSText;
     sf::Text settingsFPSTextValTen;
@@ -132,31 +162,46 @@ public:
     settingsMenu( GridEYE gridward );
     void onClick(sf::RenderWindow &window);
     
+    //Action Functions
     int exit(void);
-    virtual void draw(sf::RenderWindow &window);
+    int syncRecordLength(void){return recordMins*60+recordSeconds;};
     
 };
 
-class topBar {
+class topBar : interactiveObject {
     private:
-        int mode = 0; //Default
-    sf::Text modeText;
-    sf::Text titleText;
-    sf::Text subText;
-    sf::Font topBarFont;
-    sf::RectangleShape background;
-    sf::RectangleShape header;
+        int mode = 0;                   //Mode
+        struct tm * clockStruct;        //Time structure required for formatted time
+        char clockTextBuffer[11];      //Holds formatted time
+        double elapsedTime;
+        time_t clipStart;
+        sf::Text modeText;              //SFML Text Object
+        sf::Text titleText;             //SFML Text Object
+        sf::Text subText;               //SFML Text Object
+        sf::Text clockText;             //SFML Text Object
     
-public:
+        sf::RectangleShape background;
+        sf::RectangleShape header;
+    
+        void updateMode(void);
+    public:
+    
+    //Setup Functions
     topBar(void);
-    virtual void draw(sf::RenderWindow &window);
-    void update(void);
     void setMode(int newMode);
+    
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+   
+    //Action Functions
+    void updateClock(time_t currentTime);
+    
+
    
 };
-class playBar {
+class playBar : interactiveObject {
 private:
-    sf::Font playBarFont;
+
     sf::Texture t_background;
     sf::Texture t_fillBar;
     sf::Sprite background;
@@ -175,16 +220,23 @@ private:
     double playbackTime = 0; //Length of the clip in seconds. Calculated from clipStart and clip Ends
     double elapsedTime = 0; //Curent lenght of the playpack in seconds. Calculated from playbackStart and time(NULL)
 public:
+  
+    //Setup Functions
     playBar(sf::Vector2f position, int scale);
-    void onClick(sf::RenderWindow &window,terminal &Terminal);
     void setClipStartTime(time_t start);
     void setClipEndTime(time_t end);
     void setPlaybackStartTime(time_t start);
     void setPlaybackEndTime(time_t end);
     void setCurrentTime(void);
-    void record(void);
+    
+    //Event Functions
+    void onClick(sf::RenderWindow &window,terminal &Terminal);
+    void draw(sf::RenderWindow &window);
+   
+    //Action Functions
+    void record(int setRecordTime, bool &recordMode,topBar &topbar);
     void playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus);
-    virtual void draw(sf::RenderWindow &window);
+    
 };
 
 #endif /* graphicClasses_h */
