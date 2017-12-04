@@ -159,43 +159,43 @@ void pixMask::update( short temp ){
         }
         
         if(phase == 7){
-            G1 += 7;
-            B1 += 7;
+            G1 += 45;
+            B1 += 45;
         }
         
         if(phase == 6){
-            G1 -= 7;
+            G1 -= 45;
             if(G1 <= 0)
                 phase = 7;
         }
         
         if(phase == 5){
-            R1 += 7;
+            R1 += 45;
             if(R1 >= 252)
                 phase = 6;
         }
         
         if(phase == 4){
-            B1 -= 7;
+            B1 -= 45;
             if(B1 <= 0)
                 phase = 5;
         }
         
         if(phase == 3){
-            G1 += 7;
+            G1 += 45;
             if( G1 >= 252)
                 phase = 4;
         }
         
         if(phase == 2){
-            R1 -= 7;
+            R1 -= 45;
             if( R1 <= 0)
                 phase = 3;
         }
         
         if(phase == 1){
-            R1 += 7;
-            B1 += 7;
+            R1 += 45;
+            B1 += 45;
             if( R1 >= 252)
                 phase = 2;
         }
@@ -417,6 +417,10 @@ void video::print(){
             << "[ " << temp->access(col, 7) << " ]" << endl;
         }
     }
+}
+
+frame* video::getFrame( int temp ){
+    return this->data[temp];
 }
 
 /*

@@ -79,10 +79,11 @@ int main(int, char const**)
 // Video Capture Experiment Variables
 //-----------------------------------------------------------------
     video* vPtr = NULL;
+    frame* fPtr = NULL;
     
     session currentSession; // Begins session
     pixMask pixel;          // Pixel Obj, stores RBG values
-    
+    int tempCount;
     int temp = 0;       // Stores value from GridEYE pixel
     int pixAddr = 0x80; // GridEYE pixel 1
 
@@ -125,7 +126,7 @@ int main(int, char const**)
     recordingTimeText.setPosition( 560 , 45);
     
 
-
+    
 
  
 //-----------------------------------------------------------------
@@ -164,23 +165,7 @@ int main(int, char const**)
         pixAddr = 0x80;
         temp = 0;
         
-        // Draws the Grid
-        for( i=0 ; i < 8 ; i++ ){
-            for( j=0 ; j<8 ; j++ ){
-                gridx = (200+i*51);
-                gridy = (98+j*51);
-                newPix.setPosition( gridx, gridy );
-                
-                gridward.test(i,j);
-                newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
-                
-                /*
-                pixel.update( gridward.read(pixAddr) );
-                newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
-                */
-                grid[i][j] = newPix;
-            }
-        }
+        
     
    
 //----------------------------------------------------------------
@@ -296,12 +281,27 @@ int main(int, char const**)
                 
                 break;
             default:
-                //Grid
+                
+                // Active Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
-                        window.draw(grid[i][j]);
+                        gridx = (200+i*51);
+                        gridy = (98+j*51);
+                        newPix.setPosition( gridx, gridy );
+                        
+                        gridward.test(i,j);
+                        pixel.update( gridward.r );
+                        newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                        
+                        /*
+                         pixel.update( gridward.read(pixAddr) );
+                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
+                         */
+                        grid[i][j] = newPix;
+                        window.draw( grid[i][j]);
                     }
                 }
+                
                 toolward.draw(window);
                 stackward.draw(window);
                 //Clock Functions
@@ -324,8 +324,29 @@ int main(int, char const**)
                 playward.draw(window);//Update window object
                 break;
             case 3://PlaybackMode
-                
-                //Clock Functions
+                // Playback Grid
+                while( tempCount < vPtr->getframeCount() ){
+                    fPtr = vPtr->getFrame( tempCount );
+                    for( i = 0 ; i < 8 ; i++ ){
+                        for( j = 0 ; j < 8 ; j++ ){
+                            gridx = (200+i*51);
+                            gridy = (98+j*51);
+                            newPix.setPosition( gridx, gridy );
+                        
+                            pixel.update( fPtr->access(i,j) );
+                            newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                        
+                            /*
+                            pixel.update( gridward.read(pixAddr) );
+                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
+                            */
+                            grid[i][j] = newPix;
+                            window.draw( grid[i][j]);
+                        }
+                    }
+                    //delayMicroseconds( 1000000 );
+                    tempCount++;
+                }
                 currentTimeStruct = localtime(&currentTime);
                 recordingTimeText.setString(recordTimeBuffer);
                 strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
