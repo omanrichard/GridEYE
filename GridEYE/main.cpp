@@ -49,11 +49,6 @@ int gridx, gridy;
 
 
 
-char recordTimeBuffer[11]; //Holds formatted time
-struct tm * currentTimeStruct;//Time structure required for formatted time
-
-time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
-
 
 
 int main(int, char const**)
@@ -124,7 +119,7 @@ int main(int, char const**)
 
     while (window.isOpen()) //While the window is open.
     {
-        currentTime = time(NULL);//Updates Current Time
+        
         
         
         
@@ -228,13 +223,17 @@ int main(int, char const**)
             }
            
             
-            // Close window: exit
+            //Terminate Applicaiton Events
+            
+            //On Window Close Click
             if (event.type == sf::Event::Closed) {
-                window.close();
+                
+                window.close();                 //Close Window / Quit Application
             }
-            // Escape pressed: exit
+            //On Key Press
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                window.close();
+        
+                window.close();                 //Close Window / Quit Application
             }
         }
    
