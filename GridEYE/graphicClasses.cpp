@@ -477,9 +477,12 @@ settingsMenu::settingsMenu(void){
     
 }
 
-void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
+void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal stackward){//Button presses
     // Colors - Select: 30,144,255 Unselect: 135,206,250
     menuLayer = 1; //Set internal menuLayer reference
+    int newTime = 0;
+    int newFPS = 10;
+    bool newDR = gridward.getDR();
     
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
         sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
@@ -497,7 +500,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsTenFPS.setOutlineThickness(2);
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
                 settingsOneFPS.setOutlineThickness(0);
-                //gridward.setFPS(10);
+                newFPS = 10;
             }}
         
         // One FPS
@@ -507,7 +510,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsOneFPS.setOutlineThickness(2);
                 settingsTenFPS.setFillColor(sf::Color(135,206,250));
                 settingsTenFPS.setOutlineThickness(0);
-                //gridward.setFPS(1);
+                newFPS = 1;
             }}
         
         // Minutes UP
@@ -516,6 +519,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsMinsUp.setFillColor(sf::Color(255,144,255));
                 if(recordMins <= 50){
                     recordMins++;
+                    newTime += 60;
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
@@ -526,6 +530,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsMinsDown.setFillColor(sf::Color(255,144,255));
                 if(recordMins > 0){
                     recordMins--;
+                    newTime -= 60;
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
@@ -535,12 +540,14 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsSecondsUp.setFillColor(sf::Color(255,144,255));
                 if(recordSeconds < 59){
                     recordSeconds++;
+                    newTime += 1;
                     if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
                 else if(recordSeconds == 59 && recordMins < 50 ){
                     recordSeconds = 0;
                     recordMins++;
+                    newTime += 1;
                     settingsMinsText.setString(std::to_string(recordMins));
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
@@ -552,6 +559,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsSecondsDown.setFillColor(sf::Color(255,144,255));
                 if(recordSeconds > 0){
                     recordSeconds--;
+                    newTime -= 1;
                     if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
@@ -568,6 +576,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsRangeTrue.setOutlineThickness(2);
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeHuman.setOutlineThickness(0);
+                newDR = true;
             }}
         
         // Sensor HUMAN
@@ -577,14 +586,14 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsRangeHuman.setOutlineThickness(2);
                 settingsRangeTrue.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setOutlineThickness(0);
-                
+                newDR = false;
             }}
         
         // RESET
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsReset.setFillColor(sf::Color(30,144,255));
-                //gridward.reset();
+                gridward.reset();
                 settingsRangeHuman.setOutlineThickness(0);
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setFillColor(sf::Color(30,144,255));
@@ -605,8 +614,13 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(30,144,255));
-                //gridward.update();
-                //stackward.print("Settings Applied");
+                if( newTime == 0 )
+                    newTime = 10;
+                
+                gridward.setRunTime(newTime);
+                gridward.setFPS( newFPS );
+                gridward.setDR( newDR );
+                stackward.print("Settings Applied");
                 menuLayer = 0;
             }}
     }//end button down
@@ -648,7 +662,6 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(255,255,255));
-                //gridward.update();
             }}
     }
 }
@@ -863,6 +876,8 @@ void playBar::onClick(sf::RenderWindow &window, terminal &Terminal){
         }
     }
 }
+
+
 void playBar::setClipStartTime(time_t start){
     clipStart = start;
 }
