@@ -270,7 +270,7 @@ void toolbar::event(sf::Event &toolbarEvent){
         }
         //Moves Selection objects offscreen when mouse exits hit box
         else if(toolbarEvent.mouseMove.x > 94){
-            selectionText.setString("Void");
+            selectionText.setString("NULL");
             selectionText.setPosition( -100 , -100);
             selectionTextBox.setPosition(-100,-100);
             selection.setPosition(-100, -100);
@@ -278,7 +278,7 @@ void toolbar::event(sf::Event &toolbarEvent){
     }
 }
 
-void toolbar::onClick(sf::RenderWindow &window, terminal &stackward){
+void toolbar::onClick(sf::RenderWindow &window, terminal &Terminal){
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
         sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
             if (position.x > 0 && position.x < 95){//Within toolbar
@@ -288,28 +288,28 @@ void toolbar::onClick(sf::RenderWindow &window, terminal &stackward){
                 }
                 //Start Capture
                 if (position.y > 119 && position.y < 189){
-                    stackward.print("Starting Capture");
+                    Terminal.print("Starting Capture");
                     menuLayer = 2;//set Capture Mode
                 }
                 
                 //Play capture
                 if (position.y > 189 && position.y < 308){
-                    stackward.print("Entering Playback Mode");
+                    Terminal.print("Entering Playback Mode");
                     menuLayer = 3;//Change layer to playback
                 }
                 //Stop Caputre
                   if (position.y >308 && position.y < 402){
-                      stackward.print("Stopping Capture");
+                      Terminal.print("Stopping Capture");
                       menuLayer = 4;
                   }
                 //Save capture
                 if (position.y > 402 && position.y < 496){
-                    stackward.print("Saving Capture");
+                    Terminal.print("Saving Capture");
                     menuLayer = 5;
                 }
                 //Delete capture
                 if (position.y > 496 && position.y < 590){
-                    stackward.print("Deleting Capture");
+                    Terminal.print("Deleting Capture");
                     menuLayer = 6;
                 }
                 //exit - quit program

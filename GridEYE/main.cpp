@@ -37,33 +37,39 @@
 using namespace sf;
 
 
+//Global Variables and Objects
+
 //Global Objects
-GridEYE gridward(PDE); //Creats the Grid Eye Object
-terminal stackward(6, "Thermal Camera");//Creats the terminal Stack with 6 blank lines
-toolbar toolward;
-settingsMenu setward;
-topBar topward;
-playBar playward(sf::Vector2f(35, 375),1);
+GridEYE gridward(PDE);                      //Grid Eye Object
+terminal stackward(6, "Thermal Camera");    //Terminal Stack with 6 blank lines
+toolbar toolward;                           //Toolbar
+settingsMenu setward;                       //Settings Menu
+topBar topward;                             //Top Status Bar
+playBar playward(sf::Vector2f(35, 375),1);  //Playback bar
+
+//State Variables
+int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playback;
+                                            //4:Stop;5:Save;6:Delete
+bool recordStatus = false;                  //True: Recording; False: Not Recording
+bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
+
+//GPIO
+#define GREENLED 7                          //GPIO pin connected to Green LED Anode
+#define REDLED   7                          //GPIO Pin connected to Red LED Anode
+
 
 int i,j;
 int gridx, gridy;
 
-//Time Variables
 
-bool recordStatus = false; //True: Recording; False: Not recording
-bool playbackStatus = false;
 
 char recordTimeBuffer[11]; //Holds formatted time
 struct tm * currentTimeStruct;//Time structure required for formatted time
 
 time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
-time_t lastCaptureTime;//Time at which the most recent capture was taken - used for fps control
-time_t recordStartTime; //Time when recording starts
-time_t recordEndTime; //Time when recording Ends
-
-
-int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, settings menu is 1, Playback is 2;
-
+//time_t lastCaptureTime;//Time at which the most recent capture was taken - used for fps control
+//time_t recordStartTime; //Time when recording starts
+//time_t recordEndTime; //Time when recording Ends
 
 
 int main(int, char const**)
@@ -146,23 +152,14 @@ int main(int, char const**)
         currentTime = time(NULL);//Updates Current Time
         
         
-        //Recording Control
-        if(recordStatus == true){
-           
-            double seconds = difftime(currentTime, recordStartTime);//Caculates Elapsed Time
-            recordingTimeText.setString(std::to_string(int(seconds/60))+":"+std::to_string(int(fmod(seconds,60)))); //Calculates Time and sets string
-            }
         
-        if(playbackStatus == true){
-            
            
-            if( difftime(time(NULL), lastCaptureTime) > 0.1 ){
-                lastCaptureTime = time( NULL);
-                
-            }
+           
+        
+        
             
         
-            }
+        
         
         // For real-time window drawing experiment
         pixAddr = 0x80;
@@ -185,24 +182,30 @@ int main(int, char const**)
                 
                 if(recordStatus == true){//Stop recording video on click
                     menuLayer = 4;
+                   
+                    
+                    //Insert Code Here
+                    
+                    
                     toolward.sync(menuLayer);
                 }
                 menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
-                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
-                // Settings Menu
+        
+                //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
+                    
+                    //Insert Code Here
+                    
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    recordStartTime = time(NULL);
-                    playward.setClipStartTime(recordStartTime);
+                    playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
                     //Insert Code Here
-                    vPtr = new video( gPtr );
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -213,16 +216,16 @@ int main(int, char const**)
                 
                     //Insert Code Here
                     
-                    
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 // Record Video
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
-                    recordEndTime = time(NULL);
+                    \
                     recordStatus = false;
-                    playward.setClipEndTime(recordEndTime);
+                    playward.setClipEndTime(time(NULL));
                     }
+                    
                     //Insert Code Here
                     
                     menuLayer = 0; //Return to home
@@ -231,13 +234,14 @@ int main(int, char const**)
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
+                    
                     vPtr->exportVideo( "Test1.txt" );
                     stackward.print("Success");
                     menuLayer = 0;
+                    
                     toolward.sync(menuLayer);
                 }
                 if(menuLayer == 6){///Executes Once when Delete is clicked
-                
                 
                     //Insert Code to Delete Video Here
                 
@@ -264,8 +268,7 @@ int main(int, char const**)
         //Background
         window.draw(background);
         
-        // Draw the placeholder text
-       
+        // Draw the background and clock
         window.draw(recordingTimeText);
         topward.draw(window);//Top Menu
         stackward.draw(window);//Terminal
