@@ -128,6 +128,7 @@ public:
     int getframeCount();
     void exportVideo( string filename );
     void print();
+    frame* getFrame( int temp );
 };
 
 
