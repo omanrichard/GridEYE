@@ -21,13 +21,15 @@
 using namespace std;
 
 
-//Interactive Base Class - Unncessary at this point, but it demostrates the concept.
+//Interactive Base Class
 class interactiveObject {
-    private:
-    
+    protected:
+    sf::Font defaultFont;                                       //Font for Each object to use
+    int menuLayer = 0;                                          //Each Object
+   
     public:
     interactiveObject(void);
-    sf::Font defaultFont;
+    
     virtual void draw(sf::RenderWindow &window){};
     virtual void onClick(sf::RenderWindow &window){};
     virtual void event(sf::Event &toolbarEvent){};
@@ -35,7 +37,7 @@ class interactiveObject {
 
 /*/ --------------- Terminal (Stack) Class --------------- /*/
 
-class terminal : public interactiveObject {
+class terminal : interactiveObject {
 friend class interactiveObject;
 private:
     
@@ -53,12 +55,18 @@ private:
     sf::RectangleShape terminalBackground;
     
 public:
+    
+    //Setup Functions
     terminal(int size, string text = "root");
     void setRoot(string text);//Sets text before input
+    
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+    
+    //Action Functions
     void print(string input); //Prints on same line
     void print(string input, string text);
-    string read(int index);//Function to allow SFML to read lines from the terminal
-    void draw(sf::RenderWindow &window);
+  
     
     
 };
@@ -67,9 +75,9 @@ public:
 
 
 /*/ ---------------  Toolbar Class --------------- /*/
-class toolbar : public interactiveObject {
+class toolbar : interactiveObject {
 private:
-    int menuLayer = 0;//Default
+    
     //Toolbar Texture Objects
     sf::Texture t_settings;
     sf::Texture t_record;
@@ -95,12 +103,18 @@ private:
     sf::Text selectionText;
     
 public:
+    //Setup Functions
     toolbar(void);
-    int exit(void);//Changes menu layer
-    void sync(int newMenuLayer);
+    
+    //Event Functions
     void draw(sf::RenderWindow &window);
     void event(sf::Event &toolbarEvent);
     void onClick(sf::RenderWindow &window, terminal &stackward);
+    //Action Functions
+    
+    int exit(void);//Changes menu layer
+    void sync(int newMenuLayer);
+  
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 
@@ -145,16 +159,20 @@ private:
     
     
 public:
+    //Setup Functions
     settingsMenu(void);
-    
+   
+    //Event Functions
     void draw(sf::RenderWindow &window);
     void onClick(sf::RenderWindow &window);
+    
+    //Action Functions
     int exit(void);
     
     
 };
 
-class topBar : public interactiveObject {
+class topBar : interactiveObject {
     private:
         int mode = 0; //Default
     sf::Text modeText;
@@ -165,13 +183,21 @@ class topBar : public interactiveObject {
     sf::RectangleShape header;
     
 public:
+    
+    //Setup Functions
     topBar(void);
-    void draw(sf::RenderWindow &window);
-    void update(void);
     void setMode(int newMode);
+    
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+   
+    //Action Functions
+    void update(void);
+    
+
    
 };
-class playBar : public interactiveObject {
+class playBar : interactiveObject {
 private:
 
     sf::Texture t_background;
@@ -192,16 +218,23 @@ private:
     double playbackTime = 0; //Length of the clip in seconds. Calculated from clipStart and clip Ends
     double elapsedTime = 0; //Curent lenght of the playpack in seconds. Calculated from playbackStart and time(NULL)
 public:
+  
+    //Setup Functions
     playBar(sf::Vector2f position, int scale);
-    void onClick(sf::RenderWindow &window,terminal &Terminal);
     void setClipStartTime(time_t start);
     void setClipEndTime(time_t end);
     void setPlaybackStartTime(time_t start);
     void setPlaybackEndTime(time_t end);
     void setCurrentTime(void);
+    
+    //Event Functions
+    void onClick(sf::RenderWindow &window,terminal &Terminal);
+    void draw(sf::RenderWindow &window);
+   
+    //Action Functions
     void record(void);
     void playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus);
-    virtual void draw(sf::RenderWindow &window);
+    
 };
 
 #endif /* graphicClasses_h */

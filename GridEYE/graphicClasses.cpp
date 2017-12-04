@@ -85,9 +85,7 @@ void terminal::print(string input){
 void terminal::print(string input, string text){
     stack.insert(stack.begin(),text+" : "+input);
 }
-string terminal::read(int index){
-    return stack[index];
-}
+
 void terminal::setRoot(string text){
     rootText = text;
 }

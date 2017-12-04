@@ -1,43 +1,28 @@
 
-//
-// Disclaimer:
-// ----------
-//
-// This code will work only if you selected window, graphics and audio.
-//
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resources, use the helper
-// function `resourcePath()` from ResourcePath.hpp
-//
-
 //#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include "Event.hpp"
-#include <Mouse.hpp>
+#include <SFML/Graphics.hpp>                //Grahpics Librars
+#include "Event.hpp"                        //Mouse Move Events
+#include <Mouse.hpp>                        //Mouse Clicks
 
-//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
+//#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
-#include <fstream>
+#include <fstream>                          //FILE I/O
 #include <vector>
 #include <string>
-
-#include "projectClasses.h"
-#include "graphicClasses.h"
-
-#include <time.h>
-#include <math.h>
+#include <time.h>                           //Time Functions
+#include <math.h>                           //Math Functions
 #include <stdio.h>
 
-#define PDE 0x68
+
+#include "projectClasses.h"                 //Video File Objects Classes
+#include "graphicClasses.h"                 //User Interface Objects Classes
+
+//GPIO
+#define GREENLED 7                          //GPIO pin connected to Green LED Anode
+#define REDLED   7                          //GPIO Pin connected to Red LED Anode
+#define PDE 0x68                            //Grid-EYE I2C Address
 
 using namespace sf;
-
-
-//Global Variables and Objects
 
 //Global Objects
 GridEYE gridward(PDE);                      //Grid Eye Object
@@ -53,10 +38,6 @@ int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playb
 bool recordStatus = false;                  //True: Recording; False: Not Recording
 bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
 
-//GPIO
-#define GREENLED 7                          //GPIO pin connected to Green LED Anode
-#define REDLED   7                          //GPIO Pin connected to Red LED Anode
-
 
 int i,j;
 int gridx, gridy;
@@ -67,9 +48,7 @@ char recordTimeBuffer[11]; //Holds formatted time
 struct tm * currentTimeStruct;//Time structure required for formatted time
 
 time_t currentTime; //Current Time - Displayed when not in recording mode or Playback mode
-//time_t lastCaptureTime;//Time at which the most recent capture was taken - used for fps control
-//time_t recordStartTime; //Time when recording starts
-//time_t recordEndTime; //Time when recording Ends
+
 
 
 int main(int, char const**)
