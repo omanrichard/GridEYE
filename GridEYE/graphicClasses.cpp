@@ -18,25 +18,28 @@
 /*/ -------- Interactive Base Class --------/*/
 
 interactiveObject::interactiveObject(void){
-    if (!defaultFont.loadFromFile("sansation.ttf")) {
+    
+    if (!defaultFont.loadFromFile("sansation.ttf")) { //Loads default Font from from
         return EXIT_FAILURE;
     }
 }
 
 /*/ --------------- Terminal (Stack) Methods --------------- /*/
 terminal::terminal(int size, string text){
-    for(int i = 0; i <= size; i++){
-        stack.push_back(" "); //Adds empty values to prevent crash
+    for(int i = 0; i <= size; i++){                   //
+        stack.push_back(" ");                         //Adds empty values to prevent crash
     }
-    rootText = text;
+    rootText = text;                                  //Text String that precludes print function
     
+    //Sets placeholder text for each line in the terminal object
     terminalText1.setString("UNDEFINED");
     terminalText2.setString("UNDEFINED");
     terminalText3.setString("UNDEFINED");
     terminalText4.setString("UNDEFINED");
     terminalText5.setString("UNDEFINED");
     terminalText6.setString("UNDEFINED");
-    
+   
+    //Sets font for each line in the terminal object
     terminalText1.setFont(defaultFont);
     terminalText2.setFont(defaultFont);
     terminalText3.setFont(defaultFont);
@@ -44,6 +47,7 @@ terminal::terminal(int size, string text){
     terminalText5.setFont(defaultFont);
     terminalText6.setFont(defaultFont);
     
+    //Sets Character Size for each line in the terminal object
     terminalText1.setCharacterSize(12);
     terminalText2.setCharacterSize(12);
     terminalText3.setCharacterSize(12);
@@ -51,9 +55,7 @@ terminal::terminal(int size, string text){
     terminalText5.setCharacterSize(12);
     terminalText6.setCharacterSize(12);
     
-    terminalBackground.setSize(sf::Vector2f( 625, 94 ));
-    terminalHeader.setSize(sf::Vector2f( 625, 10 ));
-    
+    //Sets color for each line in the terminal object
     terminalText1.setFillColor(sf::Color(0,255,0));
     terminalText2.setFillColor(sf::Color(0,255,0));
     terminalText3.setFillColor(sf::Color(0,255,0));
@@ -61,9 +63,7 @@ terminal::terminal(int size, string text){
     terminalText5.setFillColor(sf::Color(0,255,0));
     terminalText6.setFillColor(sf::Color(0,255,0));
     
-    terminalBackground.setFillColor(sf::Color(0,0,0,150));
-    terminalHeader.setFillColor(sf::Color(255,94,20,150));
-    
+    //Sets position for each line in the terminal object
     terminalText1.setPosition( 100 , 608);
     terminalText2.setPosition( 100 , 622);
     terminalText3.setPosition( 100 , 636);
@@ -71,26 +71,35 @@ terminal::terminal(int size, string text){
     terminalText5.setPosition( 100 , 664);
     terminalText6.setPosition( 100 , 678);
     
+    //Creates the Frame for the terminal
+    terminalBackground.setSize(sf::Vector2f( 625, 94 ));
+    terminalHeader.setSize(sf::Vector2f( 625, 10 ));
+    
+    //Sets the color for each element of the terminal frame
+    terminalBackground.setFillColor(sf::Color(0,0,0,150));
+    terminalHeader.setFillColor(sf::Color(255,94,20,150));
+    
+    //Sets the posotion for each element of the terminal frame
     terminalBackground.setPosition(94, 606);
     terminalHeader.setPosition(94, 596);
-    
     
     
 }
 
 void terminal::print(string input){
-    stack.insert(stack.begin(),rootText+" : "+input);
+    stack.insert(stack.begin(),rootText+" : "+input); //Insert text string into stack vector
     
 }
-void terminal::print(string input, string text){
+void terminal::print(string input, string text){    //Insert text string into stack vector with non default pretext
     stack.insert(stack.begin(),text+" : "+input);
 }
 
-void terminal::setRoot(string text){
+void terminal::setRoot(string text){    //Change the default pretext
     rootText = text;
 }
 void terminal::draw(sf::RenderWindow &window){
     
+    //Set each line of the terminal text to the coropsonding position of the stack vector
     terminalText1.setString(stack[5]);
     terminalText2.setString(stack[4]);
     terminalText3.setString(stack[3]);
@@ -98,12 +107,15 @@ void terminal::draw(sf::RenderWindow &window){
     terminalText5.setString(stack[1]);
     terminalText6.setString(stack[0]);
     
+    //Adds each line of the terminal text to the window object
     window.draw(terminalText1);
     window.draw(terminalText2);
     window.draw(terminalText3);
     window.draw(terminalText4);
     window.draw(terminalText5);
     window.draw(terminalText6);
+    
+    //Adds the terminal from to the window object
     window.draw(terminalBackground);
     window.draw(terminalHeader);
     
@@ -904,9 +916,13 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
     }
     
 }
-void playBar::record(int setRecordTime, bool &recordMode, topBar &topbar){
+void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int setRecordTime){
     elapsedTime = difftime(time(NULL),clipStart);
     
+    if(setRecordTime == 0){
+        bufferA = "00:00";
+        bufferB = "00:00";
+    }
     if(elapsedTime < setRecordTime){
     if(int(elapsedTime/60) < 10){
         if(int(fmod(elapsedTime,60)) < 10){
@@ -918,13 +934,27 @@ void playBar::record(int setRecordTime, bool &recordMode, topBar &topbar){
             bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
         } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
     }
-    fillBar.setScale(1-elapsedTime/100,1);
+    
+    
+    if(int(setRecordTime/60) < 10){
+        if(int(fmod(setRecordTime,60)) < 10){
+            bufferB = "0" + std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
+        } else  bufferB = "0" + std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
     }
-    else if(elapsedTime > setRecordTime){
+    else{
+        if(int(fmod(setRecordTime,60)) < 10){
+            bufferB =  std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
+        } else  bufferB = std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
+    }
+        fillBar.setScale(1-elapsedTime/setRecordTime,1);
+    
+}
+    else if(elapsedTime > setRecordTime && recordMode == true){
         recordMode = false;
-        topbar.setMode(0);
+        Topbar.setMode(0);
+        Terminal.print("Recording Finished");
+        fillBar.setScale(0,1);
     }
-    bufferB = "00:00";
     currentTimeText.setString(bufferA + " / " + bufferB);
     
     

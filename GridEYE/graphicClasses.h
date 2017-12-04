@@ -238,7 +238,7 @@ public:
     void draw(sf::RenderWindow &window);
    
     //Action Functions
-    void record(int setRecordTime, bool &recordMode,topBar &topbar);
+    void record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int setRecordTime);
     void playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus);
     
 };

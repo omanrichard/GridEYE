@@ -283,7 +283,7 @@ int main(int, char const**)
                 
                 break;
             case 2:                               //Capture Mode
-                playward.record(recordTime, recordStatus,topward); //Playbar Recording Control
+                playward.record(topward,stackward,recordStatus,recordTime); //Playbar Recording Control
                 playward.draw(window);                  //Update window object
                 break;
             case 3:                              //Playback Mode
