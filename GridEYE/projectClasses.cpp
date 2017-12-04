@@ -45,6 +45,8 @@ GridEYE::GridEYE( int address ){
 //-----------------------------------------------------------------
 int GridEYE::read( int pixAddr ){
     int temp = 0;
+    this->test( 0, 0 );
+    temp = this->r;
     /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr ); // Receive value from pixel
