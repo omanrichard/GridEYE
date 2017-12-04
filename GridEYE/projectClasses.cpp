@@ -76,6 +76,10 @@ int GridEYE::getFPS(){
     return this->FPS;
 }
 
+int GridEYE::getRuntime(){
+    return this->runtime;
+}
+
 void GridEYE::setRunTime( int newTime ){
     try{
         if( newTime >= 3579139 )
@@ -338,10 +342,15 @@ video::video( GridEYE gridward ){
 video::video( GridEYE* gPtr ){
     frame* temp;
     
-    frameCount = (1 * 10);
+    frameCount = ( gPtr->getFPS() * gPtr->getRuntime() );
     
     for( int x = 0 ; x < frameCount ; x++){
-      //  delayMicroseconds(500000);
+        if( gPtr->getFPS() == 10 ){
+            //delayMicroseconds(1000000);   // 0.1 second
+        }
+        else{
+            //delayMicrosecond(10000000);   // 1 second
+        }
         temp = new frame( gPtr );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
     }
