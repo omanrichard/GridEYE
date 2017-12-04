@@ -15,16 +15,20 @@
 
 
 
+/*/ -------- Interactive Base Class --------/*/
+
+interactiveObject::interactiveObject(void){
+    if (!defaultFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+}
+
 /*/ --------------- Terminal (Stack) Methods --------------- /*/
 terminal::terminal(int size, string text){
     for(int i = 0; i <= size; i++){
         stack.push_back(" "); //Adds empty values to prevent crash
     }
     rootText = text;
-    
-    if (!terminalFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
     
     terminalText1.setString("UNDEFINED");
     terminalText2.setString("UNDEFINED");
@@ -33,12 +37,12 @@ terminal::terminal(int size, string text){
     terminalText5.setString("UNDEFINED");
     terminalText6.setString("UNDEFINED");
     
-    terminalText1.setFont(terminalFont);
-    terminalText2.setFont(terminalFont);
-    terminalText3.setFont(terminalFont);
-    terminalText4.setFont(terminalFont);
-    terminalText5.setFont(terminalFont);
-    terminalText6.setFont(terminalFont);
+    terminalText1.setFont(defaultFont);
+    terminalText2.setFont(defaultFont);
+    terminalText3.setFont(defaultFont);
+    terminalText4.setFont(defaultFont);
+    terminalText5.setFont(defaultFont);
+    terminalText6.setFont(defaultFont);
     
     terminalText1.setCharacterSize(12);
     terminalText2.setCharacterSize(12);
@@ -113,9 +117,7 @@ void terminal::draw(sf::RenderWindow &window){
 
 toolbar::toolbar(void){
     
-    if (!toolbarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+ 
     
     if (!t_settings.loadFromFile("settings.png")) {
         return EXIT_FAILURE;
@@ -182,7 +184,7 @@ toolbar::toolbar(void){
     
     selectionText.setString("void");
     selectionText.setCharacterSize(15);
-    selectionText.setFont(toolbarFont);
+    selectionText.setFont(defaultFont);
     selectionText.setFillColor(sf::Color(55,55,255)); //light blue
     selectionText.setPosition( -100 , -100);
     
@@ -334,9 +336,7 @@ settingsMenu::settingsMenu(void){
     if(!t_close.loadFromFile("cancel.png")){
         return EXIT_FAILURE;
     }
-    if (!settingsFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+ 
     settingsExit.setTexture(t_close);
     settingsExit.setPosition(143,93);
     settingsExit.scale(0.1, 0.1);
@@ -385,17 +385,17 @@ settingsMenu::settingsMenu(void){
     settingsResetText.setString("Reset Sensor");
     settingsApplyText.setString("Apply Settings");
     //Set font
-    settingsFPSText.setFont(settingsFont);
-    settingsFPSTextValTen.setFont(settingsFont);
-    settingsFPSTextValOne.setFont(settingsFont);
-    settingsCollectionText.setFont(settingsFont);
-    settingsMinsText.setFont(settingsFont);
-    settingsSecondsText.setFont(settingsFont);
-    settingsRangeText.setFont(settingsFont);
-    settingsRangeTextTrue.setFont(settingsFont);
-    settingsRangeTextHuman.setFont(settingsFont);
-    settingsResetText.setFont(settingsFont);
-    settingsApplyText.setFont(settingsFont);
+    settingsFPSText.setFont(defaultFont);
+    settingsFPSTextValTen.setFont(defaultFont);
+    settingsFPSTextValOne.setFont(defaultFont);
+    settingsCollectionText.setFont(defaultFont);
+    settingsMinsText.setFont(defaultFont);
+    settingsSecondsText.setFont(defaultFont);
+    settingsRangeText.setFont(defaultFont);
+    settingsRangeTextTrue.setFont(defaultFont);
+    settingsRangeTextHuman.setFont(defaultFont);
+    settingsResetText.setFont(defaultFont);
+    settingsApplyText.setFont(defaultFont);
     //Set Size
     settingsBackground.setSize(sf::Vector2f(500, 400 ));
     settingsTenFPS.setSize(sf::Vector2f(75, 25 ));
@@ -680,10 +680,6 @@ int settingsMenu::exit(void){
 
 topBar::topBar(void){
    
-    if (!topBarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
-    
     //Rectangle Shape Objects
     background.setSize(sf::Vector2f( 606, 75 ));
     header.setSize(sf::Vector2f(606, 5 ));
@@ -704,9 +700,9 @@ topBar::topBar(void){
     titleText.setCharacterSize(36);
     subText.setCharacterSize(15);
     
-    modeText.setFont(topBarFont);
-    titleText.setFont(topBarFont);
-    subText.setFont(topBarFont);
+    modeText.setFont(defaultFont);
+    titleText.setFont(defaultFont);
+    subText.setFont(defaultFont);
     
     modeText.setFillColor(sf::Color::White);
     titleText.setFillColor(sf::Color::White);
@@ -760,9 +756,7 @@ playBar::playBar(sf::Vector2f position, int scale){
     if (!t_fillBar.loadFromFile("progress.png")) {
         return EXIT_FAILURE;
     }
-    if (!playBarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+
     
     background.setTexture(t_background);
     fillBar.setTexture(t_fillBar);
@@ -781,12 +775,12 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     currentTimeText.setCharacterSize(12);
     currentTimeText.setFillColor(sf::Color::White);
-    currentTimeText.setFont(playBarFont);
+    currentTimeText.setFont(defaultFont);
     currentTimeText.setPosition(position.x+465,position.y+158);
     
     endTimeText.setCharacterSize(12);
     endTimeText.setFillColor(sf::Color::White);
-    endTimeText.setFont(playBarFont);
+    endTimeText.setFont(defaultFont);
     endTimeText.setPosition(position.x+510,position.y+158);
     
     

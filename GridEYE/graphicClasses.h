@@ -20,12 +20,29 @@
 
 using namespace std;
 
+
+//Interactive Base Class - Unncessary at this point, but it demostrates the concept.
+class interactiveObject {
+    private:
+    
+    public:
+    interactiveObject(void);
+    sf::Font defaultFont;
+    virtual void draw(sf::RenderWindow &window){};
+    virtual void onClick(sf::RenderWindow &window){};
+    virtual void event(sf::Event &toolbarEvent){};
+};
+
 /*/ --------------- Terminal (Stack) Class --------------- /*/
-class terminal{
+
+class terminal : public interactiveObject {
+friend class interactiveObject;
 private:
+    
     string rootText; //Text before input
-    vector<string> stack;
-    sf::Font terminalFont;
+    vector<string> stack; //Stack Vector
+    
+    //SFML Objects
     sf::Text terminalText1;
     sf::Text terminalText2;
     sf::Text terminalText3;
@@ -34,14 +51,14 @@ private:
     sf::Text terminalText6;
     sf::RectangleShape terminalHeader;
     sf::RectangleShape terminalBackground;
-    //Text vector
+    
 public:
     terminal(int size, string text = "root");
     void setRoot(string text);//Sets text before input
     void print(string input); //Prints on same line
     void print(string input, string text);
     string read(int index);//Function to allow SFML to read lines from the terminal
-    virtual void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window);
     
     
 };
@@ -50,7 +67,7 @@ public:
 
 
 /*/ ---------------  Toolbar Class --------------- /*/
-class toolbar{
+class toolbar : public interactiveObject {
 private:
     int menuLayer = 0;//Default
     //Toolbar Texture Objects
@@ -73,7 +90,6 @@ private:
     sf::RectangleShape toolbarFrame;
     sf::RectangleShape toolbarHeader;
     //Toolbar Selection Objects
-    sf::Font toolbarFont;
     sf::RectangleShape selection;
     sf::RectangleShape selectionTextBox;
     sf::Text selectionText;
@@ -82,21 +98,21 @@ public:
     toolbar(void);
     int exit(void);//Changes menu layer
     void sync(int newMenuLayer);
-    virtual void draw(sf::RenderWindow &window);
-    virtual void event(sf::Event &toolbarEvent);
-    virtual void onClick(sf::RenderWindow &window, terminal &stackward);
+    void draw(sf::RenderWindow &window);
+    void event(sf::Event &toolbarEvent);
+    void onClick(sf::RenderWindow &window, terminal &stackward);
 };
 /*/ --------------- End Toolbar Class --------------- /*/
 
 /*/ --------------- Settings Menu Class --------------- /*/
-class settingsMenu{
+class settingsMenu : interactiveObject {
 private:
     int menuLayer = 1;
     int rootx = 150;//Settings Menu upper left corner
     int rootY = 100;//Settings Menu upper left corner
     int recordMins = 0; //Seconds to be recorded - Is this still being used?
     int recordSeconds = 0;//Minuetes to be recorded - Is this still being used?
-    sf::Font settingsFont;
+
     // Settings Text Declare
     sf::Text settingsFPSText;
     sf::Text settingsFPSTextValTen;
@@ -130,33 +146,34 @@ private:
     
 public:
     settingsMenu(void);
-    void onClick(sf::RenderWindow &window);
     
+    void draw(sf::RenderWindow &window);
+    void onClick(sf::RenderWindow &window);
     int exit(void);
-    virtual void draw(sf::RenderWindow &window);
+    
     
 };
 
-class topBar {
+class topBar : public interactiveObject {
     private:
         int mode = 0; //Default
     sf::Text modeText;
     sf::Text titleText;
     sf::Text subText;
-    sf::Font topBarFont;
+
     sf::RectangleShape background;
     sf::RectangleShape header;
     
 public:
     topBar(void);
-    virtual void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window);
     void update(void);
     void setMode(int newMode);
    
 };
-class playBar {
+class playBar : public interactiveObject {
 private:
-    sf::Font playBarFont;
+
     sf::Texture t_background;
     sf::Texture t_fillBar;
     sf::Sprite background;
