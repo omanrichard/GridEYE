@@ -18,8 +18,8 @@
 #include "graphicClasses.h"                 //User Interface Objects Classes
 
 //GPIO
-#define GREENLED 7                          //GPIO pin connected to Green LED Anode
-#define REDLED   7                          //GPIO Pin connected to Red LED Anode
+//#define GREENLED 7 - I need to look at my schematic                         //GPIO pin connected to Green LED Anode
+//#define REDLED   7 - I need to look at my schematic                       //GPIO Pin connected to Red LED Anode
 #define PDE 0x68                            //Grid-EYE I2C Address
 
 using namespace sf;
@@ -39,6 +39,11 @@ bool recordStatus = false;                  //True: Recording; False: Not Record
 bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
 
 
+
+
+
+
+
 int i,j;
 int gridx, gridy;
 
@@ -55,7 +60,7 @@ int main(int, char const**)
 {
     
 //-----------------------------------------------------------------
-// Video Capture Experiment Variables
+// Video Capture Experiment Variables - Can we delete this?
 //-----------------------------------------------------------------
     video* vPtr = NULL;
     frame* fPtr = NULL;
@@ -71,13 +76,9 @@ int main(int, char const**)
 //-----------------------------------------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
-    window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
+    window.setFramerateLimit(60);                                    // Sets Window Framerate to 60 FPS
 
-    //Loads font - soon to be depreciated
-    sf::Font font;
-    if (!font.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
+   
    
     //----------------- Camera Grid -----------------
     sf::RectangleShape grid[8][8];
@@ -98,12 +99,7 @@ int main(int, char const**)
     topward.setMode(0);
     
  
-    currentTimeStruct = localtime(&currentTime);
-    strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
-    sf::Text recordingTimeText(recordTimeBuffer, font, 20);
-    recordingTimeText.setFillColor(sf::Color::White);
-    recordingTimeText.setPosition( 560 , 45);
-    
+  
 
     
 
@@ -242,20 +238,23 @@ int main(int, char const**)
             }
         }
    
-        // Clear screen
-        window.clear();
-        //Background
-        window.draw(background);
+   
+        window.clear();                         //Clears Screen Object of all Elements
+    
+        window.draw(background);                //Draws Background Object First
+        topward.updateClock(time(NULL));        //Updates Clock
         
-        // Draw the background and clock
-        window.draw(recordingTimeText);
-        topward.draw(window);//Top Menu
-        stackward.draw(window);//Terminal
-        toolward.draw(window); //Toolbar
+        topward.draw(window);                   //Draws Top Bar
+        stackward.draw(window);                 //Draws Terminal
+        toolward.draw(window);                  //Draws Toolbar
+       
+        
+        
+        
         /*/-------- Layer control -------/*/
         
         
-        switch(menuLayer){
+            switch(menuLayer){
                
                 
                 break;
@@ -283,19 +282,13 @@ int main(int, char const**)
                 
                 toolward.draw(window);
                 stackward.draw(window);
-                //Clock Functions
-                currentTimeStruct = localtime(&currentTime);
-                recordingTimeText.setString(recordTimeBuffer);
-                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+               
                 
                 break;
             case 1: //Settings Menu
                 setward.draw(window);//Settings Menu
                 
-                //Clock Functions
-                currentTimeStruct = localtime(&currentTime);
-                recordingTimeText.setString(recordTimeBuffer);
-                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+              
                 
                 break;
             case 2: //Capture Mode
@@ -326,9 +319,7 @@ int main(int, char const**)
                     //delayMicroseconds( 1000000 );
                     tempCount++;
                 }
-                currentTimeStruct = localtime(&currentTime);
-                recordingTimeText.setString(recordTimeBuffer);
-                strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
+         
                 
                 playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
                 playward.draw(window);//Update window object

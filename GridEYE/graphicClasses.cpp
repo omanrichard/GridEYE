@@ -677,45 +677,57 @@ int settingsMenu::exit(void){
 /*/ -------- topBar Layer --------/*/
 
 topBar::topBar(void){
-   
+    
+    //Updates Time
+    time_t tempTime = time(NULL);
+    clockStruct = localtime(&tempTime);
+    strftime (clockTextBuffer,11,"%r",clockStruct);
+    
+  
     //Rectangle Shape Objects
     background.setSize(sf::Vector2f( 606, 75 ));
-    header.setSize(sf::Vector2f(606, 5 ));
-    
     background.setFillColor(sf::Color(0, 0, 0,50));
-    header.setFillColor(sf::Color(255, 94, 20,150));
-                    
     background.setPosition(94, 0);
+    
+    header.setSize(sf::Vector2f(606, 5 ));
+    header.setFillColor(sf::Color(255, 94, 20,150));
     header.setPosition(94, 75);
     
     
     //Text Objects
+    //Mode
     modeText.setString("Booting");
-    titleText.setString("Panasonic Grid-EYE");
-    subText.setString("Created by Grant Hilgert and Richard Oman");
-    
     modeText.setCharacterSize(30);
-    titleText.setCharacterSize(36);
-    subText.setCharacterSize(15);
-    
     modeText.setFont(defaultFont);
-    titleText.setFont(defaultFont);
-    subText.setFont(defaultFont);
-    
     modeText.setFillColor(sf::Color::White);
-    titleText.setFillColor(sf::Color::White);
-    subText.setFillColor(sf::Color::Magenta);
-    
     modeText.setPosition( 550 , 10);
+    //Title
+    titleText.setString("Panasonic Grid-EYE");
+    titleText.setCharacterSize(36);
+    titleText.setFont(defaultFont);
+    titleText.setFillColor(sf::Color::White);
     titleText.setPosition( 109 , 10);
+    //Subtitle
+    subText.setString("Created by Grant Hilgert and Richard Oman");
+    subText.setCharacterSize(15);
+    subText.setFont(defaultFont);
+    subText.setFillColor(sf::Color::Magenta);
     subText.setPosition(109,55);
+    //Clock
+    clockText.setString(clockTextBuffer);
+    clockText.setFont(defaultFont);
+    clockText.setCharacterSize(20);
+    clockText.setString(clockTextBuffer);
+    clockText.setFillColor(sf::Color::White);
+    clockText.setPosition( 560 , 45);
     
+   
 }
 void topBar::setMode(int newMode){
     mode = newMode;
-    update();
+    updateMode();
 }
-    void topBar::update(void){
+    void topBar::updateMode(void){
         switch(mode){
             default:
                 modeText.setFillColor(sf::Color::Green);
@@ -742,7 +754,14 @@ void topBar::draw(sf::RenderWindow &window){
     window.draw(modeText);
     window.draw(titleText);
     window.draw(subText);
+    window.draw(clockText);
     
+}
+
+void topBar::updateClock(time_t currentTime){
+    clockStruct = localtime(&currentTime);                  //Stores Current Time into struct
+    strftime (clockTextBuffer,11,"%r",clockStruct);         //Creates Formated String
+    clockText.setString(clockTextBuffer);                   //Updates Text Object
 }
 
 playBar::playBar(sf::Vector2f position, int scale){

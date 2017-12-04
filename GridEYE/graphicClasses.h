@@ -174,15 +174,20 @@ public:
 
 class topBar : interactiveObject {
     private:
-        int mode = 0; //Default
-    sf::Text modeText;
-    sf::Text titleText;
-    sf::Text subText;
-
-    sf::RectangleShape background;
-    sf::RectangleShape header;
+        int mode = 0;                   //Mode
+        struct tm * clockStruct;        //Time structure required for formatted time
+        char clockTextBuffer[11];      //Holds formatted time
     
-public:
+        sf::Text modeText;              //SFML Text Object
+        sf::Text titleText;             //SFML Text Object
+        sf::Text subText;               //SFML Text Object
+        sf::Text clockText;             //SFML Text Object
+    
+        sf::RectangleShape background;
+        sf::RectangleShape header;
+    
+        void updateMode(void);
+    public:
     
     //Setup Functions
     topBar(void);
@@ -192,7 +197,7 @@ public:
     void draw(sf::RenderWindow &window);
    
     //Action Functions
-    void update(void);
+    void updateClock(time_t currentTime);
     
 
    
