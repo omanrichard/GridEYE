@@ -904,8 +904,10 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
     }
     
 }
-void playBar::record(void){
+void playBar::record(int setRecordTime, bool &recordMode, topBar &topbar){
     elapsedTime = difftime(time(NULL),clipStart);
+    
+    if(elapsedTime < setRecordTime){
     if(int(elapsedTime/60) < 10){
         if(int(fmod(elapsedTime,60)) < 10){
             bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
@@ -916,9 +918,16 @@ void playBar::record(void){
             bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
         } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
     }
+    fillBar.setScale(1-elapsedTime/100,1);
+    }
+    else if(elapsedTime > setRecordTime){
+        recordMode = false;
+        topbar.setMode(0);
+    }
     bufferB = "00:00";
     currentTimeText.setString(bufferA + " / " + bufferB);
-    fillBar.setScale(1-elapsedTime/100,1);
+    
+    
 }
 
 

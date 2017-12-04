@@ -168,7 +168,7 @@ public:
     
     //Action Functions
     int exit(void);
-    
+    int syncRecordLength(void){return recordMins*60+recordSeconds;};
     
 };
 
@@ -238,7 +238,7 @@ public:
     void draw(sf::RenderWindow &window);
    
     //Action Functions
-    void record(void);
+    void record(int setRecordTime, bool &recordMode,topBar &topbar);
     void playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus);
     
 };

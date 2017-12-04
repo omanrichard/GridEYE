@@ -38,7 +38,7 @@ int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playb
 bool recordStatus = false;                  //True: Recording; False: Not Recording
 bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
 
-
+int recordTime = 0;                        //Time to record the video
 
 
 
@@ -91,7 +91,7 @@ int main(int, char const**)
     background.setPosition(0,0);//move background sprite to origin
     window.draw(background);//draws background
 
-    topward.setMode(0);
+    
     
  
   
@@ -116,18 +116,9 @@ int main(int, char const**)
     int fcount = 0;
     GridEYE* gPtr = &gridward;
     
-
+    topward.setMode(0); //Set Mode to standy By
     while (window.isOpen()) //While the window is open.
     {
-        
-        
-        
-        
-           
-           
-        
-        
-            
         
         
         
@@ -139,7 +130,7 @@ int main(int, char const**)
     
    
 //----------------------------------------------------------------
-// Process Events CLICKS CLICKS CLICKS
+// Process Events
 //-----------------------------------------------------------------
         sf::Event event;
         
@@ -164,6 +155,7 @@ int main(int, char const**)
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
+                    recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
                     
                     //Insert Code Here
@@ -291,7 +283,7 @@ int main(int, char const**)
                 
                 break;
             case 2:                               //Capture Mode
-                playward.record();                      //Playbar Recording Animations
+                playward.record(recordTime, recordStatus,topward); //Playbar Recording Control
                 playward.draw(window);                  //Update window object
                 break;
             case 3:                              //Playback Mode
