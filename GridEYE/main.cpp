@@ -189,14 +189,22 @@ int main(int, char const**)
                 
                 if(recordStatus == true){//Stop recording video on click
                     menuLayer = 4;
+                   
+                    
+                    //Insert Code Here
+                    
+                    
                     toolward.sync(menuLayer);
                 }
                 menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
-                stackward.print(std::to_string(menuLayer));//Debug function -Prints Menu level to terminal
+        
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window); //Scans buffer for corosponing inputs.
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
+                    
+                    //Insert Code Here
+                    
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
@@ -205,8 +213,8 @@ int main(int, char const**)
                     recordStartTime = time(NULL);
                     playward.setClipStartTime(recordStartTime);
                     recordStatus = true;
-                    //Insert Code Here
                     
+                    //Insert Code Here
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -217,7 +225,6 @@ int main(int, char const**)
                 
                     //Insert Code Here
                     
-                    
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 if(menuLayer == 4){//Executes Once when Stop is clicked
@@ -226,6 +233,7 @@ int main(int, char const**)
                     recordStatus = false;
                     playward.setClipEndTime(recordEndTime);
                     }
+                    
                     //Insert Code Here
                
                     menuLayer = 0; //Return to home
@@ -234,13 +242,14 @@ int main(int, char const**)
                 //Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
+                    
                     vPtr->exportVideo( "Test1.txt" );
                     stackward.print("Success");
                     menuLayer = 0;
+                    
                     toolward.sync(menuLayer);
                 }
                 if(menuLayer == 6){///Executes Once when Delete is clicked
-                
                 
                     //Insert Code to Delete Video Here
                 
@@ -267,8 +276,7 @@ int main(int, char const**)
         //Background
         window.draw(background);
         
-        // Draw the placeholder text
-       
+        // Draw the background and clock
         window.draw(recordingTimeText);
         topward.draw(window);//Top Menu
         stackward.draw(window);//Terminal
@@ -310,6 +318,7 @@ int main(int, char const**)
                 break;
             case 3://PlaybackMode
                 
+                //Clock Functions
                 currentTimeStruct = localtime(&currentTime);
                 recordingTimeText.setString(recordTimeBuffer);
                 strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
