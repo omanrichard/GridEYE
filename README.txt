@@ -45,5 +45,6 @@ Requirements for program compilation:
 *************************  
 Compilation instructions:
 *************************
-  -
-  -
+  - g++ -c main.cpp -I/usr/share/SFML/include
+  - g++ main.cpp projectClasses.cpp graphicClasses.cpp -o pde-app -lsfml-graphics -lsfml-window -lsfml-system -lwiringPi
+

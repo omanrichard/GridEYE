@@ -45,6 +45,8 @@ GridEYE::GridEYE( int address ){
 //-----------------------------------------------------------------
 int GridEYE::read( int pixAddr ){
     int temp = 0;
+    this->test( 0, 0 );
+    temp = this->r;
     /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr ); // Receive value from pixel
@@ -74,6 +76,10 @@ int GridEYE::getfd(){
 
 int GridEYE::getFPS(){
     return this->FPS;
+}
+
+int GridEYE::getRuntime(){
+    return this->runtime;
 }
 
 void GridEYE::setRunTime( int newTime ){
@@ -338,10 +344,15 @@ video::video( GridEYE gridward ){
 video::video( GridEYE* gPtr ){
     frame* temp;
     
-    frameCount = (1 * 10);
+    frameCount = ( gPtr->getFPS() * gPtr->getRuntime() );
     
     for( int x = 0 ; x < frameCount ; x++){
-      //  delayMicroseconds(500000);
+        if( gPtr->getFPS() == 10 ){
+            //delayMicroseconds(1000000);   // 0.1 second
+        }
+        else{
+            //delayMicrosecond(10000000);   // 1 second
+        }
         temp = new frame( gPtr );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
     }

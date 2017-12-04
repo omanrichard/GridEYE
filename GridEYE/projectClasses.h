@@ -48,6 +48,7 @@ public:
     void setFPS( int nFPS );
     void setDR( bool nDR );
     
+    int getRuntime();
     int getFPS();
     int getfd();
 };

@@ -17,17 +17,21 @@
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "Event.hpp"
-//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
 #include <Mouse.hpp>
+
+//#include <wiringPi.h> //Include handeling to test system and only call when raspberry pi
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+
 #include "projectClasses.h"
 #include "graphicClasses.h"
+
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
+
 #define PDE 0x68
 
 using namespace sf;
@@ -65,16 +69,20 @@ int menuLayer = 0; //Each "screen" gets its own layer. ie main screen is 0, sett
 int main(int, char const**)
 {
     
-//----------- Frame Capture experiment -----------
+//-----------------------------------------------------------------
+// Video Capture Experiment Variables
+//-----------------------------------------------------------------
     video* vPtr = NULL;
+    
     session currentSession; // Begins session
-    frame activeFrame;
-    pixMask pixel;
-    int temp = 0;
-    int pixAddr = 0x80;
+    pixMask pixel;          // Pixel Obj, stores RBG values
     
-    
-//--------------------- Set up --------------------//
+    int temp = 0;       // Stores value from GridEYE pixel
+    int pixAddr = 0x80; // GridEYE pixel 1
+
+//-----------------------------------------------------------------
+// Set Up
+//-----------------------------------------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
@@ -114,7 +122,10 @@ int main(int, char const**)
 
 
  
-/*/---------- Draw ----------/*/
+//-----------------------------------------------------------------
+// Draw
+//-----------------------------------------------------------------
+    
 // Play the music
 //music.play();
 
@@ -124,11 +135,9 @@ int main(int, char const**)
  --------------------------------------------------------------------
  --------------------------------------------------------------------
 /*/
-    float tempt;
     frame* framePtr;
     int fcount = 0;
-    GridEYE* gPtr;
-    vPtr = new video;
+    GridEYE* gPtr = &gridward;
     
 
     while (window.isOpen()) //While the window is open.
@@ -177,13 +186,15 @@ int main(int, char const**)
         }
     
    
-        
-/*/ --------- Process events CLICKS CLICKS CLICKS ---------/*/
+//----------------------------------------------------------------
+// Process Events CLICKS CLICKS CLICKS
+//-----------------------------------------------------------------
         sf::Event event;
+        
         while(window.pollEvent(event)){
             toolward.event(event);//Handles Mouse moving events
             
-            //The Follow events only happen on each click
+            //The Following events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 toolward.onClick(window,stackward);//Handles Mouse click events
                 
@@ -207,8 +218,7 @@ int main(int, char const**)
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
-                
-                //Capture Video
+                // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
                     recordStartTime = time(NULL);
                     playward.setClipStartTime(recordStartTime);
@@ -218,7 +228,7 @@ int main(int, char const**)
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
-                //Playback Viode
+                // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
                     playward.onClick(window,stackward);
                     playward.setPlaybackStartTime(time(NULL));
@@ -227,6 +237,7 @@ int main(int, char const**)
                     
                      toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
+                // Record Video
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
                     recordEndTime = time(NULL);
@@ -235,11 +246,11 @@ int main(int, char const**)
                     }
                     
                     //Insert Code Here
-               
+                    
                     menuLayer = 0; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
-                //Export Video
+                // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
