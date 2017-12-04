@@ -10,6 +10,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <cmath>
 #include "projectClasses.h"
 //#include <wiringPiI2C.h>
 
@@ -147,6 +148,15 @@ int pixMask::getg(){
 
 int pixMask::getb(){
     return this->b;
+}
+void pixMask::testUpdate( short temp ){
+//Mapped data to a graph and used cos and sin to reconstruct it
+//Should increases speed
+//540 degrees of resoultion
+    float lambda = (540*temp)/255;
+    this->r = 255*cos(lambda);
+    this->g = -1*255*sin(lambda);
+    this->b = 255*sin(lambda);
 }
 
 void pixMask::update( short temp ){

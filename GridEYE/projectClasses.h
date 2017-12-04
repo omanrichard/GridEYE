@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 #include <math.h>
+#include <cmath>
 #include <mouse.hpp>
 #ifndef projectClasses_h
 #define projectClasses_h
@@ -66,7 +67,7 @@ public:
     ~pixMask();
     
     void update( short temp );
-    
+    void testUpdate( short temp ); //New implimentation for speeed improvements
     int getr();    // access r value
     int getg();    // access g value
     int getb();    // access b value
