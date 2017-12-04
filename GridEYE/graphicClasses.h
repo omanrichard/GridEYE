@@ -177,7 +177,8 @@ class topBar : interactiveObject {
         int mode = 0;                   //Mode
         struct tm * clockStruct;        //Time structure required for formatted time
         char clockTextBuffer[11];      //Holds formatted time
-    
+        double elapsedTime;
+        time_t clipStart;
         sf::Text modeText;              //SFML Text Object
         sf::Text titleText;             //SFML Text Object
         sf::Text subText;               //SFML Text Object

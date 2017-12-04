@@ -259,6 +259,7 @@ int main(int, char const**)
                 break;
             default:
                 
+                    
                 // Active Grid
                 for( i=0 ; i < 8 ; i++ ){
                     for( j=0 ; j<8 ; j++ ){
@@ -279,23 +280,22 @@ int main(int, char const**)
                     }
                 }
                 
-                toolward.draw(window);
-                stackward.draw(window);
+               
                
                 
                 break;
-            case 1: //Settings Menu
-                setward.draw(window);//Settings Menu
+            case 1:                                //Settings Menu
+                setward.draw(window);                   //Settings Menu
                 
               
                 
                 break;
-            case 2: //Capture Mode
-                playward.record();//Playbar Recording Animations
-                playward.draw(window);//Update window object
+            case 2:                               //Capture Mode
+                playward.record();                      //Playbar Recording Animations
+                playward.draw(window);                  //Update window object
                 break;
-            case 3://PlaybackMode
-                // Playback Grid
+            case 3:                              //Playback Mode
+                                                        //Playback Grid
                 while( tempCount < vPtr->getframeCount() ){
                     fPtr = vPtr->getFrame( tempCount );
                     for( i = 0 ; i < 8 ; i++ ){

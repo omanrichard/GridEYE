@@ -736,6 +736,7 @@ void topBar::setMode(int newMode){
             case 2:
                 modeText.setFillColor(sf::Color::Red);
                 modeText.setString("Recording");
+                clipStart = time(NULL);
                 break;
             case 3:
                 modeText.setFillColor(sf::Color::Yellow);
@@ -759,9 +760,26 @@ void topBar::draw(sf::RenderWindow &window){
 }
 
 void topBar::updateClock(time_t currentTime){
-    clockStruct = localtime(&currentTime);                  //Stores Current Time into struct
-    strftime (clockTextBuffer,11,"%r",clockStruct);         //Creates Formated String
-    clockText.setString(clockTextBuffer);                   //Updates Text Object
+    elapsedTime = difftime(time(NULL), clipStart);
+    switch(mode){
+        default:
+            clockStruct = localtime(&currentTime);                  //Stores Current Time into struct
+            strftime (clockTextBuffer,11,"%r",clockStruct);         //Creates Formated String
+            clockText.setString(clockTextBuffer);                   //Updates Text Object
+            break;
+        case 2:
+            if(int(elapsedTime/60) < 10){
+                if(int(fmod(elapsedTime,60)) < 10){
+                    clockText.setString("0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60))));
+                } else  clockText.setString("0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60))));
+            }
+            else{
+                if(int(fmod(elapsedTime,60)) < 10){
+                    clockText.setString(std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60))));
+                } else  clockText.setString(std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60))));
+            }
+            
+    }
 }
 
 playBar::playBar(sf::Vector2f position, int scale){
@@ -875,7 +893,6 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
             
         
         currentTimeText.setString(bufferA + " / " + bufferB);
-        //currentTimeText.setString(std::to_string(int(elapsedTime)));//Old implemntation
         double percent = elapsedTime/playbackTime;
         fillBar.setScale(percent, 1);
     }
