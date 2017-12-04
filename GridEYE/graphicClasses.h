@@ -159,8 +159,12 @@ private:
     
     
 public:
-    settingsMenu( GridEYE gridward );
-    void onClick(sf::RenderWindow &window);
+    //Setup Functions
+    settingsMenu(void);
+   
+    //Event Functions
+    void draw(sf::RenderWindow &window);
+    void onClick(sf::RenderWindow &window, GridEYE gridward, terminal stackward);
     
     //Action Functions
     int exit(void);

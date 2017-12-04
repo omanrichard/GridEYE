@@ -50,6 +50,7 @@ public:
     
     int getRuntime();
     int getFPS();
+    bool getDR();
     int getfd();
 };
 

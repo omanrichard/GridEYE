@@ -82,6 +82,10 @@ int GridEYE::getRuntime(){
     return this->runtime;
 }
 
+bool GridEYE::getDR(){
+    return this->DR;
+}
+
 void GridEYE::setRunTime( int newTime ){
     try{
         if( newTime >= 3579139 )
@@ -159,43 +163,43 @@ void pixMask::update( short temp ){
         }
         
         if(phase == 7){
-            G1 += 45;
-            B1 += 45;
+            G1 += 30;
+            B1 += 30;
         }
         
         if(phase == 6){
-            G1 -= 45;
+            G1 -= 30;
             if(G1 <= 0)
                 phase = 7;
         }
         
         if(phase == 5){
-            R1 += 45;
+            R1 += 30;
             if(R1 >= 252)
                 phase = 6;
         }
         
         if(phase == 4){
-            B1 -= 45;
+            B1 -= 30;
             if(B1 <= 0)
                 phase = 5;
         }
         
         if(phase == 3){
-            G1 += 45;
+            G1 += 30;
             if( G1 >= 252)
                 phase = 4;
         }
         
         if(phase == 2){
-            R1 -= 45;
+            R1 -= 30;
             if( R1 <= 0)
                 phase = 3;
         }
         
         if(phase == 1){
-            R1 += 45;
-            B1 += 45;
+            R1 += 30;
+            B1 += 30;
             if( R1 >= 252)
                 phase = 2;
         }
