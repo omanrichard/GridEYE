@@ -129,7 +129,7 @@ private:
     
     
 public:
-    settingsMenu(void);
+    settingsMenu( GridEYE gridward );
     void onClick(sf::RenderWindow &window);
     
     int exit(void);

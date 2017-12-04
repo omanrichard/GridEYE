@@ -92,7 +92,7 @@ int main(int, char const**)
 //-----------------------------------------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
-    window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
+    window.setFramerateLimit(30);   // Sets Window Framerate to 60 FPS
 
     //Loads font - soon to be depreciated
     sf::Font font;
@@ -205,7 +205,7 @@ int main(int, char const**)
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
-                    //Insert Code Here
+                    vPtr = new video( gPtr );
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -221,7 +221,7 @@ int main(int, char const**)
                 // Record Video
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
-                    \
+                    
                     recordStatus = false;
                     playward.setClipEndTime(time(NULL));
                     }
@@ -324,6 +324,7 @@ int main(int, char const**)
                 playward.draw(window);//Update window object
                 break;
             case 3://PlaybackMode
+                
                 // Playback Grid
                 while( tempCount < vPtr->getframeCount() ){
                     fPtr = vPtr->getFrame( tempCount );
@@ -347,6 +348,8 @@ int main(int, char const**)
                     //delayMicroseconds( 1000000 );
                     tempCount++;
                 }
+                
+                //Clock Functions
                 currentTimeStruct = localtime(&currentTime);
                 recordingTimeText.setString(recordTimeBuffer);
                 strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
