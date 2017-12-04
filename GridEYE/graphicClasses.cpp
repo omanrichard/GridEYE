@@ -487,7 +487,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsTenFPS.setOutlineThickness(2);
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
                 settingsOneFPS.setOutlineThickness(0);
-                //gridward.setFPS(10);
+                gridward.setFPS(10);
             }}
         
         // One FPS
@@ -497,7 +497,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
                 settingsOneFPS.setOutlineThickness(2);
                 settingsTenFPS.setFillColor(sf::Color(135,206,250));
                 settingsTenFPS.setOutlineThickness(0);
-                //gridward.setFPS(1);
+                gridward.setFPS(1);
             }}
         
         // Minutes UP
