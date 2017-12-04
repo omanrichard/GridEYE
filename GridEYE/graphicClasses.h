@@ -165,7 +165,9 @@ private:
     sf::Text currentTimeText;
     sf::Text endTimeText;
     sf::Vector2f origin;
-    char timeTextBuffer[8];
+    char timeTextBuffer[25];//Buffer for sprintf. 
+    string bufferA;
+    string bufferB;
     struct tm * timeTextStruct;
     time_t clipStart; //Actual time at which clip was recorded
     time_t clipEnd; //Actual time at which clip was finished recording
@@ -174,14 +176,14 @@ private:
     double elapsedTime = 0; //Curent lenght of the playpack in seconds. Calculated from playbackStart and time(NULL)
 public:
     playBar(sf::Vector2f position, int scale);
-    void onClick(sf::RenderWindow &window);
+    void onClick(sf::RenderWindow &window,terminal &Terminal);
     void setClipStartTime(time_t start);
     void setClipEndTime(time_t end);
     void setPlaybackStartTime(time_t start);
     void setPlaybackEndTime(time_t end);
     void setCurrentTime(void);
     void record(void);
-    void playback(void);
+    void playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus);
     virtual void draw(sf::RenderWindow &window);
 };
 

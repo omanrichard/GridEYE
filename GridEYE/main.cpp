@@ -223,7 +223,7 @@ int main(int, char const**)
                 }
                 // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
-                    playward.onClick(window);
+                    playward.onClick(window,stackward);
                     playward.setPlaybackStartTime(time(NULL));
                 
                     //Insert Code Here
@@ -282,10 +282,9 @@ int main(int, char const**)
         // Draw the placeholder text
        
         window.draw(recordingTimeText);
-        
-        topward.draw(window);
-        toolward.draw(window); //Toolbar
+        topward.draw(window);//Top Menu
         stackward.draw(window);//Terminal
+        toolward.draw(window); //Toolbar
         /*/-------- Layer control -------/*/
         
         
@@ -327,7 +326,7 @@ int main(int, char const**)
                 recordingTimeText.setString(recordTimeBuffer);
                 strftime (recordTimeBuffer,11,"%r",currentTimeStruct);
                 
-                playward.playback();//Playbar Playback animations
+                playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
                 playward.draw(window);//Update window object
                 break;
            

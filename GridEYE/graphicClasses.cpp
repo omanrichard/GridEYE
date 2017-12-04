@@ -110,109 +110,7 @@ void terminal::draw(sf::RenderWindow &window){
 }
 /*/ --------------- End Terminal (Stack) Methods --------------- /*/
 
-playBar::playBar(sf::Vector2f position, int scale){
- 
-    origin = position;
-    if (!t_background.loadFromFile("audio-player.png")) {
-        return EXIT_FAILURE;
-    }
-    if (!t_fillBar.loadFromFile("progress.png")) {
-        return EXIT_FAILURE;
-    }
-    if (!playBarFont.loadFromFile("sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
-    
-    background.setTexture(t_background);
-    fillBar.setTexture(t_fillBar);
-    background.setPosition(position);
-    background.scale(scale, scale);
-    
-    fillPos.x = position.x + 235;
-    fillPos.y = position.y + 164;
-    fillBar.setPosition(fillPos);
-    fillBar.scale(1, 1);
-    
-    timeTextStruct = localtime(&clipEnd);
-    strftime (timeTextBuffer,8,"%R",timeTextStruct);
-    currentTimeText.setString(timeTextBuffer);
-    endTimeText.setString(timeTextBuffer);
-    
-    currentTimeText.setCharacterSize(12);
-    currentTimeText.setFillColor(sf::Color::White);
-    currentTimeText.setFont(playBarFont);
-    currentTimeText.setPosition(position.x+465,position.y+158);
-    
-    endTimeText.setCharacterSize(12);
-    endTimeText.setFillColor(sf::Color::White);
-    endTimeText.setFont(playBarFont);
-    endTimeText.setPosition(position.x+510,position.y+158);
-    
-    
-    
-}
-void playBar::setCurrentTime(void){
- 
-    timeTextStruct = localtime(&clipStart);
-    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
-    currentTimeText.setString(timeTextBuffer);
-    
-    timeTextStruct = localtime(&clipEnd);
-    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
-    endTimeText.setString(timeTextBuffer);
-}
-void playBar::draw(sf::RenderWindow &window){
-    
-    window.draw(background);
-    window.draw(fillBar);
-    window.draw(currentTimeText);
-    window.draw(endTimeText);
-}
 
-void playBar::onClick(sf::RenderWindow &window){
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
-        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
-        
-        //playBar playward(sf::Vector2f(35, 375),1);
-            if (position.x > origin.x+190  && position.x < origin.x+230){
-                if (position.y > origin.y+150  && position.y < origin.y+180) {
-                    window.close();
-                }
-            }
-    }
-}
-void playBar::setClipStartTime(time_t start){
-    clipStart = start;
-}
-void playBar::setClipEndTime(time_t end){
-    clipEnd = end;
-    playbackTime = difftime(clipEnd, clipStart);
-    endTimeText.setString(std::to_string(int(playbackTime)));
-    
-    
-}
-void playBar::setPlaybackStartTime(time_t start){
-    playbackStart = start;
-}
-void playBar::setPlaybackEndTime(time_t end){
-    
-}
-void playBar::playback(void){
-    elapsedTime = difftime(time(NULL), playbackStart);
-    if(elapsedTime <= playbackTime){
-    currentTimeText.setString(std::to_string(int(elapsedTime)));
-    double percent = elapsedTime/playbackTime;
-    fillBar.setScale(percent, 1);
-    }
-    
-
-}
-void playBar::record(void){
-    elapsedTime = difftime(time(NULL),clipStart);
-    currentTimeText.setString(std::to_string(int(elapsedTime)));
-    endTimeText.setString("00:00");
-    fillBar.setScale(1-elapsedTime/100,1);
-}
 toolbar::toolbar(void){
     
     if (!toolbarFont.loadFromFile("sansation.ttf")) {
@@ -278,15 +176,14 @@ toolbar::toolbar(void){
     selection.setFillColor(sf::Color(0, 0, 0, 100));
     selection.setPosition(-100, -100);
     
-    
     selectionTextBox.setSize(sf::Vector2f( 94, 20 ));
     selectionTextBox.setFillColor(sf::Color(255, 255, 255, 100));
     selectionTextBox.setPosition(-100, -100);
     
     selectionText.setString("void");
-    selectionText.setCharacterSize(8);
+    selectionText.setCharacterSize(15);
     selectionText.setFont(toolbarFont);
-    selectionText.setFillColor(sf::Color::Black);
+    selectionText.setFillColor(sf::Color(55,55,255)); //light blue
     selectionText.setPosition( -100 , -100);
     
     
@@ -316,52 +213,59 @@ void toolbar::event(sf::Event &toolbarEvent){
             //Settings
             if(toolbarEvent.mouseMove.y > 0 && toolbarEvent.mouseMove.y < 119){
                 selection.setPosition(0, 26);
+                selectionTextBox.setSize(sf::Vector2f(65, 20));
                 selectionText.setString("Settings");
-                selectionText.setPosition(50 , 89);
-                selectionTextBox.setPosition(50,89);
+                selectionText.setPosition(35 , 89);
+                selectionTextBox.setPosition(30,89);
             }
             //New Capture
             if(toolbarEvent.mouseMove.y > 119 && toolbarEvent.mouseMove.y < 189){
                 selection.setPosition(0, 119);
+                selectionTextBox.setSize(sf::Vector2f(65, 20));
                 selectionText.setString("Capture");
-                selectionText.setPosition( 50 , 159);
-                selectionTextBox.setPosition(50,159);
+                selectionText.setPosition( 35 , 183);
+                selectionTextBox.setPosition(30,183);
                 
             }
             //Play Capture
             if(toolbarEvent.mouseMove.y > 219 && toolbarEvent.mouseMove.y < 308){
                 selection.setPosition(0, 219);
+                selectionTextBox.setSize(sf::Vector2f( 95, 20 ));
                 selectionText.setString("Play Capture");
-                selectionText.setPosition( 50 , 278);
-                selectionTextBox.setPosition(50,278);
+                selectionText.setPosition( 35 , 278);
+                selectionTextBox.setPosition(30,278);
             }
             //Stop Capture
             if(toolbarEvent.mouseMove.y > 308 && toolbarEvent.mouseMove.y < 402){
                 selection.setPosition(0, 308);
+                selectionTextBox.setSize(sf::Vector2f( 100, 20 ));
                 selectionText.setString("Stop Capture");
-                selectionText.setPosition( 30 , 372);
+                selectionText.setPosition( 35 , 372);
                 selectionTextBox.setPosition(30,372);
             }
             //Save Capture
             if(toolbarEvent.mouseMove.y > 402 && toolbarEvent.mouseMove.y < 496){
                 selection.setPosition(0, 402);
+                selectionTextBox.setSize(sf::Vector2f( 100, 20 ));
                 selectionText.setString("Save Capture");
-                selectionText.setPosition( 30 , 439);
-                selectionTextBox.setPosition(30,439);
+                selectionText.setPosition( 35 , 466);
+                selectionTextBox.setPosition(30,466);
             }
             //Delete Capture
             if(toolbarEvent.mouseMove.y > 496 && toolbarEvent.mouseMove.y < 590){
                 selection.setPosition(0, 496);
+                selectionTextBox.setSize(sf::Vector2f( 110, 20 ));
                 selectionText.setString("Delete Capture");
-                selectionText.setPosition( 30 , 560);
+                selectionText.setPosition( 35 , 560);
                 selectionTextBox.setPosition(30,560);
             }
             //Ouit Program
             if(toolbarEvent.mouseMove.y > 590 && toolbarEvent.mouseMove.y < 700){
                 selection.setPosition(0, 590);
+                selectionTextBox.setSize(sf::Vector2f( 130, 20 ));
                 selectionText.setString("Close Application");
-                selectionText.setPosition( 30 , 670);
-                selectionTextBox.setPosition(30,670);
+                selectionText.setPosition( 35 , 654);
+                selectionTextBox.setPosition(30,654);
             }
         }
         //Moves Selection objects offscreen when mouse exits hit box
@@ -739,6 +643,7 @@ void settingsMenu::onClick(sf::RenderWindow &window){//Button presses
     }
 }
 void settingsMenu::draw(sf::RenderWindow &window){
+   
     window.draw(settingsBackground);
     window.draw(settingsExit);
     window.draw(settingsTenFPS);
@@ -844,6 +749,148 @@ void topBar::draw(sf::RenderWindow &window){
     window.draw(titleText);
     window.draw(subText);
     
+}
+
+playBar::playBar(sf::Vector2f position, int scale){
+    
+    origin = position;
+    if (!t_background.loadFromFile("audio-player.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!t_fillBar.loadFromFile("progress.png")) {
+        return EXIT_FAILURE;
+    }
+    if (!playBarFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    
+    background.setTexture(t_background);
+    fillBar.setTexture(t_fillBar);
+    background.setPosition(position);
+    background.scale(scale, scale);
+    
+    fillPos.x = position.x + 235;
+    fillPos.y = position.y + 164;
+    fillBar.setPosition(fillPos);
+    fillBar.scale(1, 1);
+    
+    timeTextStruct = localtime(&clipEnd);
+    strftime (timeTextBuffer,8,"%R",timeTextStruct);
+    currentTimeText.setString(timeTextBuffer);
+    endTimeText.setString(timeTextBuffer);
+    
+    currentTimeText.setCharacterSize(12);
+    currentTimeText.setFillColor(sf::Color::White);
+    currentTimeText.setFont(playBarFont);
+    currentTimeText.setPosition(position.x+465,position.y+158);
+    
+    endTimeText.setCharacterSize(12);
+    endTimeText.setFillColor(sf::Color::White);
+    endTimeText.setFont(playBarFont);
+    endTimeText.setPosition(position.x+510,position.y+158);
+    
+    
+    
+}
+void playBar::setCurrentTime(void){
+    
+    timeTextStruct = localtime(&clipStart);
+    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
+    currentTimeText.setString(timeTextBuffer);
+    
+    timeTextStruct = localtime(&clipEnd);
+    strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
+    endTimeText.setString(timeTextBuffer);
+}
+void playBar::draw(sf::RenderWindow &window){
+    
+    window.draw(background);
+    window.draw(fillBar);
+    window.draw(currentTimeText);
+}
+
+void playBar::onClick(sf::RenderWindow &window, terminal &Terminal){
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
+        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
+        
+        //playBar playward(sf::Vector2f(35, 375),1);
+        if (position.x > origin.x+190  && position.x < origin.x+230){
+            if (position.y > origin.y+150  && position.y < origin.y+180) {
+                Terminal.print("Replay Mode");
+                playbackStart = time(NULL);
+            }
+        }
+    }
+}
+void playBar::setClipStartTime(time_t start){
+    clipStart = start;
+}
+void playBar::setClipEndTime(time_t end){
+    clipEnd = end;
+    playbackTime = difftime(clipEnd, clipStart);
+    
+    if(int(playbackTime/60) < 10){
+        if(int(fmod(elapsedTime,60)) < 10){
+            bufferB = "0" + std::to_string(int(playbackTime/60))+":0"+std::to_string(int(fmod(playbackTime,60)));
+        } else  bufferB = "0" + std::to_string(int(playbackTime/60))+":"+std::to_string(int(fmod(playbackTime,60)));
+    }
+    else{
+        if(int(fmod(playbackTime,60)) < 10){
+            bufferB = std::to_string(int(playbackTime/60))+":0"+std::to_string(int(fmod(playbackTime,60)));
+        } else  bufferB = std::to_string(int(playbackTime/60))+":"+std::to_string(int(fmod(playbackTime,60)));
+    }
+}
+void playBar::setPlaybackStartTime(time_t start){
+    playbackStart = start;
+}
+void playBar::setPlaybackEndTime(time_t end){
+    
+}
+void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus ){
+    elapsedTime = difftime(time(NULL), playbackStart);
+    if(elapsedTime <= playbackTime){
+        playbackStatus = true;
+        
+        if(int(elapsedTime/60) < 10){
+            if(int(fmod(elapsedTime,60)) < 10){
+            bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+            } else  bufferA = "0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+        }
+        else{
+            if(int(fmod(elapsedTime,60)) < 10){
+                bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+            } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+        }
+            
+        
+        currentTimeText.setString(bufferA + " / " + bufferB);
+        //currentTimeText.setString(std::to_string(int(elapsedTime)));//Old implemntation
+        double percent = elapsedTime/playbackTime;
+        fillBar.setScale(percent, 1);
+    }
+    else if(playbackStatus == true){
+        playbackStatus = false;
+        Terminal.print("Playback Complete");
+        TopBar.setMode(4);
+        
+    }
+    
+}
+void playBar::record(void){
+    elapsedTime = difftime(time(NULL),clipStart);
+    if(int(elapsedTime/60) < 10){
+        if(int(fmod(elapsedTime,60)) < 10){
+            bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+        } else  bufferA = "0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+    }
+    else{
+        if(int(fmod(elapsedTime,60)) < 10){
+            bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+        } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+    }
+    bufferB = "00:00";
+    currentTimeText.setString(bufferA + " / " + bufferB);
+    fillBar.setScale(1-elapsedTime/100,1);
 }
 
 
