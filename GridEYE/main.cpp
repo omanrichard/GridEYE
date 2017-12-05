@@ -4,7 +4,7 @@
 #include "Event.hpp"                        //Mouse Move Events
 #include "Mouse.hpp"                       //Mouse Clicks
 
-//#include <wiringPi.h>                     //Raspberry Pi GPIO
+#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
 #include <fstream>                          //FILE I/O
 #include <vector>
@@ -17,11 +17,12 @@
 #include "graphicClasses.h"                 //User Interface Objects Classes
 
 //GPIO
-//#define GREENLED 7 - I need to look at my schematic                         //GPIO pin connected to Green LED Anode
-//#define REDLED   7 - I need to look at my schematic                       //GPIO Pin connected to Red LED Anode
+#define GREENLED 4                         //GPIO pin connected to Green LED Anode
+#define REDLED   5                   //GPIO Pin connected to Red LED Anode
 #define PDE 0x68                            //Grid-EYE I2C Address
 #define xGrid 200
 #define yGrid 98
+
 
 //Global Objects
 GridEYE gridward(PDE);                      //Grid Eye Object
@@ -52,6 +53,10 @@ int pixScale = 51;
 
 int main(int, char const**)
 {
+    pinMode(GREENLED, OUTPUT);
+    pinMode(REDLED,OUTPUT);
+    digitalWrite(GREENLED, HIGH);
+    digitalWrite(REDLED, HIGH);
 //-----------------------------------------------------------------
 // Video Capture Experiment Variables - Can we delete this? -- Eventually
 //-----------------------------------------------------------------
@@ -137,6 +142,7 @@ int main(int, char const**)
         
                 //Settings Menu
                 if(menuLayer == 1){
+                    digitalWrite(GREENLED,LOW);
                     setward.onClick(window, gridward, stackward); //Scans buffer for corosponing inputs.
                     recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
@@ -147,6 +153,7 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
+                    digitalWrite(REDLED,LOW);
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
@@ -229,6 +236,7 @@ int main(int, char const**)
 // Layer Control
 //-----------------------------------------------------------------
         switch(menuLayer){
+            
             default:    //Streams Live data from sensor but not recording
                 pixAddr = 0x80;
                 
