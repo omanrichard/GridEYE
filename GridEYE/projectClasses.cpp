@@ -12,9 +12,10 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-//#include <wiringPiI2C.h>
+#include <wiringPiI2C.h>
 
 #define PGE 0x68
+#define PCR 0x00
 
 using namespace std;
 int row,col;
@@ -31,13 +32,13 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
-    /*
+    
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
      
         FPS = 10;
         runtime = 10;
-     */
+     
 }
 // Will remove eventually
 GridEYE::GridEYE( int address ){

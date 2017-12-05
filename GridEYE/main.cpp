@@ -228,6 +228,8 @@ int main(int, char const**)
 //-----------------------------------------------------------------
         switch(menuLayer){
             default:    //Streams Live data from sensor but not recording
+                pixAddr = 0x80;
+                
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j ++ ){
                     
