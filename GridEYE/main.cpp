@@ -343,8 +343,9 @@ int main(int, char const**)
                 break;
 
             case 3:     //Playback Mode
-                
-               /* do{
+                tempCount = vPtr->getframeCount();
+
+                if( difftime( time(NULL), tempTime) >= 1 ){
                     fPtr = vPtr->getFrame( tempCount ); //Playback Grid
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
@@ -355,15 +356,31 @@ int main(int, char const**)
                             pixel.fastUpdate( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
-                            if( difftime( time(NULL), tempTime) >= (1/gridward.getFPS())){
-                                window.draw(newPix);
-                            }
+                            window.draw(newPix);
                         }
                     }
+                    previousFPtr = fPtr;
                     tempCount++;
-                } while(tempCount < vPtr->getframeCount());
+                    tempTime++;
+                }
+                else{
+                    for( i = 0 ; i < 8 ; i++ ){
+                        for( j = 0 ; j < 8 ; j++ ){
+                            xPix = (xGrid + i*pixScale);
+                            yPix = (yGrid + j*pixScale);
+                            newPix.setPosition( xPix, yPix );
+                            
+                            pixel.fastUpdate( previousFPtr->access(i,j) );
+                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                            
+                            window.draw(newPix);
+                        }
+                    }
+                }
                 
-                */
+                
+                
+                
                 
                 playward.draw(window);//Update window object
                 playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
