@@ -158,7 +158,7 @@ int main(int, char const**)
                     recordStatus = true;
                     
                     vPtr = new video();
-                    vPtr->setframeCount(gPtr->getFPS() * gPtr->getRuntime());
+                    vPtr->setframeCount( gPtr->getRuntime());
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -303,10 +303,6 @@ int main(int, char const**)
                     }
                 }
             
-                
-                    if(recordStatus == true){
-                        vidward.addFrame(newFrame);
-                    }
                 playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                 playward.draw(window);//Draws playbar element to window object
                 
