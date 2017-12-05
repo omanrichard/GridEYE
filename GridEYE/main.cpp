@@ -111,6 +111,8 @@ int main(int, char const**)
  --------------------------------------------------------------------
 /*/
     frame* framePtr;
+    frame* previousFPtr;
+    
     int fcount = 0;
     tempCount=0;
     recordTime = gridward.getRuntime();
@@ -315,9 +317,27 @@ int main(int, char const**)
                     playward.draw(window);//Draws playbar element to window object
                 
                     tempTime = time(NULL);
+                    previousFPtr = fPtr;
                 }
                 else
-                    window.draw( newPix );
+                    for( i = 0 ; i < 8 ; i++ ){
+                        for( j = 0 ; j < 8 ; j++ ){
+                            //Memory Registers
+                            int index = 10*i + j;
+                            int address = 0x80 + 20*i+2*j;
+                            
+                            pixel.fastUpdate(previousFPtr->access(i,j));
+                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                            
+                            // Pixel Position
+                            xPix = (xGrid + i*51);
+                            yPix = (yGrid + j*51);
+                            newPix.setPosition( xPix, yPix );
+                            
+                            // Draw the Pixel
+                            window.draw( newPix );
+                        }
+                    }
                     playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                     playward.draw(window);//Draws playbar element to window object
                 break;
