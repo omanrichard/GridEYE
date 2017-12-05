@@ -57,7 +57,7 @@ int GridEYE::read( int pixAddr ){
     this->test( 0, 0 );
     temp = this->r;
     */
-    
+    fd = wiringPiI2CSetup( PGE );
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg8( fd, pixAddr ); // Receive value from pixel
     temp = temp >> 4;                           // Thermistor has 12-bit data
