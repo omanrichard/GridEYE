@@ -5,7 +5,6 @@
 //  Created by Grant Hilgert on 12/1/17.
 //  Copyright © 2017 Richard Oman. All rights reserved.
 //
-
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -14,11 +13,8 @@
 #include "graphicClasses.h"
 
 
-
 /*/ -------- Interactive Base Class --------/*/
-
-interactiveObject::interactiveObject(void){
-    
+interactiveObject::interactiveObject(){
     if (!defaultFont.loadFromFile("sansation.ttf")) { //Loads default Font from from
         //return EXIT_FAILURE;
     }
@@ -83,13 +79,12 @@ terminal::terminal(int size, string text){
     terminalBackground.setPosition(94, 606);
     terminalHeader.setPosition(94, 596);
     
-    
 }
 
 void terminal::print(string input){
     stack.insert(stack.begin(),rootText+" : "+input); //Insert text string into stack vector
-    
 }
+
 void terminal::print(string input, string text){    //Insert text string into stack vector with non default pretext
     stack.insert(stack.begin(),text+" : "+input);
 }
@@ -97,6 +92,7 @@ void terminal::print(string input, string text){    //Insert text string into st
 void terminal::setRoot(string text){    //Change the default pretext
     rootText = text;
 }
+
 void terminal::draw(sf::RenderWindow &window){
     
     //Set each line of the terminal text to the coropsonding position of the stack vector
@@ -303,7 +299,6 @@ void toolbar::onClick(sf::RenderWindow &window, terminal &Terminal){
                     Terminal.print("Starting Capture");
                     menuLayer = 2;//set Capture Mode
                 }
-                
                 //Play capture
                 if (position.y > 189 && position.y < 308){
                     Terminal.print("Entering Playback Mode");
@@ -329,9 +324,7 @@ void toolbar::onClick(sf::RenderWindow &window, terminal &Terminal){
                     window.close();//Close Window
                 }
             }
-        
-
-}
+    }
 }
 
 int toolbar::exit(void){
@@ -485,8 +478,8 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
     int newFPS = gridward.getFPS();
     bool newDR = gridward.getDR();
     
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
-        sf::Vector2i position = sf::Mouse::getPosition(window);//Get Mouse Coordinates
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   //When Left Mouse is clicked
+        sf::Vector2i position = sf::Mouse::getPosition(window); //Get Mouse Coordinates
         
         //Settings Exit Button
         if (position.x > 143  && position.x < 173){//Add root to this
@@ -626,7 +619,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 menuLayer = 0;
             }}
     }//end button down
-    
+
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
         sf::Vector2i position = sf::Mouse::getPosition(window);
         
@@ -665,6 +658,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
             }}
     }
 }
+
 void settingsMenu::draw(sf::RenderWindow &window){
    
     window.draw(settingsBackground);
@@ -842,10 +836,8 @@ playBar::playBar(sf::Vector2f position, int scale){
     endTimeText.setFillColor(sf::Color::White);
     endTimeText.setFont(defaultFont);
     endTimeText.setPosition(position.x+510,position.y+158);
-    
-    
-    
 }
+
 void playBar::setCurrentTime(void){
     
     timeTextStruct = localtime(&clipStart);
@@ -856,6 +848,7 @@ void playBar::setCurrentTime(void){
     strftime (timeTextBuffer,8,"%M:%S",timeTextStruct);
     endTimeText.setString(timeTextBuffer);
 }
+
 void playBar::draw(sf::RenderWindow &window){
     
     window.draw(background);
@@ -881,6 +874,7 @@ void playBar::onClick(sf::RenderWindow &window, terminal &Terminal){
 void playBar::setClipStartTime(time_t start){
     clipStart = start;
 }
+
 void playBar::setClipEndTime(time_t end){
     clipEnd = end;
     playbackTime = difftime(clipEnd, clipStart);
@@ -896,12 +890,15 @@ void playBar::setClipEndTime(time_t end){
         } else  bufferB = std::to_string(int(playbackTime/60))+":"+std::to_string(int(fmod(playbackTime,60)));
     }
 }
+
 void playBar::setPlaybackStartTime(time_t start){
     playbackStart = start;
 }
+
 void playBar::setPlaybackEndTime(time_t end){
     
 }
+
 void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus ){
     elapsedTime = difftime(time(NULL), playbackStart);
     if(elapsedTime <= playbackTime){
@@ -927,10 +924,9 @@ void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus 
         playbackStatus = false;
         Terminal.print("Playback Complete");
         TopBar.setMode(4);
-        
     }
-    
 }
+
 void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int setRecordTime){
     elapsedTime = difftime(time(NULL),clipStart);
     
@@ -939,18 +935,16 @@ void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int 
         bufferB = "00:00";
     }
     if(elapsedTime < setRecordTime){
-    if(int(elapsedTime/60) < 10){
-        if(int(fmod(elapsedTime,60)) < 10){
-            bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
-        } else  bufferA = "0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
-    }
-    else{
-        if(int(fmod(elapsedTime,60)) < 10){
-            bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
-        } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
-    }
-    
-    
+        if(int(elapsedTime/60) < 10){
+            if(int(fmod(elapsedTime,60)) < 10){
+                bufferA = "0" + std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+            } else  bufferA = "0" + std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+        }
+        else{
+            if(int(fmod(elapsedTime,60)) < 10){
+                bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
+            } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
+        }
     if(int(setRecordTime/60) < 10){
         if(int(fmod(setRecordTime,60)) < 10){
             bufferB = "0" + std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
@@ -961,9 +955,10 @@ void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int 
             bufferB =  std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
         } else  bufferB = std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
     }
-        fillBar.setScale(1-elapsedTime/setRecordTime,1);
     
-}
+    fillBar.setScale(1-elapsedTime/setRecordTime,1);
+    
+    }
     else if(elapsedTime > setRecordTime && recordMode == true){
         recordMode = false;
         Topbar.setMode(0);
@@ -971,7 +966,6 @@ void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int 
         fillBar.setScale(0,1);
     }
     currentTimeText.setString(bufferA + " / " + bufferB);
-    
 }
 
 

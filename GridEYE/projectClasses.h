@@ -155,7 +155,7 @@ public:
     void exportVideo( string filename );
     void print();
     frame* getFrame( int temp );
-    void setframeCount( int count ){
+    void setframeCount( int count );
 
 };
 

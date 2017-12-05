@@ -18,8 +18,6 @@
 #ifndef graphicClasses_h
 #define graphicClasses_h
 
-using namespace std;
-
 
 //Interactive Base Class
 class interactiveObject {
@@ -37,7 +35,7 @@ class interactiveObject {
 
 /*/ --------------- Terminal (Stack) Class --------------- /*/
 
-class terminal : interactiveObject {
+class terminal : public interactiveObject {
 friend class interactiveObject;
 private:
     
@@ -75,7 +73,7 @@ public:
 
 
 /*/ ---------------  Toolbar Class --------------- /*/
-class toolbar : interactiveObject {
+class toolbar : public interactiveObject {
 private:
     
     //Toolbar Texture Objects
@@ -172,7 +170,7 @@ public:
     
 };
 
-class topBar : interactiveObject {
+class topBar : public interactiveObject {
     private:
         int mode = 0;                   //Mode
         struct tm * clockStruct;        //Time structure required for formatted time

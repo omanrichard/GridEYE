@@ -287,42 +287,39 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
-                if( difftime( time(NULL), tempTime)) >= 1 ){
+                if( difftime( time(NULL), tempTime) >= 1 ){
                     
+                    fPtr = new frame(gPtr);
+                    vPtr->addFrame( fPtr );
                 
-                fPtr = new frame(gPtr);
-                vPtr->addFrame( fPtr );
-                
-                for( i = 0 ; i < 8 ; i++ ){
-                    for( j = 0 ; j < 8 ; j++ ){
-                        //Memory Registers
-                        int index = 10*i + j;
-                        int address = 0x80 + 20*i+2*j;
+                    for( i = 0 ; i < 8 ; i++ ){
+                        for( j = 0 ; j < 8 ; j++ ){
+                            //Memory Registers
+                            int index = 10*i + j;
+                            int address = 0x80 + 20*i+2*j;
         
-                        pixel.fastUpdate(fPtr->access(i,j));
-                        newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                            pixel.fastUpdate(fPtr->access(i,j));
+                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
-                        // Pixel Position
-                        xPix = (xGrid + i*51);
-                        yPix = (yGrid + j*51);
-                        newPix.setPosition( xPix, yPix );
+                            // Pixel Position
+                            xPix = (xGrid + i*51);
+                            yPix = (yGrid + j*51);
+                            newPix.setPosition( xPix, yPix );
                         
-                        /*
-                         //Hardware Function
-                         pixel.fastUpdate( gridward.read(pixAddr) );
-                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                         */
-                        
-                        // Draw the Pixel
-                        window.draw( newPix );
+                            // Draw the Pixel
+                            window.draw( newPix );
+                        }
                     }
-                }
             
-                playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
-                playward.draw(window);//Draws playbar element to window object
+                    playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
+                    playward.draw(window);//Draws playbar element to window object
                 
                     tempTime = time(NULL);
                 }
+                else
+                    window.draw( newPix );
+                    playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
+                    playward.draw(window);//Draws playbar element to window object
                 break;
 
             case 3:     //Playback Mode
