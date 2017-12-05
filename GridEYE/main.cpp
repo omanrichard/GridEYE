@@ -277,7 +277,7 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
-                if( difftime( time(NULL), tempTime)) >= 1 ){
+                if( difftime( time(NULL), tempTime) >= 1 ){
                     
                     fPtr = new frame(gPtr);
                     vPtr->addFrame( fPtr );
