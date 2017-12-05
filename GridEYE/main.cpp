@@ -123,11 +123,11 @@ int main(int, char const**)
     while (window.isOpen()) //While the window is open.
     {
       //LED Control
-        if(recordStatus == true){
+        if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
             digitalWrite(GREENLED,1);
             digitalWrite(REDLED,0);
         }
-        else if(recordStatus == false){
+        else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
             digitalWrite(GREENLED,0);
             digitalWrite(REDLED,1);
         }
@@ -271,7 +271,7 @@ int main(int, char const**)
                         
                         
                          //Hardware Function
-                         pixel.fastUpdate( gridward.read(pixAddr) );
+                         pixel.monoUpdate( gridward.read(pixAddr) );
                          newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
@@ -300,7 +300,7 @@ int main(int, char const**)
                             int index = 10*i + j;
                             int address = 0x80 + 20*i+2*j;
         
-                            pixel.fastUpdate(fPtr->access(i,j));
+                            pixel.monoUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                             // Pixel Position
@@ -326,7 +326,7 @@ int main(int, char const**)
                             int index = 10*i + j;
                             int address = 0x80 + 20*i+2*j;
                             
-                            pixel.fastUpdate(previousFPtr->access(i,j));
+                            pixel.monoUpdate(previousFPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             // Pixel Position
@@ -353,7 +353,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.fastUpdate( fPtr->access(i,j) );
+                            pixel.monoUpdate( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             window.draw(newPix);
@@ -370,7 +370,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.fastUpdate( previousFPtr->access(i,j) );
+                            pixel.monoUpdate( previousFPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             window.draw(newPix);
