@@ -306,6 +306,10 @@ int main(int, char const**)
                 
                     tempTime = time(NULL);
                 }
+                else
+                    window.draw( newPix );
+                    playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
+                    playward.draw(window);//Draws playbar element to window object
                 break;
 
             case 3:     //Playback Mode
