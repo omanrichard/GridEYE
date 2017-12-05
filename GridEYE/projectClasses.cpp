@@ -201,7 +201,11 @@ void pixMask::fastUpdate( short temp ){
     this->g = -1*255*sin((540*temp)/255);
     this->b = 255*sin((540*temp)/255);
 }
-
+void pixMask::monoUpdate(short temp){
+    this->r = temp;
+    this->g = 0;
+    this->b = 0;
+}
 void pixMask::update( short temp ){
     int R1 = 0;
     int G1 = 0;

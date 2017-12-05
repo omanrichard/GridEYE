@@ -92,6 +92,7 @@ public:
     
     void update( short temp );
     void fastUpdate( short temp ); //New implimentation for speeed improvements
+    void monoUpdate( short temp);
     int getr();    // access r value
     int getg();    // access g value
     int getb();    // access b value
