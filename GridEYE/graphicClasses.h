@@ -201,7 +201,8 @@ class topBar : public interactiveObject {
 
    
 };
-class playBar : public interactiveObject {
+
+class playBar : interactiveObject {
 private:
 
     sf::Texture t_background;

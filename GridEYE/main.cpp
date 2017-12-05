@@ -122,6 +122,16 @@ int main(int, char const**)
     gridward.setFD();//Fix
     while (window.isOpen()) //While the window is open.
     {
+      //LED Control
+        if(recordStatus == true){
+            digitalWrite(GREENLED,1);
+            digitalWrite(REDLED,0);
+        }
+        else if(recordStatus == false){
+            digitalWrite(GREENLED,0);
+            digitalWrite(REDLED,1);
+        }
+        
         //-----------------------------------------------------------------
         // Process Events
         //-----------------------------------------------------------------
@@ -158,8 +168,7 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    digitalWrite(GREENLED,1);
-                    digitalWrite(REDLED,0);
+                    
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
@@ -180,6 +189,7 @@ int main(int, char const**)
                 // Stop-Record
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
+                        
                         delete vPtr;
                         vPtr = new video;
                     recordStatus = false;
@@ -193,7 +203,7 @@ int main(int, char const**)
                 }
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
-                    digitalWrite(GREENLED,1);
+                   
                     stackward.print("Exporting Video");
                     vPtr->exportVideo( "Test1.txt" );   // Exports data packet
                     stackward.print("Success");
