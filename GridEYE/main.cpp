@@ -272,6 +272,9 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
+                if( difftime( time(NULL), tempTime)) >= 1 ){
+                    
+                
                 fPtr = new frame(gPtr);
                 vPtr->addFrame( fPtr );
                 
@@ -306,6 +309,9 @@ int main(int, char const**)
                     }
                 playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                 playward.draw(window);//Draws playbar element to window object
+                
+                    tempTime = time(NULL);
+                }
                 break;
 
             case 3:     //Playback Mode
