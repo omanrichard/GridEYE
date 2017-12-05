@@ -196,10 +196,32 @@ int pixMask::getb(){
 void pixMask::fastUpdate( short temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
 //Should increases speed
-//540 degrees of resoultion
-    this->r = 255*cos((540*temp)/255);
-    this->g = -1*255*sin((540*temp)/255);
-    this->b = 255*sin((540*temp)/255);
+//0 through 540 degrees of resoultion masked to 0 through 255 color values converted to radians by 180/PI
+    int tempr = 255*cos(((540*temp)/255)*(180/3.14159));
+    int tempg = -1*255*sin(((540*temp)/255)*(180/3.14159));
+    int tempb = 255*sin(((540*temp)/255)*(180/3.14159));
+    //Bound wave between 0 and 255. Clip wave below 0
+    if(tempr > 0){
+        this->r = tempr;
+    }
+    else if(tempr < 1){
+        this->r = 0;
+    }
+    if(tempg > 0){
+        this->g = tempg;
+    }
+    else if(tempg < 1){
+        this->g = 0;
+    }
+    if(tempb > 0){
+        this->b = tempb;
+    }
+    else if(tempb < 1){
+        this->b = 0;
+    }
+    
+    this->g = -1*255*sin(((540*temp)/255)*(180/3.14159));
+    this->b = 255*sin(((540*temp)/255)*(180/3.14159));
 }
 void pixMask::monoUpdate(short temp){
     this->r = temp;

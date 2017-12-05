@@ -269,7 +269,7 @@ int main(int, char const**)
                         newPix.setPosition( xPix, yPix );
                         
                          //Hardware Function
-                         pixel.monoUpdate( gridward.read(pixAddr) );
+                         pixel.fastUpdate( gridward.read(pixAddr) );
                          newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
@@ -328,7 +328,7 @@ int main(int, char const**)
                             int index = 10*i + j;
                             int address = 0x80 + 20*i+2*j;
                             
-                            pixel.monoUpdate(previousFPtr->access(i,j));
+                            pixel.fastUpdate(previousFPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             // Pixel Position
@@ -356,7 +356,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.monoUpdate( fPtr->access(i,j) );
+                            pixel.fastUpdate( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             window.draw(newPix);
@@ -373,7 +373,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.monoUpdate( previousFPtr->access(i,j) );
+                            pixel.fastUpdate( previousFPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             window.draw(newPix);
