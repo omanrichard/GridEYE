@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 #include <math.h>
-#include "mouse.hpp"
+#include "Mouse.hpp"
 #include "projectClasses.h"
 
 #ifndef graphicClasses_h
