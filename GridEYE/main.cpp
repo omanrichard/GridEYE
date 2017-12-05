@@ -55,8 +55,8 @@ int main(int, char const**)
 {
     pinMode(GREENLED, OUTPUT);
     pinMode(REDLED,OUTPUT);
-    digitalWrite(GREENLED, HIGH);
-    digitalWrite(REDLED, HIGH);
+    digitalWrite(GREENLED, 1);
+    digitalWrite(REDLED, 1);
 //-----------------------------------------------------------------
 // Video Capture Experiment Variables - Can we delete this? -- Eventually
 //-----------------------------------------------------------------
@@ -142,7 +142,7 @@ int main(int, char const**)
         
                 //Settings Menu
                 if(menuLayer == 1){
-                    digitalWrite(GREENLED,LOW);
+                    digitalWrite(GREENLED,0);
                     setward.onClick(window, gridward, stackward); //Scans buffer for corosponing inputs.
                     recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
@@ -153,7 +153,7 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    digitalWrite(REDLED,LOW);
+                    digitalWrite(REDLED,0);
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
