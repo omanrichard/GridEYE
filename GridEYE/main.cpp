@@ -4,7 +4,7 @@
 #include "Event.hpp"                        //Mouse Move Events
 #include "Mouse.hpp"                       //Mouse Clicks
 
-#include <wiringPi.h>                     //Raspberry Pi GPIO
+//#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
 #include <fstream>                          //FILE I/O
 #include <vector>
@@ -53,12 +53,14 @@ int pixScale = 51;
 
 int main(int, char const**)
 {
+    /*
     wiringPiSetup();
     pinMode(GREENLED, OUTPUT);
     pinMode(REDLED,OUTPUT);
    
     digitalWrite(GREENLED, 0); //Turns Green Led On
     digitalWrite(REDLED, 1);
+     */
 //-----------------------------------------------------------------
 // Video Capture Experiment Variables - Can we delete this? -- Eventually
 //-----------------------------------------------------------------
@@ -126,12 +128,16 @@ int main(int, char const**)
     {
       //LED Control
         if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
+           /*
             digitalWrite(GREENLED,1);
             digitalWrite(REDLED,0);
+            */
         }
         else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
+            /*
             digitalWrite(GREENLED,0);
             digitalWrite(REDLED,1);
+             */
         }
         
         //-----------------------------------------------------------------
@@ -253,21 +259,14 @@ int main(int, char const**)
         // Layer Control
         //-----------------------------------------------------------------
         switch(menuLayer){
-            
             default:    //Streams Live data from sensor but not recording
                 pixAddr = 0x80;
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j ++ ){
-                    
-                        //Test Function
-                        //pixel.fastUpdate( rand() % 255 );
-                        //newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                        
                         // Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
                         newPix.setPosition( xPix, yPix );
-                        
                         
                          //Hardware Function
                          pixel.monoUpdate( gridward.read(pixAddr) );
@@ -295,17 +294,15 @@ int main(int, char const**)
                 
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
-        
-                            pixel.monoUpdate(fPtr->access(i,j));
-                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                        
                             // Pixel Position
                             xPix = (xGrid + i*51);
                             yPix = (yGrid + j*51);
                             newPix.setPosition( xPix, yPix );
+                            //Memory Registers
+                            int index = 10*i + j;
+                            int address = 0x80 + 20*i+2*j;
+                            pixel.monoUpdate(fPtr->access(i,j));
+                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                             // Draw the Pixel
                             window.draw( newPix );

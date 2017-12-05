@@ -12,7 +12,7 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-#include <wiringPiI2C.h>
+//#include <wiringPiI2C.h>
 
 #define PGE 0x68
 #define PCR 0x00
@@ -32,10 +32,10 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
-    
+    /*
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
-     
+     */
         FPS = 10;
         runtime = 10;
      
@@ -50,24 +50,24 @@ GridEYE::GridEYE( int address ){
 // GridEYE Methods
 //-----------------------------------------------------------------
 void GridEYE::setFD(void){
-    fd = wiringPiI2CSetup( PGE );
+   // fd = wiringPiI2CSetup( PGE );
 }
 
 int GridEYE::read( int pixAddr ){
     short temp = 0;
     short temp2 = 0;
     short result = 0;
-    /*
+    
     this->test( 0, 0 );
     temp = this->r;
-    */
     
+    /*
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg8( fd, pixAddr ); // Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
     temp = temp >> 2;                           // Thermistor has 12-bit data
-                                                // Shift 2 removes precision Bits, makes short data 8-bit temperature
-     
+                                            // Shift 2 removes precision Bits, makes short data 8-bit temperature
+     */
      //wiringPiI2CWriteReg8( fd, pixAddr+1 , 1 );
      //temp2 = wiringPiI2CReadReg8( fd, pixAddr+1 );
      //wiringPiI2CWriteReg8( fd, pixAddr+1, 0);
@@ -82,7 +82,7 @@ int GridEYE::read( int pixAddr ){
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-    wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+   // wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -142,19 +142,19 @@ void GridEYE::setRunTime( int newTime ){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    
+    /*
     try{
         if( temp == 1 || temp == 10 )
             throw -1;
         if( temp == 1 )
-            wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+           // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
-            wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+           // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
     }
     catch( int ){
         cout << "Exception Handled: invalid setting value" << endl;
     }
-    
+    */
     return;
 }
 
@@ -411,10 +411,8 @@ video::video( GridEYE* gPtr ){
     
     for( int x = 0 ; x < frameCount ; x++){
         if( gPtr->getFPS() == 10 ){
-            //delayMicroseconds(1000000);   // 0.1 second
         }
         else{
-            //delayMicrosecond(10000000);   // 1 second
         }
         temp = new frame( gPtr );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
@@ -442,7 +440,7 @@ void video::setframeCount( int count ){
 }
 
 void video::exportVideo( string filename ){
-    frame* temp = NULL;
+    frame* temp;
     fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );
 
@@ -454,8 +452,9 @@ void video::exportVideo( string filename ){
     for( int x = 0 ; x < frameCount ; x++ ){
         newOutput << "Frame No. : " << x + 1 << endl;
         temp = this->getFrame(x);
+        
         for( row = 0 ; row < 8 ; row++ ){                                        // Frame No. : 1
-            newOutput << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+            newOutput << "\t"                           // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
             << "[ " << temp->access(col, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
             << "[ " << temp->access(col, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
             << "[ " << temp->access(col, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
