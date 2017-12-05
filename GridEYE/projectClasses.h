@@ -57,7 +57,7 @@ public:
     GridEYE( int frames, int time );
     GridEYE( int address );
     ~GridEYE();
-    
+    void setFD(void);
     int read(int pixAddr);
     
     void reset(void);

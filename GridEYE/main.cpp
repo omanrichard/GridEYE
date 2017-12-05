@@ -117,6 +117,7 @@ int main(int, char const**)
 
     
     topward.setMode(0); //Set Mode to standy By
+    gridward.setFD();//Fix
     while (window.isOpen()) //While the window is open.
     {
         //-----------------------------------------------------------------
@@ -176,6 +177,7 @@ int main(int, char const**)
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
                     
+                    digitalWrite(REDLED,1);
                     recordStatus = false;
                     playward.setClipEndTime(time(NULL));
                     }
@@ -187,6 +189,7 @@ int main(int, char const**)
                 }
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
+                    digitalWrite(GREENLED,1);
                     stackward.print("Exporting Video");
                     vPtr->exportVideo( "Test1.txt" );   // Exports data packet
                     stackward.print("Success");
