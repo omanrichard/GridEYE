@@ -192,9 +192,6 @@ int main(int, char const**)
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
                         
-                        delete vPtr;
-                        vPtr = new video;
-                        
                     recordStatus = false;
                     playward.setClipEndTime(time(NULL));
                     }
@@ -208,16 +205,16 @@ int main(int, char const**)
                 if(menuLayer == 5){//Executes Once when Export is clicked
                    
                     stackward.print("Exporting Video");
-                    vPtr->exportVideo( "Test1.txt" );   // Exports data packet
+                    vPtr->exportVideo( "Test1.txt" );   // Exports data file
                     stackward.print("Success");
                     menuLayer = 0;
                     
                     toolward.sync(menuLayer);
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
-                
-                    //Insert Code to Delete Video Here
-                
+                    
+                    currentSession.undoRec();
+                    
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 
@@ -252,9 +249,9 @@ int main(int, char const**)
        
         
         
-//-----------------------------------------------------------------
-// Layer Control
-//-----------------------------------------------------------------
+        //-----------------------------------------------------------------
+        // Layer Control
+        //-----------------------------------------------------------------
         switch(menuLayer){
             
             default:    //Streams Live data from sensor but not recording

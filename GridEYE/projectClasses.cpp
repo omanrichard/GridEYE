@@ -358,16 +358,16 @@ void frame::updateFrame( GridEYE gPtr ){
 
 void frame::print(){
     
-    for( col = 0 ; col < 8 ; col++){                                        // Frame No. : 1
+    for( row = 0 ; row < 8 ; row++){                                        // Frame No. : 1
         cout << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-        << "[ " << this->sensor_values[col][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-        << "[ " << this->sensor_values[col][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-        << "[ " << this->sensor_values[col][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-        << "[ " << this->sensor_values[col][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-        << "[ " << this->sensor_values[col][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-        << "[ " << this->sensor_values[col][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-        << "[ " << this->sensor_values[col][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-        << "[ " << this->sensor_values[col][7] << " ] " << endl;
+        << "[ " << this->sensor_values[row][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+        << "[ " << this->sensor_values[row][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+        << "[ " << this->sensor_values[row][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+        << "[ " << this->sensor_values[row][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+        << "[ " << this->sensor_values[row][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+        << "[ " << this->sensor_values[row][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+        << "[ " << this->sensor_values[row][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+        << "[ " << this->sensor_values[row][7] << " ] " << endl;
     }
     return;
 }
@@ -441,26 +441,29 @@ void video::setframeCount( int count ){
 }
 
 void video::exportVideo( string filename ){
+    frame* temp = NULL;
     fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );
-    
-    newOutput << "*" << frameCount;    // Copies data from memory to file
-    
-    for( int x = 0; x < frameCount; x++ ){
-        frame* temp = (data[x]);
-        newOutput << "%" << x;                                              // Begin Packet % indicates frame number
-        newOutput << "&" << temp->get_max() << "&" << temp->get_mean();     // & indicates sub-data value
-        for( int y = 0; y < 8 ; y++){
-            newOutput << "@" << "$" << temp->access( y, 0 )             // @ indicates row begin
-            << "$" << temp->access( y, 1 )
-            << "$" << temp->access( y, 2 )             // $ indicates data value
-            << "$" << temp->access( y, 3 )
-            << "$" << temp->access( y, 4 )
-            << "$" << temp->access( y, 5 )
-            << "$" << temp->access( y, 6 )
-            << "$" << temp->access( y, 7 );
+
+    newOutput << "Frame Count: " << this->frameCount
+              << "Avg. Temp: "   << this->mean
+              << "Max Temp: "    << this->max
+              << endl;   // Copies data from memory to file
+
+    for( int x = 0 ; x < frameCount ; x++ ){
+        newOutput << "Frame No. : " << x + 1 << endl;
+        
+        for( row = 0 ; row < 8 ; row++ ){                                        // Frame No. : 1
+            newOutput << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
+            << "[ " << this->access[row][0] << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+            << "[ " << this->access[row][1] << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+            << "[ " << this->access[row][2] << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+            << "[ " << this->access[row][3] << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+            << "[ " << this->access[row][4] << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+            << "[ " << this->access[row][5] << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+            << "[ " << this->access[row][6] << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+            << "[ " << this->access[row][7] << " ]\t" << endl;
         }
-        newOutput << "#"; // End Packet
     }
     newOutput.close( ); // Close file
     return;
