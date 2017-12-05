@@ -49,11 +49,13 @@ int xPix, yPix;
 
 int pixScale = 51;
 
-pinMode(GREENLED, OUTPUT);
-pinMode(REDLED,OUTPUT);
+
 
 int main(int, char const**)
 {
+    wiringPiSetup();
+    pinMode(GREENLED, OUTPUT);
+    pinMode(REDLED,OUTPUT);
    
     digitalWrite(GREENLED, 1);
     digitalWrite(REDLED, 1);
