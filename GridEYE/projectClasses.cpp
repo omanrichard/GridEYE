@@ -197,12 +197,15 @@ void pixMask::fastUpdate( short temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
 //Should increases speed
 //540 degrees of resoultion
-    float lambda = (float(540)*float(temp))/float(255);
-    this->r = 255*cos(lambda);
-    this->g = -1*255*sin(lambda);
-    this->b = 255*sin(lambda);
+    this->r = 255*cos((540*temp)/255);
+    this->g = -1*255*sin((540*temp)/255);
+    this->b = 255*sin((540*temp)/255);
 }
-
+void pixMask::monoUpdate(short temp){
+    this->r = temp;
+    this->g = 0;
+    this->b = 0;
+}
 void pixMask::update( short temp ){
     int R1 = 0;
     int G1 = 0;
