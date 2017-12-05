@@ -67,6 +67,8 @@ int main(int, char const**)
     video* vPtr = NULL;
     frame* fPtr = NULL;
     
+    int sessionIndex = 0;
+    int fCount = 0;
     int tempCount = 0;
     int temp = 0;       // Stores value from GridEYE pixel
     int pixAddr = 0x80; // GridEYE pixel 1
@@ -192,6 +194,7 @@ int main(int, char const**)
                         
                         delete vPtr;
                         vPtr = new video;
+                        
                     recordStatus = false;
                     playward.setClipEndTime(time(NULL));
                     }
@@ -256,7 +259,6 @@ int main(int, char const**)
             
             default:    //Streams Live data from sensor but not recording
                 pixAddr = 0x80;
-                
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j ++ ){
                     
@@ -318,6 +320,12 @@ int main(int, char const**)
                 
                     tempTime = time(NULL);
                     previousFPtr = fPtr;
+                    fCount++;
+                    
+                    if( fCount == (gPtr->getFPS() * gPtr->getRuntime()) ){
+                        currentSession.addVideo(vPtr);
+                        sessionIndex++;
+                    }
                 }
                 else
                     for( i = 0 ; i < 8 ; i++ ){
@@ -343,6 +351,7 @@ int main(int, char const**)
                 break;
 
             case 3:     //Playback Mode
+                vPtr = currentSession.getVideo(sessionIndex);
                 tempCount = vPtr->getframeCount();
 
                 if( difftime( time(NULL), tempTime) >= 1 ){

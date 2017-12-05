@@ -560,6 +560,10 @@ void session::undoRec(){        // Removes "active" recording from the stack of 
     this->vCount--;             // update video count value
 }
 
+video* session::getVideo( int index ){
+    return this->current[index];
+}
+
 session::~session(){}
 //-----------------------------------------------------------------
 

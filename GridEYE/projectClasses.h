@@ -176,6 +176,7 @@ public:
     void addVideo( video* newVid ); // Implement Save button
     void undoRec();                 // Implement Delete Button
     void print();
+    video* getVideo( int index );
 };
 //-----------------------------------------------------------------
 

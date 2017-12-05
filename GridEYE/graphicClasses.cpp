@@ -746,27 +746,28 @@ void topBar::setMode(int newMode){
     mode = newMode;
     updateMode();
 }
-    void topBar::updateMode(void){
-        switch(mode){
-            default:
-                modeText.setFillColor(sf::Color::Green);
-                modeText.setString("Stand-By");
-                break;
-            case 2:
-                modeText.setFillColor(sf::Color::Red);
-                modeText.setString("Recording");
-                clipStart = time(NULL);
-                break;
-            case 3:
-                modeText.setFillColor(sf::Color::Yellow);
-                modeText.setString("Play Back");
-                break;
-            case 4:
-                modeText.setFillColor(sf::Color(0,115,115));
-                modeText.setString("Replay");
-                break;
+
+void topBar::updateMode(void){
+    switch(mode){
+        default:
+            modeText.setFillColor(sf::Color::Green);
+            modeText.setString("Stand-By");
+            break;
+        case 2:
+            modeText.setFillColor(sf::Color::Red);
+            modeText.setString("Recording");
+            clipStart = time(NULL);
+            break;
+        case 3:
+            modeText.setFillColor(sf::Color::Yellow);
+            modeText.setString("Play Back");
+            break;
+        case 4:
+            modeText.setFillColor(sf::Color(0,115,115));
+            modeText.setString("Replay");
+            break;
         }
-    };
+}
 
 void topBar::draw(sf::RenderWindow &window){
     window.draw(background);
@@ -775,7 +776,6 @@ void topBar::draw(sf::RenderWindow &window){
     window.draw(titleText);
     window.draw(subText);
     window.draw(clockText);
-    
 }
 
 void topBar::updateClock(time_t currentTime){
