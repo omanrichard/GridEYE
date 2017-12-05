@@ -33,7 +33,8 @@ toolbar toolward;                           //Toolbar
 settingsMenu setward;                       //Settings Menu
 topBar topward;                             //Top Status Bar
 playBar playward(sf::Vector2f(35, 375),1);  //Playback bar
-
+fastVideo vidward;                          //Test Video Implementation
+ fastFrame newFrame;
 //State Variables
 int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playback;
                                             //4:Stop;5:Save;6:Delete
@@ -222,38 +223,43 @@ int main(int, char const**)
             }
         }
    
-   
-        window.clear();                         //Clears Screen Object of all Elements
-    
-        window.draw(background);                //Draws Background Object First
+        
         topward.updateClock(time(NULL));        //Updates Clock
         
+        window.clear();                         //Clears Screen Object of all Elements
+        
+        window.draw(background);                //Draws Background Object First
         topward.draw(window);                   //Draws Top Bar
         stackward.draw(window);                 //Draws Terminal
         toolward.draw(window);                  //Draws Toolbar
        
         
         
-        
-        //-----------------------------------------------------------------
-        // Layer Control
-        //-----------------------------------------------------------------
+//-----------------------------------------------------------------
+// Layer Control
+//-----------------------------------------------------------------
         switch(menuLayer){
-            default:    // Draw Active Grid
+            default:    //Streams Live data from sensor but not recording
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j ++ ){
+                    
+                        //Test Function
+                        pixel.fastUpdate( rand() % 255 );
+                        newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                        
                         // Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
                         newPix.setPosition( xPix, yPix );
                         
-                        gridward.test(i,j);
-                        pixel.update( gridward.r );
-                        newPix.setFillColor(sf::Color(gridward.r,gridward.g,gridward.b));
+                        //Memory Registers
+                        if(pixAddr <= 0xFF && pixAddr > 0x80) //Error Protection
+                        pixAddr += 2;           //Incriment to next Register
                         
                         /*
-                         pixel.update( gridward.read(pixAddr) );
-                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb());
+                         //Hardware Function
+                         pixel.fastUpdate( gridward.read(pixAddr) );
+                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         */
                         
                         // Draw the Pixel
@@ -262,17 +268,57 @@ int main(int, char const**)
                 }
                 break;
                 
-            case 1:     //Settings Menu
-                setward.draw(window);                   //Settings Menu
+            case 1:   //Settings Menu
+                setward.draw(window);//Draw Settings Menu
                 break;
-            case 2:                               //Capture Mode
-                playward.record(topward,stackward,recordStatus,recordTime); //Playbar Recording Control
-                playward.draw(window);                  //Update window object
+            
+            case 2:  //Capture Mode
+                
+                for( int row = 0 ; row < 8 ; row++ ){
+                    for( int col = 0 ; col < 8 ; col ++ ){
+                        
+                        //Test Function
+                       
+                        int index = 10*row + col;
+                        int address = 0x80 + 20*row+2*col;
+        
+                        newFrame.frame[index] = (rand() % 255);
+                        pixel.fastUpdate(newFrame.frame[index]);
+                        newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                        
+
+                        // Pixel Position
+                        xPix = (xGrid + i*51);
+                        yPix = (yGrid + j*51);
+                        newPix.setPosition( xPix, yPix );
+                        
+                        //Memory Registers
+                        if(pixAddr <= 0xFF && pixAddr > 0x80) //Error Protection
+                            pixAddr += 2;           //Incriment to next Register
+                        
+                        /*
+                         //Hardware Function
+                         pixel.fastUpdate( gridward.read(pixAddr) );
+                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                         */
+                        
+                        // Draw the Pixel
+                        
+                        window.draw( newPix );
+                    }
+                }
+            
+                
+                    if(recordStatus == true){
+                        vidward.addFrame(newFrame);
+                    }
+                playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
+                playward.draw(window);//Draws playbar element to window object
                 break;
 
             case 3:     //Playback Mode
                 
-                do{
+               /* do{
                     fPtr = vPtr->getFrame( tempCount ); //Playback Grid
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
@@ -280,7 +326,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.update( fPtr->access(i,j) );
+                            pixel.fastUpdate( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             if( difftime( time(NULL), tempTime) >= (1/gridward.getFPS())){
@@ -290,6 +336,8 @@ int main(int, char const**)
                     }
                     tempCount++;
                 } while(tempCount < vPtr->getframeCount());
+                
+                */
                 
                 playward.draw(window);//Update window object
                 playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations

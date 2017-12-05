@@ -19,6 +19,28 @@
 
 using namespace std;
 
+
+struct fastFrame {
+    
+    int frameCount;
+    short frame[64];
+    
+};
+
+class fastVideo {
+private:
+    vector<fastFrame> videoFile;
+public:
+    void addFrame(fastFrame newFrame){videoFile.push_back(newFrame);};
+    short playVideo(int frameNumber, int row, int col);
+
+    
+};
+
+
+
+
+
 //-----------------------------------------------------------------
 // GridEYE
 //-----------------------------------------------------------------
@@ -42,8 +64,10 @@ public:
     
     //removing soon
     void test(int row, int col);    //Draw Test pattern
+    
     short pixelL;
     int r,g,b;
+    short randTemp(void){ return rand()%255;};
     //
     void setRunTime( int nTime );
     void setFPS( int nFPS );
@@ -67,7 +91,7 @@ public:
     ~pixMask();
     
     void update( short temp );
-    void testUpdate( short temp ); //New implimentation for speeed improvements
+    void fastUpdate( short temp ); //New implimentation for speeed improvements
     int getr();    // access r value
     int getg();    // access g value
     int getb();    // access b value
@@ -89,7 +113,7 @@ private:                            // 0  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     frame();
-    frame(GridEYE gridward);
+    frame(GridEYE &gridward);
     frame( GridEYE* gPtr );
     ~frame();
     

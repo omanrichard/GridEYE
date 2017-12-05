@@ -19,6 +19,19 @@
 using namespace std;
 int row,col;
 
+
+
+
+short fastVideo::playVideo(int frameNumber, int row, int col){
+    int address = 0x80 + (10*2*row + 2*col);
+    return videoFile[frameNumber].frame[address];
+    
+    
+    
+}
+
+
+
 //-----------------------------------------------------------------
 // GridEYE Constructors
 //-----------------------------------------------------------------GridEYE::GridEYE(){
@@ -66,10 +79,30 @@ void GridEYE::reset(void){
 }
 
 void GridEYE::test(int row, int col){
-    r = rand() % 255;
-    g = rand() % 255;
-    b = rand() % 255;
+   
+    if(col < 2){
+        r = rand() % 255;
+        g = rand() % 255;
+        b = rand() % 255;
+    }
+    
+    if(col > 1 && col < 4){
+        r = rand() % 255;
+        g= 255;
+        b = 255;
+    }
+    if(col > 3 && col < 6){
+        r = 255;
+        g = rand() % 255;
+        b = 255;
+    }
+    if(col > 5){
+        r = 255;
+        g = 255;
+        b = rand() % 255;
+    }
 }
+
 
 int GridEYE::getfd(){
     return this->fd;
@@ -125,6 +158,8 @@ GridEYE::~GridEYE(){
     
 }
 
+
+
 //-----------------------------------------------------------------
 // pixMask Methods
 //-----------------------------------------------------------------
@@ -149,7 +184,7 @@ int pixMask::getg(){
 int pixMask::getb(){
     return this->b;
 }
-void pixMask::testUpdate( short temp ){
+void pixMask::fastUpdate( short temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
 //Should increases speed
 //540 degrees of resoultion
@@ -220,9 +255,10 @@ void pixMask::update( short temp ){
 // Frame Methods
 //----------------------------------------------------------------
 frame::frame(){
+    //fastFrame newFrame;
     for( row=0 ; row < 8 ; row++ ){
         for( col=0 ; col < 8 ; col++){
-            this->sensor_values[row][col] = 0;
+            //newFrame.frame[row][col] = 0;
         }
     }
     this->mean = 0;
@@ -230,12 +266,12 @@ frame::frame(){
     return;
 }
 
-frame::frame(GridEYE gridward){
+frame::frame(GridEYE &gridward){
+    
     for( row = 0 ; row < 8 ; row++ ){
         for( col = 0 ; col < 8 ;  col++){
-            gridward.test( row,col );
-            gridward.pixelL = gridward.g;
-            this->sensor_values[row][col] = gridward.pixelL;  // Receive value from device, end transmission
+            //newFrame.frame[row][col] = gridward.randTemp();
+            //this->sensor_values[row][col] = gridward.randTemp();  // Receive value from device, end transmission
         }
     }
     set_max();
