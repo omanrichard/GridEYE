@@ -52,11 +52,11 @@ int GridEYE::read( int pixAddr ){
     short temp = 0;
     short temp2 = 0;
     short result = 0;
-    
+    /*
     this->test( 0, 0 );
     temp = this->r;
+    */
     
-    /*
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
     temp = wiringPiI2CReadReg8( fd, pixAddr ); // Receive value from pixel
     temp = temp >> 4;                           // Thermistor has 12-bit data
@@ -67,14 +67,14 @@ int GridEYE::read( int pixAddr ){
      temp2 = temp2 << 4;
      
      result = temp2 & temp;
-     */
+     
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-    //wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+    wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -134,7 +134,7 @@ void GridEYE::setRunTime( int newTime ){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    /*
+    
     try{
         if( temp == 1 || temp == 10 )
             throw -1;
@@ -146,7 +146,7 @@ void GridEYE::setFPS(int temp){
     catch( int ){
         cout << "Exception Handled: invalid setting value" << endl;
     }
-     */
+    
     return;
 }
 
