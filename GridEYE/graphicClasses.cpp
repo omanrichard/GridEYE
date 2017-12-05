@@ -20,7 +20,7 @@
 interactiveObject::interactiveObject(void){
     
     if (!defaultFont.loadFromFile("sansation.ttf")) { //Loads default Font from from
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
 }
 
@@ -130,25 +130,25 @@ toolbar::toolbar(void){
  
     
     if (!t_settings.loadFromFile("settings.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_record.loadFromFile("record.png")) {
-        return EXIT_FAILURE;
+       //return EXIT_FAILURE;
     }
     if (!t_stop.loadFromFile("stop.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_play.loadFromFile("play.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_trash.loadFromFile("trash.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_save.loadFromFile("save.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_quit.loadFromFile("gravestone.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     
     
@@ -344,7 +344,7 @@ void toolbar::sync(int newMenuLayer){
 settingsMenu::settingsMenu(void){
     
     if(!t_close.loadFromFile("cancel.png")){
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
  
     settingsExit.setTexture(t_close);
@@ -811,10 +811,10 @@ playBar::playBar(sf::Vector2f position, int scale){
     
     origin = position;
     if (!t_background.loadFromFile("audio-player.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
     if (!t_fillBar.loadFromFile("progress.png")) {
-        return EXIT_FAILURE;
+        //return EXIT_FAILURE;
     }
 
     

@@ -2,7 +2,7 @@
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>                //Grahpics Librars
 #include "Event.hpp"                        //Mouse Move Events
-#include <Mouse.hpp>                        //Mouse Clicks
+#include "Mouse.hpp"                       //Mouse Clicks
 
 //#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
