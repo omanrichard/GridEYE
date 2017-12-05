@@ -150,7 +150,8 @@ int main(int, char const**)
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
-                    vPtr = new video;
+                    vPtr = new video();
+                    vPtr->setframeCount(gPtr->getFPS() * gPtr->getRuntime());
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -163,10 +164,11 @@ int main(int, char const**)
                   
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
-                // Record Video
+                // Stop-Record
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                     if(recordStatus == true){
-                    
+                        delete vPtr;
+                        vPtr = new video;
                     recordStatus = false;
                     playward.setClipEndTime(time(NULL));
                     }
@@ -185,7 +187,7 @@ int main(int, char const**)
                     
                     toolward.sync(menuLayer);
                 }
-                if(menuLayer == 6){///Executes Once when Delete is clicked
+                if(menuLayer == 6){//Executes Once when Delete is clicked
                 
                     //Insert Code to Delete Video Here
                 
@@ -262,6 +264,8 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
+                fPtr = new frame(gPtr);
+                vPtr->addFrame( fPtr );
                 
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j++ ){
@@ -269,8 +273,7 @@ int main(int, char const**)
                         int index = 10*i + j;
                         int address = 0x80 + 20*i+2*j;
         
-                        newFrame.frame[index] = (rand() % 255);
-                        pixel.fastUpdate(newFrame.frame[index]);
+                        pixel.fastUpdate(fPtr->access(i,j));
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         // Pixel Position

@@ -426,6 +426,10 @@ int video::getframeCount(){
     return this->frameCount;
 }
 
+void video::setframeCount( int count ){
+    this->frameCount = count;
+}
+
 void video::exportVideo( string filename ){
     fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );

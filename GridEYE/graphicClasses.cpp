@@ -480,8 +480,9 @@ settingsMenu::settingsMenu(void){
 void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal stackward){//Button presses
     // Colors - Select: 30,144,255 Unselect: 135,206,250
     menuLayer = 1; //Set internal menuLayer reference
-    int newTime = 0;
-    int newFPS = 10;
+    
+    int newTime = gridward.getRuntime();
+    int newFPS = gridward.getFPS();
     bool newDR = gridward.getDR();
     
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){//When Left Mouse is clicked
@@ -606,7 +607,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsMinsText.setString(std::to_string(recordMins));
                 recordSeconds = 0;
                 settingsSecondsText.setString(std::to_string(recordSeconds));
-                //stackward.print("Reset","Grid-EYE");
+                stackward.print("Reset","Grid-EYE");
                 
             }}
         
@@ -626,8 +627,6 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
             }}
     }//end button down
     
-    
-    //
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
         sf::Vector2i position = sf::Mouse::getPosition(window);
         
@@ -972,7 +971,6 @@ void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int 
         fillBar.setScale(0,1);
     }
     currentTimeText.setString(bufferA + " / " + bufferB);
-    
     
 }
 
