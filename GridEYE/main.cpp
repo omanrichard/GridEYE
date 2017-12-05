@@ -17,8 +17,8 @@
 #include "graphicClasses.h"                 //User Interface Objects Classes
 
 //GPIO
-#define GREENLED 4 - I need to look at my schematic                         //GPIO pin connected to Green LED Anode
-#define REDLED   5 - I need to look at my schematic                       //GPIO Pin connected to Red LED Anode
+#define GREENLED 4                         //GPIO pin connected to Green LED Anode
+#define REDLED   5                   //GPIO Pin connected to Red LED Anode
 #define PDE 0x68                            //Grid-EYE I2C Address
 #define xGrid 200
 #define yGrid 98
