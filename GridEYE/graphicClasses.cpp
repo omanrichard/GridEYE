@@ -621,6 +621,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 gridward.setFPS( newFPS );
                 gridward.setDR( newDR );
                 stackward.print("Settings Applied");
+                
                 menuLayer = 0;
             }}
     }//end button down

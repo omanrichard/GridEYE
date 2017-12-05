@@ -76,20 +76,19 @@ int main(int, char const**)
     // window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
 
     //----------------- Camera Grid -----------------
-    sf::RectangleShape grid[8][8];
     sf::RectangleShape newPix(sf::Vector2f(50, 50));
 
     //----------------- Background ------------------
    
-    sf::Texture t_background;//Background text - stays global for now
-    sf::Sprite background;//Background Sprite - stays global for now
+   // sf::Texture t_background;//Background text - stays global for now
+   // sf::Sprite background;//Background Sprite - stays global for now
     
-    if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
-        return EXIT_FAILURE;//Exit program and report error if file can be found
-    }
-    background.setTexture(t_background);//maps background text to background sprite
-    background.setPosition(0,0);//move background sprite to origin
-    window.draw(background);//draws background
+   // if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
+    //    return EXIT_FAILURE;//Exit program and report error if file can be found
+    //}
+    //background.setTexture(t_background);//maps background text to background sprite
+    //background.setPosition(0,0);//move background sprite to origin
+    //window.draw(background);//draws background
 
 //-----------------------------------------------------------------
 // Draw Loop
@@ -113,16 +112,6 @@ int main(int, char const**)
     topward.setMode(0); //Set Mode to standy By
     while (window.isOpen()) //While the window is open.
     {
-        
-        
-        
-        // For real-time window drawing experiment
-        pixAddr = 0x80;
-        temp = 0;
-        
-        
-    
-   
         //-----------------------------------------------------------------
         // Process Events
         //-----------------------------------------------------------------
@@ -161,7 +150,6 @@ int main(int, char const**)
                     playward.setClipStartTime(time(NULL));
                     recordStatus = true;
                     
-                    tempTime = time(NULL);
                     vPtr = new video;
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
@@ -228,7 +216,7 @@ int main(int, char const**)
         
         window.clear();                         //Clears Screen Object of all Elements
         
-        window.draw(background);                //Draws Background Object First
+        //window.draw(background);                //Draws Background Object First
         topward.draw(window);                   //Draws Top Bar
         stackward.draw(window);                 //Draws Terminal
         toolward.draw(window);                  //Draws Toolbar
@@ -244,23 +232,22 @@ int main(int, char const**)
                     for( j = 0 ; j < 8 ; j ++ ){
                     
                         //Test Function
-                        pixel.fastUpdate( rand() % 255 );
-                        newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
+                        //pixel.fastUpdate( rand() % 255 );
+                        //newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         // Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
                         newPix.setPosition( xPix, yPix );
                         
-                        //Memory Registers
-                        if(pixAddr <= 0xFF && pixAddr > 0x80) //Error Protection
-                        pixAddr += 2;           //Incriment to next Register
                         
-                        /*
                          //Hardware Function
                          pixel.fastUpdate( gridward.read(pixAddr) );
                          newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                        */
+                        
+                        //Memory Registers
+                        if(pixAddr < 0xFF && pixAddr >= 0x80) //Error Protection
+                            pixAddr += 2;           //Incriment to next Register
                         
                         // Draw the Pixel
                         window.draw( newPix );
@@ -274,27 +261,20 @@ int main(int, char const**)
             
             case 2:  //Capture Mode
                 
-                for( int row = 0 ; row < 8 ; row++ ){
-                    for( int col = 0 ; col < 8 ; col ++ ){
-                        
-                        //Test Function
-                       
-                        int index = 10*row + col;
-                        int address = 0x80 + 20*row+2*col;
+                for( i = 0 ; i < 8 ; i++ ){
+                    for( j = 0 ; j < 8 ; j++ ){
+                        //Memory Registers
+                        int index = 10*i + j;
+                        int address = 0x80 + 20*i+2*j;
         
                         newFrame.frame[index] = (rand() % 255);
                         pixel.fastUpdate(newFrame.frame[index]);
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
-
                         // Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
                         newPix.setPosition( xPix, yPix );
-                        
-                        //Memory Registers
-                        if(pixAddr <= 0xFF && pixAddr > 0x80) //Error Protection
-                            pixAddr += 2;           //Incriment to next Register
                         
                         /*
                          //Hardware Function
@@ -303,7 +283,6 @@ int main(int, char const**)
                          */
                         
                         // Draw the Pixel
-                        
                         window.draw( newPix );
                     }
                 }

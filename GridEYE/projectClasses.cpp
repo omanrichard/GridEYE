@@ -19,15 +19,9 @@
 using namespace std;
 int row,col;
 
-
-
-
 short fastVideo::playVideo(int frameNumber, int row, int col){
     int address = 0x80 + (10*2*row + 2*col);
     return videoFile[frameNumber].frame[address];
-    
-    
-    
 }
 
 
@@ -38,14 +32,11 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 
 GridEYE::GridEYE(){
     /*
-     GridEYE::GridEYE(){
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
      
         FPS = 10;
         runtime = 10;
-     
-     }
      */
 }
 // Will remove eventually
@@ -58,14 +49,24 @@ GridEYE::GridEYE( int address ){
 // GridEYE Methods
 //-----------------------------------------------------------------
 int GridEYE::read( int pixAddr ){
-    int temp = 0;
+    short temp = 0;
+    short temp2 = 0;
+    short result = 0;
+    
     this->test( 0, 0 );
     temp = this->r;
+    
     /*
-    wiringPiI2CWriteReg16( fd, pixAddr, 1 );    // Write to pixel, requests data
-    temp = wiringPiI2CReadReg16( fd, pixAddr ); // Receive value from pixel
-    temp = temp >> 2;                           // Thermistor has 12-bit data
+    wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
+    temp = wiringPiI2CReadReg8( fd, pixAddr ); // Receive value from pixel
+    temp = temp >> 4;                           // Thermistor has 12-bit data
                                                 // Shift 2 removes precision Bits, makes short data 8-bit temperature
+     
+     wiringPiI2CWriteReg8( fd, pixAddr+1 , 1 );
+     temp2 = wiringPiI2CReadReg8( fd, pixAddr+1 );
+     temp2 = temp2 << 4;
+     
+     result = temp2 & temp;
      */
     return temp;
 }
@@ -208,43 +209,43 @@ void pixMask::update( short temp ){
         }
         
         if(phase == 7){
-            G1 += 30;
-            B1 += 30;
+            G1 += 15;
+            B1 += 15;
         }
         
         if(phase == 6){
-            G1 -= 30;
+            G1 -= 15;
             if(G1 <= 0)
                 phase = 7;
         }
         
         if(phase == 5){
-            R1 += 30;
+            R1 += 15;
             if(R1 >= 252)
                 phase = 6;
         }
         
         if(phase == 4){
-            B1 -= 30;
+            B1 -= 15;
             if(B1 <= 0)
                 phase = 5;
         }
         
         if(phase == 3){
-            G1 += 30;
+            G1 += 15;
             if( G1 >= 252)
                 phase = 4;
         }
         
         if(phase == 2){
-            R1 -= 30;
+            R1 -= 15;
             if( R1 <= 0)
                 phase = 3;
         }
         
         if(phase == 1){
-            R1 += 30;
-            B1 += 30;
+            R1 += 15;
+            B1 += 15;
             if( R1 >= 252)
                 phase = 2;
         }

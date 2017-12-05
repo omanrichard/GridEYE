@@ -13,7 +13,7 @@
 #include <time.h>
 #include <math.h>
 #include <cmath>
-#include <mouse.hpp>
+#include "Mouse.hpp"
 #ifndef projectClasses_h
 #define projectClasses_h
 
