@@ -184,499 +184,499 @@ void pixMask::lazyUpdate(int temp){
             this->b = 127;
             break;
         case 11:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 107;
+            this->g = 0;
+            this->b = 127;
             break;
         case 12:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 103;
+            this->g = 0;
+            this->b = 127;
             break;
         case 13:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 101;
+            this->g = 0;
+            this->b = 127;
             break;
         case 14:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 99;
+            this->g = 0;
+            this->b = 127;
             break;
         case 15:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 97;
+            this->g = 0;
+            this->b = 127;
             break;
         case 16:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 95;
+            this->g = 0;
+            this->b = 127;
             break;
         case 17:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 93;
+            this->g = 0;
+            this->b = 127;
             break;
         case 18:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 91;
+            this->g = 0;
+            this->b = 127;
             break;
         case 19:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 89;
+            this->g = 0;
+            this->b = 127;
             break;
         case 20:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 87;
+            this->g = 0;
+            this->b = 127;
             break;
         case 21:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 85;
+            this->g = 0;
+            this->b = 127;
             break;
         case 22:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 83;
+            this->g = 0;
+            this->b = 127;
             break;
         case 23:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 81;
+            this->g = 0;
+            this->b = 127;
             break;
         case 24:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 79;
+            this->g = 0;
+            this->b = 127;
             break;
         case 25:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 77;
+            this->g = 0;
+            this->b = 127;
             break;
         case 26:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 75;
+            this->g = 0;
+            this->b = 127;
             break;
         case 27:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 73;
+            this->g = 0;
+            this->b = 127;
             break;
         case 28:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 71;
+            this->g = 0;
+            this->b = 127;
             break;
         case 29:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 69;
+            this->g = 0;
+            this->b = 127;
             break;
         case 30:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 67;
+            this->g = 0;
+            this->b = 127;
             break;
         case 31:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 65;
+            this->g = 0;
+            this->b = 127;
             break;
         case 32:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 63;
+            this->g = 0;
+            this->b = 127;
             break;
         case 33:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 61;
+            this->g = 0;
+            this->b = 127;
             break;
         case 34:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 59;
+            this->g = 0;
+            this->b = 127;
             break;
         case 35:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 57;
+            this->g = 0;
+            this->b = 127;
             break;
         case 36:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 55;
+            this->g = 0;
+            this->b = 127;
             break;
         case 37:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 53;
+            this->g = 0;
+            this->b = 127;
             break;
         case 38:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 51;
+            this->g = 0;
+            this->b = 127;
             break;
         case 39:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 49;
+            this->g = 0;
+            this->b = 127;
             break;
         case 40:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 47;
+            this->g = 0;
+            this->b = 127;
             break;
         case 41:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 45;
+            this->g = 0;
+            this->b = 127;
             break;
         case 42:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 43;
+            this->g = 0;
+            this->b = 127;
             break;
         case 43:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 41;
+            this->g = 0;
+            this->b = 127;
             break;
         case 44:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 39;
+            this->g = 0;
+            this->b = 127;
             break;
         case 45:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 37;
+            this->g = 0;
+            this->b = 127;
             break;
         case 46:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 35;
+            this->g = 0;
+            this->b = 127;
             break;
         case 47:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 33;
+            this->g = 0;
+            this->b = 127;
             break;
         case 48:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 31;
+            this->g = 0;
+            this->b = 127;
             break;
         case 49:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 29;
+            this->g = 0;
+            this->b = 127;
             break;
         case 50:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 27;
+            this->g = 0;
+            this->b = 127;
             break;
         case 51:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 25;
+            this->g = 0;
+            this->b = 127;
             break;
         case 52:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 23;
+            this->g = 0;
+            this->b = 127;
             break;
         case 53:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 21;
+            this->g = 0;
+            this->b = 127;
             break;
         case 54:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 19;
+            this->g = 0;
+            this->b = 127;
             break;
         case 55:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 17;
+            this->g = 0; 
+            this->b = 127;
             break;
         case 56:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 15;
+            this->g = 0;
+            this->b = 127;
             break;
         case 57:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 13;
+            this->g = 0;
+            this->b = 127;
             break;
         case 58:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 11;
+            this->g = 0;
+            this->b = 127;
             break;
         case 59:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 9;
+            this->g = 0;
+            this->b = 127;
             break;
         case 60:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 7;
+            this->g = 0;
+            this->b = 127;
             break;
         case 61:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 5;
+            this->g = 0;
+            this->b = 127;
             break;
         case 62:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 3;
+            this->g = 0;
+            this->b = 127;
             break;
         case 63:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 1;
+            this->g = 0;
+            this->b = 127;
             break;
         case 64:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 1;
+            this->b = 127;
             break;
         case 65:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 3;
+            this->b = 127;
             break;
         case 66:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 5;
+            this->b = 127;
             break;
         case 67:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 7;
+            this->b = 127;
             break;
         case 68:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 9;
+            this->b = 127;
             break;
         case 69:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 11;
+            this->b = 127;
             break;
         case 70:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 13;
+            this->b = 127;
             break;
         case 71:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 15;
+            this->b = 127;
             break;
         case 72:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 17;
+            this->b = 127;
             break;
         case 73:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 19;
+            this->b = 127;
             break;
         case 74:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 21;
+            this->b = 127;
             break;
         case 75:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 23;
+            this->b = 127;
             break;
         case 76:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 25;
+            this->b = 127;
             break;
         case 77:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 27;
+            this->b = 127;
             break;
         case 78:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 29;
+            this->b = 127;
             break;
         case 79:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 31;
+            this->b = 127;
             break;
         case 80:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 33;
+            this->b = 127;
             break;
         case 81:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 35;
+            this->b = 127;
             break;
         case 82:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 37;
+            this->b = 127;
             break;
         case 83:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 39;
+            this->b = 127;
             break;
         case 84:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 41;
+            this->b = 127;
             break;
         case 85:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 43;
+            this->b = 127;
             break;
         case 86:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 45;
+            this->b = 127;
             break;
         case 87:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 47;
+            this->b = 127;
             break;
         case 88:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 49;
+            this->b = 127;
             break;
         case 89:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 51;
+            this->b = 127;
             break;
         case 90:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 53;
+            this->b = 127;
             break;
         case 91:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 55;
+            this->b = 127;
             break;
         case 92:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 57;
+            this->b = 127;
             break;
         case 93:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 59;
+            this->b = 127;
             break;
         case 94:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 61;
+            this->b = 127;
             break;
         case 95:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 63;
+            this->b = 127;
             break;
         case 96:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 65;
+            this->b = 127;
             break;
         case 97:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 67;
+            this->b = 127;
             break;
         case 98:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 69;
+            this->b = 127;
             break;
         case 99:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 0;
+            this->g = 71;
+            this->b = 127;
             break;
         //100
         case 100:
-            this->r = 127;
-            this->g = 0;
+            this->r = 0;
+            this->g = 73;
             this->b = 127;
             break;
         case 101:
-            this->r = 125;
-            this->g = 0;
+            this->r = 0;
+            this->g = 75;
             this->b = 127;
             break;
         case 102:
-            this->r = 123;
-            this->g = 0;
+            this->r = 0;
+            this->g = 77;
             this->b = 127;
             break;
         case 103:
-            this->r = 121;
-            this->g = 0;
+            this->r = 0;
+            this->g = 79;
             this->b = 127;
             break;
         case 104:
-            this->r = 119;
-            this->g = 0;
+            this->r = 0;
+            this->g = 81;
             this->b = 127;
             break;
         case 105:
-            this->r = 117;
-            this->g = 0;
+            this->r = 0;
+            this->g = 83;
             this->b = 127;
             break;
         case 106:
-            this->r = 115;
-            this->g = 0;
+            this->r = 0;
+            this->g = 85;
             this->b = 127;
             break;
         case 108:
-            this->r = 113;
-            this->g = 0;
+            this->r = 0;
+            this->g = 87;
             this->b = 127;
             break;
         case 109:
-            this->r = 111;
-            this->g = 0;
+            this->r = 0;
+            this->g = 89;
             this->b = 127;
             break;
         case 110:
-            this->r = 109;
-            this->g = 0;
+            this->r = 0;
+            this->g = 91;
             this->b = 127;
             break;
         case 111:
