@@ -88,7 +88,7 @@ int main(int, char const**)
     time_t recordStart;
     time_t tempTime;
     
-    setward.setDefaultRecordTime(recordTime);
+    setward.setDefaultRecordTime(recordTime); //sync settings layer to default values - in seconds
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     //----------------- Camera Grid -----------------
