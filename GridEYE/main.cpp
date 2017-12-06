@@ -335,7 +335,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.updatepdate( fPtr->access(i,j) );
+                            pixel.update( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
                             window.draw(newPix);
