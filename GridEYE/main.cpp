@@ -104,8 +104,12 @@ int main(int, char const**)
     //background.setTexture(t_background);//maps background text to background sprite
     //background.setPosition(0,0);//move background sprite to origin
     //window.draw(background);//draws background
+    sf::Image icon;
+    if (!icon.loadFromFile("icon.png")) {
+        return EXIT_FAILURE;
+    }
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    
     
 //-----------------------------------------------------------------
 // Draw Loop
