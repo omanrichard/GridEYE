@@ -34,7 +34,7 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 GridEYE::GridEYE(){
     
         fd = wiringPiI2CSetup( PGE );
-        wiringPiI2CWriteReg16(fd, PCR, 0);
+        wiringPiI2CWriteReg8(fd, PCR, 0);
      
         FPS = 10;
         runtime = 10;
