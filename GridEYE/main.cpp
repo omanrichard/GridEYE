@@ -251,7 +251,7 @@ int main(int, char const**)
                         if( vPtr == NULL )
                             throw 0;
                         if( sessionIndex < 0 )
-                            throw "exception handled"
+                            throw "exception handled";
                         currentSession.undoRec();
                         sessionIndex--;
                     }
