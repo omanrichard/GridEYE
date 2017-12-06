@@ -467,8 +467,11 @@ session::session( video* newVid ){      // constructor adds video pointer to ses
 }
 
 void session::addVideo( video* newVid ){
-    this->current.push_back( newVid );  // Append "active" recording to video stack
-    this->vCount++;                     // Update video count value
+    if( vCount == 0 )
+        this->current[0] = newVid;
+    else
+        this->current.push_back( newVid );  // Append "active" recording to video stack
+    this->vCount++;                         // Update video count value
 }
 
 void session::undoRec(){        // Removes "active" recording from the stack of videos
