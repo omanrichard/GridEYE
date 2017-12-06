@@ -48,7 +48,7 @@ GridEYE::GridEYE( int address ){
 //-----------------------------------------------------------------
 // GridEYE Methods
 //-----------------------------------------------------------------
-int GridEYE::read( int pixAddr ){
+float GridEYE::read( int pixAddr ){
     int temp = 0;
     float result = 0;
     
