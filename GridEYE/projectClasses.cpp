@@ -1272,6 +1272,142 @@ void pixMask::lazyUpdate(int temp){
             this->g = 127;
             this->b = 0;
             break;
+        case 229:
+            this->r = 73;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 230:
+            this->r = 75;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 231:
+            this->r = 77;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 232:
+            this->r = 79;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 233:
+            this->r = 81;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 234:
+            this->r = 83;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 235:
+            this->r = 85;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 236:
+            this->r = 87;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 237:
+            this->r = 89;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 238:
+            this->r = 91;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 239:
+            this->r = 93;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 240:
+            this->r = 95;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 241:
+            this->r = 97;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 242:
+            this->r = 99;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 243:
+            this->r = 101;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 244:
+            this->r = 103;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 245:
+            this->r = 105;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 246:
+            this->r = 107;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 247:
+            this->r = 109;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 248:
+            this->r = 111;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 249:
+            this->r = 113;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 250:
+            this->r = 115;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 251:
+            this->r = 117;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 252:
+            this->r = 119;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 253:
+            this->r = 121;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 254:
+            this->r = 123;
+            this->g = 127;
+            this->b = 0;
+            break;
+        case 255:
+            this->r = 125;
+            this->g = 127;
+            this->b = 0;
+            break;
+        
     }
     
     
