@@ -59,7 +59,7 @@ int GridEYE::read( int pixAddr ){
     temp = wiringPiI2CReadReg8( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
                                                 // Pixels have 12-bit data
-     temp = temp&0x0800;                        // Right shift 1 removes sign
+     temp = temp&0x07FF;                        // Right shift 1 removes sign
      //temp = temp >> 1;                          //
     
     while( temp > 0 ){
@@ -135,7 +135,7 @@ int pixMask::getb(){
 }
 void pixMask::lazyUpdate(float temp){
     
-    int tempMask = (temp*255)/127.9375;
+    int tempMask = ((temp*255)/500);
     
     switch(tempMask){
         case 0:
