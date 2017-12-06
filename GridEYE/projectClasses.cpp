@@ -133,7 +133,7 @@ int pixMask::getg(){
 int pixMask::getb(){
     return this->b;
 }
-void pixMask::lazyUpdate(int temp){
+void pixMask::lazyUpdate(float temp){
     
     switch(temp){
         case 0:
@@ -390,7 +390,7 @@ void pixMask::lazyUpdate(int temp){
     
     
 }
-void pixMask::fastUpdate( short temp ){
+void pixMask::fastUpdate( float temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
 //Should increases speed
 //0 through 540 degrees of resoultion masked to 0 through 255 color values converted to radians by 180/PI
@@ -430,12 +430,12 @@ void pixMask::fastUpdate( short temp ){
     this->g = -1*255*sin(((540*temp)/255)*(180/3.14159));
     this->b = 255*sin(((540*temp)/255)*(180/3.14159));
 }
-void pixMask::monoUpdate(short temp){
+void pixMask::monoUpdate(float temp){
     this->r = temp;
     this->g = 0;
     this->b = 0;
 }
-void pixMask::update( short temp ){
+void pixMask::update( float temp ){
     int R1 = 0;
     int G1 = 0;
     int B1 = 0;
