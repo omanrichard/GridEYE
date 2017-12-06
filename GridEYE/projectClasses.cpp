@@ -1272,143 +1272,143 @@ void pixMask::lazyUpdate(float temp){
             this->g = 127;
             this->b = 0;
             break;
-        case 228:
-            this->r = 71;
+        case 228: //STOP
+            this->r = 0;
             this->g = 127;
             this->b = 0;
             break;
         case 229:
-            this->r = 73;
+            this->r = 2;
             this->g = 127;
             this->b = 0;
             break;
         case 230:
-            this->r = 75;
+            this->r = 7;
             this->g = 127;
             this->b = 0;
             break;
         case 231:
-            this->r = 77;
+            this->r = 12;
             this->g = 127;
             this->b = 0;
             break;
         case 232:
-            this->r = 79;
+            this->r = 17;
             this->g = 127;
             this->b = 0;
             break;
         case 233:
-            this->r = 81;
+            this->r = 22;
             this->g = 127;
             this->b = 0;
             break;
         case 234:
-            this->r = 83;
+            this->r = 27;
             this->g = 127;
             this->b = 0;
             break;
         case 235:
-            this->r = 85;
+            this->r = 32;
             this->g = 127;
             this->b = 0;
             break;
         case 236:
-            this->r = 87;
+            this->r = 37;
             this->g = 127;
             this->b = 0;
             break;
         case 237:
-            this->r = 89;
+            this->r = 42;
             this->g = 127;
             this->b = 0;
             break;
         case 238:
-            this->r = 91;
+            this->r = 47;
             this->g = 127;
             this->b = 0;
             break;
         case 239:
-            this->r = 93;
+            this->r = 52;
             this->g = 127;
             this->b = 0;
             break;
         case 240:
-            this->r = 95;
+            this->r = 57;
             this->g = 127;
             this->b = 0;
             break;
         case 241:
-            this->r = 97;
+            this->r = 62;
             this->g = 127;
             this->b = 0;
             break;
         case 242:
-            this->r = 99;
+            this->r = 67;
             this->g = 127;
             this->b = 0;
             break;
         case 243:
-            this->r = 101;
+            this->r = 72;
             this->g = 127;
             this->b = 0;
             break;
         case 244:
-            this->r = 103;
+            this->r = 77;
             this->g = 127;
             this->b = 0;
             break;
         case 245:
-            this->r = 105;
+            this->r = 82;
             this->g = 127;
             this->b = 0;
             break;
         case 246:
-            this->r = 107;
+            this->r = 87;
             this->g = 127;
             this->b = 0;
             break;
         case 247:
-            this->r = 109;
+            this->r = 92;
             this->g = 127;
             this->b = 0;
             break;
         case 248:
-            this->r = 111;
+            this->r = 97;
             this->g = 127;
             this->b = 0;
             break;
         case 249:
-            this->r = 113;
+            this->r = 102;
             this->g = 127;
             this->b = 0;
             break;
         case 250:
-            this->r = 115;
+            this->r = 107;
             this->g = 127;
             this->b = 0;
             break;
         case 251:
-            this->r = 117;
+            this->r = 112;
             this->g = 127;
             this->b = 0;
             break;
         case 252:
-            this->r = 119;
+            this->r = 117;
             this->g = 127;
             this->b = 0;
             break;
         case 253:
-            this->r = 121;
+            this->r = 112;
             this->g = 127;
             this->b = 0;
             break;
         case 254:
-            this->r = 123;
+            this->r = 117;
             this->g = 127;
             this->b = 0;
             break;
         case 255:
-            this->r = 125;
+            this->r = 122;
             this->g = 127;
             this->b = 0;
             break;
