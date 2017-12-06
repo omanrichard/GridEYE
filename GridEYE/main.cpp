@@ -171,7 +171,23 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    vPtr = new video;
+                    vPtr = currentSession.getVideo(sessionIndex);
+                    if( vPtr == NULL )
+                        sessionIndex = 0;
+                    else
+                        sessionIndex++;
+                    
+                    try{
+                        vPtr = new video;
+                        
+                        if( vPtr == NULL )
+                            throw "Could not Allocate memory to store capture video";
+                    }
+                    catch( string error ){
+                        stackward.print( error );
+                        sessionIndex--;
+                        menuLayer = 0;
+                    }
                     
                     currentSession.addVideo(vPtr);
                     
@@ -189,7 +205,7 @@ int main(int, char const**)
                         playward.setPlaybackStartTime(time(NULL));  //Sets playback start time in playbar
                         playbackStatus = true;                      //Switchs device into payback mode
                         toolward.sync(menuLayer);//Sync toolbar to current menu layer
-                        vPtr = currentSession.getVideo( sessionIndex);
+                        vPtr = currentSession.getVideo( sessionIndex );
                         recordStart = time( NULL );
                     }
                     catch( int ){
@@ -226,14 +242,21 @@ int main(int, char const**)
                         toolward.sync(menuLayer);
                     }
                     catch( int x ){
-                        cout << "Error " << x << ": Unable to export video" << endl;
                         if( x == 0 )
-                            stackward.print( "Unalbe to Export Video... Error 0x0: No videos stored in memory...");
+                            stackward.print( "Unable to Export Video... Error 0x0: No videos stored in memory...");
                     }
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
-                    currentSession.undoRec();
-                    sessionIndex--;
+                    vPtr = currentSession.getVideo( sessionIndex );
+                    try{
+                        if( vPtr == NULL )
+                            throw 0;
+                        currentSession.undoRec();
+                        sessionIndex--;
+                    }
+                    catch( int x ){
+                        stackward.print( "Error 0x00: Cannot delete video. No videos stored in memory...");
+                    }
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -330,7 +353,6 @@ int main(int, char const**)
                             topward.setMode(0);
                             playward.setClipEndTime(time(NULL));
                             currentSession.addVideo(vPtr);
-                            sessionIndex++;
                             fCount = 0;
                         }
                         tempTime = time(NULL);
