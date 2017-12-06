@@ -162,7 +162,6 @@ int main(int, char const**)
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window, gPtr, stackward); //Scans buffer for corosponing inputs.
-                    //sf::sleep( sf::milliseconds(50) );
                     
                     recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
@@ -174,8 +173,6 @@ int main(int, char const**)
                     vPtr = new video;
                     
                     currentSession.addVideo(vPtr);
-                    
-                   // sf::sleep(sf::milliseconds(50));
                     
                     recordStatus = true;                        //Switichs device into Record Mode
                     playward.setClipStartTime(time(NULL));      //Sets the clip start time in the playbar
@@ -204,7 +201,6 @@ int main(int, char const**)
                         
                     recordStatus = true;
                     
-                    //Insert Code Here
                     
                     menuLayer = 4; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
@@ -213,7 +209,6 @@ int main(int, char const**)
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
-                   // sf::sleep( sf::milliseconds(50));
                     filename = "pge_vid_";
                     filename += std::to_string(sessionIndex);
                     filename += ".txt";
@@ -349,59 +344,7 @@ int main(int, char const**)
                     playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                     playward.draw(window);//Draws playbar element to window object
                     break;
-                    /*
-               if( fCount < ( gridward.FPS * gridward.runtime )){
-                   
-                   //(gridward.FPS == 10) ? sf::sleep(sf::milliseconds(100)) : sf::sleep(sf::milliseconds(1000));
-                    fPtr = new frame( gPtr );
-                    vPtr->addFrame( fPtr );
                 
-                    for( i = 0 ; i < 8 ; i++ ){
-                        for( j = 0 ; j < 8 ; j++ ){
-                            // Pixel Position
-                            xPix = (xGrid + i*51);
-                            yPix = (yGrid + j*51);
-                            newPix.setPosition( xPix, yPix );
-                            
-                            pixel.fastUpdate(fPtr->access(i,j));
-                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                        
-                            // Draw the Pixel
-                            window.draw( newPix );
-                            }
-                    }
-                   prevFrame = fPtr;
-               }
-               else if( difftime(time(NULL), tempTime ) >=  gridward.runtime * gridward.FPS ){
-                    menuLayer = 0; // Return to Home
-                    recordStatus = false;
-                       
-                    toolward.sync(menuLayer);
-                    topward.setMode(menuLayer);
-                   
-                    fCount = 0;
-               }
-               else{
-                   for( i = 0 ; i < 8 ; i++ ){
-                       for( j = 0 ; j < 8 ; j++ ){
-                           // Pixel Position
-                           xPix = (xGrid + i*51);
-                           yPix = (yGrid + j*51);
-                           newPix.setPosition( xPix, yPix );
-                           
-                           pixel.fastUpdate(prevFrame->access(i,j));
-                           newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                           
-                           // Draw the Pixel
-                           window.draw( newPix );
-                       }
-                   }
-               }
-                playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
-                playward.draw(window);//Draws playbar element to window object
-                fCount++;
-                break;
-*/
             case 3:     //Playback Mode
                 
                 if( difftime( time(NULL), tempTime) >= 1 ){
@@ -457,35 +400,7 @@ int main(int, char const**)
                         }
                     }
                 }
-                /*
-                if( fCount < vPtr->getframeCount() ){
-                    fPtr = vPtr->getFrame( fCount ); //Playback Grid
-                    for( i = 0 ; i < 8 ; i++ ){
-                        for( j = 0 ; j < 8 ; j++ ){
-                            xPix = (xGrid + i*pixScale);
-                            yPix = (yGrid + j*pixScale);
-                            newPix.setPosition( xPix, yPix );
-                            
-                            pixel.fastUpdate( fPtr->access(i,j) );
-                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                                
-                            window.draw(newPix);
-                        }
-                    }
-                    fCount++;
-                    //(gridward.FPS == 10) ? sf::sleep(sf::milliseconds(100)) : sf::sleep(sf::milliseconds(1000));
-                        
-                }
-                else{
-                    menuLayer = 0; // Return to Home
-                    playbackStatus = false;
-                    
-                    toolward.sync(menuLayer);
-                    topward.setMode(menuLayer);
-                    
-                    fCount = 0;
-                }
-                 */
+              
                 playward.draw(window);//Update window object
                 playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
                 break;
