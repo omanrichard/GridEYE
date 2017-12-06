@@ -135,7 +135,9 @@ int pixMask::getb(){
 }
 void pixMask::lazyUpdate(float temp){
     
-    switch(temp){
+    int tempMask = (temp*255)/127.9375;
+    
+    switch(tempMask){
         case 0:
             this->r = 127;
             this->g = 0;
