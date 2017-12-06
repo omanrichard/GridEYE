@@ -321,8 +321,16 @@ int main(int, char const**)
             
             case 2:  //Capture Mode
                     if( difftime( time(NULL), tempTime) >= 1 ){
+                        try{
+                            fPtr = new frame( gPtr );
+                            
+                            if( fPtr == NULL )
+                                throw "Could not allocate memory for new frame...";
+                        }
+                        catch( string error ){
+                            stackward.print(error);
+                        }
                         
-                        fPtr = new frame( gPtr );
                         vPtr->addFrame( fPtr );
                         
                         for( i = 0 ; i < 8 ; i++ ){
