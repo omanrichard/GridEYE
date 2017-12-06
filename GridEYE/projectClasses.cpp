@@ -475,10 +475,12 @@ void session::addVideo( video* newVid ){
 }
 
 void session::undoRec(){        // Removes "active" recording from the stack of videos
+    if( vCount == 0 ){
+        this->current.push_back( NULL );
+    }
     this->current.pop_back();   // pop_back() removes last value, decrements vector size by 1
     this->vCount--;             // update video count value
-    if( vCount == 0 )
-        this->current.push_back( NULL );
+
 }
 
 video* session::getVideo( int index ){
