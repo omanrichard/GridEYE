@@ -361,7 +361,7 @@ int main(int, char const**)
                             playward.setClipEndTime(time(NULL));
                             currentSession.addVideo(vPtr);
                             fCount = 0;
-                            toolward.print("Capture Finished");
+                            stackward.print("Capture Finished");
                         }
                         tempTime = time(NULL);
                     }
