@@ -380,6 +380,7 @@ int main(int, char const**)
                         recordStatus = false;
                         topward.setMode(4);
                         fCount = 0;
+                        toolward.sync(menuLayer);
                     }
                     tempTime = time(NULL);
                 }
