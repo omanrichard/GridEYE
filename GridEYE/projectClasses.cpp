@@ -67,7 +67,7 @@ float GridEYE::read( int pixAddr ){
         result += 0.25;
     }
     
-    return temp;
+    return result;
 }
 
 void GridEYE::reset(void){
