@@ -48,7 +48,7 @@ GridEYE::GridEYE( int address ){
 // GridEYE Methods
 //-----------------------------------------------------------------
 void GridEYE::setFD(void){
-   // fd = wiringPiI2CSetup( PGE );
+   fd = wiringPiI2CSetup( PGE );
 }
 
 int GridEYE::read( int pixAddr ){

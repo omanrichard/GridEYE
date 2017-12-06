@@ -381,7 +381,6 @@ int main(int, char const**)
                     }
                     playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                     playward.draw(window);//Draws playbar element to window object
-                    sf::sleep( sf::milliseconds(50));
                 }
         }// End Layer Control Switch
         
