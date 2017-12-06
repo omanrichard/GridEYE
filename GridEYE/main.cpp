@@ -393,14 +393,15 @@ int main(int, char const**)
             case 3:     //Playback Mode
                 
                 if( difftime( time(NULL), tempTime) >= 1 ){
+                    try{
+                        if( fCount > ( gridward.runtime * gridward.FPS ))
+                            throw 2;
+                        
+                        fPtr = vPtr->getFrame(fCount);
                     
-                    fPtr = vPtr->getFrame(fCount);
-                    
+                
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
                             
                             pixel.fastUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
@@ -426,13 +427,18 @@ int main(int, char const**)
                         toolward.sync(menuLayer);
                     }
                     tempTime = time(NULL);
+                    
+                    }
+                    catch( int x ){
+                            menuLayer = 0;
+                            recordStatus = false;
+                            topward.setMode(0);
+                            fCount = 0;
+                    }
                 }
                 else{
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
                             
                             pixel.fastUpdate(prevFrame->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
@@ -467,7 +473,8 @@ int main(int, char const**)
                         window.draw( newPix );
                     }
                 }
-                
+                playward.draw(window);//Update window object
+                playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
         }// End Layer Control Switch
         
         //Sync all elements
