@@ -1411,10 +1411,6 @@ void pixMask::lazyUpdate(float temp){
             this->b = 0;
             break;
     }
-    
-    
-    
-    }
 }
 void pixMask::fastUpdate( float temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
