@@ -222,9 +222,21 @@ int main(int, char const**)
                     recordStatus = false;
                     
                     stackward.print("Recording Ended, Discarded Recording");
-                    
-                    menuLayer = 4; //Return to home
-                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    try{
+                        vPtr = currentSession.getVideo(sessionIndex);
+                        if( vPtr == NULL )
+                            throw 0;
+                        currentSession.undoRec();
+                        sessionIndex--;
+                        menuLayer = 0; //Return to home
+                        toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    }
+                    catch( int x )
+                    {
+                        stackward.print( "No videos stored in current Session ");
+                        menuLayer = 0; //Return to home
+                        toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    }
                 }
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
