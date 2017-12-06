@@ -4,7 +4,7 @@
 #include "Event.hpp"                        //Mouse Move Events
 #include "Mouse.hpp"                        //Mouse Clicks
 
-//#include <wiringPi.h>                     //Raspberry Pi GPIO
+#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
 #include <fstream>                          //FILE I/O
 #include <vector>
@@ -129,16 +129,16 @@ int main(int, char const**)
     {
       //LED Control
         if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
-           /*
+           
             digitalWrite(GREENLED,1);
             digitalWrite(REDLED,0);
-            */
+            
         }
         else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
-           /*
+           
             digitalWrite(GREENLED,0);
             digitalWrite(REDLED,1);
-            */
+            
         }
         
         //-----------------------------------------------------------------

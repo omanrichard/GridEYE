@@ -12,7 +12,7 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-//#include <wiringPiI2C.h>
+#include <wiringPiI2C.h>
 
 #define PGE 0x68
 #define PCR 0x00
@@ -32,10 +32,10 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
-    /*
+    
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
-     */
+     
         FPS = 10;
         runtime = 10;
 }
@@ -52,23 +52,23 @@ int GridEYE::read( int pixAddr ){
     short temp = 0;
     short result = 0;
     
-    temp = rand() % 90;
+    //temp = rand() % 90;
     
-    /*
+    
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );     // Write to pixel, requests data
     temp = wiringPiI2CReadReg8( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
     
      temp = temp >> 2;                          // Thermistor has 12-bit data
                                                 // Shift 2 removes precision Bits, makes short data 8-bit temperature
-    */
+    
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-        //wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+        wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -83,19 +83,19 @@ int GridEYE::getfd(){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    /*
+    
      try{
         if( temp == 1 || temp == 10 )
         throw -1;
         if( temp == 1 )
-         // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+            wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
-         // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+            wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
      }
      catch( int ){
          cout << "Exception Handled: invalid setting value" << endl;
      }
-    */
+    
         return;
      }
 
