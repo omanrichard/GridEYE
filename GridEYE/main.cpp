@@ -4,7 +4,7 @@
 #include "Event.hpp"                        //Mouse Move Events
 #include "Mouse.hpp"                       //Mouse Clicks
 
-//#include <wiringPi.h>                     //Raspberry Pi GPIO
+#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
 #include <fstream>                          //FILE I/O
 #include <vector>
@@ -34,8 +34,8 @@ settingsMenu setward;                       //Settings Menu
 topBar topward;                             //Top Status Bar
 playBar playward(sf::Vector2f(35, 375),1);  //Playback bar
 fastVideo vidward;                          //Test Video Implementation
-//fastFrame newFrame;
-//State Variables
+
+
 int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playback;
                                             //4:Stop;5:Save;6:Delete
 bool recordStatus = false;                  //True: Recording; False: Not Recording
@@ -52,14 +52,17 @@ int pixScale = 51;
 
 int main(int, char const**)
 {
-    /*
+    
     wiringPiSetup();
     pinMode(GREENLED, OUTPUT);
     pinMode(REDLED,OUTPUT);
    
     digitalWrite(GREENLED, 0); //Turns Green Led On
     digitalWrite(REDLED, 1);
-     */
+    
+    GridEYE gridward;                      //Grid Eye Object
+    GridEYE* gPtr = &gridward;
+    
 //-----------------------------------------------------------------
 // Video Capture Experiment Variables - Can we delete this? -- Eventually
 //-----------------------------------------------------------------
@@ -76,6 +79,8 @@ int main(int, char const**)
     int tempCount = 0;
     int temp = 0;       // Stores value from GridEYE pixel
     int pixAddr = 0x80; // GridEYE pixel 1
+    
+    std::string filename = "pge_vid_";
     
     time_t tempTime = time(NULL);
     time_t recordStart;
@@ -117,9 +122,6 @@ int main(int, char const**)
  --------------------------------------------------------------------
  --------------------------------------------------------------------
 /*/
-    GridEYE gridward;                      //Grid Eye Object
-    GridEYE* gPtr = &gridward;
-    
     tempCount = 0;
     recordTime = gridward.runtime;
 
@@ -130,16 +132,16 @@ int main(int, char const**)
     {
       //LED Control
         if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
-           /*
+           
             digitalWrite(GREENLED,1);
             digitalWrite(REDLED,0);
-            */
+            
         }
         else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
-            /*
+            
             digitalWrite(GREENLED,0);
             digitalWrite(REDLED,1);
-             */
+            
         }
         
         //-----------------------------------------------------------------
@@ -157,9 +159,7 @@ int main(int, char const**)
                 if(recordStatus == true){//Stop recording video on click
                     menuLayer = 4;
                    
-                    
                     //Insert Code Here
-                    
                     
                     toolward.sync(menuLayer);
                 }
@@ -178,9 +178,6 @@ int main(int, char const**)
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
                     vPtr = new video;
-                    cout << "The address of the video is: " << &(*vPtr) << endl;
-                    
-                    //vPtr->setframeCount( tempCount * tempFPS);
                     
                     currentSession.addVideo(vPtr);
                     sessionIndex++;
@@ -213,7 +210,7 @@ int main(int, char const**)
                     recordStatus = true;
                     
                     //Insert Code Here
-                                
+                    
                     menuLayer = 4; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -222,9 +219,10 @@ int main(int, char const**)
                     stackward.print("Exporting Video");
                     
                     sf::sleep( sf::milliseconds(250));
-                    vPtr->exportVideo( "Test1.txt" );   // Exports data file
+                    filename += std::to_string(sessionIndex);
+                    filename += ".txt";
+                    vPtr->exportVideo( filename );   // Exports data file
 
-                    
                     stackward.print("Success");
                     menuLayer = 0;
                     toolward.sync(menuLayer);

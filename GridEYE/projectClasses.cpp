@@ -12,7 +12,7 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-//#include <wiringPiI2C.h>
+#include <wiringPiI2C.h>
 
 #define PGE 0x68
 #define PCR 0x00
@@ -32,13 +32,11 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
-    /*
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
-     */
+     
         FPS = 10;
         runtime = 10;
-     
 }
 // Will remove eventually
 GridEYE::GridEYE( int address ){
@@ -58,7 +56,7 @@ int GridEYE::read( int pixAddr ){
     short temp2 = 0;
     short result = 0;
     
-    temp = rand() % 90;
+    //temp = rand() % 90;
     
     /*
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
@@ -66,14 +64,14 @@ int GridEYE::read( int pixAddr ){
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
     temp = temp >> 2;                           // Thermistor has 12-bit data
                                             // Shift 2 removes precision Bits, makes short data 8-bit temperature
-     */
-     //wiringPiI2CWriteReg8( fd, pixAddr+1 , 1 );
-     //temp2 = wiringPiI2CReadReg8( fd, pixAddr+1 );
-     //wiringPiI2CWriteReg8( fd, pixAddr+1, 0);
+    */
+    wiringPiI2CWriteReg8( fd, pixAddr+1 , 1 );      // Open Register for reading
+    temp2 = wiringPiI2CReadReg8( fd, pixAddr+1 );   // Read value
+    wiringPiI2CWriteReg8( fd, pixAddr+1, 0);        // Close Register
 
-    // temp2 = temp2 << 4;
+    temp2 = temp2 << 4;
      
-     //result = temp2 & temp;
+    result = temp2 & temp;
      
     return temp;
 }
@@ -81,7 +79,7 @@ int GridEYE::read( int pixAddr ){
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-   // wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+    wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -147,7 +145,7 @@ void GridEYE::setDR( bool nDR ){
  */
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    /*
+    
      try{
      if( temp == 1 || temp == 10 )
      throw -1;
@@ -159,7 +157,7 @@ void GridEYE::setFPS(int temp){
      catch( int ){
      cout << "Exception Handled: invalid setting value" << endl;
      }
-     */
+     
      return;
      }
 GridEYE::~GridEYE(){
