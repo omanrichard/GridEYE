@@ -81,10 +81,10 @@ public:
     pixMask();
     ~pixMask();
     
-    void update( short temp );
-    void fastUpdate( short temp ); //New implimentation for speeed improvements
-    void monoUpdate( short temp);
-    void lazyUpdate( short int);
+    void update(float temp);
+    void fastUpdate(float temp); //New implimentation for speeed improvements
+    void monoUpdate(float temp);
+    void lazyUpdate(float temp);
     int getr();    // access r value
     int getg();    // access g value
     int getb();    // access b value
@@ -99,7 +99,7 @@ class frame{                        //      Stores sensor data
 private:                            // 0  [] [] [] [] [] [] [] []
     float mean;                     // 1  [] [] [] [] [] [] [] []
     short max;                      // 3  [] [] [] [] [] [] [] []
-    short sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
+    float sensor_values[8][8];      // 4  [] [] [] [] [] [] [] []
                                     // 4  [] [] [] [] [] [] [] []
     void set_max();                 // 5  [] [] [] [] [] [] [] []
     void set_mean();                // 6  [] [] [] [] [] [] [] []

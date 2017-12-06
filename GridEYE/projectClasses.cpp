@@ -50,7 +50,7 @@ GridEYE::GridEYE( int address ){
 //-----------------------------------------------------------------
 int GridEYE::read( int pixAddr ){
     int temp = 0;
-    int result = 0;
+    float result = 0;
     
     //temp = rand() % 90;
     
@@ -58,12 +58,16 @@ int GridEYE::read( int pixAddr ){
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );     // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg16( fd, pixAddr, 0);
+                                                // Pixels have 12-bit data
+     temp = temp&0x0800;                        // Right shift 1 removes sign
+     temp = temp >> 1;                          //
     
-     temp = temp&0x0800;
-     temp = temp >> 1;                          // Thermistor has 12-bit data
-                                                // Shift 2 removes precision Bits, makes short data 8-bit temperature
+    while( temp > 0 ){
+        temp -= 0x04;
+        result += 0.25
+    }
     
-    return temp;
+    return result;
 }
 
 void GridEYE::reset(void){
