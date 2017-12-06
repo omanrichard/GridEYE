@@ -136,23 +136,33 @@ void pixMask::fastUpdate( short temp ){
     int tempg = -1*255*sin(((540*temp)/255)*(180/3.14159));
     int tempb = 255*sin(((540*temp)/255)*(180/3.14159));
     //Bound wave between 0 and 255. Clip wave below 0
-    if(tempr > 0){
+    if(tempr > 0 && tempr <= 127){
         this->r = tempr;
     }
     else if(tempr < 1){
         this->r = 0;
     }
-    if(tempg > 0){
+    else if(tempr > 127){
+        this->r = 127;
+    }
+    
+    if(tempg > 0 && tempr <= 127){
         this->g = tempg;
     }
     else if(tempg < 1){
         this->g = 0;
     }
-    if(tempb > 0){
+    else if(tempg > 127){
+        this->r = 127;
+    }
+    if(tempb > 0 && tempr <= 127){
         this->b = tempb;
     }
     else if(tempb < 1){
         this->b = 0;
+    }
+    else if(tempb > 127){
+        this->r = 127;
     }
     
     this->g = -1*255*sin(((540*temp)/255)*(180/3.14159));
