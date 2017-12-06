@@ -61,12 +61,12 @@ float GridEYE::read( int pixAddr ){
                                                 // Pixels have 12-bit data
      temp = temp & 0x07FF;                        // Right shift 1 removes sign
      //temp = temp >> 1;                          //
-    /*
+    
     while( temp > 0 ){
         temp -= 0x04;
         result += 0.25;
     }
-    */
+    
     return temp;
 }
 
