@@ -170,7 +170,7 @@ int main(int, char const**)
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window, gPtr, stackward); //Scans buffer for corosponing inputs.
-                    sf::sleep( sf::milliseconds(150) );
+                    sf::sleep( sf::milliseconds(50) );
                     
                     recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
@@ -183,7 +183,7 @@ int main(int, char const**)
                     
                     currentSession.addVideo(vPtr);
                     sessionIndex++;
-                    sf::sleep(sf::milliseconds(250));
+                    sf::sleep(sf::milliseconds(50));
                     
                     recordStatus = true;
                     playward.setClipStartTime(time(NULL));
@@ -220,7 +220,7 @@ int main(int, char const**)
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
-                    sf::sleep( sf::milliseconds(250));
+                    sf::sleep( sf::milliseconds(50));
                     filename += std::to_string(sessionIndex);
                     filename += ".txt";
                     vPtr->exportVideo( filename );   // Exports data file
@@ -319,7 +319,7 @@ int main(int, char const**)
                     toolward.sync(menuLayer);
                     topward.setMode(menuLayer);
                    
-                   fCount = 0;
+                    fCount = 0;
                 }
                 playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                 playward.draw(window);//Draws playbar element to window object
@@ -381,6 +381,7 @@ int main(int, char const**)
                     }
                     playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
                     playward.draw(window);//Draws playbar element to window object
+                    sf::sleep( sf::milliseconds(50));
                 }
         }// End Layer Control Switch
         
