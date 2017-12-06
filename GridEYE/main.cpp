@@ -199,7 +199,8 @@ int main(int, char const**)
                 // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
                     try{
-                        if( sessionIndex == 0 )
+                        vPtr = currentSession.getVideo(0);
+                        if( vPtr == NULL )
                             throw 0;
                         playward.onClick(window,stackward);
                         playward.setPlaybackStartTime(time(NULL));  //Sets playback start time in playbar

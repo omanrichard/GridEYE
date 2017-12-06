@@ -330,22 +330,7 @@ video::video(){
     
     cout << "Video Created" << endl;
 }
-/*
-video::video( GridEYE gridward ){
-    frame* temp;
-    gridward.runtime = 65;
-    gridward.setFPS( 10 );
-    
-    this->frameCount = (gridward.FPS * gridward.runtime);
-    
-    for( int x = 0 ; x < frameCount ; x++){
-        temp = new frame( gridward );       // Collect data and create frame
-        this->data.push_back( temp );       // Store pointer in data Vector
-        //this->frameCount++;
-    }
-    return;
-}
-*/
+
 video::video( GridEYE* gPtr ){
     frame* temp;
     
