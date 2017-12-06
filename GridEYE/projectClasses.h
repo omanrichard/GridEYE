@@ -62,7 +62,7 @@ public:
     void setFD(void);
     int getfd();
 
-    int read(int pixAddr);
+    float read(int pixAddr);
     void reset(void);
     
     short randTemp(void){ return rand()%255;};
