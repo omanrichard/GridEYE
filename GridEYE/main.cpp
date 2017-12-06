@@ -56,16 +56,14 @@ int main(int, char const**)
     GridEYE gridward;                       //Grid Eye Object
     GridEYE* gPtr = &gridward;
     gridward.setFD();//Fix
-   /*
+   
     wiringPiSetup();                        //WiringPiSetup
     pinMode(GREENLED, OUTPUT);              //Configure Green Led Pin
     pinMode(REDLED,OUTPUT);                 //Configure Red Led Pin
    
     digitalWrite(GREENLED, 0);              //Turns Green Led On
     digitalWrite(REDLED, 1);                //Turns Red Led Off
-*/
     
-
 //-----------------------------------------------------------------
 // Set Up
 //-----------------------------------------------------------------
