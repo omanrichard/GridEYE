@@ -319,6 +319,7 @@ int main(int, char const**)
                         if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.FPS * gridward.runtime) ){
                             menuLayer = 0;
                             recordStatus = false;
+                            topward.setMode(0);
                             playward.setClipEndTime(time(NULL));
                             currentSession.addVideo(vPtr);
                             sessionIndex++;
@@ -433,6 +434,7 @@ int main(int, char const**)
                     if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.runtime * gridward.FPS) ){
                         menuLayer = 0;
                         recordStatus = false;
+                        topward.setMode(4);
                         fCount = 0;
                     }
                     tempTime = time(NULL);
