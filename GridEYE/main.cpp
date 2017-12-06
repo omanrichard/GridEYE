@@ -200,24 +200,35 @@ int main(int, char const**)
                 // Stop-Record
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                         
-                    recordStatus = true;
+                    recordStatus = false;
                     
+                    stackward.print("Recording Ended, Discarded Recording");
                     
-                    menuLayer = 4; //Return to home
+                    menuLayer = 0; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
-                    filename = "pge_vid_";
-                    filename += std::to_string(sessionIndex);
-                    filename += ".txt";
-                    vPtr->exportVideo( filename );   // Exports data file
+                    try{
+                        if( sessionIndex == 0 )
+                            throw 0;
+                    
+                        filename = "pge_vid_";
+                        filename += std::to_string(sessionIndex);
+                        filename += ".txt";
+                        vPtr->exportVideo( filename );   // Exports data file
 
-                    stackward.print("Success");
-                    menuLayer = 0;
-                    toolward.sync(menuLayer);
+                        stackward.print("Success");
+                        menuLayer = 0;
+                        toolward.sync(menuLayer);
+                    }
+                    catch( int x ){
+                        cout << "Error " << x << ": Unable to export video" << endl;
+                        if( x == 0 )
+                            stackward.print( "Error 0: No videos stored in memory...");
+                    }
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
                     currentSession.undoRec();
