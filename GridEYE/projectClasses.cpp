@@ -818,7 +818,7 @@ void pixMask::lazyUpdate(float temp){
         case 137:
             this->r = 0;
             this->g = 127;
-            this->b = 109
+            this->b = 109;
             break;
         case 138:
             this->r = 0;
@@ -1412,10 +1412,6 @@ void pixMask::lazyUpdate(float temp){
             this->g = 127;
             this->b = 0;
             break;
-
-    
-    
-    
     }
 }
 void pixMask::fastUpdate( float temp ){
