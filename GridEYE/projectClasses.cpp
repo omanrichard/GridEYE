@@ -55,7 +55,6 @@ int GridEYE::read( int pixAddr ){
     //temp = rand() % 90;
     
     
-    /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );     // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg16( fd, pixAddr, 0);
@@ -178,180 +177,178 @@ void pixMask::lazyUpdate(int temp){
             this->g =
             this->b =
             break;
-        case 10:
-            this->r =
-            this->g =
-            this->b =
+        case 221:
+            this->r =59;
+            this->g =59;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 222:
+            this->r =61;
+            this->g =61;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 223:
+            this->r =63;
+            this->g =63;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 224:
+            this->r =65;
+            this->g =65;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 225:
+            this->r =67;
+            this->g =67;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 226:
+            this->r =69;
+            this->g =69;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 227:
+            this->r =71;
+            this->g =71;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 228:
+            this->r =73;
+            this->g =73;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 229:
+            this->r =75;
+            this->g =75;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 230:
+            this->r =77;
+            this->g =77;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 231:
+            this->r =79;
+            this->g =79;
+            this->b =127
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 232:
+            this->r =81;
+            this->g =81;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 233:
+            this->r =83;
+            this->g =83;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 234:
+            this->r =85;
+            this->g =85;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 235:
+            this->r =87;
+            this->g =87;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 236:
+            this->r =89;
+            this->g =89;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 237:
+            this->r =91;
+            this->g =91;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 238:
+            this->r =93;
+            this->g =93;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 239:
+            this->r =95;
+            this->g =95;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 240:
+            this->r =97;
+            this->g =97;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 241:
+            this->r =99
+            this->g =99
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 242:
+            this->r =101
+            this->g =101
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 243:
+            this->r =103
+            this->g =103
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 244:
+            this->r =105
+            this->g =105
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 245:
+            this->r =107;
+            this->g =107;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 246:
+            this->r =109;
+            this->g =109;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 247:
+            this->r =111;
+            this->g =111;
+            this->b =127;
+        case 248:
+            this->r =113;
+            this->g =113;
+            this->b =127;
+        case 249:
+            this->r =115;
+            this->g =115;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 250:
+            this->r =117;
+            this->g =117;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 251:
+            this->r =119;
+            this->g =119;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 252:
+            this->r =121;
+            this->g =121;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 253:
+            this->r =123;
+            this->g =123;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 254:
+            this->r =125
+            this->g =125;
+            this->b =127;
             break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
-            break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
-            break;
-        case 0:
-            this->r =
-            this->g =
-            this->b =
+        case 255:
+            this->r = 127;
+            this->g = 127;
+            this->b = 127;
             break;
     }
     
