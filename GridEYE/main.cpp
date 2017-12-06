@@ -212,7 +212,7 @@ int main(int, char const**)
                     stackward.print("Exporting Video");
                     
                     try{
-                        vPtr = currentSession.getVideo( sessionIndex);
+                        vPtr = currentSession.getVideo( sessionIndex );
                         if( vPtr == NULL )
                             throw 0;
                     

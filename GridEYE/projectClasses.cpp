@@ -463,7 +463,7 @@ video::~video(){
 //-----------------------------------------------------------------
 session::session(){     // Default Constructor
     this->vCount = 0;                           // Initializes video count to zero
-    this->current[0] = NULL;
+    this->current.push_back( NULL );
     cout << "Session Started" << endl << endl;
     return;
 }
@@ -489,6 +489,8 @@ void session::addVideo( video* newVid ){
 void session::undoRec(){        // Removes "active" recording from the stack of videos
     this->current.pop_back();   // pop_back() removes last value, decrements vector size by 1
     this->vCount--;             // update video count value
+    if( vCount == 0 )
+        this->current.push_back( NULL );
 }
 
 video* session::getVideo( int index ){
