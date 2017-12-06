@@ -208,7 +208,7 @@ int main(int, char const**)
                         recordStart = time( NULL );
                     }
                     catch( int ){
-                        stackward.print("No Videos stored in Session");
+                        stackward.print("No videos stored in current session");
                         menuLayer = 0;
                     }
                 }
@@ -242,7 +242,7 @@ int main(int, char const**)
                     }
                     catch( int x ){
                         if( x == 0 )
-                            stackward.print( "Unable to Export Video... Error 0x0: No videos stored in memory...");
+                            stackward.print( "Unable to export video. Error 0x0: No videos stored in current session");
                     }
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
@@ -254,7 +254,7 @@ int main(int, char const**)
                         sessionIndex--;
                     }
                     catch( int x ){
-                        stackward.print( "Error 0x00: Cannot delete video. No videos stored in memory...");
+                        stackward.print( "Error 0x00: Cannot delete video. No videos stored in current session");
                     }
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
@@ -361,6 +361,7 @@ int main(int, char const**)
                             playward.setClipEndTime(time(NULL));
                             currentSession.addVideo(vPtr);
                             fCount = 0;
+                            toolward.print("Capture Finished");
                         }
                         tempTime = time(NULL);
                     }
@@ -420,18 +421,21 @@ int main(int, char const**)
                     if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.runtime * gridward.FPS) ){
                         menuLayer = 0;
                         recordStatus = false;
-                        topward.setMode(4);
+                        topward.setMode(0);
                         fCount = 0;
                         toolward.sync(menuLayer);
+                        toolward.print("Playback Complete");
                     }
                     tempTime = time(NULL);
                     
                     }
                     catch( int x ){
-                            menuLayer = 0;
-                            recordStatus = false;
-                            topward.setMode(0);
-                            fCount = 0;
+                        menuLayer = 0;
+                        recordStatus = false;
+                        topward.setMode(0);
+                        fCount = 0;
+                        toolward.sync(menuLayer);
+                        toolward.print("Playback Complete");
                     }
                 }
                 else{
