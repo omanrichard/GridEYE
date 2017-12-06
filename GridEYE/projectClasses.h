@@ -47,9 +47,6 @@ public:
 class GridEYE{
     friend class video;
 private:
-    int FPS;        // 1 or 10 FPS
-    int runtime;    // Run Time in seconds
-    bool DR;        // True: TRUE, Human: FALSE
     int fd;         // File Descriptor for I2C functions
 
 public:
@@ -57,6 +54,11 @@ public:
     GridEYE( int frames, int time );
     GridEYE( int address );
     ~GridEYE();
+    
+    int FPS;        // 1 or 10 FPS
+    int runtime;    // Run Time in seconds
+    bool DR;        // True: TRUE, Human: FALSE
+    
     void setFD(void);
     int read(int pixAddr);
     
@@ -69,13 +71,13 @@ public:
     int r,g,b;
     short randTemp(void){ return rand()%255;};
     //
-    void setRunTime( int nTime );
-    void setFPS( int nFPS );
-    void setDR( bool nDR );
+  //  void setRunTime( int nTime );
+   void setFPS( int nFPS );
+ //   void setDR( bool nDR );
     
-    int getRuntime();
-    int getFPS();
-    bool getDR();
+//    int getRuntime();
+//int getFPS();
+ //   bool getDR();
     int getfd();
 };
 

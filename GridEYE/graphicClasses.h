@@ -162,7 +162,7 @@ public:
    
     //Event Functions
     void draw(sf::RenderWindow &window);
-    void onClick(sf::RenderWindow &window, GridEYE gridward, terminal stackward);
+    void onClick(sf::RenderWindow &window, GridEYE* gridward, terminal stackward);
     
     //Action Functions
     int exit(void);

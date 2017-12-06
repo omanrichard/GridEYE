@@ -115,7 +115,7 @@ void GridEYE::test(int row, int col){
 int GridEYE::getfd(){
     return this->fd;
 }
-
+/*
 int GridEYE::getFPS(){
     return this->FPS;
 }
@@ -139,33 +139,32 @@ void GridEYE::setRunTime( int newTime ){
     }
 }
 
-void GridEYE::setFPS(int temp){
-    this->FPS = temp;
-    /*
-    try{
-        if( temp == 1 || temp == 10 )
-            throw -1;
-        if( temp == 1 )
-           // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
-        if( temp == 10 )
-           // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
-    }
-    catch( int ){
-        cout << "Exception Handled: invalid setting value" << endl;
-    }
-    */
-    return;
-}
+
 
 void GridEYE::setDR( bool nDR ){
     this->DR = nDR;
 }
-
-
+ */
+void GridEYE::setFPS(int temp){
+    this->FPS = temp;
+    /*
+     try{
+     if( temp == 1 || temp == 10 )
+     throw -1;
+     if( temp == 1 )
+     // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+     if( temp == 10 )
+     // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+     }
+     catch( int ){
+     cout << "Exception Handled: invalid setting value" << endl;
+     }
+     */
+     return;
+     }
 GridEYE::~GridEYE(){
     
 }
-
 
 
 //-----------------------------------------------------------------
@@ -417,7 +416,7 @@ video::video( GridEYE gridward ){
     gridward.runtime = 65;
     gridward.setFPS( 10 );
     
-    this->frameCount = (gridward.getFPS() * gridward.runtime);
+    this->frameCount = (gridward.FPS * gridward.runtime);
     
     for( int x = 0 ; x < frameCount ; x++){
         temp = new frame( gridward );       // Collect data and create frame
@@ -430,10 +429,10 @@ video::video( GridEYE gridward ){
 video::video( GridEYE* gPtr ){
     frame* temp;
     
-    frameCount = ( gPtr->getFPS() * gPtr->getRuntime() );
+    frameCount = ( gPtr->FPS * gPtr->runtime );
     
     for( int x = 0 ; x < frameCount ; x++){
-        if( gPtr->getFPS() == 10 ){
+        if( gPtr->FPS == 10 ){
         }
         else{
         }
@@ -468,13 +467,14 @@ void video::exportVideo( string filename ){
     newOutput.open( filename, ios::out );
 
     newOutput << "Frame Count: " << this->frameCount
-              << "Avg. Temp: "   << this->mean
-              << "Max Temp: "    << this->max
+              << " Avg. Temp: "   << this->mean
+              << " Max Temp: "    << this->max
               << endl;
+    temp = this->getFrame(0);
     for( int x = 0 ; x < frameCount ; x++ ){
-        temp = this->getFrame(0);
+        
 
-        newOutput << "Frame No. : " << x + 1 << endl;        
+        newOutput << "Frame No. : " << x + 1 << endl;
         for( row = 0 ; row < 8 ; row++ ){                                        // Frame No. : 1
             newOutput << "\t"                           // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
             << "[ " << temp->access(row, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
@@ -486,7 +486,7 @@ void video::exportVideo( string filename ){
             << "[ " << temp->access(row, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
             << "[ " << temp->access(row, 7) << " ]\t" << endl;
         }
-        temp = this->getFrame( x+1 );
+        temp = this->getFrame(x);
     }
     newOutput.close( ); // Close file
     return;

@@ -12,6 +12,9 @@
 #include <string>
 #include "graphicClasses.h"
 
+bool newDR = true;
+int newFPS = 10;
+int newruntime = 0;
 
 /*/ -------- Interactive Base Class --------/*/
 interactiveObject::interactiveObject(){
@@ -470,13 +473,9 @@ settingsMenu::settingsMenu(void){
     
 }
 
-void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal stackward){//Button presses
+void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal stackward){//Button presses
     // Colors - Select: 30,144,255 Unselect: 135,206,250
     menuLayer = 1; //Set internal menuLayer reference
-    
-    int newTime = gridward.getRuntime();
-    int newFPS = gridward.getFPS();
-    bool newDR = gridward.getDR();
     
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   //When Left Mouse is clicked
         sf::Vector2i position = sf::Mouse::getPosition(window); //Get Mouse Coordinates
@@ -494,6 +493,8 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsTenFPS.setOutlineThickness(2);
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
                 settingsOneFPS.setOutlineThickness(0);
+                
+                sf::sleep(sf::milliseconds(50));
                 newFPS = 10;
             }}
         
@@ -504,6 +505,8 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsOneFPS.setOutlineThickness(2);
                 settingsTenFPS.setFillColor(sf::Color(135,206,250));
                 settingsTenFPS.setOutlineThickness(0);
+                
+                sf::sleep(sf::milliseconds(50));
                 newFPS = 1;
             }}
         
@@ -513,7 +516,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsMinsUp.setFillColor(sf::Color(255,144,255));
                 if(recordMins <= 50){
                     recordMins++;
-                    newTime += 60;
+                    newruntime += 60;
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
@@ -524,7 +527,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsMinsDown.setFillColor(sf::Color(255,144,255));
                 if(recordMins > 0){
                     recordMins--;
-                    newTime -= 60;
+                    newruntime -= 60;
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
@@ -534,14 +537,14 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsSecondsUp.setFillColor(sf::Color(255,144,255));
                 if(recordSeconds < 59){
                     recordSeconds++;
-                    newTime += 1;
+                    newruntime += 1;
                     if(recordSeconds > 9) settingsSecondsText.setPosition(rootx+300,rootY+175);
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
                 else if(recordSeconds == 59 && recordMins < 50 ){
                     recordSeconds = 0;
                     recordMins++;
-                    newTime += 1;
+                    newruntime += 1;
                     settingsMinsText.setString(std::to_string(recordMins));
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
@@ -553,12 +556,13 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
                 settingsSecondsDown.setFillColor(sf::Color(255,144,255));
                 if(recordSeconds > 0){
                     recordSeconds--;
-                    newTime -= 1;
+                    newruntime -= 1;
                     if(recordSeconds > 10) settingsSecondsText.setPosition(rootx+300+5,rootY+175);
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
                 if(recordSeconds == 0){
                     recordSeconds = 59;
+                    newruntime -= 1;
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
             }}
@@ -587,7 +591,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsReset.setFillColor(sf::Color(30,144,255));
-                gridward.reset();
+                gridward->reset();
                 settingsRangeHuman.setOutlineThickness(0);
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setFillColor(sf::Color(30,144,255));
@@ -608,14 +612,15 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE gridward, terminal 
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(30,144,255));
-                if( newTime == 0 )
-                    newTime = 10;
+                if( newruntime == 0 )
+                    newruntime = 1;
                 
-                gridward.setRunTime(newTime);
-                gridward.setFPS( newFPS );
-                gridward.setDR( newDR );
-                stackward.print("Settings Applied");
+                gridward->runtime = newruntime;
+                gridward->FPS = newFPS;
+                gridward->DR = newDR;
                 
+                cout << gridward->runtime << endl;
+                cout << gridward->FPS << endl;
                 menuLayer = 0;
             }}
     }//end button down
