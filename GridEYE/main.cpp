@@ -212,11 +212,12 @@ int main(int, char const**)
                     stackward.print("Exporting Video");
                     
                     try{
-                        if( sessionIndex == 0 )
+                        vPtr = currentSession.getVideo( sessionIndex);
+                        if( vPtr == NULL )
                             throw 0;
                     
                         filename = "pge_vid_";
-                        filename += std::to_string(sessionIndex);
+                        filename += std::to_string(sessionIndex+1);
                         filename += ".txt";
                         vPtr->exportVideo( filename );   // Exports data file
 
