@@ -150,14 +150,14 @@ void GridEYE::setFPS(int temp){
      if( temp == 1 || temp == 10 )
      throw -1;
      if( temp == 1 )
-     // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+         wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
      if( temp == 10 )
-     // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+         wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
      }
      catch( int ){
-     cout << "Exception Handled: invalid setting value" << endl;
+         cout << "Exception Handled: invalid setting value" << endl;
      }
-     
+    
      return;
      }
 GridEYE::~GridEYE(){
