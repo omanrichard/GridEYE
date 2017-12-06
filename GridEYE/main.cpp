@@ -201,7 +201,7 @@ int main(int, char const**)
                     try{
                         vPtr = currentSession.getVideo(0);
                         if( vPtr == NULL )
-                            //throw 0;
+                            throw 0;
                         playward.onClick(window,stackward);
                         playward.setPlaybackStartTime(time(NULL));  //Sets playback start time in playbar
                         playbackStatus = true;                      //Switchs device into payback mode
@@ -221,7 +221,7 @@ int main(int, char const**)
                     
                     stackward.print("Recording Ended, Discarded Recording");
                     
-                    menuLayer = 0; //Return to home
+                    menuLayer = 4; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 // Export Video
