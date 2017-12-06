@@ -35,7 +35,7 @@ settingsMenu setward;                       //Settings Menu
 topBar topward;                             //Top Status Bar
 playBar playward(sf::Vector2f(35, 375),1);  //Playback bar
 fastVideo vidward;                          //Test Video Implementation
- fastFrame newFrame;
+//fastFrame newFrame;
 //State Variables
 int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playback;
                                             //4:Stop;5:Save;6:Delete
@@ -67,7 +67,9 @@ int main(int, char const**)
     session currentSession; // Begins session
 
     video* vPtr = NULL;
-    frame* fPtr = NULL;
+    frame* fPtr;
+    frame* framePtr;
+    frame* previousFPtr;
     
     int sessionIndex = 0;
     int fCount = 0;
@@ -76,7 +78,7 @@ int main(int, char const**)
     int pixAddr = 0x80; // GridEYE pixel 1
     
     time_t tempTime = time(NULL);
-    
+    time_t recordStart;
     
     
 //-----------------------------------------------------------------
@@ -84,23 +86,24 @@ int main(int, char const**)
 //-----------------------------------------------------------------
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
-    // window.setFramerateLimit(60);   // Sets Window Framerate to 60 FPS
-
     //----------------- Camera Grid -----------------
     sf::RectangleShape newPix(sf::Vector2f(50, 50));
 
-    //----------------- Background ------------------
-   
-   // sf::Texture t_background;//Background text - stays global for now
-   // sf::Sprite background;//Background Sprite - stays global for now
     
-   // if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
+    
+    //----------------- Background ------------------
+    // sf::Texture t_background;//Background text - stays global for now
+    // sf::Sprite background;//Background Sprite - stays global for now
+    
+    // if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
     //    return EXIT_FAILURE;//Exit program and report error if file can be found
     //}
     //background.setTexture(t_background);//maps background text to background sprite
     //background.setPosition(0,0);//move background sprite to origin
     //window.draw(background);//draws background
 
+    
+    
 //-----------------------------------------------------------------
 // Draw Loop
 //-----------------------------------------------------------------
@@ -114,8 +117,7 @@ int main(int, char const**)
  --------------------------------------------------------------------
  --------------------------------------------------------------------
 /*/
-    frame* framePtr;
-    frame* previousFPtr;
+    
     
     int fcount = 0;
     tempCount=0;
@@ -176,14 +178,18 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
+                    vPtr = new video;
+                    cout << "The address of the video is: " << &(*vPtr) << endl;
+                    vPtr->setframeCount( gPtr->getRuntime() * gPtr->getFPS() );
                     
-                    playward.setClipStartTime(time(NULL));
+                    currentSession.addVideo(vPtr);
+                    sessionIndex++;
+                    sf::sleep(sf::milliseconds(250));
+                    
                     recordStatus = true;
-                    
-                    vPtr = new video();
-                    vPtr->setframeCount( gPtr->getRuntime());
-                    
+                    playward.setClipStartTime(time(NULL));
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    recordStart = time(NULL);
                 }
                 // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
@@ -191,7 +197,7 @@ int main(int, char const**)
                     playward.setPlaybackStartTime(time(NULL));
                 
                     //Insert Code Here
-                  
+                    
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 // Stop-Record
@@ -209,10 +215,13 @@ int main(int, char const**)
                 }
                 // Export Video
                 if(menuLayer == 5){//Executes Once when Export is clicked
-                   
                     stackward.print("Exporting Video");
+                    
+                    sf::sleep( sf::milliseconds(250));
                     vPtr->exportVideo( "Test1.txt" );   // Exports data file
+
                     stackward.print("Success");
+                    
                     menuLayer = 0;
                     
                     toolward.sync(menuLayer);
@@ -220,6 +229,7 @@ int main(int, char const**)
                 if(menuLayer == 6){//Executes Once when Delete is clicked
                     
                     currentSession.undoRec();
+                    sessionIndex--;
                     
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
@@ -262,7 +272,7 @@ int main(int, char const**)
             default:    //Streams Live data from sensor but not recording
                 pixAddr = 0x80;
                 for( i = 0 ; i < 8 ; i++ ){
-                    for( j = 0 ; j < 8 ; j ++ ){
+                    for( j = 0 ; j < 8 ; j++ ){
                         // Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
@@ -287,8 +297,7 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
-                if( difftime( time(NULL), tempTime) >= 1 ){
-                    
+               if( fCount < vPtr->getframeCount() ){
                     fPtr = new frame(gPtr);
                     vPtr->addFrame( fPtr );
                 
@@ -301,12 +310,13 @@ int main(int, char const**)
                             //Memory Registers
                             int index = 10*i + j;
                             int address = 0x80 + 20*i+2*j;
-                            pixel.monoUpdate(fPtr->access(i,j));
+        
+                            pixel.fastUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                             // Draw the Pixel
                             window.draw( newPix );
-                        }
+                            }
                     }
             
                     playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
@@ -315,33 +325,24 @@ int main(int, char const**)
                     tempTime = time(NULL);
                     previousFPtr = fPtr;
                     fCount++;
-                    
-                    if( fCount == (gPtr->getFPS() * gPtr->getRuntime()) ){
-                        currentSession.addVideo(vPtr);
-                        sessionIndex++;
-                    }
+                    (gPtr->getFPS() == 10) ? sf::sleep(sf::milliseconds(100)) : sf::sleep(sf::milliseconds(1000));
+                   
+                   if( fCount == vPtr->getframeCount() ){
+                       menuLayer = 0;
+                       recordStatus = false;
+                   }
                 }
-                else
-                    for( i = 0 ; i < 8 ; i++ ){
-                        for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
-                            
-                            pixel.fastUpdate(previousFPtr->access(i,j));
-                            newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
-                            
-                            // Pixel Position
-                            xPix = (xGrid + i*51);
-                            yPix = (yGrid + j*51);
-                            newPix.setPosition( xPix, yPix );
-                            
-                            // Draw the Pixel
-                            window.draw( newPix );
-                        }
-                    }
-                    playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
-                    playward.draw(window);//Draws playbar element to window object
+                
+                if( difftime( time(NULL), recordStart) >= gPtr->getRuntime()){
+                        menuLayer = 0; // Return to Home
+                        recordStatus = false;
+
+                        toolward.sync(menuLayer);
+                        topward.setMode(menuLayer);
+                }
+                playward.record(topward,stackward,recordStatus,recordTime);//Playbar Recording Control
+                playward.draw(window);//Draws playbar element to window object
+                
                 break;
 
             case 3:     //Playback Mode

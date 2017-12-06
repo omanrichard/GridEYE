@@ -58,8 +58,7 @@ int GridEYE::read( int pixAddr ){
     short temp2 = 0;
     short result = 0;
     
-    this->test( 0, 0 );
-    temp = this->r;
+    temp = rand() % 90;
     
     /*
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
@@ -314,13 +313,13 @@ frame::frame(GridEYE &gridward){
 }
 
 frame::frame(GridEYE* gPtr){
-    int temp = 0;
+    short temp = 0;
     int pixAddr = 0x80;
     
     for( row = 0 ; row < 8 ; row++ ){
         for( col = 0 ; col < 8 ;  col++){
-            temp = gPtr->read( pixAddr );                // Read Thermistor Data
-            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
+            temp = gPtr->read( pixAddr );                   // Read Thermistor Data
+            this->sensor_values[row][col] = temp;    // Stores temp value in sensor table
             pixAddr += 2;                                   // Increment to next pixel
         }
     }
@@ -410,6 +409,8 @@ video::video(){
     this->frameCount = 0;
     this->mean = 0;
     this->max = 0;
+    
+    cout << "Video Created" << endl;
 }
 video::video( GridEYE gridward ){
     frame* temp;
@@ -462,30 +463,30 @@ void video::setframeCount( int count ){
 }
 
 void video::exportVideo( string filename ){
-    frame* temp;
+    frame* temp = NULL;
     fstream newOutput;                      // Creates/Opens new output file
     newOutput.open( filename, ios::out );
 
     newOutput << "Frame Count: " << this->frameCount
               << "Avg. Temp: "   << this->mean
               << "Max Temp: "    << this->max
-              << endl;   // Copies data from memory to file
-
+              << endl;
     for( int x = 0 ; x < frameCount ; x++ ){
-        newOutput << "Frame No. : " << x + 1 << endl;
-        temp = this->getFrame(x);
-        
+        temp = this->getFrame(0);
+
+        newOutput << "Frame No. : " << x + 1 << endl;        
         for( row = 0 ; row < 8 ; row++ ){                                        // Frame No. : 1
             newOutput << "\t"                           // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-            << "[ " << temp->access(col, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-            << "[ " << temp->access(col, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-            << "[ " << temp->access(col, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-            << "[ " << temp->access(col, 3) << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-            << "[ " << temp->access(col, 4) << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-            << "[ " << temp->access(col, 5) << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-            << "[ " << temp->access(col, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-            << "[ " << temp->access(col, 7) << " ]\t" << endl;
+            << "[ " << temp->access(row, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+            << "[ " << temp->access(row, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+            << "[ " << temp->access(row, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+            << "[ " << temp->access(row, 3) << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+            << "[ " << temp->access(row, 4) << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+            << "[ " << temp->access(row, 5) << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+            << "[ " << temp->access(row, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+            << "[ " << temp->access(row, 7) << " ]\t" << endl;
         }
+        temp = this->getFrame( x+1 );
     }
     newOutput.close( ); // Close file
     return;
@@ -510,8 +511,8 @@ void video::print(){
     }
 }
 
-frame* video::getFrame( int temp ){
-    return this->data[temp];
+frame* video::getFrame( int frameNum ){
+    return this->data[frameNum];
 }
 
 /*

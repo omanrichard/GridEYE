@@ -140,24 +140,23 @@ private:
     
     short max;
     float mean;
-    
     void set_max();
     void set_mean();
     
 public:
     video();
+    // We dont use these I think
     video( GridEYE gridward );
-    // Call using pointer or object?
     video( GridEYE* gPtr );
     ~video();
     
     void addFrame(frame* fptr);
-    int getframeCount();
     void exportVideo( string filename );
     void print();
-    frame* getFrame( int temp );
     void setframeCount( int count );
-
+    
+    int getframeCount();
+    frame* getFrame( int temp );
 };
 
 
