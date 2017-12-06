@@ -859,267 +859,267 @@ void pixMask::lazyUpdate(int temp){
             this->g =
             this->b =
             break;
-        case 47:
+        case 147:
             this->r =
             this->g =
             this->b =
             break;
-        case 48:
+        case 148:
             this->r =
             this->g =
             this->b =
             break;
-        case 49:
+        case 149:
             this->r =
             this->g =
             this->b =
             break;
-        case 50:
+        case 150:
             this->r =
             this->g =
             this->b =
             break;
-        case 51:
+        case 151:
             this->r =
             this->g =
             this->b =
             break;
-        case 52:
+        case 152:
             this->r =
             this->g =
             this->b =
             break;
-        case 53:
+        case 153:
             this->r =
             this->g =
             this->b =
             break;
-        case 54:
+        case 154:
             this->r =
             this->g =
             this->b =
             break;
-        case 55:
+        case 155:
             this->r =
             this->g =
             this->b =
             break;
-        case 56:
+        case 156:
             this->r =
             this->g =
             this->b =
             break;
-        case 57:
+        case 157:
             this->r =
             this->g =
             this->b =
             break;
-        case 58:
+        case 158:
             this->r =
             this->g =
             this->b =
             break;
-        case 59:
+        case 159:
             this->r =
             this->g =
             this->b =
             break;
-        case 60:
+        case 160:
             this->r =
             this->g =
             this->b =
             break;
-        case 61:
+        case 161:
             this->r =
             this->g =
             this->b =
             break;
-        case 62:
+        case 162:
             this->r =
             this->g =
             this->b =
             break;
-        case 63:
+        case 163:
             this->r =
             this->g =
             this->b =
             break;
-        case 64:
+        case 164:
             this->r =
             this->g =
             this->b =
             break;
-        case 65:
+        case 165:
             this->r =
             this->g =
             this->b =
             break;
-        case 66:
+        case 166:
             this->r =
             this->g =
             this->b =
             break;
-        case 67:
+        case 167:
             this->r =
             this->g =
             this->b =
             break;
-        case 68:
+        case 168:
             this->r =
             this->g =
             this->b =
             break;
-        case 69:
+        case 169:
             this->r =
             this->g =
             this->b =
             break;
-        case 70:
+        case 170:
             this->r =
             this->g =
             this->b =
             break;
-        case 71:
+        case 171:
             this->r =
             this->g =
             this->b =
             break;
-        case 72:
+        case 172:
             this->r =
             this->g =
             this->b =
             break;
-        case 73:
+        case 173:
             this->r =
             this->g =
             this->b =
             break;
-        case 74:
+        case 174:
             this->r =
             this->g =
             this->b =
             break;
-        case 75:
+        case 175:
             this->r =
             this->g =
             this->b =
             break;
-        case 76:
+        case 176:
             this->r =
             this->g =
             this->b =
             break;
-        case 77:
+        case 177:
             this->r =
             this->g =
             this->b =
             break;
-        case 78:
+        case 178:
             this->r =
             this->g =
             this->b =
             break;
-        case 79:
+        case 179:
             this->r =
             this->g =
             this->b =
             break;
-        case 80:
+        case 180:
             this->r =
             this->g =
             this->b =
             break;
-        case 81:
+        case 181:
             this->r =
             this->g =
             this->b =
             break;
-        case 82:
+        case 182:
             this->r =
             this->g =
             this->b =
             break;
-        case 83:
+        case 183:
             this->r =
             this->g =
             this->b =
             break;
-        case 84:
+        case 184:
             this->r =
             this->g =
             this->b =
             break;
-        case 85:
+        case 185:
             this->r =
             this->g =
             this->b =
             break;
-        case 86:
+        case 186:
             this->r =
             this->g =
             this->b =
             break;
-        case 87:
+        case 187:
             this->r =
             this->g =
             this->b =
             break;
-        case 88:
+        case 188:
             this->r =
             this->g =
             this->b =
             break;
-        case 89:
+        case 189:
             this->r =
             this->g =
             this->b =
             break;
-        case 90:
+        case 190:
             this->r =
             this->g =
             this->b =
             break;
-        case 91:
+        case 191:
             this->r =
             this->g =
             this->b =
             break;
-        case 92:
+        case 192:
             this->r =
             this->g =
             this->b =
             break;
-        case 93:
+        case 193:
             this->r =
             this->g =
             this->b =
             break;
-        case 94:
+        case 194:
             this->r =
             this->g =
             this->b =
             break;
-        case 95:
+        case 195:
             this->r =
             this->g =
             this->b =
             break;
-        case 96:
+        case 196:
             this->r =
             this->g =
             this->b =
             break;
-        case 97:
+        case 197:
             this->r =
             this->g =
             this->b =
             break;
-        case 98:
+        case 198:
             this->r =
             this->g =
             this->b =
             break;
-        case 99:
+        case 199:
             this->r =
             this->g =
             this->b =
