@@ -12,7 +12,7 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-//#include <wiringPiI2C.h>
+#include <wiringPiI2C.h>
 
 #define PGE 0x68
 #define PCR 0x00
@@ -32,10 +32,10 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
-    /*
+    
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
-     */
+     
         FPS = 10;
         runtime = 10;
 }
@@ -52,7 +52,8 @@ int GridEYE::read( int pixAddr ){
     int temp = 0;
     int result = 0;
     
-    temp = rand() % 90;
+    //temp = rand() % 90;
+    
     
     /*
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );     // Write to pixel, requests data
@@ -62,14 +63,14 @@ int GridEYE::read( int pixAddr ){
      temp = temp&0x0800;
      temp = temp >> 1;                          // Thermistor has 12-bit data
                                                 // Shift 2 removes precision Bits, makes short data 8-bit temperature
-    */
+    
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-        //wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+        wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -84,19 +85,19 @@ int GridEYE::getfd(){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    /*
+    
      try{
         if( temp == 1 || temp == 10 )
         throw -1;
         if( temp == 1 )
-         // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+            wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
-         // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+            wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
      }
      catch( int ){
          cout << "Exception Handled: invalid setting value" << endl;
      }
-    */
+    
         return;
      }
 
@@ -561,22 +562,7 @@ video::video(){
     
     cout << "Video Created" << endl;
 }
-/*
-video::video( GridEYE gridward ){
-    frame* temp;
-    gridward.runtime = 65;
-    gridward.setFPS( 10 );
-    
-    this->frameCount = (gridward.FPS * gridward.runtime);
-    
-    for( int x = 0 ; x < frameCount ; x++){
-        temp = new frame( gridward );       // Collect data and create frame
-        this->data.push_back( temp );       // Store pointer in data Vector
-        //this->frameCount++;
-    }
-    return;
-}
-*/
+
 video::video( GridEYE* gPtr ){
     frame* temp;
     
@@ -694,6 +680,7 @@ video::~video(){
 //-----------------------------------------------------------------
 session::session(){     // Default Constructor
     this->vCount = 0;                           // Initializes video count to zero
+    this->current.push_back( NULL );
     cout << "Session Started" << endl << endl;
     return;
 }
@@ -712,13 +699,20 @@ session::session( video* newVid ){      // constructor adds video pointer to ses
 }
 
 void session::addVideo( video* newVid ){
-    this->current.push_back( newVid );  // Append "active" recording to video stack
-    this->vCount++;                     // Update video count value
+    if( vCount == 0 )
+        this->current[0] = newVid;
+    else
+        this->current.push_back( newVid );  // Append "active" recording to video stack
+    this->vCount++;                         // Update video count value
 }
 
 void session::undoRec(){        // Removes "active" recording from the stack of videos
+    if( vCount == 0 ){
+        this->current.push_back( NULL );
+    }
     this->current.pop_back();   // pop_back() removes last value, decrements vector size by 1
     this->vCount--;             // update video count value
+
 }
 
 video* session::getVideo( int index ){

@@ -4,7 +4,7 @@
 #include "Event.hpp"                        //Mouse Move Events
 #include "Mouse.hpp"                        //Mouse Clicks
 
-//#include <wiringPi.h>                     //Raspberry Pi GPIO
+#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
 #include <fstream>                          //FILE I/O
 #include <vector>
@@ -56,16 +56,14 @@ int main(int, char const**)
     GridEYE gridward;                       //Grid Eye Object
     GridEYE* gPtr = &gridward;
     gridward.setFD();//Fix
-   /*
+   
     wiringPiSetup();                        //WiringPiSetup
     pinMode(GREENLED, OUTPUT);              //Configure Green Led Pin
     pinMode(REDLED,OUTPUT);                 //Configure Red Led Pin
    
     digitalWrite(GREENLED, 0);              //Turns Green Led On
     digitalWrite(REDLED, 1);                //Turns Red Led Off
-*/
     
-
 //-----------------------------------------------------------------
 // Set Up
 //-----------------------------------------------------------------
@@ -106,8 +104,12 @@ int main(int, char const**)
     //background.setTexture(t_background);//maps background text to background sprite
     //background.setPosition(0,0);//move background sprite to origin
     //window.draw(background);//draws background
+    sf::Image icon;
+    if (!icon.loadFromFile("icon.png")) {
+        return EXIT_FAILURE;
+    }
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    
     
 //-----------------------------------------------------------------
 // Draw Loop
@@ -129,16 +131,16 @@ int main(int, char const**)
     {
       //LED Control
         if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
-           /*
+           
             digitalWrite(GREENLED,1);
             digitalWrite(REDLED,0);
-            */
+            
         }
         else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
-           /*
+           
             digitalWrite(GREENLED,0);
             digitalWrite(REDLED,1);
-            */
+            
         }
         
         //-----------------------------------------------------------------
@@ -171,7 +173,23 @@ int main(int, char const**)
                 }
                 // Capture Video
                 if(menuLayer == 2){//Executes Once when Capture is clicked
-                    vPtr = new video;
+                    vPtr = currentSession.getVideo(sessionIndex);
+                    if( vPtr == NULL )
+                        sessionIndex = 0;
+                    else
+                        sessionIndex++;
+                    
+                    try{
+                        vPtr = new video;
+                        
+                        if( vPtr == NULL )
+                            throw "Could not Allocate memory to store capture video";
+                    }
+                    catch( string error ){
+                        stackward.print( error );
+                        sessionIndex--;
+                        menuLayer = 0;
+                    }
                     
                     currentSession.addVideo(vPtr);
                     
@@ -183,25 +201,27 @@ int main(int, char const**)
                 // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
                     try{
-                        if( sessionIndex == 0 )
+                        vPtr = currentSession.getVideo(0);
+                        if( vPtr == NULL )
                             throw 0;
                         playward.onClick(window,stackward);
                         playward.setPlaybackStartTime(time(NULL));  //Sets playback start time in playbar
                         playbackStatus = true;                      //Switchs device into payback mode
                         toolward.sync(menuLayer);//Sync toolbar to current menu layer
-                        vPtr = currentSession.getVideo( sessionIndex);
+                        vPtr = currentSession.getVideo( sessionIndex );
                         recordStart = time( NULL );
                     }
                     catch( int ){
-                        stackward.print("No Videos stored in Session");
+                        stackward.print("No videos stored in current session");
                         menuLayer = 0;
                     }
                 }
                 // Stop-Record
                 if(menuLayer == 4){//Executes Once when Stop is clicked
                         
-                    recordStatus = true;
+                    recordStatus = false;
                     
+                    stackward.print("Recording Ended, Discarded Recording");
                     
                     menuLayer = 4; //Return to home
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
@@ -210,19 +230,42 @@ int main(int, char const**)
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
-                    filename = "pge_vid_";
-                    filename += std::to_string(sessionIndex);
-                    filename += ".txt";
-                    vPtr->exportVideo( filename );   // Exports data file
+                    try{
+                        vPtr = currentSession.getVideo( sessionIndex );
+                        if( vPtr == NULL )
+                            throw 0;
+                    
+                        filename = "pge_vid_";
+                        filename += std::to_string(sessionIndex+1);
+                        filename += ".txt";
+                        vPtr->exportVideo( filename );   // Exports data file
 
-                    stackward.print("Success");
-                    menuLayer = 0;
-                    toolward.sync(menuLayer);
+                        stackward.print("Success");
+                        menuLayer = 0;
+                        toolward.sync(menuLayer);
+                    }
+                    catch( int x ){
+                        if( x == 0 )
+                            stackward.print( "Unable to export video. Error 0x0: No videos stored in current session");
+                    }
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
-                    currentSession.undoRec();
-                    sessionIndex--;
-                    
+                    vPtr = currentSession.getVideo( sessionIndex );
+                    try{
+                        if( vPtr == NULL )
+                            throw 0;
+                        if( sessionIndex < 0 )
+                            throw "exception handled";
+                        currentSession.undoRec();
+                        sessionIndex--;
+                    }
+                    catch( int x ){
+                        stackward.print( "Error 0x00: Cannot delete video. No videos stored in current session");
+                    }
+                    catch( string error ){
+                        stackward.print(error);
+                        sessionIndex = 0;
+                    }
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 topward.setMode(menuLayer);//Set topbar to current mode
@@ -286,8 +329,16 @@ int main(int, char const**)
             
             case 2:  //Capture Mode
                     if( difftime( time(NULL), tempTime) >= 1 ){
+                        try{
+                            fPtr = new frame( gPtr );
+                            
+                            if( fPtr == NULL )
+                                throw "Could not allocate memory for new frame...";
+                        }
+                        catch( string error ){
+                            stackward.print(error);
+                        }
                         
-                        fPtr = new frame( gPtr );
                         vPtr->addFrame( fPtr );
                         
                         for( i = 0 ; i < 8 ; i++ ){
@@ -318,8 +369,8 @@ int main(int, char const**)
                             topward.setMode(0);
                             playward.setClipEndTime(time(NULL));
                             currentSession.addVideo(vPtr);
-                            sessionIndex++;
                             fCount = 0;
+                            stackward.print("Capture Finished");
                         }
                         tempTime = time(NULL);
                     }
@@ -350,14 +401,15 @@ int main(int, char const**)
             case 3:     //Playback Mode
                 
                 if( difftime( time(NULL), tempTime) >= 1 ){
+                    try{
+                        if( fCount > ( gridward.runtime * gridward.FPS ))
+                            throw 2;
+                        
+                        fPtr = vPtr->getFrame(fCount);
                     
-                    fPtr = vPtr->getFrame(fCount);
-                    
+                
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
                             
                             pixel.fastUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
@@ -378,17 +430,26 @@ int main(int, char const**)
                     if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.runtime * gridward.FPS) ){
                         menuLayer = 0;
                         recordStatus = false;
-                        topward.setMode(4);
+                        topward.setMode(0);
                         fCount = 0;
+                        toolward.sync(menuLayer);
+                        stackward.print("Playback Complete");
                     }
                     tempTime = time(NULL);
+                    
+                    }
+                    catch( int x ){
+                        menuLayer = 0;
+                        recordStatus = false;
+                        topward.setMode(0);
+                        fCount = 0;
+                        toolward.sync(menuLayer);
+                        stackward.print("Playback Complete");
+                    }
                 }
                 else{
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            //Memory Registers
-                            int index = 10*i + j;
-                            int address = 0x80 + 20*i+2*j;
                             
                             pixel.fastUpdate(prevFrame->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
@@ -423,7 +484,8 @@ int main(int, char const**)
                         window.draw( newPix );
                     }
                 }
-                
+                playward.draw(window);//Update window object
+                playward.playback(topward,stackward,playbackStatus);//Playbar Playback animations
         }// End Layer Control Switch
         
         //Sync all elements
