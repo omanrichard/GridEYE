@@ -55,12 +55,12 @@ int GridEYE::read( int pixAddr ){
     //temp = rand() % 90;
     
     
-    wiringPiI2CWriteReg16( fd, pixAddr, 1 );     // Write to pixel, requests data
+    wiringPiI2CWriteReg8( fd, pixAddr, 1 );     // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr );  // Receive value from pixel
-    wiringPiI2CWriteReg16( fd, pixAddr, 0);
+    wiringPiI2CWriteReg8( fd, pixAddr, 0);
                                                 // Pixels have 12-bit data
      temp = temp&0x0800;                        // Right shift 1 removes sign
-     temp = temp >> 1;                          //
+     //temp = temp >> 1;                          //
     
     while( temp > 0 ){
         temp -= 0x04;
@@ -73,7 +73,7 @@ int GridEYE::read( int pixAddr ){
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-        wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+        wiringPiI2CWriteReg8( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
@@ -93,9 +93,9 @@ void GridEYE::setFPS(int temp){
         if( temp == 1 || temp == 10 )
         throw -1;
         if( temp == 1 )
-            wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+            wiringPiI2CWriteReg8( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
-            wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+            wiringPiI2CWriteReg8(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
      }
      catch( int ){
          cout << "Exception Handled: invalid setting value" << endl;
