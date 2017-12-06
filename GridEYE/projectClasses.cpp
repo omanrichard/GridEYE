@@ -463,6 +463,7 @@ video::~video(){
 //-----------------------------------------------------------------
 session::session(){     // Default Constructor
     this->vCount = 0;                           // Initializes video count to zero
+    this->current[0] = NULL;
     cout << "Session Started" << endl << endl;
     return;
 }
