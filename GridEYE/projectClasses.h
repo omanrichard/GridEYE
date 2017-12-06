@@ -60,25 +60,14 @@ public:
     bool DR;        // True: TRUE, Human: FALSE
     
     void setFD(void);
+    int getfd();
+
     int read(int pixAddr);
-    
     void reset(void);
     
-    //removing soon
-    void test(int row, int col);    //Draw Test pattern
-    
-    short pixelL;
-    int r,g,b;
     short randTemp(void){ return rand()%255;};
-    //
-  //  void setRunTime( int nTime );
-   void setFPS( int nFPS );
- //   void setDR( bool nDR );
-    
-//    int getRuntime();
-//int getFPS();
- //   bool getDR();
-    int getfd();
+    void setFPS( int nFPS );
+ 
 };
 
 //-----------------------------------------------------------------
@@ -116,20 +105,13 @@ private:                            // 0  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     frame();
-    frame(GridEYE &gridward);
+    //frame(GridEYE &gridward);
     frame( GridEYE* gPtr );
     ~frame();
     
     short access( short row , short col );
     short get_max();
     float get_mean();
-    
-    void new_max( short newMax );
-    void new_mean( float newMean );
-    
-    void updateFrame( GridEYE PGE );
-    void print();
-    
 };
 
 //-----------------------------------------------------------------
@@ -148,13 +130,12 @@ private:
 public:
     video();
     // We dont use these I think
-    video( GridEYE gridward );
+    //video( GridEYE gridward );
     video( GridEYE* gPtr );
     ~video();
     
     void addFrame(frame* fptr);
     void exportVideo( string filename );
-    void print();
     void setframeCount( int count );
     
     int getframeCount();

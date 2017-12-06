@@ -12,7 +12,7 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-#include <wiringPiI2C.h>
+//#include <wiringPiI2C.h>
 
 #define PGE 0x68
 #define PCR 0x00
@@ -32,9 +32,10 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 //-----------------------------------------------------------------GridEYE::GridEYE(){
 
 GridEYE::GridEYE(){
+    /*
         fd = wiringPiI2CSetup( PGE );
         wiringPiI2CWriteReg16(fd, PCR, 0);
-     
+     */
         FPS = 10;
         runtime = 10;
 }
@@ -47,119 +48,57 @@ GridEYE::GridEYE( int address ){
 //-----------------------------------------------------------------
 // GridEYE Methods
 //-----------------------------------------------------------------
-void GridEYE::setFD(void){
-   fd = wiringPiI2CSetup( PGE );
-}
-
 int GridEYE::read( int pixAddr ){
     short temp = 0;
-    short temp2 = 0;
     short result = 0;
     
-    //temp = rand() % 90;
+    temp = rand() % 90;
     
-    
-    wiringPiI2CWriteReg8( fd, pixAddr, 1 );    // Write to pixel, requests data
-    temp = wiringPiI2CReadReg8( fd, pixAddr ); // Receive value from pixel
+    /*
+    wiringPiI2CWriteReg8( fd, pixAddr, 1 );     // Write to pixel, requests data
+    temp = wiringPiI2CReadReg8( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
-    temp = temp >> 2;                           // Thermistor has 12-bit data
-                                            // Shift 2 removes precision Bits, makes short data 8-bit temperature
     
-    //wiringPiI2CWriteReg8( fd, pixAddr+1 , 1 );      // Open Register for reading
-    //temp2 = wiringPiI2CReadReg8( fd, pixAddr+1 );   // Read value
-    //wiringPiI2CWriteReg8( fd, pixAddr+1, 0);        // Close Register
-
-    //temp2 = temp2 << 4;
-     
-    //result = temp2 & temp;
-     
+     temp = temp >> 2;                          // Thermistor has 12-bit data
+                                                // Shift 2 removes precision Bits, makes short data 8-bit temperature
+    */
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-    wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
+        //wiringPiI2CWriteReg16( fd, 0x02, 0 ); // Resets Frame rate register to default
     DR = true;
     return;
 }
 
-void GridEYE::test(int row, int col){
-   
-    if(col < 2){
-        r = rand() % 255;
-        g = rand() % 255;
-        b = rand() % 255;
-    }
-    
-    if(col > 1 && col < 4){
-        r = rand() % 255;
-        g= 255;
-        b = 255;
-    }
-    if(col > 3 && col < 6){
-        r = 255;
-        g = rand() % 255;
-        b = 255;
-    }
-    if(col > 5){
-        r = 255;
-        g = 255;
-        b = rand() % 255;
-    }
+void GridEYE::setFD(void){
+    //fd = wiringPiI2CSetup( PGE );
 }
-
 
 int GridEYE::getfd(){
     return this->fd;
 }
-/*
-int GridEYE::getFPS(){
-    return this->FPS;
-}
 
-int GridEYE::getRuntime(){
-    return this->runtime;
-}
-
-bool GridEYE::getDR(){
-    return this->DR;
-}
-
-void GridEYE::setRunTime( int newTime ){
-    try{
-        if( newTime >= 3579139 )
-            throw 0;
-        this->runtime = newTime;
-    }
-    catch( int ){
-        cout << "exception handled invalid time. max time is 60 minutes" << endl;
-    }
-}
-
-
-
-void GridEYE::setDR( bool nDR ){
-    this->DR = nDR;
-}
- */
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    
+    /*
      try{
-     if( temp == 1 || temp == 10 )
-     throw -1;
-     if( temp == 1 )
-         wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
-     if( temp == 10 )
-         wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
+        if( temp == 1 || temp == 10 )
+        throw -1;
+        if( temp == 1 )
+         // wiringPiI2CWriteReg16( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
+        if( temp == 10 )
+         // wiringPiI2CWriteReg16(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
      }
      catch( int ){
          cout << "Exception Handled: invalid setting value" << endl;
      }
-    
-     return;
+    */
+        return;
      }
+
 GridEYE::~GridEYE(){
     
 }
@@ -296,6 +235,7 @@ frame::frame(){
     return;
 }
 
+/*
 frame::frame(GridEYE &gridward){
     
     for( row = 0 ; row < 8 ; row++ ){
@@ -308,6 +248,7 @@ frame::frame(GridEYE &gridward){
     set_mean();
     return;
 }
+*/
 
 frame::frame(GridEYE* gPtr){
     short temp = 0;
@@ -360,36 +301,6 @@ float frame::get_mean(){
     return this->mean;
 }
 
-void frame::updateFrame( GridEYE gPtr ){
-    int temp = 0;
-    int pixAddr = 0x80;
-    
-    for( row = 0 ; row < 8 ; row++ ){
-        for( col = 0 ; col < 8 ;  col++){
-            temp = gPtr.read( pixAddr );                // Read Thermistor Data
-            this->sensor_values[row][col] = (short)temp;    // Stores temp value in sensor table
-            pixAddr += 2;                                   // Increment to next pixel
-        }
-    }
-}
-
-
-void frame::print(){
-    
-    for( row = 0 ; row < 8 ; row++){                                        // Frame No. : 1
-        cout << "\t"                                      // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-        << "[ " << this->sensor_values[row][0] << " ] "   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-        << "[ " << this->sensor_values[row][1] << " ] "   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-        << "[ " << this->sensor_values[row][2] << " ] "   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-        << "[ " << this->sensor_values[row][3] << " ] "   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-        << "[ " << this->sensor_values[row][4] << " ] "   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-        << "[ " << this->sensor_values[row][5] << " ] "   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-        << "[ " << this->sensor_values[row][6] << " ] "   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-        << "[ " << this->sensor_values[row][7] << " ] " << endl;
-    }
-    return;
-}
-
 short frame::access( short row , short col ){
     return this->sensor_values[row][col];    //Accesses data point in data array
 }
@@ -409,6 +320,7 @@ video::video(){
     
     cout << "Video Created" << endl;
 }
+/*
 video::video( GridEYE gridward ){
     frame* temp;
     gridward.runtime = 65;
@@ -423,7 +335,7 @@ video::video( GridEYE gridward ){
     }
     return;
 }
-
+*/
 video::video( GridEYE* gPtr ){
     frame* temp;
     
@@ -488,25 +400,6 @@ void video::exportVideo( string filename ){
     }
     newOutput.close( ); // Close file
     return;
-}
-
-void video::print(){
-    frame* temp;
-    for( row = 0 ; row < frameCount ; row++ ){
-        temp = this->data[row];
-        cout << "Frame No. : " << row + 1 << endl;
-        for( col = 0 ; col < 8 ; col++){                // Frame No. : 1
-            cout << "\t"                                // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-            << "[ " << temp->access(col, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-            << "[ " << temp->access(col, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-            << "[ " << temp->access(col, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-            << "[ " << temp->access(col, 3) << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-            << "[ " << temp->access(col, 4) << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-            << "[ " << temp->access(col, 5) << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-            << "[ " << temp->access(col, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-            << "[ " << temp->access(col, 7) << " ]" << endl;
-        }
-    }
 }
 
 frame* video::getFrame( int frameNum ){
