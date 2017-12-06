@@ -303,7 +303,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*51);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.fastUpdate(fPtr->access(i,j));
+                            pixel.update(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                             // Draw the Pixel
@@ -335,7 +335,7 @@ int main(int, char const**)
                             yPix = (yGrid + j*pixScale);
                             newPix.setPosition( xPix, yPix );
                             
-                            pixel.fastUpdate( fPtr->access(i,j) );
+                            pixel.updatepdate( fPtr->access(i,j) );
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
                             window.draw(newPix);
@@ -369,7 +369,7 @@ int main(int, char const**)
                         newPix.setPosition( xPix, yPix );
                         
                         //Hardware Function
-                        pixel.fastUpdate( gridward.read(pixAddr) );
+                        pixel.update( gridward.read(pixAddr) );
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
