@@ -64,7 +64,7 @@ int GridEYE::read( int pixAddr ){
     
     while( temp > 0 ){
         temp -= 0x04;
-        result += 0.25
+        result += 0.25;
     }
     
     return result;
