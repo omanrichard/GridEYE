@@ -60,13 +60,13 @@ float GridEYE::read( int pixAddr ){
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
                                                 // Pixels have 12-bit data
     temp = (temp & 0x07FF);
-    
+    /*
     while( temp > 0x00 ){
         temp -= 0x04;
         result += 0.25;
     }
-    
-    return result;
+    */
+    return temp;
 }
 
 void GridEYE::reset(void){
