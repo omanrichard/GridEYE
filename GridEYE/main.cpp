@@ -41,7 +41,7 @@ int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playb
 bool recordStatus = false;                  //True: Recording; False: Not Recording
 bool playbackStatus = false;                //True: Playing Clip; False: Not Playing Clip
 
-int recordTime = 0;                         //Time to record the video
+int recordTime = 10;                         //Time to record the video, default 10 seconds
 
 int i, j;
 int xPix, yPix;
@@ -164,6 +164,7 @@ int main(int, char const**)
                     setward.onClick(window, gPtr, stackward); //Scans buffer for corosponing inputs.
                     
                     recordTime = setward.syncRecordLength();
+                    gridward.runtime = recordTime;
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
                 
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
