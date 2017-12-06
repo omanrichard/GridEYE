@@ -55,7 +55,7 @@ int GridEYE::read( int pixAddr ){
     //temp = rand() % 90;
     
     
-    /*
+    
     wiringPiI2CWriteReg16( fd, pixAddr, 1 );     // Write to pixel, requests data
     temp = wiringPiI2CReadReg16( fd, pixAddr );  // Receive value from pixel
     wiringPiI2CWriteReg16( fd, pixAddr, 0);
@@ -154,31 +154,451 @@ void pixMask::lazyUpdate(int temp){
             this->b = 127;
             break;
         case 4:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 119;
+            this->g = 0;
+            this->b = 127;
             break;
         case 5:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 117;
+            this->g = 0;
+            this->b = 127;
             break;
         case 6:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 115;
+            this->g = 0;
+            this->b = 127;
             break;
         case 8:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 113;
+            this->g = 0;
+            this->b = 127;
             break;
         case 9:
+            this->r = 111;
+            this->g = 0;
+            this->b = 127;
+            break;
+        case 10:
+            this->r = 109;
+            this->g = 0;
+            this->b = 127;
+            break;
+        case 0:
             this->r =
             this->g =
             this->b =
             break;
-        case 10:
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 0:
             this->r =
             this->g =
             this->b =
