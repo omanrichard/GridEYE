@@ -310,7 +310,7 @@ int main(int, char const**)
                         newPix.setPosition( xPix, yPix );
                         
                         //Hardware Function
-                        pixel.fastUpdate( gridward.read(pixAddr) );
+                        pixel.lazyUpdate( gridward.read(pixAddr) );
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
@@ -347,7 +347,7 @@ int main(int, char const**)
                                 int index = 10*i + j;
                                 int address = 0x80 + 20*i+2*j;
                                 
-                                pixel.fastUpdate(fPtr->access(i,j));
+                                pixel.lazyUpdate(fPtr->access(i,j));
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
                                 // Pixel Position
@@ -381,7 +381,7 @@ int main(int, char const**)
                                 int index = 10*i + j;
                                 int address = 0x80 + 20*i+2*j;
                                 
-                                pixel.fastUpdate(prevFrame->access(i,j));
+                                pixel.lazyUpdate(prevFrame->access(i,j));
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
                                 // Pixel Position
@@ -411,7 +411,7 @@ int main(int, char const**)
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
                             
-                            pixel.fastUpdate(fPtr->access(i,j));
+                            pixel.lazyUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             // Pixel Position
@@ -451,7 +451,7 @@ int main(int, char const**)
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
                             
-                            pixel.fastUpdate(prevFrame->access(i,j));
+                            pixel.lazyUpdate(prevFrame->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                             // Pixel Position
