@@ -513,7 +513,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
         // Minutes UP
         if (position.x > (rootx + 150)  && position.x < (rootx+200)){
             if (position.y > (rootY+175) && position.y < (rootY+200)){
-                settingsMinsUp.setFillColor(sf::Color(255,144,255));
+                settingsMinsUp.setFillColor(sf::Color(sf::Color::Green));
                 if(recordMins <= 50){
                     recordMins++;
                     newruntime += 60;
@@ -524,7 +524,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
         // Minutes DOWN
         if (position.x > (rootx + 150)  && position.x < (rootx +200)){
             if (position.y > (rootY + 200) && position.y < (rootY+225)){
-                settingsMinsDown.setFillColor(sf::Color(255,144,255));
+                settingsMinsDown.setFillColor(sf::Color(sf::Color::Red));
                 if(recordMins > 0){
                     recordMins--;
                     newruntime -= 60;
@@ -534,7 +534,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
         // Seconds UP
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY + 175) && position.y < (rootY+200)){
-                settingsSecondsUp.setFillColor(sf::Color(255,144,255));
+                settingsSecondsUp.setFillColor(sf::Color(sf::Color::Green));
                 if(recordSeconds < 59){
                     recordSeconds++;
                     newruntime += 1;
@@ -553,7 +553,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
         // Seconds DOWN
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY+200) && position.y < (rootY+225)){
-                settingsSecondsDown.setFillColor(sf::Color(255,144,255));
+                settingsSecondsDown.setFillColor(sf::Color(sf::Color::Red));
                 if(recordSeconds > 0){
                     recordSeconds--;
                     newruntime -= 1;
