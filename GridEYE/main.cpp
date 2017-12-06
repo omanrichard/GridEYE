@@ -63,6 +63,8 @@ int main(int, char const**)
     GridEYE gridward;                      //Grid Eye Object
     GridEYE* gPtr = &gridward;
     
+    gridward.setFD();//Fix
+
 //-----------------------------------------------------------------
 // Video Capture Experiment Variables - Can we delete this? -- Eventually
 //-----------------------------------------------------------------
@@ -127,7 +129,7 @@ int main(int, char const**)
 
     
     topward.setMode(0); //Set Mode to standy By
-   // gridward.setFD();//Fix
+    
     while (window.isOpen()) //While the window is open.
     {
       //LED Control
