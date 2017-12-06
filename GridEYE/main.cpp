@@ -2,7 +2,7 @@
 //#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>                //Grahpics Librars
 #include "Event.hpp"                        //Mouse Move Events
-#include "Mouse.hpp"                       //Mouse Clicks
+#include "Mouse.hpp"                        //Mouse Clicks
 
 //#include <wiringPi.h>                     //Raspberry Pi GPIO
 #include <iostream>
@@ -17,8 +17,8 @@
 #include "graphicClasses.h"                 //User Interface Objects Classes
 
 //GPIO
-#define GREENLED 4                         //GPIO pin connected to Green LED Anode
-#define REDLED   5                   //GPIO Pin connected to Red LED Anode
+#define GREENLED 4                          //GPIO pin connected to Green LED Anode
+#define REDLED   5                          //GPIO Pin connected to Red LED Anode
 #define PDE 0x68                            //Grid-EYE I2C Address
 #define xGrid 200
 #define yGrid 98
@@ -53,16 +53,16 @@ int pixScale = 51;
 int main(int, char const**)
 {
     // Wiring Pi Setup
-    GridEYE gridward;                      //Grid Eye Object
+    GridEYE gridward;                       //Grid Eye Object
     GridEYE* gPtr = &gridward;
     gridward.setFD();//Fix
    /*
-    wiringPiSetup();
-    pinMode(GREENLED, OUTPUT);
-    pinMode(REDLED,OUTPUT);
+    wiringPiSetup();                        //WiringPiSetup
+    pinMode(GREENLED, OUTPUT);              //Configure Green Led Pin
+    pinMode(REDLED,OUTPUT);                 //Configure Red Led Pin
    
-    digitalWrite(GREENLED, 0); //Turns Green Led On
-    digitalWrite(REDLED, 1);
+    digitalWrite(GREENLED, 0);              //Turns Green Led On
+    digitalWrite(REDLED, 1);                //Turns Red Led Off
 */
     
 
@@ -95,7 +95,7 @@ int main(int, char const**)
     sf::RectangleShape newPix(sf::Vector2f(50, 50));
 
     
-    
+    //Background is obmitted to improve speed during demo
     //----------------- Background ------------------
     // sf::Texture t_background;//Background text - stays global for now
     // sf::Sprite background;//Background Sprite - stays global for now
@@ -117,10 +117,7 @@ int main(int, char const**)
 // music.play();
 
 /*/
- ------------------------ Start the game loop -----------------------
- ---------------------------GO Johnny GO!----------------------------
- --------------------------------------------------------------------
- --------------------------------------------------------------------
+ ------------------------ Start the main loop -----------------------
 /*/
     tempCount = 0;
     recordTime = gridward.runtime;
@@ -145,25 +142,22 @@ int main(int, char const**)
         }
         
         //-----------------------------------------------------------------
-        // Process Events
+        // Process Events - These are user input including Mouse Clicks and Mouse Moves
         //-----------------------------------------------------------------
-        sf::Event event;
+        sf::Event event;                                            //Create SFML event object
         
         while(window.pollEvent(event)){
-            toolward.event(event);//Handles Mouse moving events
+            toolward.event(event);                                  //Handles Mouse moving events
             
             //The Following events only happen on each click
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                toolward.onClick(window,stackward);//Handles Mouse click events
+                toolward.onClick(window,stackward);                 //Handles Mouse click events
                 
-                if(recordStatus == true){//Stop recording video on click
-                    menuLayer = 4;
-                   
-                    //Insert Code Here
-                    
-                    toolward.sync(menuLayer);
+                if(recordStatus == true){                           //Stop recording video on click
+                    menuLayer = 4;                                  //When recoding, any mouse click will exicute stop function
+                    toolward.sync(menuLayer);//Syncs the toolbar with the new menu layer
                 }
-                menuLayer = toolward.exit();//Changes menu Lever to what is stored in toolbar
+                menuLayer = toolward.exit();                        //Changes menu Lever to what is stored in toolbar
         
                 //Settings Menu
                 if(menuLayer == 1){
@@ -183,10 +177,10 @@ int main(int, char const**)
                     
                    // sf::sleep(sf::milliseconds(50));
                     
-                    recordStatus = true;
-                    playward.setClipStartTime(time(NULL));
-                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
-                    recordStart = time(NULL);
+                    recordStatus = true;                        //Switichs device into Record Mode
+                    playward.setClipStartTime(time(NULL));      //Sets the clip start time in the playbar
+                    toolward.sync(menuLayer);                   //Sync toolbar to current menu layer
+                    recordStart = time(NULL);                   //sets absolute timee recording starts
                 }
                 // Playback Video
                 if(menuLayer == 3){//Executes Once when Playback is clicked
@@ -194,10 +188,8 @@ int main(int, char const**)
                         if( sessionIndex == 0 )
                             throw 0;
                         playward.onClick(window,stackward);
-                        playward.setPlaybackStartTime(time(NULL));
-                
-                    //Insert Code Here
-                        playbackStatus = true;
+                        playward.setPlaybackStartTime(time(NULL));  //Sets playback start time in playbar
+                        playbackStatus = true;                      //Switchs device into payback mode
                         toolward.sync(menuLayer);//Sync toolbar to current menu layer
                         vPtr = currentSession.getVideo( sessionIndex);
                         recordStart = time( NULL );
