@@ -82,7 +82,7 @@ int main(int, char const**)
     int temp = 0;       // Stores value from GridEYE pixel
     int pixAddr = 0x80; // GridEYE pixel 1
     
-    std::string filename = "pge_vid_";
+    std::string filename;
     
     time_t tempTime = time(NULL);
     time_t recordStart;
@@ -221,6 +221,7 @@ int main(int, char const**)
                     stackward.print("Exporting Video");
                     
                     sf::sleep( sf::milliseconds(50));
+                    filename = "pge_vid_";
                     filename += std::to_string(sessionIndex);
                     filename += ".txt";
                     vPtr->exportVideo( filename );   // Exports data file
