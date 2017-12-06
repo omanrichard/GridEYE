@@ -153,26 +153,56 @@ void pixMask::lazyUpdate(int temp){
             this->b = 127;
             break;
         case 4:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 119;
+            this->g = 0;
+            this->b = 127;
             break;
         case 5:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 117;
+            this->g = 0;
+            this->b = 127;
             break;
         case 6:
-            this->r =
-            this->g =
-            this->b =
+            this->r = 115;
+            this->g = 0;
+            this->b = 127;
             break;
         case 8:
+            this->r = 113;
+            this->g = 0;
+            this->b = 127;
+            break;
+        case 9:
+            this->r = 111;
+            this->g = 0;
+            this->b = 127;
+            break;
+        case 10:
+            this->r = 109;
+            this->g = 0;
+            this->b = 127;
+            break;
+        case 11:
             this->r =
             this->g =
             this->b =
             break;
-        case 9:
+        case 12:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 13:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 14:
+            this->r =
+            this->g =
+            this->b =
+            break;
+        case 15:
             this->r =
             this->g =
             this->b =
