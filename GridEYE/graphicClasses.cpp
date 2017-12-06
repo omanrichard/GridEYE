@@ -485,6 +485,11 @@ settingsMenu::settingsMenu(void){
     
 }
 
+void settingsMenu::setDefaultRecordTime(int defaultSeconds){
+    recordSeconds = defaultSeconds;
+    settingsSecondsText.setString(std::to_string(recordSeconds));
+}
+
 void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal stackward){//Button presses
     // Colors - Select: 30,144,255 Unselect: 135,206,250
     menuLayer = 1; //Set internal menuLayer reference

@@ -166,6 +166,7 @@ public:
     
     //Action Functions
     int exit(void);
+    void setDefaultRecordTime(int recordSeconds);
     int syncRecordLength(void){return recordMins*60+recordSeconds;};
     
 };
