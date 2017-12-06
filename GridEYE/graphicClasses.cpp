@@ -494,7 +494,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsOneFPS.setFillColor(sf::Color(135,206,250));
                 settingsOneFPS.setOutlineThickness(0);
                 
-                sf::sleep(sf::milliseconds(50));
+                //sf::sleep(sf::milliseconds(50));
                 newFPS = 10;
             }}
         
@@ -506,7 +506,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsTenFPS.setFillColor(sf::Color(135,206,250));
                 settingsTenFPS.setOutlineThickness(0);
                 
-                sf::sleep(sf::milliseconds(50));
+                //sf::sleep(sf::milliseconds(50));
                 newFPS = 1;
             }}
         

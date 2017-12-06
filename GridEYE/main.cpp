@@ -168,7 +168,7 @@ int main(int, char const**)
                 //Settings Menu
                 if(menuLayer == 1){
                     setward.onClick(window, gPtr, stackward); //Scans buffer for corosponing inputs.
-                    sf::sleep( sf::milliseconds(50) );
+                    //sf::sleep( sf::milliseconds(50) );
                     
                     recordTime = setward.syncRecordLength();
                     menuLayer = setward.exit();//Allows settings menu to Menu layers
@@ -181,7 +181,7 @@ int main(int, char const**)
                     
                     currentSession.addVideo(vPtr);
                     sessionIndex++;
-                    sf::sleep(sf::milliseconds(50));
+                   // sf::sleep(sf::milliseconds(50));
                     
                     recordStatus = true;
                     playward.setClipStartTime(time(NULL));
@@ -218,7 +218,7 @@ int main(int, char const**)
                 if(menuLayer == 5){//Executes Once when Export is clicked
                     stackward.print("Exporting Video");
                     
-                    sf::sleep( sf::milliseconds(50));
+                   // sf::sleep( sf::milliseconds(50));
                     filename = "pge_vid_";
                     filename += std::to_string(sessionIndex);
                     filename += ".txt";
