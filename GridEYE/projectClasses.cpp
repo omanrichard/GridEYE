@@ -79,7 +79,7 @@ void GridEYE::reset(void){
 }
 
 void GridEYE::setFD(void){
-    //fd = wiringPiI2CSetup( PGE );
+    fd = wiringPiI2CSetup( PGE );
 }
 
 int GridEYE::getfd(){
