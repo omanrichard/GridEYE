@@ -250,13 +250,18 @@ int main(int, char const**)
                     try{
                         if( vPtr == NULL )
                             throw 0;
+                        if( sessionIndex < 0 )
+                            throw "exception handled"
                         currentSession.undoRec();
                         sessionIndex--;
                     }
                     catch( int x ){
                         stackward.print( "Error 0x00: Cannot delete video. No videos stored in current session");
                     }
-                    
+                    catch( string error ){
+                        stackward.print(error);
+                        sessionIndex = 0;
+                    }
                     toolward.sync(menuLayer);//Sync toolbar to current menu layer
                 }
                 topward.setMode(menuLayer);//Set topbar to current mode
