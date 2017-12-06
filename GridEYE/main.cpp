@@ -52,6 +52,10 @@ int pixScale = 51;
 
 int main(int, char const**)
 {
+    // Wiring Pi Setup
+    GridEYE gridward;                      //Grid Eye Object
+    GridEYE* gPtr = &gridward;
+    gridward.setFD();//Fix
     
     wiringPiSetup();
     pinMode(GREENLED, OUTPUT);
@@ -59,38 +63,32 @@ int main(int, char const**)
    
     digitalWrite(GREENLED, 0); //Turns Green Led On
     digitalWrite(REDLED, 1);
+
     
-    GridEYE gridward;                      //Grid Eye Object
-    GridEYE* gPtr = &gridward;
-    
-    gridward.setFD();//Fix
 
 //-----------------------------------------------------------------
-// Video Capture Experiment Variables - Can we delete this? -- Eventually
+// Set Up
 //-----------------------------------------------------------------
     session currentSession; // Begins session
-    int tempFPS;
-    
-    video* vPtr = NULL;
-    frame* fPtr;
-    frame* framePtr;
-    frame* previousFPtr;
-    
     int sessionIndex = 0;
+
+    int tempFPS;
     int fCount = 0;
     int tempCount = 0;
+    
+    video* vPtr = NULL;
+    frame* fPtr = NULL;
+    frame* framePtr = NULL;
+
     int temp = 0;       // Stores value from GridEYE pixel
     int pixAddr = 0x80; // GridEYE pixel 1
     
     std::string filename;
     
-    time_t tempTime = time(NULL);
     time_t recordStart;
     
     
-//-----------------------------------------------------------------
-// Set Up
-//-----------------------------------------------------------------
+
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
     //----------------- Camera Grid -----------------
@@ -253,7 +251,6 @@ int main(int, char const**)
             }
         }
    
-        
         topward.updateClock(time(NULL));        //Updates Clock
         
         window.clear();                         //Clears Screen Object of all Elements
