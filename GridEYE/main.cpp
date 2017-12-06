@@ -227,7 +227,7 @@ int main(int, char const**)
                     catch( int x ){
                         cout << "Error " << x << ": Unable to export video" << endl;
                         if( x == 0 )
-                            stackward.print( "Error 0: No videos stored in memory...");
+                            stackward.print( "Unalbe to Export Video... Error 0x0: No videos stored in memory...");
                     }
                 }
                 if(menuLayer == 6){//Executes Once when Delete is clicked
