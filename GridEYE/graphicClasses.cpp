@@ -471,6 +471,18 @@ settingsMenu::settingsMenu(void){
     settingsResetText.setPosition(rootx+50+15 ,rootY+350 );
     settingsApplyText.setPosition(rootx+300+13 ,rootY+350 );
     
+    //Set Selection to default
+    settingsRangeHuman.setOutlineThickness(0);
+    settingsRangeHuman.setFillColor(sf::Color(135,206,250));
+    settingsRangeTrue.setFillColor(sf::Color(30,144,255));
+    settingsRangeTrue.setOutlineThickness(2);
+    settingsTenFPS.setOutlineThickness(2);
+    settingsTenFPS.setFillColor(sf::Color(30,144,255));
+    settingsOneFPS.setFillColor(sf::Color(135,206,250));
+    settingsOneFPS.setOutlineThickness(0);
+    
+    
+    
 }
 
 void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal stackward){//Button presses
