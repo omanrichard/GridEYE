@@ -424,7 +424,7 @@ int main(int, char const**)
                         topward.setMode(0);
                         fCount = 0;
                         toolward.sync(menuLayer);
-                        toolward.print("Playback Complete");
+                        stackward.print("Playback Complete");
                     }
                     tempTime = time(NULL);
                     
@@ -435,7 +435,7 @@ int main(int, char const**)
                         topward.setMode(0);
                         fCount = 0;
                         toolward.sync(menuLayer);
-                        toolward.print("Playback Complete");
+                        stackward.print("Playback Complete");
                     }
                 }
                 else{
