@@ -37,10 +37,6 @@ public:
     
 };
 
-
-
-
-
 //-----------------------------------------------------------------
 // GridEYE
 //-----------------------------------------------------------------
@@ -50,14 +46,14 @@ private:
     int fd;         // File Descriptor for I2C functions
 
 public:
-    GridEYE();      //Hint: My board has it set at 0x68 :)
+    GridEYE();      //Hint: My board has it set at 0x68
     GridEYE( int frames, int time );
     GridEYE( int address );
     ~GridEYE();
     
-    int FPS;        // 1 or 10 FPS
-    int runtime;    // Run Time in seconds
-    bool DR;        // True: TRUE, Human: FALSE
+    int FPS;        //1 or 10 FPS
+    int runtime;    //Run Time in seconds
+    bool DR;        //True: TRUE, Human: FALSE
     
     void setFD(void);
     int getfd();
@@ -84,7 +80,7 @@ public:
     void update(float temp);
     void fastUpdate(float temp); //New implimentation for speeed improvements
     void monoUpdate(float temp);
-    void lazyUpdate(float temp);
+    void newUpdate(float temp);
     int getr();    // access r value
     int getg();    // access g value
     int getb();    // access b value
@@ -106,7 +102,6 @@ private:                            // 0  [] [] [] [] [] [] [] []
                                     // 7  [] [] [] [] [] [] [] []
 public:
     frame();
-    //frame(GridEYE &gridward);
     frame( GridEYE* gPtr );
     ~frame();
     
@@ -120,8 +115,8 @@ public:
 //-----------------------------------------------------------------
 class video{
 private:
-    short frameCount;       // 10 Frames -> 1 Second
-    vector< frame* > data;  // Storing up to 31,800 frames maximum
+    short frameCount;       //10 Frames -> 1 Second
+    vector< frame* > data;  //Storing up to 31,800 frames maximum
     
     short max;
     float mean;
@@ -130,9 +125,6 @@ private:
     
 public:
     video();
-    // We dont use these I think
-    //video( GridEYE gridward );
-    video( GridEYE* gPtr );
     ~video();
     
     void addFrame(frame* fptr);
@@ -142,7 +134,6 @@ public:
     int getframeCount();
     frame* getFrame( int temp );
 };
-
 
 //-----------------------------------------------------------------
 // Session
@@ -154,7 +145,6 @@ private:
     
 public:
     session();
-    session( video* newVid );
     ~session();
     
     void addVideo( video* newVid ); // Implement Save button

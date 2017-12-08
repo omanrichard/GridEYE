@@ -33,7 +33,7 @@ short fastVideo::playVideo(int frameNumber, int row, int col){
 
 GridEYE::GridEYE(){
     
-        fd = wiringPiI2CSetup( PGE );
+        fd = wiringPiI2CSetup( PGE );       //Sets up fd out of scope
         wiringPiI2CWriteReg8(fd, PCR, 0);
      
         FPS = 10;
@@ -52,33 +52,31 @@ float GridEYE::read( int pixAddr ){
     int temp = 0;
     float result = 0;
     
-    //temp = rand() % 90;
-    
-    
-    wiringPiI2CWriteReg8( fd, pixAddr, 1 );     // Write to pixel, requests data
-    temp = wiringPiI2CReadReg8( fd, pixAddr );  // Receive value from pixel
+    wiringPiI2CWriteReg8( fd, pixAddr, 1 );     //Write to pixel, requests data
+    temp = wiringPiI2CReadReg8( fd, pixAddr );  //Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
-                                                // Pixels have 12-bit data
-    temp = (temp & 0x07FF);
+                                                //Pixels have 12-bit data
+    temp = (temp & 0x07FF);                     //Removes sign bit
     /*
     while( temp > 0x00 ){
         temp -= 0x04;
         result += 0.25;
     }
     */
+    //temp = rand() % 90;   //random temp generator for testing
     return temp;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-        wiringPiI2CWriteReg8( fd, 0x02, 0 ); // Resets Frame rate register to default
+    wiringPiI2CWriteReg8( fd, 0x02, 0 ); //Resets Frame rate register to default
     DR = true;
     return;
 }
 
 void GridEYE::setFD(void){
-    fd = wiringPiI2CSetup( PGE );
+    fd = wiringPiI2CSetup( PGE );   //Initializes fd for I2C
 }
 
 int GridEYE::getfd(){
@@ -87,26 +85,21 @@ int GridEYE::getfd(){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
-    
-     try{
+    try{
         if( temp == 1 || temp == 10 )
-        throw -1;
+            throw -1;
         if( temp == 1 )
             wiringPiI2CWriteReg8( fd, 0x02, 1 );   // Sets Frame rate register to 1 FPS
         if( temp == 10 )
             wiringPiI2CWriteReg8(fd, 0x02, 0);     // Sets Frame rate register to 10 FPS
-     }
-     catch( int ){
-         cout << "Exception Handled: invalid setting value" << endl;
-     }
-    
-        return;
-     }
-
-GridEYE::~GridEYE(){
-    
+    }
+    catch( int ){
+        cout << "Exception Handled: invalid setting value" << endl;
+    }
+    return;
 }
 
+GridEYE::~GridEYE(){}
 
 //-----------------------------------------------------------------
 // pixMask Methods
@@ -115,11 +108,8 @@ pixMask::pixMask(){
     this->r = 0;
     this->g = 0;
     this->b = 0;
-    
     return;
 }
-
-pixMask::~pixMask(){}
 
 int pixMask::getr(){
     return this->r;
@@ -132,7 +122,7 @@ int pixMask::getg(){
 int pixMask::getb(){
     return this->b;
 }
-void pixMask::lazyUpdate(float temp){
+void pixMask::newUpdate(float temp){
     
     int tempMask = ((temp*180)/127);
     
@@ -1035,12 +1025,8 @@ void pixMask::lazyUpdate(float temp){
             this->b = 255;
             break;
     }
-       
-            
-      
-          
-       
 }
+
 void pixMask::fastUpdate( float temp ){
 //Mapped data to a graph and used cos and sin to reconstruct it
 //Should increases speed
@@ -1098,42 +1084,35 @@ void pixMask::update( float temp ){
             this->g = G1;
             this->b = B1;
         }
-        
         if(phase == 7){
             G1 += 15;
             B1 += 15;
         }
-        
         if(phase == 6){
             G1 -= 15;
             if(G1 <= 0)
                 phase = 7;
         }
-        
         if(phase == 5){
             R1 += 15;
             if(R1 >= 252)
                 phase = 6;
         }
-        
         if(phase == 4){
             B1 -= 15;
             if(B1 <= 0)
                 phase = 5;
         }
-        
         if(phase == 3){
             G1 += 15;
             if( G1 >= 252)
                 phase = 4;
         }
-        
         if(phase == 2){
             R1 -= 15;
             if( R1 <= 0)
                 phase = 3;
         }
-        
         if(phase == 1){
             R1 += 15;
             B1 += 15;
@@ -1142,6 +1121,8 @@ void pixMask::update( float temp ){
         }
     } // end for
 }
+
+pixMask::~pixMask(){}
 
 //----------------------------------------------------------------
 // Frame Methods
@@ -1157,21 +1138,6 @@ frame::frame(){
     this->max = 0;
     return;
 }
-
-/*
-frame::frame(GridEYE &gridward){
-    
-    for( row = 0 ; row < 8 ; row++ ){
-        for( col = 0 ; col < 8 ;  col++){
-            //newFrame.frame[row][col] = gridward.randTemp();
-            //this->sensor_values[row][col] = gridward.randTemp();  // Receive value from device, end transmission
-        }
-    }
-    set_max();
-    set_mean();
-    return;
-}
-*/
 
 frame::frame(GridEYE* gPtr){
     short temp = 0;
@@ -1258,8 +1224,8 @@ video::video( GridEYE* gPtr ){
         temp = new frame( gPtr );       // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
     }
-    //this->set_max();
-    //this->set_mean();
+    this->set_max();
+    this->set_mean();
     return;
 }
 //-----------------------------------------------------------------
@@ -1295,15 +1261,15 @@ void video::exportVideo( string filename ){
 
         newOutput << "Frame No. : " << x + 1 << endl;
         for( row = 0 ; row < 8 ; row++ ){                                        // Frame No. : 1
-            newOutput << "\t"                           // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8
-            << "[ " << temp->access(row, 0) << " ]\t"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
-            << "[ " << temp->access(row, 1) << " ]\t"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
-            << "[ " << temp->access(row, 2) << " ]\t"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
-            << "[ " << temp->access(row, 3) << " ]\t"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
-            << "[ " << temp->access(row, 4) << " ]\t"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
-            << "[ " << temp->access(row, 5) << " ]\t"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
-            << "[ " << temp->access(row, 6) << " ]\t"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
-            << "[ " << temp->access(row, 7) << " ]\t" << endl;
+            newOutput << "\t[ " << temp->access(row, 0) << " ]"   // TAB [ 1] [ 2] [ 3] [ 4] [ 5] [ 6] [ 7] [ 8]
+                      << "\t[ " << temp->access(row, 1) << " ]"   // TAB [ 9] [10] [11] [12] [13] [14] [15] [16]
+                      << "\t[ " << temp->access(row, 2) << " ]"   // TAB [17] [18] [19] [20] [21] [22] [23] [24]
+                      << "\t[ " << temp->access(row, 3) << " ]"   // TAB [25] [26] [27] [28] [29] [30] [31] [32]
+                      << "\t[ " << temp->access(row, 4) << " ]"   // TAB [33] [34] [35] [36] [37] [38] [39] [40]
+                      << "\t[ " << temp->access(row, 5) << " ]"   // TAB [41] [42] [43] [44] [45] [46] [47] [48]
+                      << "\t[ " << temp->access(row, 6) << " ]"   // TAB [49] [50] [51] [52] [53] [54] [55] [56]
+                      << "\t[ " << temp->access(row, 7) << " ]"   // TAB [57] [58] [59] [60] [61] [62] [63] [64]
+                      << endl;
         }
         temp = this->getFrame(x);
     }
@@ -1315,27 +1281,25 @@ frame* video::getFrame( int frameNum ){
     return this->data[frameNum];
 }
 
-/*
 void video::set_max(){
-    short temp = 0;
+    int tempCount = 0;
+    int temp2 = 0;
     frame* framePtr = NULL;
     
     while(temp < this->frameCount){
         framePtr = data[temp];
-        for( row = 0 ; row < 8 ; row++ ){
-            for( col = 0 ; col < 8 ;  col++){
-                if( framePtr->access(row,col) > temp )
-                    temp = framePtr->access(row,col);
-            }
-        }
-        temp++;
+        
+        if( framePtr->get_max() > temp2 )
+            temp2 = framePtr->get_max();
+        
+        tempCount++;
     }
-    framePtr->new_max( temp );
+    this->max;
     return;
 }
 
 void video::set_mean(){
-    short temp = 0;
+    int temp = 0;
     float sum = 0;
     frame* framePtr = NULL;
     
@@ -1348,12 +1312,10 @@ void video::set_mean(){
         }
         temp++;
     }
-    framePtr->new_mean( sum / (64*frameCount) );
+    this->mean = ( sum / (64*frameCount) );
 }
-*/
-video::~video(){
-    
-}
+
+video::~video(){}
 //-----------------------------------------------------------------
 
 
@@ -1365,19 +1327,6 @@ session::session(){     // Default Constructor
     this->current.push_back( NULL );
     cout << "Session Started" << endl << endl;
     return;
-}
-
-session::session( video* newVid ){      // constructor adds video pointer to session array
-    cout << "Session Started" << endl << endl;
-    try{
-        if( !( this->vCount < 1 ) )
-            throw -1;                       // Maybe throw error class instead, can do something later in main
-        this->current.push_back( newVid );  // Adds video pointer into the array in first position
-        this->vCount++;
-    }
-    catch( int ){
-        cout << "Exception Handled" << endl;
-    }
 }
 
 void session::addVideo( video* newVid ){
@@ -1394,7 +1343,6 @@ void session::undoRec(){        // Removes "active" recording from the stack of 
     }
     this->current.pop_back();   // pop_back() removes last value, decrements vector size by 1
     this->vCount--;             // update video count value
-
 }
 
 video* session::getVideo( int index ){

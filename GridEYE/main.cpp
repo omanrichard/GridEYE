@@ -244,20 +244,21 @@ int main(int, char const**)
                     
                     try{
                         vPtr = currentSession.getVideo( sessionIndex );
-                        if( vPtr == NULL )
+                        if( vPtr == NULL )  // Checks session stack for a valid video pointer
                             throw 0;
                     
-                        filename = "pge_vid_";
-                        filename += std::to_string(sessionIndex+1);
-                        filename += ".txt";
-                        vPtr->exportVideo( filename );   // Exports data file
+                        filename = "pge_vid_";                      // Base string for file name
+                        filename += std::to_string(sessionIndex+1); // Converts the video index to a string,
+                                                                    // appends to the base
+                        filename += ".txt";                         // appends .txt
+                        vPtr->exportVideo( filename );              // Exports data file with created filename
 
-                        stackward.print("Success");
+                        stackward.print("Success");                 // Reports to user the file was successfully created
                         menuLayer = 0;
                         toolward.sync(menuLayer);
                     }
                     catch( int x ){
-                        if( x == 0 )
+                        if( x == 0 )    // Error message if no videos are present on the stack
                             stackward.print( "Unable to export video. Error 0x0: No videos stored in current session");
                     }
                 }
@@ -278,9 +279,9 @@ int main(int, char const**)
                         stackward.print(error);
                         sessionIndex = 0;
                     }
-                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    toolward.sync(menuLayer);// Sync toolbar to current menu layer
                 }
-                topward.setMode(menuLayer);//Set topbar to current mode
+                topward.setMode(menuLayer);// Set topbar to current mode
             }
            
             //Terminate Applicaiton Events
@@ -288,18 +289,18 @@ int main(int, char const**)
             //On Window Close Click
             if (event.type == sf::Event::Closed) {
                 
-                window.close();                 //Close Window / Quit Application
+                window.close();                 // Close Window / Quit Application
             }
             //On Key Press
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         
-                window.close();                 //Close Window / Quit Application
+                window.close();                 // Close Window / Quit Application
             }
         }
    
-        topward.updateClock(time(NULL));        //Updates Clock
+        topward.updateClock(time(NULL));        // Updates Clock
         
-        window.clear();                         //Clears Screen Object of all Elements
+        window.clear();                         // Clears Screen Object of all Elements
         
         //window.draw(background);                //Draws Background Object First
         topward.draw(window);                   //Draws Top Bar
@@ -312,11 +313,11 @@ int main(int, char const**)
         // Layer Control
         //-----------------------------------------------------------------
         switch(menuLayer){
-            default:    // Live Feed, not recording.
+            default:    //Live Feed, not recording.
                 pixAddr = 0x80;
                 for( i = 0 ; i < 8 ; i++ ){
                     for( j = 0 ; j < 8 ; j++ ){
-                        // Pixel Position
+                        //Pixel Position
                         xPix = (xGrid + i*51);
                         yPix = (yGrid + j*51);
                         newPix.setPosition( xPix, yPix );
@@ -326,8 +327,8 @@ int main(int, char const**)
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
-                        if(pixAddr < 0xFF && pixAddr >= 0x80) //Error Protection
-                            pixAddr += 2;           //Increment to next Register
+                        if(pixAddr < 0xFF && pixAddr >= 0x80)   //Error Protection
+                            pixAddr += 2;                       //Increment to next Register
                         
                         // Draw the Pixel
                         window.draw( newPix );
@@ -336,15 +337,14 @@ int main(int, char const**)
                 break;
                 
             case 1:   //Settings Menu
-                setward.draw(window);//Draw Settings Menu
+                setward.draw(window);   //Draw Settings Menu
                 break;
             
             case 2:  //Capture Mode
-                    if( difftime( time(NULL), tempTime) >= 1 ){
+                    if( difftime( time(NULL), tempTime) >= 1 ){     //Records and displays data after 1 second has elapsed
                         try{
                             fPtr = new frame( gPtr );
-                            
-                            if( fPtr == NULL )
+                            if( fPtr == NULL )  // Check to see if memory was allocated for the frame
                                 throw "Could not allocate memory for new frame...";
                         }
                         catch( string error ){
@@ -362,19 +362,19 @@ int main(int, char const**)
                                 pixel.lazyUpdate(fPtr->access(i,j));
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
-                                // Pixel Position
+                                //Pixel Position
                                 xPix = (xGrid + i*51);
                                 yPix = (yGrid + j*51);
                                 newPix.setPosition( xPix, yPix );
                                 
-                                // Draw the Pixel
+                                //Draw the Pixel
                                 window.draw( newPix );
                             }
                         }
                         
                         prevFrame = fPtr;
                         fCount++;
-                        
+                        //Exits Capture when the record time is reached
                         if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.FPS * gridward.runtime) ){
                             menuLayer = 0;
                             recordStatus = false;
@@ -411,7 +411,7 @@ int main(int, char const**)
                     break;
                 
             case 3:     //Playback Mode
-                
+                //After a second has passed, display the next frame
                 if( difftime( time(NULL), tempTime) >= 1 ){
                     try{
                         if( fCount > ( gridward.runtime * gridward.FPS ))
@@ -422,7 +422,6 @@ int main(int, char const**)
                 
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
-                            
                             pixel.lazyUpdate(fPtr->access(i,j));
                             newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
@@ -439,6 +438,7 @@ int main(int, char const**)
                     prevFrame = fPtr;
                     fCount++;
                     
+                    //Exits Playback if record time is reached
                     if( difftime( time(NULL), recordStart ) >= gridward.runtime || fCount == (gridward.runtime * gridward.FPS) ){
                         menuLayer = 0;
                         recordStatus = false;
@@ -450,7 +450,7 @@ int main(int, char const**)
                     tempTime = time(NULL);
                     
                     }
-                    catch( int x ){
+                    catch( int x ){ //Exits Playback if playback extends past framecount
                         menuLayer = 0;
                         recordStatus = false;
                         topward.setMode(0);
@@ -459,7 +459,7 @@ int main(int, char const**)
                         stackward.print("Playback Complete");
                     }
                 }
-                else{
+                else{   //Displays previous frame if less than a second has passed
                     for( i = 0 ; i < 8 ; i++ ){
                         for( j = 0 ; j < 8 ; j++ ){
                             

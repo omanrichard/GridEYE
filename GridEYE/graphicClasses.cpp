@@ -15,15 +15,17 @@
 bool newDR = true;
 int newFPS = 10;
 int newruntime = 0;
-
-/*/ -------- Interactive Base Class --------/*/
+//-----------------------------------------------------------------
+// Interactive Object Methods
+//-----------------------------------------------------------------
 interactiveObject::interactiveObject(){
     if (!defaultFont.loadFromFile("sansation.ttf")) { //Loads default Font from from
         //return EXIT_FAILURE;
     }
 }
-
-/*/ --------------- Terminal (Stack) Methods --------------- /*/
+//-----------------------------------------------------------------
+// Terminal (Message Stack) Methods
+//-----------------------------------------------------------------
 terminal::terminal(int size, string text){
     for(int i = 0; i <= size; i++){                   //
         stack.push_back(" ");                         //Adds empty values to prevent crash
@@ -77,11 +79,10 @@ terminal::terminal(int size, string text){
     //Sets the color for each element of the terminal frame
     terminalBackground.setFillColor(sf::Color(0,0,0,150));
     terminalHeader.setFillColor(sf::Color(255,94,20,150));
-    
+
     //Sets the posotion for each element of the terminal frame
     terminalBackground.setPosition(94, 606);
     terminalHeader.setPosition(94, 596);
-    
 }
 
 void terminal::print(string input){
@@ -97,7 +98,6 @@ void terminal::setRoot(string text){    //Change the default pretext
 }
 
 void terminal::draw(sf::RenderWindow &window){
-    
     //Set each line of the terminal text to the coropsonding position of the stack vector
     terminalText1.setString(stack[5]);
     terminalText2.setString(stack[4]);
@@ -117,17 +117,12 @@ void terminal::draw(sf::RenderWindow &window){
     //Adds the terminal from to the window object
     window.draw(terminalBackground);
     window.draw(terminalHeader);
-    
-    
-    
 }
-/*/ --------------- End Terminal (Stack) Methods --------------- /*/
 
-
+//-----------------------------------------------------------------
+// Toolbar Methods
+//-----------------------------------------------------------------
 toolbar::toolbar(void){
-    
- 
-    
     if (!t_settings.loadFromFile("settings.png")) {
         //return EXIT_FAILURE;
     }
@@ -292,53 +287,53 @@ void toolbar::event(sf::Event &toolbarEvent){
 void toolbar::onClick(sf::RenderWindow &window, terminal &Terminal){
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){//If left button is pressed
         sf::Vector2i position = sf::Mouse::getPosition(window);//Get position of mouse
-            if (position.x > 0 && position.x < 95){//Within toolbar
-                //Settings
-                if (position.y > 0 && position.y < 119){
-                    menuLayer = 1; //Change layer to settings layer
-                }
-                //Start Capture
-                if (position.y > 119 && position.y < 189){
-                    Terminal.print("Starting Capture");
-                    menuLayer = 2;//set Capture Mode
-                }
-                //Play capture
-                if (position.y > 189 && position.y < 308){
-                    Terminal.print("Entering Playback Mode");
-                    menuLayer = 3;//Change layer to playback
-                }
-                //Stop Caputre
-                  if (position.y >308 && position.y < 402){
-                      Terminal.print("Stopping Capture");
-                      menuLayer = 4;
-                  }
-                //Save capture
-                if (position.y > 402 && position.y < 496){
-                    Terminal.print("Saving Capture");
-                    menuLayer = 5;
-                }
-                //Delete capture
-                if (position.y > 496 && position.y < 590){
-                    Terminal.print("Deleting Capture");
-                    menuLayer = 6;
-                }
-                //exit - quit program
-                if (position.y > 590 && position.y < 700){
-                    window.close();//Close Window
-                }
+        if (position.x > 0 && position.x < 95){//Within toolbar
+            //Settings
+            if (position.y > 0 && position.y < 119){
+                menuLayer = 1; //Change layer to settings layer
             }
+            //Start Capture
+            if (position.y > 119 && position.y < 189){
+                Terminal.print("Starting Capture");
+                menuLayer = 2;//set Capture Mode
+            }
+            //Play capture
+            if (position.y > 189 && position.y < 308){
+                Terminal.print("Entering Playback Mode");
+                menuLayer = 3;//Change layer to playback
+            }
+            //Stop Caputre
+            if (position.y >308 && position.y < 402){
+                Terminal.print("Stopping Capture");
+                menuLayer = 4;
+            }
+            //Save capture
+            if (position.y > 402 && position.y < 496){
+                Terminal.print("Saving Capture");
+                menuLayer = 5;
+            }
+            //Delete capture
+            if (position.y > 496 && position.y < 590){
+                Terminal.print("Deleting Capture");
+                menuLayer = 6;
+            }
+            //Exit - quit program
+            if (position.y > 590 && position.y < 700){
+                window.close();//Close Window
+            }
+        }
     }
 }
 
 int toolbar::exit(void){
     return menuLayer;
 }
+
 void toolbar::sync(int newMenuLayer){
     menuLayer = newMenuLayer;
 }
 
 settingsMenu::settingsMenu(void){
-    
     if(!t_close.loadFromFile("cancel.png")){
         //return EXIT_FAILURE;
     }
@@ -347,8 +342,7 @@ settingsMenu::settingsMenu(void){
     settingsExit.setPosition(143,93);
     settingsExit.scale(0.1, 0.1);
     
-    
-    // Settings Button Position
+    //Settings Button Position
     settingsTenFPS.setPosition(rootx+100 ,rootY+75 );   //Default
     settingsOneFPS.setPosition(rootx+325 ,rootY+75 );
     settingsMinsBox.setPosition(rootx+75 ,rootY+175 );
@@ -363,8 +357,7 @@ settingsMenu::settingsMenu(void){
     settingsApply.setPosition(rootx+300 ,rootY+350 );
     settingsBackground.setPosition(-500, -500);
     settingsBackground.setPosition(rootx,rootY);    //Move settings background in place
-    
-    
+ 
     //Set Char size
     settingsFPSText.setCharacterSize(30);
     settingsFPSTextValTen.setCharacterSize(20);
@@ -378,7 +371,7 @@ settingsMenu::settingsMenu(void){
     settingsResetText.setCharacterSize(20);
     settingsApplyText.setCharacterSize(20);
     
-    //set strings
+    //Set strings
     settingsFPSText.setString("Frames Per Second");
     settingsFPSTextValTen.setString("10 FPS");
     settingsFPSTextValOne.setString("1 FPS");
@@ -390,7 +383,8 @@ settingsMenu::settingsMenu(void){
     settingsRangeTextHuman.setString("Human");
     settingsResetText.setString("Reset Sensor");
     settingsApplyText.setString("Apply Settings");
-    //Set font
+    
+    //Set Font
     settingsFPSText.setFont(defaultFont);
     settingsFPSTextValTen.setFont(defaultFont);
     settingsFPSTextValOne.setFont(defaultFont);
@@ -402,6 +396,7 @@ settingsMenu::settingsMenu(void){
     settingsRangeTextHuman.setFont(defaultFont);
     settingsResetText.setFont(defaultFont);
     settingsApplyText.setFont(defaultFont);
+    
     //Set Size
     settingsBackground.setSize(sf::Vector2f(500, 400 ));
     settingsTenFPS.setSize(sf::Vector2f(75, 25 ));
@@ -416,6 +411,7 @@ settingsMenu::settingsMenu(void){
     settingsApply.setSize(sf::Vector2f(150, 25 ));
     settingsMinsBox.setSize(sf::Vector2f(50, 50 ));
     settingsSecondsBox.setSize(sf::Vector2f(50, 50 ));
+    
     //Set fill size
     settingsBackground.setFillColor(sf::Color(255, 255, 255,150));
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -430,7 +426,8 @@ settingsMenu::settingsMenu(void){
     settingsRangeHuman.setFillColor(sf::Color(135,206,250));
     settingsReset.setFillColor(sf::Color(30,144,255));
     settingsApply.setFillColor(sf::Color(30,144,255));
-    //Set Boarders
+    
+    //Set Borders
     settingsTenFPS.setOutlineColor(sf::Color::White);
     settingsOneFPS.setOutlineColor(sf::Color::White);
     settingsMinsUp.setOutlineColor(sf::Color::White);
@@ -444,8 +441,7 @@ settingsMenu::settingsMenu(void){
     settingsReset.setOutlineColor(sf::Color::White);
     settingsApply.setOutlineColor(sf::Color::White);
     
-    // Settings Text Color
-    
+    //Settings Text Color
     settingsFPSText.setFillColor(sf::Color::Black);
     settingsFPSTextValTen.setFillColor(sf::Color::Black);
     settingsFPSTextValOne.setFillColor(sf::Color::Black);
@@ -458,7 +454,7 @@ settingsMenu::settingsMenu(void){
     settingsResetText.setFillColor(sf::Color::Black);
     settingsApplyText.setFillColor(sf::Color::Black);
     
-    // Settings Text Position
+    //Settings Text Position
     settingsFPSText.setPosition(rootx+50,rootY+25 );
     settingsFPSTextValTen.setPosition(rootx+100+10 ,rootY+75 );
     settingsFPSTextValOne.setPosition(rootx+325+15 ,rootY+75 );
@@ -480,9 +476,6 @@ settingsMenu::settingsMenu(void){
     settingsTenFPS.setFillColor(sf::Color(30,144,255));
     settingsOneFPS.setFillColor(sf::Color(135,206,250));
     settingsOneFPS.setOutlineThickness(0);
-    
-    
-    
 }
 
 void settingsMenu::setDefaultRecordTime(int defaultSeconds){
@@ -491,7 +484,7 @@ void settingsMenu::setDefaultRecordTime(int defaultSeconds){
 }
 
 void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal stackward){//Button presses
-    // Colors - Select: 30,144,255 Unselect: 135,206,250
+    // Colors :: Select: 30,144,255 Unselect: 135,206,250
     menuLayer = 1; //Set internal menuLayer reference
     
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){   //When Left Mouse is clicked
@@ -502,8 +495,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
             if (position.y > 93 && position.y < 123){//Add root to this
                 menuLayer = 0;
             }}
-        
-        // 10 FPS
+        //10 FPS
         if (position.x > (rootx + 100)  && position.x < (rootx+175)){
             if (position.y > (rootY+ 75) && position.y < (rootY+100)){
                 settingsTenFPS.setFillColor(sf::Color(30,144,255));
@@ -514,8 +506,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 //sf::sleep(sf::milliseconds(50));
                 newFPS = 10;
             }}
-        
-        // One FPS
+        //One FPS
         if (position.x > (rootx + 325)  && position.x < (rootx+400)){
             if (position.y > (rootY+75) && position.y < (rootY+100)){
                 settingsOneFPS.setFillColor(sf::Color(30,144,255));
@@ -526,8 +517,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 //sf::sleep(sf::milliseconds(50));
                 newFPS = 1;
             }}
-        
-        // Minutes UP
+        //Minutes UP
         if (position.x > (rootx + 150)  && position.x < (rootx+200)){
             if (position.y > (rootY+175) && position.y < (rootY+200)){
                 settingsMinsUp.setFillColor(sf::Color(sf::Color::Green));
@@ -537,8 +527,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
-        
-        // Minutes DOWN
+        //Minutes DOWN
         if (position.x > (rootx + 150)  && position.x < (rootx +200)){
             if (position.y > (rootY + 200) && position.y < (rootY+225)){
                 settingsMinsDown.setFillColor(sf::Color(sf::Color::Red));
@@ -548,7 +537,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                     settingsMinsText.setString(std::to_string(recordMins));
                 }
             }}
-        // Seconds UP
+        //Seconds UP
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY + 175) && position.y < (rootY+200)){
                 settingsSecondsUp.setFillColor(sf::Color(sf::Color::Green));
@@ -566,8 +555,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
             }}
-        
-        // Seconds DOWN
+        //Seconds DOWN
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY+200) && position.y < (rootY+225)){
                 settingsSecondsDown.setFillColor(sf::Color(sf::Color::Red));
@@ -583,8 +571,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                     settingsSecondsText.setString(std::to_string(recordSeconds));
                 }
             }}
-        
-        // Sensor TRUE
+        //Sensor TRUE
         if (position.x > (rootx + 75)  && position.x < (rootx + 175)){
             if (position.y > (rootY + 300) && position.y < (rootY + 325)){
                 settingsRangeTrue.setFillColor(sf::Color(30,144,255));
@@ -593,8 +580,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsRangeHuman.setOutlineThickness(0);
                 newDR = true;
             }}
-        
-        // Sensor HUMAN
+        //Sensor HUMAN
         if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
             if (position.y > (rootY + 300) && position.y < (rootY + 325)){
                 settingsRangeHuman.setFillColor(sf::Color(30,144,255));
@@ -603,8 +589,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsRangeTrue.setOutlineThickness(0);
                 newDR = false;
             }}
-        
-        // RESET
+        //RESET
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsReset.setFillColor(sf::Color(30,144,255));
@@ -624,8 +609,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 stackward.print("Reset","Grid-EYE");
                 
             }}
-        
-        // APPLY
+        //APPLY
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(30,144,255));
@@ -641,39 +625,36 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 menuLayer = 0;
             }}
     }//end button down
-
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){  // Release
+    //Button Release
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)){
         sf::Vector2i position = sf::Mouse::getPosition(window);
-        
-        //MINS UP
+        //Mins UP
         if (position.x > (rootx + 150)  && position.x < (rootx+200)){
             if (position.y > (rootY+175) && position.y < (rootY+200)){
                 settingsMinsUp.setFillColor(sf::Color(30,144,255));
             }}
-        
         //Mins Down
         if (position.x > (rootx + 150)  && position.x < (rootx +200)){
             if (position.y > (rootY + 200) && position.y < (rootY+225)){
                 settingsMinsDown.setFillColor(sf::Color(135,206,250));
             }}
-        
-        //seconds up
+        //Seconds up
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY + 175) && position.y < (rootY+200)){
                 settingsSecondsUp.setFillColor(sf::Color(30,144,255));
             }}
         
-        //seconds down
+        //Seconds down
         if (position.x > (rootx + 375)  && position.x < (rootx+425)){
             if (position.y > (rootY+200) && position.y < (rootY+225)){
                 settingsSecondsDown.setFillColor(sf::Color(135,206,250));
             }}
-        //reset
+        //Reset
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsReset.setFillColor(sf::Color(255,144,255));
             }}
-        //apply
+        //Apply
         if (position.x > (rootx + 300)  && position.x < (rootx + 450)){
             if (position.y > (rootY + 350) && position.y < (rootY + 375)){
                 settingsApply.setFillColor(sf::Color(255,255,255));
@@ -682,7 +663,6 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
 }
 
 void settingsMenu::draw(sf::RenderWindow &window){
-   
     window.draw(settingsBackground);
     window.draw(settingsExit);
     window.draw(settingsTenFPS);
@@ -714,9 +694,9 @@ int settingsMenu::exit(void){
     return menuLayer;
 }
 
-
-/*/ -------- topBar Layer --------/*/
-
+//-----------------------------------------------------------------
+// Topbar Methods
+//-----------------------------------------------------------------
 topBar::topBar(void){
     
     //Updates Time
@@ -724,7 +704,6 @@ topBar::topBar(void){
     clockStruct = localtime(&tempTime);
     strftime (clockTextBuffer,11,"%r",clockStruct);
     
-  
     //Rectangle Shape Objects
     background.setSize(sf::Vector2f( 606, 75 ));
     background.setFillColor(sf::Color(0, 0, 0,50));
@@ -733,7 +712,6 @@ topBar::topBar(void){
     header.setSize(sf::Vector2f(606, 5 ));
     header.setFillColor(sf::Color(255, 94, 20,150));
     header.setPosition(94, 75);
-    
     
     //Text Objects
     //Mode
@@ -761,9 +739,8 @@ topBar::topBar(void){
     clockText.setString(clockTextBuffer);
     clockText.setFillColor(sf::Color::White);
     clockText.setPosition( 560 , 45);
-    
-   
 }
+
 void topBar::setMode(int newMode){
     mode = newMode;
     updateMode();
@@ -788,7 +765,7 @@ void topBar::updateMode(void){
             modeText.setFillColor(sf::Color(0,115,115));
             modeText.setString("Replay");
             break;
-        }
+    }
 }
 
 void topBar::draw(sf::RenderWindow &window){
@@ -823,6 +800,9 @@ void topBar::updateClock(time_t currentTime){
     }
 }
 
+//-----------------------------------------------------------------
+// Playbar Methods
+//-----------------------------------------------------------------
 playBar::playBar(sf::Vector2f position, int scale){
     
     origin = position;
@@ -833,7 +813,6 @@ playBar::playBar(sf::Vector2f position, int scale){
         //return EXIT_FAILURE;
     }
 
-    
     background.setTexture(t_background);
     fillBar.setTexture(t_fillBar);
     background.setPosition(position);
@@ -872,7 +851,6 @@ void playBar::setCurrentTime(void){
 }
 
 void playBar::draw(sf::RenderWindow &window){
-    
     window.draw(background);
     window.draw(fillBar);
     window.draw(currentTimeText);
@@ -891,7 +869,6 @@ void playBar::onClick(sf::RenderWindow &window, terminal &Terminal){
         }
     }
 }
-
 
 void playBar::setClipStartTime(time_t start){
     clipStart = start;
@@ -918,7 +895,7 @@ void playBar::setPlaybackStartTime(time_t start){
 }
 
 void playBar::setPlaybackEndTime(time_t end){
-    
+
 }
 
 void playBar::playback(topBar &TopBar, terminal &Terminal, bool &playbackStatus ){
@@ -967,19 +944,17 @@ void playBar::record(topBar &Topbar, terminal &Terminal,  bool &recordMode, int 
                 bufferA =  std::to_string(int(elapsedTime/60))+":0"+std::to_string(int(fmod(elapsedTime,60)));
             } else  bufferA = std::to_string(int(elapsedTime/60))+":"+std::to_string(int(fmod(elapsedTime,60)));
         }
-    if(int(setRecordTime/60) < 10){
-        if(int(fmod(setRecordTime,60)) < 10){
-            bufferB = "0" + std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
-        } else  bufferB = "0" + std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
-    }
-    else{
-        if(int(fmod(setRecordTime,60)) < 10){
-            bufferB =  std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
-        } else  bufferB = std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
-    }
-    
-    fillBar.setScale(1-elapsedTime/setRecordTime,1);
-    
+        if(int(setRecordTime/60) < 10){
+            if(int(fmod(setRecordTime,60)) < 10){
+                bufferB = "0" + std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
+            } else  bufferB = "0" + std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
+        }
+        else{
+            if(int(fmod(setRecordTime,60)) < 10){
+                bufferB =  std::to_string(int(setRecordTime/60))+":0"+std::to_string(int(fmod(setRecordTime,60)));
+            } else  bufferB = std::to_string(int(setRecordTime/60))+":"+std::to_string(int(fmod(setRecordTime,60)));
+        }
+        fillBar.setScale(1-elapsedTime/setRecordTime,1);
     }
     else if(elapsedTime > setRecordTime && recordMode == true){
         recordMode = false;
