@@ -1,10 +1,14 @@
 //
 //  projectClasses.cpp
-//  Project
+//  Data Processing Application for Panasonic GridEYE using
+//  RaspberryPi 3 and C++
 //
-//  Created by Grant Hilgert and Richard Oman on 11/11/17.
-//  Copyright © 2017 Richard Oman. All rights reserved.
+//  Created by Grant Hilgert and Richard Oman on 12/1/17.
 //
+//  ECE 3220 Software Design in C and C++
+//  Instructor: Dr. Luis Rivera
+//  University of Missouri
+//  Department of Electrical and Computer Engineering
 
 #include <iostream>
 #include <fstream>
@@ -12,37 +16,21 @@
 #include <string>
 #include <cmath>
 #include "projectClasses.h"
-#include <wiringPiI2C.h>
+//#include <wiringPiI2C.h>
 
-#define PGE 0x68
-#define PCR 0x00
+#define PGE 0x68    //GridEYE I2C Address
+#define PCR 0x00    //GridEYE Power Control Register Address
 
 using namespace std;
 int row,col;
 
-short fastVideo::playVideo(int frameNumber, int row, int col){
-    int address = 0x80 + (10*2*row + 2*col);
-    return videoFile[frameNumber].frame[address];
-}
-
-
-
 //-----------------------------------------------------------------
 // GridEYE Constructors
-//-----------------------------------------------------------------GridEYE::GridEYE(){
-
+//-----------------------------------------------------------------
 GridEYE::GridEYE(){
-    
-        fd = wiringPiI2CSetup( PGE );       //Sets up fd out of scope
-        wiringPiI2CWriteReg8(fd, PCR, 0);
-     
-        FPS = 10;
-        runtime = 10;
-}
-// Will remove eventually
-GridEYE::GridEYE( int address ){
     FPS = 10;
     runtime = 10;
+    DR = true;
 }
 
 //-----------------------------------------------------------------
@@ -51,32 +39,32 @@ GridEYE::GridEYE( int address ){
 float GridEYE::read( int pixAddr ){
     int temp = 0;
     float result = 0;
-    
+    /*
     wiringPiI2CWriteReg8( fd, pixAddr, 1 );     //Write to pixel, requests data
     temp = wiringPiI2CReadReg8( fd, pixAddr );  //Receive value from pixel
     wiringPiI2CWriteReg8( fd, pixAddr, 0);
                                                 //Pixels have 12-bit data
-    temp = (temp & 0x07FF);                     //Removes sign bit
-    /*
-    while( temp > 0x00 ){
+    temp = (temp & 0x07FF);                     //Masks sign bit
+    
+    while( temp > 0x00 ){       //Finds Celsius Temperature from Bit data
         temp -= 0x04;
-        result += 0.25;
+        result += 0.25;         //4 Hex = 0.25 degrees Celsius
     }
     */
-    //temp = rand() % 90;   //random temp generator for testing
-    return temp;
+    result = rand() % 90;   //random temp generator for testing
+    return result;
 }
 
 void GridEYE::reset(void){
     FPS = 10;
     runtime = 10;
-    wiringPiI2CWriteReg8( fd, 0x02, 0 ); //Resets Frame rate register to default
     DR = true;
+    //wiringPiI2CWriteReg8( fd, 0x02, 0 ); //Resets Frame rate register to default
     return;
 }
 
 void GridEYE::setFD(void){
-    fd = wiringPiI2CSetup( PGE );   //Initializes fd for I2C
+    //fd = wiringPiI2CSetup( PGE );   //Initializes fd for I2C
 }
 
 int GridEYE::getfd(){
@@ -85,6 +73,7 @@ int GridEYE::getfd(){
 
 void GridEYE::setFPS(int temp){
     this->FPS = temp;
+    /*
     try{
         if( temp == 1 || temp == 10 )
             throw -1;
@@ -96,13 +85,14 @@ void GridEYE::setFPS(int temp){
     catch( int ){
         cout << "Exception Handled: invalid setting value" << endl;
     }
+    */
     return;
 }
 
 GridEYE::~GridEYE(){}
 
 //-----------------------------------------------------------------
-// pixMask Methods
+// pixMask Constructor
 //-----------------------------------------------------------------
 pixMask::pixMask(){
     this->r = 0;
@@ -110,7 +100,9 @@ pixMask::pixMask(){
     this->b = 0;
     return;
 }
-
+//-----------------------------------------------------------------
+// pixMask Methods
+//-----------------------------------------------------------------
 int pixMask::getr(){
     return this->r;
 }
@@ -123,9 +115,7 @@ int pixMask::getb(){
     return this->b;
 }
 void pixMask::newUpdate(float temp){
-    
     int tempMask = ((temp*180)/127);
-    
     switch(tempMask){
         case 0:
             this->r = 127;
@@ -1125,20 +1115,8 @@ void pixMask::update( float temp ){
 pixMask::~pixMask(){}
 
 //----------------------------------------------------------------
-// Frame Methods
+// Frame Constructors
 //----------------------------------------------------------------
-frame::frame(){
-    //fastFrame newFrame;
-    for( row=0 ; row < 8 ; row++ ){
-        for( col=0 ; col < 8 ; col++){
-            //newFrame.frame[row][col] = 0;
-        }
-    }
-    this->mean = 0;
-    this->max = 0;
-    return;
-}
-
 frame::frame(GridEYE* gPtr){
     short temp = 0;
     int pixAddr = 0x80;
@@ -1210,8 +1188,8 @@ video::video(){
     
     cout << "Video Created" << endl;
 }
-
-video::video( GridEYE* gPtr ){
+/*
+video::video( GridEYE* gPtr ){  //Not used in final implementation
     frame* temp;
     
     frameCount = ( gPtr->FPS * gPtr->runtime );
@@ -1221,21 +1199,19 @@ video::video( GridEYE* gPtr ){
         }
         else{
         }
-        temp = new frame( gPtr );       // Collect data and create frame
+        temp = new frame( gPtr );           // Collect data and create frame
         this->data.push_back( temp );       // Store pointer in data Vector
     }
     this->set_max();
     this->set_mean();
     return;
-}
+}*/
 //-----------------------------------------------------------------
 // Video Methods
 //-----------------------------------------------------------------
 void video::addFrame(frame* fPtr){
     this->data.push_back(fPtr);
     this->frameCount++;
-    //this->set_max();
-    //this->set_mean();
 }
 
 int video::getframeCount(){
@@ -1286,8 +1262,8 @@ void video::set_max(){
     int temp2 = 0;
     frame* framePtr = NULL;
     
-    while(temp < this->frameCount){
-        framePtr = data[temp];
+    while(tempCount < this->frameCount){
+        framePtr = data[tempCount];
         
         if( framePtr->get_max() > temp2 )
             temp2 = framePtr->get_max();

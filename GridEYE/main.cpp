@@ -1,40 +1,55 @@
+//  main.cpp
+//
+//  Data Processing Application for Panasonic GridEYE using
+//  RaspberryPi 3 and C++
+//
+//  Created by Grant Hilgert and Richard Oman on 12/1/17.
+//
+//  ECE 3220 Software Design in C and C++
+//  Instructor: Dr. Luis Rivera
+//  University of Missouri
+//  Department of Electrical and Computer Engineering
 
 //#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>                //Grahpics Librars
-#include "Event.hpp"                        //Mouse Move Events
-#include "Mouse.hpp"                        //Mouse Clicks
+#include <SFML/Graphics.hpp>    //Graphics Libraries
+#include "Event.hpp"            //Mouse Move Events
+#include "Mouse.hpp"            //Mouse Clicks
 
-#include <wiringPi.h>                     //Raspberry Pi GPIO
+//wiringPi library and functions commented out to permit compilation using
+//"Dummy Data" functions
+
+//#include <wiringPi.h>           //Raspberry Pi GPIO
 #include <iostream>
-#include <fstream>                          //FILE I/O
+#include <fstream>              //FILE I/O
 #include <vector>
 #include <string>
-#include <time.h>                           //Time Functions
-#include <math.h>                           //Math Functions
+#include <time.h>               //Time Functions
+#include <math.h>               //Math Functions
 #include <stdio.h>
 
-#include "projectClasses.h"                 //Video File Objects Classes
-#include "graphicClasses.h"                 //User Interface Objects Classes
+#include "projectClasses.h"     //Video File Objects Classes
+#include "graphicClasses.h"     //User Interface Objects Classes
 
 //GPIO
-#define GREENLED 4                          //GPIO pin connected to Green LED Anode
-#define REDLED   5                          //GPIO Pin connected to Red LED Anode
-#define PDE 0x68                            //Grid-EYE I2C Address
+#define GREENLED 4              //GPIO pin connected to Green LED Anode
+#define REDLED   5              //GPIO Pin connected to Red LED Anode
+#define PDE 0x68                //Grid-EYE I2C Address
+
+//Display Grid Standard Values
 #define xGrid 200
 #define yGrid 98
-
+#define pixScale 51
 
 //Global Objects
-
 pixMask pixel;                              // Pixel Obj, stores RBG values
+int pixAddr = 0x80;                         // GridEYE pixel 1
 
+//Interactive Objects
 terminal stackward(6, "Thermal Camera");    //Terminal Stack with 6 blank lines
 toolbar toolward;                           //Toolbar
 settingsMenu setward;                       //Settings Menu
 topBar topward;                             //Top Status Bar
 playBar playward(sf::Vector2f(35, 375),1);  //Playback bar
-fastVideo vidward;                          //Test Video Implementation
-
 
 int menuLayer = 0;                          //0:Home;1:Settings;2:Record;3:Playback;
                                             //4:Stop;5:Save;6:Delete
@@ -46,28 +61,27 @@ int recordTime = 10;                         //Time to record the video, default
 int i, j;
 int xPix, yPix;
 
-int pixScale = 51;
-
-
-
 int main(int, char const**)
 {
-    // Wiring Pi Setup
-    GridEYE gridward;                       //Grid Eye Object
-    GridEYE* gPtr = &gridward;
-    gridward.setFD();//Fix
-   
-    wiringPiSetup();                        //WiringPiSetup
-    pinMode(GREENLED, OUTPUT);              //Configure Green Led Pin
-    pinMode(REDLED,OUTPUT);                 //Configure Red Led Pin
-   
-    digitalWrite(GREENLED, 0);              //Turns Green Led On
-    digitalWrite(REDLED, 1);                //Turns Red Led Off
-    
+
 //-----------------------------------------------------------------
 // Set Up
 //-----------------------------------------------------------------
-    session currentSession; // Begins session
+    // Wiring Pi Setup
+    GridEYE gridward;                       //Grid Eye Object
+    GridEYE* gPtr = &gridward;
+    gridward.setFD();                       //Initialize GridEYE for I2C, store fd in GridEYE object
+    /*
+     wiringPiSetup();                        //WiringPiSetup for LEDs
+     pinMode(GREENLED, OUTPUT);              //Configure Green Led Pin
+     pinMode(REDLED,OUTPUT);                 //Configure Red Led Pin
+     
+     digitalWrite(GREENLED, 0);              //Turns Green Led On
+     digitalWrite(REDLED, 1);                //Turns Red Led Off
+     */
+    
+    //Begin Session
+    session currentSession;
     int sessionIndex = 0;
 
     int tempFPS;
@@ -78,38 +92,34 @@ int main(int, char const**)
     frame* fPtr = NULL;
     frame* prevFrame = NULL;
 
-    int temp = 0;       // Stores value from GridEYE pixel
-    int pixAddr = 0x80; // GridEYE pixel 1
-    
     std::string filename;
     
     time_t recordStart;
     time_t tempTime;
     
     setward.setDefaultRecordTime(recordTime); //sync settings layer to default values - in seconds
-    // Create the main window
-    sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
-    //----------------- Camera Grid -----------------
-    sf::RectangleShape newPix(sf::Vector2f(50, 50));
-
     
-    //Background is obmitted to improve speed during demo
-    //----------------- Background ------------------
+    //Create the main window
+    sf::RenderWindow window(sf::VideoMode(700, 700), "PGE-DPA v.2"); //Creates Winodw
+    //Create Pixel to Draw Grid
+    sf::RectangleShape newPix(sf::Vector2f(50, 50));
+    
+    //Background is omitted to improve speed during demo
+    //Create Background
     // sf::Texture t_background;//Background text - stays global for now
     // sf::Sprite background;//Background Sprite - stays global for now
-    
     // if(!t_background.loadFromFile("texture2.jpg")){//Load backgroud image
     //    return EXIT_FAILURE;//Exit program and report error if file can be found
     //}
     //background.setTexture(t_background);//maps background text to background sprite
     //background.setPosition(0,0);//move background sprite to origin
     //window.draw(background);//draws background
+    
     sf::Image icon;
     if (!icon.loadFromFile("icon.png")) {
         return EXIT_FAILURE;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
     
 //-----------------------------------------------------------------
 // Draw Loop
@@ -123,16 +133,12 @@ int main(int, char const**)
     {
       //LED Control
         if(recordStatus == true){ //Turns Red Led on and Green Led off when recording
-           
-            digitalWrite(GREENLED,1);
-            digitalWrite(REDLED,0);
-            
+            //digitalWrite(GREENLED,1);
+            //digitalWrite(REDLED,0);
         }
         else if(recordStatus == false){//Turns Red Led off and Green Led on when in stand-by
-           
-            digitalWrite(GREENLED,0);
-            digitalWrite(REDLED,1);
-            
+            //digitalWrite(GREENLED,0);
+            //digitalWrite(REDLED,1);
         }
         
         //-----------------------------------------------------------------
@@ -155,16 +161,16 @@ int main(int, char const**)
         
                 //Settings Menu
                 if(menuLayer == 1){
-                    setward.onClick(window, gPtr, stackward); //Scans buffer for corosponing inputs.
+                    setward.onClick(window, gPtr, stackward);   //Scans buffer for corosponing inputs.
                     
                     recordTime = setward.syncRecordLength();
                     gridward.runtime = recordTime;
-                    menuLayer = setward.exit();//Allows settings menu to Menu layers
+                    menuLayer = setward.exit();                 //Allows settings menu to Menu layers
                 
-                    toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                    toolward.sync(menuLayer);                   //Sync toolbar to current menu layer
                 }
                 // Capture Video
-                if(menuLayer == 2){//Executes Once when Capture is clicked
+                if(menuLayer == 2){     //Executes Once when Capture is clicked
                     vPtr = currentSession.getVideo(sessionIndex);
                     if( vPtr == NULL )
                         sessionIndex = 0;
@@ -178,6 +184,7 @@ int main(int, char const**)
                             throw "Could not Allocate memory to store capture video";
                         
                         currentSession.addVideo(vPtr);              //Adds video to the session data stack
+                        playward.onClick(window,stackward);
                         recordStatus = true;                        //Switichs device into Record Mode
                         playward.setClipStartTime(time(NULL));      //Sets the clip start time in the playbar
                         toolward.sync(menuLayer);                   //Sync toolbar to current menu layer
@@ -194,7 +201,7 @@ int main(int, char const**)
                     }
                 }
                 // Playback Video
-                if(menuLayer == 3){//Executes Once when Playback is clicked
+                if(menuLayer == 3){     //Executes Once when Playback is clicked
                     try{
                         vPtr = currentSession.getVideo(0);
                         if( vPtr == NULL )
@@ -212,7 +219,7 @@ int main(int, char const**)
                     }
                 }
                 // Stop-Record
-                if(menuLayer == 4){//Executes Once when Stop is clicked
+                if(menuLayer == 4){     //Executes Once when Stop is clicked
                         
                     recordStatus = false;
                     
@@ -223,14 +230,14 @@ int main(int, char const**)
                             throw 0;
                         currentSession.undoRec();
                         sessionIndex--;
-                        menuLayer = 0; //Return to home
-                        toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                        menuLayer = 0;                  //Return to home
+                        toolward.sync(menuLayer);       //Sync toolbar to current menu layer
                     }
                     catch( int x )
                     {
                         stackward.print( "No videos stored in current Session ");
-                        menuLayer = 0; //Return to home
-                        toolward.sync(menuLayer);//Sync toolbar to current menu layer
+                        menuLayer = 0;                  //Return to home
+                        toolward.sync(menuLayer);       //Sync toolbar to current menu layer
                     }
                 }
                 // Export Video
@@ -282,7 +289,7 @@ int main(int, char const**)
             
             //Terminate Applicaiton Events
             //On Window Close Click
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
                 window.close();                 // Close Window / Quit Application
             }
             //On Key Press
@@ -315,7 +322,7 @@ int main(int, char const**)
                         newPix.setPosition( xPix, yPix );
                         
                         //Set Pixel Color
-                        gridward.DR ? pixel.newUpdate(pixAddr) : pixel.update(pixAddr);
+                        gridward.DR ? pixel.newUpdate(gridward.read(pixAddr)) : pixel.update(gridward.read(pixAddr));
                         newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                         
                         //Memory Registers
@@ -333,6 +340,7 @@ int main(int, char const**)
                 break;
             
             case 2:  //Capture Mode
+                frame* prevFrame;
                 if( difftime( time(NULL), tempTime) >= 1 ){     //Records and displays data after 1 second has elapsed
                     try{
                         fPtr = new frame( gPtr );
@@ -344,11 +352,10 @@ int main(int, char const**)
                         for( i = 0 ; i < 8 ; i++ ){
                             for( j = 0 ; j < 8 ; j++ ){
                                 //Memory Registers
-                                int index = 10*i + j;
-                                int address = 0x80 + 20*i+2*j;
+                                pixAddr = 0x80;
                             
                                 //Pixel Color
-                                gridward.DR ? pixel.newUpdate(pixAddr) : pixel.update(pixAddr); //DR Implementation
+                                gridward.DR ? pixel.newUpdate(gridward.read(pixAddr)) : pixel.update(gridward.read(pixAddr)); //DR Implementation
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                                 //Pixel Position
@@ -360,7 +367,6 @@ int main(int, char const**)
                                 window.draw( newPix );
                             }
                         }
-                        
                         prevFrame = fPtr;
                         fCount++;
                         //Exits Capture when the record time is reached
@@ -377,24 +383,23 @@ int main(int, char const**)
                         }
                         catch( string error ){
                             stackward.print(error);
+                            fCount = 0;
                         }
                     }
                     else{
                         for( i = 0 ; i < 8 ; i++ ){
                             for( j = 0 ; j < 8 ; j++ ){
-                                //Memory Registers
-                                int index = 10*i + j;
-                                int address = 0x80 + 20*i+2*j;
                                 
-                                gridward.DR ? pixel.newUpdate(pixAddr) : pixel.update(pixAddr);
+                                //Pixel Color
+                                gridward.DR ? pixel.newUpdate(prevFrame->access(i,j)) : pixel.update(prevFrame->access(i,j));
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                                 
-                                // Pixel Position
+                                //Pixel Position
                                 xPix = (xGrid + i*51);
                                 yPix = (yGrid + j*51);
                                 newPix.setPosition( xPix, yPix );
                                 
-                                // Draw the Pixel
+                                //Draw the Pixel
                                 window.draw( newPix );
                             }
                         }
@@ -407,15 +412,15 @@ int main(int, char const**)
                 //After a second has passed, display the next frame
                 if( difftime( time(NULL), tempTime) >= 1 ){
                     try{
-                        if( fCount > ( gridward.runtime * gridward.FPS ))
+                        if( fCount > ( 10 ))
                             throw 2;
                         
                         fPtr = vPtr->getFrame(fCount);
-                    
+                        
                         for( i = 0 ; i < 8 ; i++ ){
                             for( j = 0 ; j < 8 ; j++ ){
                                 //Pixel Color
-                                gridward.DR ? pixel.newUpdate(prevFrame->access(i,j)) : pixel.update(prevFrame->access(i,j));
+                                gridward.DR ? pixel.newUpdate(fPtr->access(i,j)) : pixel.update(fPtr->access(i,j));
                                 newPix.setFillColor(sf::Color(pixel.getr(),pixel.getg(), pixel.getb()));
                             
                                 //Pixel Position

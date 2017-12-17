@@ -1,10 +1,15 @@
-//
 //  projectClasses.h
-//  Project
 //
-//  Created by Richard Oman on 11/11/17.
-//  Copyright © 2017 Richard Oman. All rights reserved.
+//  Data Processing Application for Panasonic GridEYE using
+//  RaspberryPi 3 and C++
 //
+//  Created by Grant Hilgert and Richard Oman on 12/1/17.
+//
+//  ECE 3220 Software Design in C and C++
+//  Instructor: Dr. Luis Rivera
+//  University of Missouri
+//  Department of Electrical and Computer Engineering
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -18,24 +23,6 @@
 #define projectClasses_h
 
 using namespace std;
-
-
-struct fastFrame {
-    
-    int frameCount;
-    short frame[64];
-    
-};
-
-class fastVideo {
-private:
-    vector<fastFrame> videoFile;
-public:
-    void addFrame(fastFrame newFrame){videoFile.push_back(newFrame);};
-    short playVideo(int frameNumber, int row, int col);
-
-    
-};
 
 //-----------------------------------------------------------------
 // GridEYE
@@ -61,7 +48,6 @@ public:
     float read(int pixAddr);
     void reset(void);
     
-    short randTemp(void){ return rand()%255;};
     void setFPS( int nFPS );
  
 };

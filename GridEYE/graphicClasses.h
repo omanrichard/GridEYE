@@ -1,10 +1,15 @@
-//
 //  graphicClasses.h
-//  GridEYE
 //
-//  Created by Grant Hilgert on 12/1/17.
-//  Copyright © 2017 Richard Oman. All rights reserved.
+//  Data Processing Application for Panasonic GridEYE using
+//  RaspberryPi 3 and C++
 //
+//  Created by Grant Hilgert and Richard Oman on 12/1/17.
+//
+//  ECE 3220 Software Design in C and C++
+//  Instructor: Dr. Luis Rivera
+//  University of Missouri
+//  Department of Electrical and Computer Engineering
+
 #include <iostream>
 #include <fstream>
 #include <vector>

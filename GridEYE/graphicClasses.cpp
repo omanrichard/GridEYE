@@ -1,10 +1,15 @@
-//
 //  graphicClasses.cpp
-//  GridEYE
 //
-//  Created by Grant Hilgert on 12/1/17.
-//  Copyright © 2017 Richard Oman. All rights reserved.
+//  Data Processing Application for Panasonic GridEYE using
+//  RaspberryPi 3 and C++
 //
+//  Created by Grant Hilgert and Richard Oman on 12/1/17.
+//
+//  ECE 3220 Software Design in C and C++
+//  Instructor: Dr. Luis Rivera
+//  University of Missouri
+//  Department of Electrical and Computer Engineering
+
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -578,7 +583,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsRangeTrue.setOutlineThickness(2);
                 settingsRangeHuman.setFillColor(sf::Color(135,206,250));
                 settingsRangeHuman.setOutlineThickness(0);
-                newDR = true;
+                newDR = false;
             }}
         //Sensor HUMAN
         if (position.x > (rootx + 325)  && position.x < (rootx + 425)){
@@ -587,7 +592,7 @@ void settingsMenu::onClick(sf::RenderWindow &window, GridEYE* gridward, terminal
                 settingsRangeHuman.setOutlineThickness(2);
                 settingsRangeTrue.setFillColor(sf::Color(135,206,250));
                 settingsRangeTrue.setOutlineThickness(0);
-                newDR = false;
+                newDR = true;
             }}
         //RESET
         if (position.x > (rootx + 50)  && position.x < (rootx+200)){
