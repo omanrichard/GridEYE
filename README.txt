@@ -1,5 +1,5 @@
 ******************************************************************************
-Data Processing Application for Panasonic GridEYE using Raspberry Pi 3 and C++
+Data Processing Application for Panasonic GridEYE© using Raspberry Pi 3© and C++
 ******************************************************************************
 Created by: Grant Hilgert & Richard Oman
 Final Submission Date: November 8, 2017
@@ -22,18 +22,20 @@ Project Goals:
 *********************
 Hardware Used:
 *********************
-  - Raspberry Pi 3 Model B (RPi-3)
-  - Panasonic GridEYE imaging device (PGE) (custom imaging device developed by Grant Hilgert for use with RPi-3)
+  - Raspberry Pi 3 Model B© (RPi-3)
+  - Panasonic GridEYE© imaging device (PGE) (custom imaging device developed by Grant Hilgert for use with RPi-3)
 
 The PGE was developed by Grant Hilgert for use with the RPi-3.
 
 *********************
 Development Platform:
 *********************
-The Data Processing Application (PGE-DPA) was developed using Xcode on macOS High Sierra (ver. 10.13.2), using a template
-that assists in the development and generation of a windowed program using the Simple and Fast Multimedia Library (SFML).
+The Data Processing Application (PGE-DPA) was developed using Xcode© on macOS High Sierra© (ver. 10.13.2), using a template
+that assists in the development and generation of a windowed program using the Simple and Fast Multimedia Library© (SFML).
 
 SFML is a cross-language, multi-platform API that assists in the creation of executable applications for use on multiple platforms.
+
+Example code provided by sfml-dev.org was used as reference for us to learn how SFML works, and we modified as a template for our code to build off of.
 
 *************************************
 Requirements for program compilation:
